@@ -44,7 +44,21 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public String[] getTableColumns(String tableName) {
-        return new String[0];
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM information_schema.columns" +
+                     " WHERE table_name='" + tableName + "'")) {
+            String[] columnNames = new String[100];
+            int index = 0;
+
+            while (rs.next()) {
+                columnNames[index++] = rs.getString("column_name");
+            }
+            columnNames = Arrays.copyOf(columnNames, index, String[].class);
+            return columnNames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
     }
 
     @Override
