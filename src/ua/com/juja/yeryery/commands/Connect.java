@@ -1,13 +1,13 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
-import ua.com.juja.yeryery.JDBCManager;
 
 public class Connect {
     private View view;
-    private JDBCManager manager;
+    private DatabaseManager manager;
 
-    public Connect(View view, JDBCManager manager) {
+    public Connect(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }

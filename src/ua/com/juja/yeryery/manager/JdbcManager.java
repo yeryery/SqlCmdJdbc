@@ -1,12 +1,13 @@
-package ua.com.juja.yeryery;
+package ua.com.juja.yeryery.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JDBCManager {
+public class JdbcManager implements DatabaseManager {
     private Connection connection;
 
+    @Override
     public void connect(String database, String username, String password) {
         try {
             Class.forName("org.postgresql.Driver");

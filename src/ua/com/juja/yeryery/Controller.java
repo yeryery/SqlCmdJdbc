@@ -1,6 +1,7 @@
 package ua.com.juja.yeryery;
 
 import ua.com.juja.yeryery.commands.Connect;
+import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 public class Controller {
@@ -8,7 +9,7 @@ public class Controller {
     private View view;
     private Connect connect;
 
-    public Controller(View view, JDBCManager manager) {
+    public Controller(View view, DatabaseManager manager) {
         this.view = view;
         this.connect = new Connect(view, manager);
     }
