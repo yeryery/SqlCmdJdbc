@@ -1,6 +1,8 @@
+package ua.com.juja.yeryery.view;
+
 import java.util.Scanner;
 
-public class Console implements View{
+public class Console implements View {
     @Override
     public void write(String input) {
         System.out.println(input);

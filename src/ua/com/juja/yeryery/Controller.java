@@ -1,3 +1,8 @@
+package ua.com.juja.yeryery;
+
+import ua.com.juja.yeryery.commands.Connect;
+import ua.com.juja.yeryery.view.View;
+
 public class Controller {
 
     private View view;

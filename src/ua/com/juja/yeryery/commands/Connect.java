@@ -1,3 +1,8 @@
+package ua.com.juja.yeryery.commands;
+
+import ua.com.juja.yeryery.view.View;
+import ua.com.juja.yeryery.JDBCManager;
+
 public class Connect {
     private View view;
     private JDBCManager manager;
