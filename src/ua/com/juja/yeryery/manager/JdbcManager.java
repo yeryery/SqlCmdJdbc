@@ -1,8 +1,7 @@
 package ua.com.juja.yeryery.manager;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Arrays;
 
 public class JdbcManager implements DatabaseManager {
     private Connection connection;
@@ -26,7 +25,21 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public String[] getTableNames() {
-        return new String[0];
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(
+                     "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")) {
+            String[] tableNames = new String[100];
+            int index = 0;
+
+            while (resultSet.next()) {
+                tableNames[index++] = resultSet.getString("table_name");
+            }
+            tableNames = Arrays.copyOf(tableNames, index, String[].class);
+            return tableNames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
     }
 
     @Override
