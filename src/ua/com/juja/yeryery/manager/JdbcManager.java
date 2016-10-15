@@ -63,11 +63,15 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void clear(String tableName) {
-
+        try (Statement st = connection.createStatement()) {
+            st.executeUpdate("DELETE FROM " + tableName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean isConnected() {
-        return false;
+        return connection != null;
     }
 }
