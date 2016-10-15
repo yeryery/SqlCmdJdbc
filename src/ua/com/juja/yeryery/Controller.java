@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery;
 
+import ua.com.juja.yeryery.commands.Command;
 import ua.com.juja.yeryery.commands.Connect;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -7,11 +8,11 @@ import ua.com.juja.yeryery.view.View;
 public class Controller {
 
     private View view;
-    private Connect connect;
+    private Command command;
 
     public Controller(View view, DatabaseManager manager) {
         this.view = view;
-        this.connect = new Connect(view, manager);
+        this.command = new Connect(view, manager);
     }
 
     public void run() {
@@ -20,8 +21,7 @@ public class Controller {
                         "connect|database|username|password");
 
         String input = view.read();
-        connect.process(input);
+        command.process(input);
         view.write("Success!");
     }
 }
-//connect|yeryery|postgres|nepomny
