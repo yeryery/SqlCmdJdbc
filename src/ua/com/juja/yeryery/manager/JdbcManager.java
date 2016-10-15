@@ -23,4 +23,24 @@ public class JdbcManager implements DatabaseManager {
             throw new RuntimeException("Can`t get connection! You have entered incorrect data. Please try again...");
         }
     }
+
+    @Override
+    public String[] getTableNames() {
+        return new String[0];
+    }
+
+    @Override
+    public String[] getTableColumns(String tableName) {
+        return new String[0];
+    }
+
+    @Override
+    public void clear(String tableName) {
+
+    }
+
+    @Override
+    public boolean isConnected() {
+        return false;
+    }
 }
