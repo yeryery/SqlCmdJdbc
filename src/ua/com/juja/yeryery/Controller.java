@@ -19,12 +19,12 @@ public class Controller {
 
     public void run() {
         view.write("Hello, user!");
-        view.write("Please, enter: " +
-                "connect|database|username|password");
+        String connectToDatabase = "Please, enter: " +
+                "'connect|database|username|password' or use command 'help'";
+        view.write(connectToDatabase);
 
         while (true) {
             String input = view.read();
-
             for (Command command : commands) {
                 try {
                     if (command.canProcess(input)) {
@@ -32,19 +32,21 @@ public class Controller {
                         break;
                     }
                 } catch (Exception e) {
+                    if (e instanceof NullPointerException) {
+                        view.write(String.format("You can`t use '%s' unless you are not connected.", input));
+                        view.write(connectToDatabase);
+                        break;
+                    }
                     printError(e);
                     break;
                 }
             }
-            view.write("type the commands (or help)");
         }
     }
 
     private void printError(Exception e) {
         String message = e.getMessage();
-        if (e.getCause() != null) {
-            message += " " + e.getCause().getMessage();
-        }
+
         view.write("Error! " + message);
         view.write("Try again");
     }
