@@ -17,5 +17,6 @@ public class Exit implements Command {
     @Override
     public void process(String input) {
         view.write("See you!");
+        System.exit(0);
     }
 }
