@@ -14,7 +14,8 @@ public class Controller {
         this.commands = new Command[] {new Connect(view, manager),
                                        new Clear(view, manager),
                                        new List(view, manager),
-                                       new Exit(view)};
+                                       new Exit(view),
+                                       new Help(view)};
     }
 
     public void run() {
