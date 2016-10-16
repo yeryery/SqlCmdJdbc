@@ -25,14 +25,27 @@ public class Controller {
         while (true) {
             String input = view.read();
 
-            for (Command command :
-                    commands) {
-                if (command.canProcess(input)) {
-                    command.process(input);
+            for (Command command : commands) {
+                try {
+                    if (command.canProcess(input)) {
+                        command.process(input);
+                        break;
+                    }
+                } catch (Exception e) {
+                    printError(e);
                     break;
                 }
             }
             view.write("type the commands (or help)");
         }
+    }
+
+    private void printError(Exception e) {
+        String message = e.getMessage();
+        if (e.getCause() != null) {
+            message += " " + e.getCause().getMessage();
+        }
+        view.write("Error! " + message);
+        view.write("Try again");
     }
 }

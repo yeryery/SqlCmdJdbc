@@ -19,7 +19,7 @@ public class JdbcManager implements DatabaseManager {
                     "jdbc:postgresql://127.0.0.1:5432/" + database, username, password);
         } catch (SQLException e) {
             connection = null;
-            throw new RuntimeException("Can`t get connection! You have entered incorrect data. Please try again...");
+            throw new RuntimeException("Can`t get connection! You have entered incorrect data.");
         }
     }
 
