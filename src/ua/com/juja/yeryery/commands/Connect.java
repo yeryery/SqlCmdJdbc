@@ -13,9 +13,15 @@ public class Connect implements Command {
     }
 
     @Override
+    public boolean canProcess(String input) {
+        return input.startsWith("connect|");
+    }
+
+    @Override
     public void process(String input) {
         String[] data = input.split("\\|");
 
         manager.connect(data[1], data[2], data[3]);
+        view.write("Success!");
     }
 }
