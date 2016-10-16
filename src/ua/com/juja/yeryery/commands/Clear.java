@@ -20,6 +20,8 @@ public class Clear implements Command {
 
     @Override
     public void process(String input) {
-
+        String[] data = new String[100];
+        data = input.split("\\s+");
+        manager.clear(data[1]);
     }
 }
