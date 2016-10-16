@@ -1,9 +1,6 @@
 package ua.com.juja.yeryery;
 
-import ua.com.juja.yeryery.commands.Clear;
-import ua.com.juja.yeryery.commands.Command;
-import ua.com.juja.yeryery.commands.Connect;
-import ua.com.juja.yeryery.commands.List;
+import ua.com.juja.yeryery.commands.*;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
@@ -16,7 +13,8 @@ public class Controller {
         this.view = view;
         this.commands = new Command[] {new Connect(view, manager),
                                        new Clear(view, manager),
-                                       new List(view, manager)};
+                                       new List(view, manager),
+                                       new Exit(view)};
     }
 
     public void run() {
@@ -24,15 +22,17 @@ public class Controller {
         view.write("Please, enter: " +
                 "connect|database|username|password");
 
-        String input = view.read();
+        while (true) {
+            String input = view.read();
 
-        for (Command command :
-                commands) {
-            if (command.canProcess(input)) {
-                command.process(input);
-                break;
+            for (Command command :
+                    commands) {
+                if (command.canProcess(input)) {
+                    command.process(input);
+                    break;
+                }
             }
+            view.write("type the commands (or help)");
         }
-        view.write("type the commands (or help)");
     }
 }
