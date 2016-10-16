@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.Arrays;
 
 public class JdbcManager implements DatabaseManager {
+
     private Connection connection;
 
     @Override

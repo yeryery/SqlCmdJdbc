@@ -4,6 +4,7 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 public class Connect implements Command {
+
     private View view;
     private DatabaseManager manager;
     private static String COMMAND_SAMPLE = "connect|yeryery|postgres|postgrespass";

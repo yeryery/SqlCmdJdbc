@@ -25,6 +25,7 @@ public class Controller {
 
         while (true) {
             String input = view.read();
+
             for (Command command : commands) {
                 try {
                     if (command.canProcess(input)) {
