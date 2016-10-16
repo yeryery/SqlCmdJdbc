@@ -37,7 +37,7 @@ public class JdbcManager implements DatabaseManager {
             tableNames = Arrays.copyOf(tableNames, index, String[].class);
             return tableNames;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return new String[0];
         }
     }
@@ -56,7 +56,7 @@ public class JdbcManager implements DatabaseManager {
             columnNames = Arrays.copyOf(columnNames, index, String[].class);
             return columnNames;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return new String[0];
         }
     }
@@ -66,7 +66,7 @@ public class JdbcManager implements DatabaseManager {
         try (Statement st = connection.createStatement()) {
             st.executeUpdate("DELETE FROM " + tableName);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
