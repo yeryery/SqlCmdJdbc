@@ -12,4 +12,6 @@ public interface DatabaseManager {
     boolean isConnected();
 
     void insert(String tableName, DataSet input);
+
+    DataSet[] getDataContent(String tableName);
 }

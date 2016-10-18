@@ -76,8 +76,6 @@ public class JdbcManager implements DatabaseManager {
         return connection != null;
     }
 
-
-
     @Override
     public void insert(String tableName, DataSet input) {
         try (Statement st = connection.createStatement()) {
@@ -88,6 +86,30 @@ public class JdbcManager implements DatabaseManager {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public DataSet[] getDataContent(String tableName) {
+        try (
+             Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
+            int size = getSize(tableName);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            DataSet[] result = new DataSet[size];
+            int index = 0;
+            while (rs.next()) {
+                DataSet dataSet = new DataSet();
+                result[index++] = dataSet;
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
+                }
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new DataSet[0];
         }
     }
 
@@ -107,5 +129,12 @@ public class JdbcManager implements DatabaseManager {
             result += String.format(format, value);
         }
         return result.substring(0, result.length() - 1);
+    }
+
+    private int getSize(String tableName) throws SQLException {
+        Statement st = connection.createStatement();
+        ResultSet rsCount = st.executeQuery("SELECT COUNT (*) FROM " + tableName);
+        rsCount.next();
+        return rsCount.getInt(1);
     }
 }
