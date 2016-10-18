@@ -15,6 +15,7 @@ public class Controller {
                                        new Clear(view, manager),
                                        new List(view, manager),
                                        new Insert(view, manager),
+                                       new Display(view, manager),
                                        new Exit(view),
                                        new Help(view)};
     }
