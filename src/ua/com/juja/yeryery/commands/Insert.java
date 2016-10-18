@@ -35,8 +35,8 @@ public class Insert implements Command{
 
         String currentTableName = "";
         for (int i = 0; i < size; i++) {
-            if (tableNumber == i) {
-                currentTableName = tableNames[i - 1];
+            if (i == tableNumber - 1) {
+                currentTableName = tableNames[i];
             }
         }
 
