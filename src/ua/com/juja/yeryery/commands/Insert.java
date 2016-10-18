@@ -52,6 +52,8 @@ public class Insert implements Command{
             newRow.put(columnNames[i], values[i]);
         }
 
+        manager.insert(currentTableName, newRow);
+
         view.write("You have successfully entered new data!");
     }
 
