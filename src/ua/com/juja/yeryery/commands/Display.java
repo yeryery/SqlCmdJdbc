@@ -21,16 +21,16 @@ public class Display implements Command {
 
     @Override
     public void process(String input) {
+        String[] tableNames = manager.getTableNames(); // TODO
+
         view.write("Please select number of table which you want to display");
 
-        String[] tableNames = manager.getTableNames(); // TODO
         int size = tableNames.length;
         for (int i = 0; i < size; i++) {
             view.write((i + 1) + " " + tableNames[i]);
         }
 
         int tableNumber = Integer.parseInt(view.read());
-        ;
 
         String currentTableName = "";
         for (int i = 0; i < size; i++) {
@@ -47,7 +47,6 @@ public class Display implements Command {
 
     private void printValues(DataSet[] dataSets) {
         String result = "";
-
         for (DataSet dataSet : dataSets) {
             result += getStringRow(dataSet);
             result += "\n";
@@ -58,8 +57,8 @@ public class Display implements Command {
 
     private String getStringRow(DataSet dataSet) {
         Object[] values = dataSet.getValues();
-        String result = "| ";
 
+        String result = "| ";
         for (Object value : values) {
             result += value + " | ";
         }

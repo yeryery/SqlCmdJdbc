@@ -22,9 +22,10 @@ public class Insert implements Command{
 
     @Override
     public void process(String input) {
+        String[] tableNames = manager.getTableNames(); // TODO
+
         view.write("Please select number of table where you want to insert a new row");
 
-        String[] tableNames = manager.getTableNames(); // TODO
         int size = tableNames.length;
         for (int i = 0; i < size; i++) {
             view.write((i + 1) + " " + tableNames[i]);
@@ -42,8 +43,8 @@ public class Insert implements Command{
         view.write("Enter the values you require");
         String[] columnNames = manager.getTableColumns(currentTableName);
         int tableSize = columnNames.length;
-        String[] values = new String[tableSize];
 
+        String[] values = new String[tableSize];
         DataSet newRow = new DataSet();
 
         for (int i = 0; i < tableSize; i++) {
@@ -53,7 +54,6 @@ public class Insert implements Command{
         }
 
         manager.insert(currentTableName, newRow);
-
         view.write("You have successfully entered new data!");
     }
 
