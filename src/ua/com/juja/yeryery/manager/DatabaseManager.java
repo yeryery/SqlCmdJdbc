@@ -10,4 +10,6 @@ public interface DatabaseManager {
     void clear(String tableName);
 
     boolean isConnected();
+
+    void insert(String tableName, DataSet input);
 }

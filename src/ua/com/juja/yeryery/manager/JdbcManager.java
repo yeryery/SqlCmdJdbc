@@ -75,4 +75,37 @@ public class JdbcManager implements DatabaseManager {
     public boolean isConnected() {
         return connection != null;
     }
+
+
+
+    @Override
+    public void insert(String tableName, DataSet input) {
+        try (Statement st = connection.createStatement()) {
+            String columnNames = getColumnNamesFormatted("%s,", input);
+            String values = getValuesFormatted("'%s',", input);
+
+            st.executeUpdate("INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getColumnNamesFormatted(String format, DataSet input) {
+        String result = "";
+        String[] columnNames = input.getColumnNames();
+        for (String columnName : columnNames) {
+            result += String.format(format, columnName);
+        }
+        return result.substring(0, result.length() - 1);
+    }
+
+    private String getValuesFormatted(String format, DataSet input) {
+        String result = "";
+        Object[] values = input.getValues();
+        for (Object value : values) {
+            result += String.format(format, value);
+        }
+        return result.substring(0, result.length() - 1);
+    }
 }

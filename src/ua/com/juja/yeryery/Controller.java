@@ -14,6 +14,7 @@ public class Controller {
         this.commands = new Command[] {new Connect(view, manager),
                                        new Clear(view, manager),
                                        new List(view, manager),
+                                       new Insert(view, manager),
                                        new Exit(view),
                                        new Help(view)};
     }
