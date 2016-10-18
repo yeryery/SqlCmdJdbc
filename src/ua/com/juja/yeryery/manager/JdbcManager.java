@@ -85,7 +85,7 @@ public class JdbcManager implements DatabaseManager {
             st.executeUpdate("INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class JdbcManager implements DatabaseManager {
             }
             return result;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return new DataSet[0];
         }
     }
