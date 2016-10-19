@@ -21,7 +21,8 @@ public class Controller {
                                        new Insert(view, manager),
                                        new Display(view, manager),
                                        new Exit(view),
-                                       new Help(view)};
+                                       new Help(view),
+                                       new Unknown(view)};
     }
 
     public void run() {
