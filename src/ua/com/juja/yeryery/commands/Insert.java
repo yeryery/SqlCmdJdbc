@@ -43,5 +43,4 @@ public class Insert implements Command{
         manager.insert(currentTableName, newRow);
         view.write("You have successfully entered new data!");
     }
-
 }
