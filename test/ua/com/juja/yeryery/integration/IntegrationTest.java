@@ -24,6 +24,20 @@ public class IntegrationTest {
     @Test
     public void TestExit() {
         //given
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestHelp() {
+        //given
         in.add("help");
         in.add("exit");
 
@@ -38,15 +52,21 @@ public class IntegrationTest {
                 "\t\tConnect to Database\r\n" +
                 "\tlist\r\n" +
                 "\t\tList of tables\r\n" +
-                "\tclear tableName\r\n" +
-                "\t\tClear table 'tableName'\r\n" +
+                "\tcreate\r\n" +
+                "\t\tCreate new table\r\n" +
+                "\tdisplay\r\n" +
+                "\t\tDisplay require table\r\n" +
+                "\tinsert\r\n" +
+                "\t\tInsert new data in require table\r\n" +
+                "\tclear\r\n" +
+                "\t\tClear require table\r\n" +
+                "\tdrop\r\n" +
+                "\t\tDrop require table\r\n" +
                 "\texit\r\n" +
                 "\t\tProgram exit\r\n" +
                 "\thelp\r\n" +
                 "\t\tAll commands\r\n" +
-                "See you!\r\n" +
-                "Error! null\r\n" +
-                "Try again\r\n", out.getData());
+                "See you!\r\n", out.getData());
     }
 
 }
