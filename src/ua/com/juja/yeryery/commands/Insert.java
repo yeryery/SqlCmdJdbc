@@ -20,7 +20,7 @@ public class Insert implements Command{
 
     @Override
     public boolean canProcess(String input) {
-        return input.startsWith("insert");
+        return input.equals("insert");
     }
 
     @Override

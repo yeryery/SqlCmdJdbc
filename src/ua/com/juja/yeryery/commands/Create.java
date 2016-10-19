@@ -22,7 +22,7 @@ public class Create implements Command{
 
     @Override
     public boolean canProcess(String input) {
-        return input.startsWith("create");
+        return input.equals("create");
     }
 
     @Override
