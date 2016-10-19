@@ -8,7 +8,7 @@ public class Controller {
 
     private View view;
     private Command[] commands;
-    String connectToDatabase = "Please, enter: " +
+    private String connectToDatabase = "Please, enter: " +
                 "'connect|database|username|password' or use command 'help'";
 
     public Controller(View view, DatabaseManager manager) {
