@@ -27,7 +27,7 @@ public class ChooseTable implements Dialog {
                     throw new ExitException();
                 }
                 if (tableNumber < 0 || tableNumber > size) {
-                    view.write("There is no table with this number! Try again");
+                    view.write("There is no table with this number! Try again.");
                 }
             } catch (NumberFormatException e) {
                 view.write("This is not a number! Try again.");

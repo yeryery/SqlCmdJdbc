@@ -56,7 +56,7 @@ public class Controller {
                         return;
                     }
                     printError(e);
-                    return;
+                    break;
                 }
             }
         }

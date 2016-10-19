@@ -180,6 +180,7 @@ public class IntegrationTest {
     public void TestConnectWithWrongNumberOfParameters() {
         //given
         in.add("connect|yeryery");
+        in.add("exit");
 
         //when
         Main.main(new String[0]);
@@ -188,13 +189,15 @@ public class IntegrationTest {
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 "Error! Wrong number of parameters. Expected 4, and you have entered 2\r\n" +
-                "Try again\r\n", out.getData());
+                "Try again\r\n" +
+                "See you!\r\n", out.getData());
     }
 
     @Test
     public void TestConnectWithWrongParameter() {
         //given
         in.add("connect|yeryery|postgres|wrongpass");
+        in.add("exit");
 
         //when
         Main.main(new String[0]);
@@ -203,7 +206,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 "Error! Can`t get connection! You have entered incorrect data.\r\n" +
-                "Try again\r\n", out.getData());
+                "Try again\r\n" +
+                "See you!\r\n", out.getData());
     }
 
     @Test
@@ -236,10 +240,98 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "Success!\r\n" +
-                "[test, ttable]\r\n" +
-                "See you!\r\n", out.getData());
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                "Success!\n" +
+                "[ttable, test]\n" +
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestDisplayAfterConnect() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("display");
+        in.add("2");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                //display
+                "Please select number of table you need or '0' to exit\n" +
+                "1. ttable\n" +
+                "2. test\n" +
+                "0. Exit\n" +
+                //select number
+                "| id | name | age | \n" +
+                "-----------------------------\n" +
+                "| 1 | Jack | 24 | \n" +
+                "| 2 | Michael | 29 | \n" +
+                "-------------------------\n" +
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestDisplayChooseWrongNumber() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("display");
+        in.add("-1");
+        in.add("0");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                //display
+                "Please select number of table you need or '0' to exit\n" +
+                "1. ttable\n" +
+                "2. test\n" +
+                "0. Exit\n" +
+                "There is no table with this number! Try again.\n" +
+                "Please select number of table you need or '0' to exit\n" +
+                "1. ttable\n" +
+                "2. test\n" +
+                "0. Exit\n" +
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestDisplayChooseNotNumber() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("display");
+        in.add("notNumber");
+        in.add("0");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                //display
+                "Please select number of table you need or '0' to exit\n" +
+                "1. ttable\n" +
+                "2. test\n" +
+                "0. Exit\n" +
+                "This is not a number! Try again.\n" +
+                "Please select number of table you need or '0' to exit\n" +
+                "1. ttable\n" +
+                "2. test\n" +
+                "0. Exit\n" +
+                "See you!", out.getData().trim().replace("\r",""));
     }
 }
