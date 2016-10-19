@@ -18,7 +18,7 @@ public class Drop implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("display");
+        return input.equals("drop");
     }
 
     @Override
@@ -27,5 +27,6 @@ public class Drop implements Command {
 
         manager.drop(currentTableName);
         view.write("Table " + currentTableName + " successfully dropped");
+        view.write("type 'list' to see available tables");
     }
 }

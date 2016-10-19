@@ -16,6 +16,7 @@ public class Controller {
         this.commands = new Command[] {new Connect(view, manager),
                                        new Clear(view, manager),
                                        new Create(view, manager),
+                                       new Drop(view, manager),
                                        new List(view, manager),
                                        new Insert(view, manager),
                                        new Display(view, manager),
