@@ -38,7 +38,7 @@ public class Display implements Command {
             result += getStringRow(dataSet);
             result += "\n";
         }
-        view.write(result);
+        view.write(result.substring(0, result.length() - 1));
         view.write("-------------------------");
     }
 
