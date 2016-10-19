@@ -8,7 +8,7 @@ public class ChooseTable implements Dialog {
     public String askUser(DatabaseManager manager, View view) {
         String[] tableNames = manager.getTableNames();
 
-        view.write("Please select number of table where you want to insert a new row");
+        view.write("Please select number of table you need");
 
         int size = tableNames.length;
         for (int i = 0; i < size; i++) {
@@ -16,7 +16,6 @@ public class ChooseTable implements Dialog {
         }
 
         int tableNumber = Integer.parseInt(view.read());
-        ;
 
         String tableName = "";
         for (int i = 0; i < size; i++) {

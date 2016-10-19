@@ -82,6 +82,15 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
+    public void drop(String tableName) {
+        try (Statement st = connection.createStatement()) {
+            st.executeUpdate("DROP TABLE " + tableName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
     public boolean isConnected() {
         return connection != null;
     }

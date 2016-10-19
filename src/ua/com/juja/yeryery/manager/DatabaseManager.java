@@ -11,6 +11,8 @@ public interface DatabaseManager {
 
     void create(String tableName, DataSet columns);
 
+    void drop(String tableName);
+
     boolean isConnected();
 
     void insert(String tableName, DataSet input);
