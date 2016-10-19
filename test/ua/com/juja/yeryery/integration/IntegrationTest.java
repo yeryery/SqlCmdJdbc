@@ -158,4 +158,34 @@ public class IntegrationTest {
                 "You can`t use 'insert' unless you are not connected.\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
     }
+
+    @Test
+    public void TestConnectWithWrongNumberOfParameters() {
+        //given
+        in.add("connect|yeryery");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Error! Wrong number of parameters. Expected 4, and you have entered 2\r\n" +
+                "Try again\r\n", out.getData());
+    }
+
+    @Test
+    public void TestConnectWithWrongParameter() {
+        //given
+        in.add("connect|yeryery|postgres|wrongpass");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Error! Can`t get connection! You have entered incorrect data.\r\n" +
+                "Try again\r\n", out.getData());
+    }
 }
