@@ -25,8 +25,20 @@ public class Help implements Command {
         view.write("\tlist");
         view.write("\t\tList of tables");
 
-        view.write("\tclear tableName");
-        view.write("\t\tClear table 'tableName'");
+        view.write("\tcreate");
+        view.write("\t\tCreate new table");
+
+        view.write("\tdisplay");
+        view.write("\t\tDisplay require table");
+
+        view.write("\tinsert");
+        view.write("\t\tInsert new data in require table");
+
+        view.write("\tclear");
+        view.write("\t\tClear require table");
+
+        view.write("\tdrop");
+        view.write("\t\tDrop require table");
 
         view.write("\texit");
         view.write("\t\tProgram exit");
