@@ -160,6 +160,23 @@ public class IntegrationTest {
     }
 
     @Test
+    public void TestUnknownCommandBeforeConnect() {
+        //given
+        in.add("somecomand");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Unknown command: somecomand!\r\n" +
+                "Try again.\r\n" +
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
     public void TestConnectWithWrongNumberOfParameters() {
         //given
         in.add("connect|yeryery");
@@ -187,5 +204,42 @@ public class IntegrationTest {
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 "Error! Can`t get connection! You have entered incorrect data.\r\n" +
                 "Try again\r\n", out.getData());
+    }
+
+    @Test
+    public void TestUnknownCommandAfterConnect() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("somecomand");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Success!\r\n" +
+                "Unknown command: somecomand!\r\n" +
+                "Try again.\r\n" +
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestListAfterConnect() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("list");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Success!\r\n" +
+                "[test, ttable]\r\n" +
+                "See you!\r\n", out.getData());
     }
 }
