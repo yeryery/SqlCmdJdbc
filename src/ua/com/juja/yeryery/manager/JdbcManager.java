@@ -72,6 +72,16 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
+    public void create(String tableName, DataSet dataSet) {
+        try (Statement st = connection.createStatement()) {
+            String dataTypes = getDataSetFormatted(dataSet);
+            st.executeUpdate("CREATE TABLE " + tableName + "(ID INT PRIMARY KEY NOT NULL, " + dataTypes + ")");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
     public boolean isConnected() {
         return connection != null;
     }
@@ -127,6 +137,17 @@ public class JdbcManager implements DatabaseManager {
         Object[] values = input.getValues();
         for (Object value : values) {
             result += String.format(format, value);
+        }
+        return result.substring(0, result.length() - 1);
+    }
+
+    private String getDataSetFormatted(DataSet input) {
+        String result = "";
+        String[] columnNames = input.getColumnNames();
+        Object[] values = input.getValues();
+        for (int i = 0; i < columnNames.length; i++) {
+            result += columnNames[i] + " ";
+            result += values[i] + ",";
         }
         return result.substring(0, result.length() - 1);
     }

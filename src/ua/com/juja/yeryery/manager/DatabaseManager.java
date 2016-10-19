@@ -9,6 +9,8 @@ public interface DatabaseManager {
 
     void clear(String tableName);
 
+    void create(String tableName, DataSet columns);
+
     boolean isConnected();
 
     void insert(String tableName, DataSet input);
