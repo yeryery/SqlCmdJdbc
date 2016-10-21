@@ -24,14 +24,14 @@ public class ChooseTable implements Dialog {
         for (int i = 0; i < size; i++) {
             view.write((i + 1) + ". " + names[i]);
         }
-        view.write("0. Back (go back to the menu)");
+        view.write("0. back (go back to the menu)");
             String input = view.read();
 
             if (isParsable(input)) {
                 tableNumber = Integer.parseInt(input);
                 String check = "";
                 if (tableNumber == 0) {
-                    check = "Back";
+                    check = "back";
                 }
                 if (tableNumber < 0 || tableNumber > size) {
                     view.write("There is no table with this number! Try again.");
@@ -46,7 +46,7 @@ public class ChooseTable implements Dialog {
             } else {
                 String check = "";
                 for (String name : names) {
-                    if (input.equals(name) || input.equals("Back")) {
+                    if (input.equals(name) || input.equals("back")) {
                         check = input;
                     }
                 }

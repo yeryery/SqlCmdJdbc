@@ -26,7 +26,7 @@ public class Display implements Command {
     public void process(String input) {
         String currentTableName = dialog.askUser(manager, view);
 
-        if (!currentTableName.equals("Back")) {
+        if (!currentTableName.equals("back")) {
             String[] tableColumns = manager.getTableColumns(currentTableName);
             printColumnNames(tableColumns);
             DataSet[] rows = manager.getDataContent(currentTableName);
