@@ -68,6 +68,7 @@ public class IntegrationTest {
                 "\t\tProgram exit\r\n" +
                 "\thelp\r\n" +
                 "\t\tAll commands\r\n" +
+                "Type command or 'help'\r\n" +
                 //exit
                 "See you!\r\n", out.getData());
     }
@@ -201,6 +202,7 @@ public class IntegrationTest {
                 //someCommand
                 "Unknown command: someCommand!\r\n" +
                 "Try again.\r\n" +
+                "Type command or 'help'\r\n" +
                 //exit
                 "See you!\r\n", out.getData());
     }
@@ -256,9 +258,11 @@ public class IntegrationTest {
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 //connect
                 "Success!\r\n" +
+                "Type command or 'help'\r\n" +
                 //someCommand
                 "Unknown command: someCommand!\r\n" +
                 "Try again.\r\n" +
+                "Type command or 'help'\r\n" +
                 //exit
                 "See you!\r\n", out.getData());
     }
@@ -278,8 +282,10 @@ public class IntegrationTest {
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect
                 "Success!\n" +
+                "Type command or 'help'\n" +
                 //list
                 "[ttable, test]\n" +
+                "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
@@ -300,17 +306,18 @@ public class IntegrationTest {
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect
                 "Success!\n" +
+                "Type command or 'help'\n" +
                 //display
-                "Please select number of table you need or '0' to exit\n" +
-                "1. ttable\n" +
-                "2. test\n" +
-                "0. Exit\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. Back (go back to the menu)\n" +
                 //select number
-                "| id | name | age | \n" +
-                "-----------------------------\n" +
-                "| 1 | Jack | 24 | \n" +
-                "| 2 | Michael | 29 | \n" +
+                "| id | name | password | \n" +
                 "-------------------------\n" +
+                "------------------------\n" +
+                "Type command or 'help'\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 
@@ -321,6 +328,7 @@ public class IntegrationTest {
         in.add("display");
         in.add("-1");
         in.add("0");
+        in.add("exit");
 
         //when
         Main.main(new String[0]);
@@ -330,28 +338,40 @@ public class IntegrationTest {
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect
                 "Success!\n" +
+                "Type command or 'help'\n" +
                 //display
-                "Please select number of table you need or '0' to exit\n" +
-                "1. ttable\n" +
-                "2. test\n" +
-                "0. Exit\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. Back (go back to the menu)\n" +
                 //-1
                 "There is no table with this number! Try again.\n" +
-                "Please select number of table you need or '0' to exit\n" +
-                "1. ttable\n" +
-                "2. test\n" +
-                "0. Exit\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. Back (go back to the menu)\n" +
+                //0
+                "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 
     @Test
-    public void TestDisplayChooseNotNumber() {
+    public void TestCreateAfterConnect() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("somename");
+        in.add("2");
+        in.add("name");
+        in.add("text");
+        in.add("age");
+        in.add("int");
         in.add("display");
-        in.add("notNumber");
-        in.add("0");
+        in.add("somename");
+        in.add("drop");
+        in.add("somename");
+        in.add("exit");
 
         //when
         Main.main(new String[0]);
@@ -361,18 +381,41 @@ public class IntegrationTest {
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect
                 "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create\n" +
+                //someName
+                "Please enter the number of columns of your table\n" +
+                //2
+                "name of column 1\n" +
+                //name
+                "datatype of column 1\n" +
+                //text
+                "name of column 2\n" +
+                //age
+                "datatype of column 2\n" +
+                //int
+                "Your table 'somename' have successfully created!\n" +
+                "Type command or 'help'\n" +
                 //display
-                "Please select number of table you need or '0' to exit\n" +
-                "1. ttable\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. somename\n" +
                 "2. test\n" +
-                "0. Exit\n" +
-                //notNumber
-                "This is not a number! Try again.\n" +
-                "Please select number of table you need or '0' to exit\n" +
-                "1. ttable\n" +
+                "3. ttable\n" +
+                "0. Back (go back to the menu)\n" +
+                "| id | name | age | \n" +
+                "-------------------------\n" +
+                "------------------------\n" +
+                "Type command or 'help'\n" +
+                //drop
+                "Please enter the name or select number of table you need\n" +
+                "1. somename\n" +
                 "2. test\n" +
-                "0. Exit\n" +
-                //exit
+                "3. ttable\n" +
+                "0. Back (go back to the menu)\n" +
+                //1
+                "Table somename successfully dropped\n" +
+                "Type command or 'help'\n" +
                 "See you!", out.getData().trim().replace("\r",""));
     }
 }
