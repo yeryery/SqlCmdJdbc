@@ -44,6 +44,7 @@ public class Controller {
                 try {
                     if (command.canProcess(input)) {
                         command.process(input);
+                        view.write("Type command or 'help'");
                         break;
                     }
                 } catch (Exception e) {
