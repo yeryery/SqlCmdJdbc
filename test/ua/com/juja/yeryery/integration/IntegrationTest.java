@@ -357,72 +357,6 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateAfterConnectAndDrop() {
-        //given
-        in.add("connect|yeryery|postgres|postgrespass");
-        in.add("create");
-        in.add("somename");
-        in.add("2");
-        in.add("name");
-        in.add("text");
-        in.add("age");
-        in.add("int");
-        in.add("display");
-        in.add("somename");
-        in.add("drop");
-        in.add("somename");
-        in.add("exit");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
-                //connect
-                "Success!\n" +
-                "Type command or 'help'\n" +
-                //create
-                "Please enter the name of table you want to create or 'cancel' to go back\n" +
-                //somename
-                "Please enter the number of columns of your table or '0' to go back\n" +
-                //2
-                "name of column 1\n" +
-                //name
-                "datatype of column 1\n" +
-                //text
-                "name of column 2\n" +
-                //age
-                "datatype of column 2\n" +
-                //int
-                "Your table 'somename' have successfully created!\n" +
-                "Type command or 'help'\n" +
-                //display
-                "Please enter the name or select number of table you need\n" +
-                "1. somename\n" +
-                "2. test\n" +
-                "3. ttable\n" +
-                "0. cancel (to go back)\n" +
-                //somename
-                "| id | name | age | \n" +
-                "-------------------------\n" +
-                "------------------------\n" +
-                "Type command or 'help'\n" +
-                //drop
-                "Please enter the name or select number of table you need\n" +
-                //somename
-                "1. somename\n" +
-                "2. test\n" +
-                "3. ttable\n" +
-                "0. cancel (to go back)\n" +
-                //1
-                "Table somename successfully dropped\n" +
-                "Type command or 'help'\n" +
-                //exit
-                "See you!", out.getData().trim().replace("\r",""));
-    }
-
-    @Test
     public void TestCreateAndCancel() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
@@ -604,6 +538,192 @@ public class IntegrationTest {
                 "ERROR: type \"wrongtype\" does not exist\n" +
                 "  Position: 57\n" +
                 //0
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateAfterConnectAndDrop() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("somename");
+        in.add("2");
+        in.add("name");
+        in.add("text");
+        in.add("age");
+        in.add("int");
+        in.add("display");
+        in.add("somename");
+        in.add("drop");
+        in.add("somename");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //somename
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //2
+                "name of column 1\n" +
+                //name
+                "datatype of column 1\n" +
+                //text
+                "name of column 2\n" +
+                //age
+                "datatype of column 2\n" +
+                //int
+                "Your table 'somename' have successfully created!\n" +
+                "Type command or 'help'\n" +
+                //display
+                "Please enter the name or select number of table you need\n" +
+                "1. somename\n" +
+                "2. test\n" +
+                "3. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //somename
+                "| id | name | age | \n" +
+                "-------------------------\n" +
+                "------------------------\n" +
+                "Type command or 'help'\n" +
+                //drop
+                "Please enter the name or select number of table you need\n" +
+                //somename
+                "1. somename\n" +
+                "2. test\n" +
+                "3. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //1
+                "Table somename successfully dropped\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestInsertAndCancel() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("insert");
+        in.add("cancel");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //insert
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //cancel
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestInsertWrongSql() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("insert");
+        in.add("ttable");
+        in.add("notnumber");
+        in.add("somename");
+        in.add("25");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //insert
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "Enter the values you require\n" +
+                //notnumber
+                "id\n" +
+                //somename
+                "name\n" +
+                //25
+                "age\n" +
+                "ERROR: invalid input syntax for integer: \"notnumber\"\n" +
+                "  Position: 41\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestInsert() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("insert");
+        in.add("ttable");
+        in.add("10");
+        in.add("somename");
+        in.add("25");
+        in.add("display");
+        in.add("ttable");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //insert
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "Enter the values you require\n" +
+                //10
+                "id\n" +
+                //somename
+                "name\n" +
+                //25
+                "age\n" +
+                "You have successfully entered new data!\n" +
+                "Type command or 'help'\n" +
+                //display
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "| id | name | age | \n" +
+                "-------------------------\n" +
+                "| 10 | somename | 25 | \n" +
+                "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
