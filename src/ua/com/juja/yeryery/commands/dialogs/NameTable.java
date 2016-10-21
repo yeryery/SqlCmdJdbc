@@ -7,17 +7,16 @@ public class NameTable implements Dialog {
     @Override
     public String askUser(DatabaseManager manager, View view) {
         String[] names = manager.getTableNames();
+        view.write("Please enter the name of table you want to create or type 'back' to go back");
 
         String uniqueName = "";
         while (uniqueName.equals("")) {
-            view.write("Please enter the name of table you want to create");
             String tableName = view.read();
 
-            int size = names.length;
             for (String name : names) {
                 if (tableName.equals(name)) {
-                    view.write("Table " + tableName + "already exists. Choose another name");
-                    break;
+                    view.write("Table '" + tableName + "' already exists. Try again.");
+                    tableName = "";
                 }
                 uniqueName = tableName;
             }

@@ -29,23 +29,25 @@ public class Create implements Command{
     public void process(String input) {
         String currentTableName = dialog.askUser(manager, view);
 
-        view.write("Please enter the number of columns of your table");
-        int tableSize = parseInt(view.read());
+        if (!currentTableName.equals("back")) {
+            view.write("Please enter the number of columns of your table");
+            int tableSize = parseInt(view.read());
 
-        DataSet dataTypes = new DataSet();
+            DataSet dataTypes = new DataSet();
 
-        for (int i = 0; i < tableSize; i++) {
-            view.write("column " + (i + 1));
-            String columnName = view.read();
+            for (int i = 0; i < tableSize; i++) {
+                view.write("name of column " + (i + 1));
+                String columnName = view.read();
 
-            view.write("datatype of column " + (i + 1));
-            String dataType = view.read();
+                view.write("datatype of column " + (i + 1));
+                String dataType = view.read();
 
-            dataTypes.put(columnName, dataType);
+                dataTypes.put(columnName, dataType);
+            }
+
+            manager.create(currentTableName, dataTypes);
+            view.write("Your table '" + currentTableName + "' have successfully created!");
         }
-
-        manager.create(currentTableName, dataTypes);
-        view.write("You have successfully created new data!");
     }
 }
 
