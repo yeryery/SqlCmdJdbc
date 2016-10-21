@@ -29,7 +29,7 @@ public class Create implements Command{
     public void process(String input) {
         String currentTableName = dialog.askUser(manager, view);
 
-        if (!currentTableName.equals("back")) {
+        if (!currentTableName.equals("cancel")) {
             view.write("Please enter the number of columns of your table");
             int tableSize = parseInt(view.read());
 

@@ -311,7 +311,7 @@ public class IntegrationTest {
                 "Please enter the name or select number of table you need\n" +
                 "1. test\n" +
                 "2. ttable\n" +
-                "0. Back (go back to the menu)\n" +
+                "0. cancel (to go back)\n" +
                 //select number
                 "| id | name | password | \n" +
                 "-------------------------\n" +
@@ -343,13 +343,13 @@ public class IntegrationTest {
                 "Please enter the name or select number of table you need\n" +
                 "1. test\n" +
                 "2. ttable\n" +
-                "0. Back (go back to the menu)\n" +
+                "0. cancel (to go back)\n" +
                 //-1
                 "There is no table with this number! Try again.\n" +
                 "Please enter the name or select number of table you need\n" +
                 "1. test\n" +
                 "2. ttable\n" +
-                "0. Back (go back to the menu)\n" +
+                "0. cancel (to go back)\n" +
                 //0
                 "Type command or 'help'\n" +
                 //exit
@@ -383,7 +383,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please enter the name of table you want to create\n" +
+                "Please enter the name of table you want to create or type 'cancel' to go back\n" +
                 //someName
                 "Please enter the number of columns of your table\n" +
                 //2
@@ -402,7 +402,7 @@ public class IntegrationTest {
                 "1. somename\n" +
                 "2. test\n" +
                 "3. ttable\n" +
-                "0. Back (go back to the menu)\n" +
+                "0. cancel (to go back)\n" +
                 "| id | name | age | \n" +
                 "-------------------------\n" +
                 "------------------------\n" +
@@ -412,7 +412,7 @@ public class IntegrationTest {
                 "1. somename\n" +
                 "2. test\n" +
                 "3. ttable\n" +
-                "0. Back (go back to the menu)\n" +
+                "0. cancel (to go back)\n" +
                 //1
                 "Table somename successfully dropped\n" +
                 "Type command or 'help'\n" +
