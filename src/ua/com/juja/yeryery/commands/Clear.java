@@ -34,7 +34,7 @@ public class Clear implements Command {
                 manager.clear(currentTableName);
                 view.write(String.format("Table '%s' successfully cleared!", currentTableName));
             } else {
-                view.write("Cleaning tables canceled");
+                view.write("Table cleaning canceled");
             }
         }
     }
