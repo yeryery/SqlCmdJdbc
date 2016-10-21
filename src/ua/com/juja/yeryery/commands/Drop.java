@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.commands.dialogs.ChooseTable;
+import ua.com.juja.yeryery.commands.dialogs.SelectTable;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -13,7 +13,7 @@ public class Drop implements Command {
     public Drop(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        dialog = new ChooseTable();
+        dialog = new SelectTable();
     }
 
     @Override
