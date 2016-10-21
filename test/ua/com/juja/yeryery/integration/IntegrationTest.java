@@ -238,7 +238,7 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "Error! Can`t get connection! You have entered incorrect data.\r\n" +
+                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"postgres\"\r\n" +
                 "Try again.\r\n" +
                 "See you!\r\n", out.getData());
     }
@@ -284,7 +284,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //list
-                "[ttable, test]\n" +
+                "[test, ttable]\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -313,7 +313,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //select number
-                "| id | name | password | \n" +
+                "| id | name | age | \n" +
                 "-------------------------\n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
@@ -383,9 +383,9 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please enter the name of table you want to create or type 'cancel' to go back\n" +
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //somename
-                "Please enter the number of columns of your table\n" +
+                "Please enter the number of columns of your table or '0' to go back\n" +
                 //2
                 "name of column 1\n" +
                 //name
@@ -440,7 +440,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please enter the name of table you want to create or type 'cancel' to go back\n" +
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
                 "Type command or 'help'\n" +
                 //exit
@@ -448,7 +448,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateExistingName() {
+    public void TestCreateWithExistingName() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -466,11 +466,146 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please enter the name of table you want to create or type 'cancel' to go back\n" +
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //test
                 "Table 'test' already exists. Try again.\n" +
                 //cancel
                 "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateAndCancelAfterNaming() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("somename");
+        in.add("0");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //somename
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //-1
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateWithNegativeTableSize() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("somename");
+        in.add("-1");
+        in.add("0");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //somename
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //-1
+                "Number must be positive! Try again (or type '0' to go back).\n" +
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //0
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateWithSqlErrorWhenNameisNumeric() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("111");
+        in.add("1");
+        in.add("name");
+        in.add("text");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //111
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //1
+                "name of column 1\n" +
+                //name
+                "datatype of column 1\n" +
+                //text
+                "ERROR: syntax error at or near \"111\"\n" +
+                "  Position: 14\n" +
+                //0
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateWithSqlErrorWhenDatatypeDoesntExist() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("somename");
+        in.add("1");
+        in.add("name");
+        in.add("wrongtype");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //somename
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //1
+                "name of column 1\n" +
+                //name
+                "datatype of column 1\n" +
+                //wrongtype
+                "ERROR: type \"wrongtype\" does not exist\n" +
+                "  Position: 57\n" +
+                //0
+                "Type command or 'help'\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 }

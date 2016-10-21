@@ -7,7 +7,7 @@ public class NameTable implements Dialog {
     @Override
     public String askUser(DatabaseManager manager, View view) {
         String[] names = manager.getTableNames();
-        view.write("Please enter the name of table you want to create or type 'cancel' to go back");
+        view.write("Please enter the name of table you want to create or 'cancel' to go back");
 
         String uniqueName = "";
         while (uniqueName.equals("")) {
