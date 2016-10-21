@@ -20,7 +20,7 @@ public class JdbcManager implements DatabaseManager {
                     "jdbc:postgresql://127.0.0.1:5432/" + database, username, password);
         } catch (SQLException e) {
             connection = null;
-            throw new RuntimeException("Can`t get connection! You have entered incorrect data.");
+            throw new RuntimeException(e);
         }
     }
 
@@ -72,12 +72,10 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void create(String tableName, DataSet dataSet) {
+    public void create(String tableName, DataSet dataSet) throws SQLException {
         try (Statement st = connection.createStatement()) {
             String dataTypes = getDataSetFormatted(dataSet);
             st.executeUpdate("CREATE TABLE " + tableName + "(ID INT PRIMARY KEY NOT NULL, " + dataTypes + ")");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
