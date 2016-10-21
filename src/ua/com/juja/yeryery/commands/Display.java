@@ -26,10 +26,12 @@ public class Display implements Command {
     public void process(String input) {
         String currentTableName = dialog.askUser(manager, view);
 
-        String[] tableColumns = manager.getTableColumns(currentTableName);
-        printColumnNames(tableColumns);
-        DataSet[] rows = manager.getDataContent(currentTableName);
-        printValues(rows);
+        if (!currentTableName.equals("Back")) {
+            String[] tableColumns = manager.getTableColumns(currentTableName);
+            printColumnNames(tableColumns);
+            DataSet[] rows = manager.getDataContent(currentTableName);
+            printValues(rows);
+        }
     }
 
     private void printValues(DataSet[] dataSets) {
@@ -38,8 +40,8 @@ public class Display implements Command {
             result += getStringRow(dataSet);
             result += "\n";
         }
+        result += "-------------------------";
         view.write(result.substring(0, result.length() - 1));
-        view.write("-------------------------");
     }
 
     private String getStringRow(DataSet dataSet) {
@@ -58,6 +60,6 @@ public class Display implements Command {
             result += column + " | ";
         }
         view.write(result);
-        view.write("-----------------------------");
+        view.write("-------------------------");
     }
 }
