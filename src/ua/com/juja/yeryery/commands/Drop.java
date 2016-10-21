@@ -27,5 +27,17 @@ public class Drop implements Command {
 
         manager.drop(currentTableName);
         view.write("Table " + currentTableName + " successfully dropped");
+
+        if (!currentTableName.equals("cancel")) {
+            view.write(String.format("Are you sure you want to drop table '%s'? (y/n)", currentTableName));
+            String confirm = view.read();
+
+            if (confirm.equals("y")) {
+                manager.drop(currentTableName);
+                view.write(String.format("Table '%s' successfully dropped!", currentTableName));
+            } else {
+                view.write("Cleaning tables canceled");
+            }
+        }
     }
 }
