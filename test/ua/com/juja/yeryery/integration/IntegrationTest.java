@@ -32,6 +32,7 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
                 "See you!\r\n", out.getData());
     }
 
@@ -47,6 +48,7 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //help
                 "List of commands:\r\n" +
                 "\tconnect|database|username|password\r\n" +
                 "\t\tConnect to Database\r\n" +
@@ -66,6 +68,7 @@ public class IntegrationTest {
                 "\t\tProgram exit\r\n" +
                 "\thelp\r\n" +
                 "\t\tAll commands\r\n" +
+                //exit
                 "See you!\r\n", out.getData());
     }
 
@@ -73,96 +76,6 @@ public class IntegrationTest {
     public void TestListWithoutConnect() {
         //given
         in.add("list");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "You can`t use 'list' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
-    }
-
-    @Test
-    public void TestClearWithoutConnect() {
-        //given
-        in.add("clear");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "You can`t use 'clear' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
-    }
-
-    @Test
-    public void TestCreateWithoutConnect() {
-        //given
-        in.add("create");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "You can`t use 'create' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
-    }
-
-    @Test
-    public void TestDisplayWithoutConnect() {
-        //given
-        in.add("display");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "You can`t use 'display' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
-    }
-
-    @Test
-    public void TestDropWithoutConnect() {
-        //given
-        in.add("drop");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "You can`t use 'drop' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
-    }
-
-    @Test
-    public void TestInsertWithoutConnect() {
-        //given
-        in.add("insert");
-
-        //when
-        Main.main(new String[0]);
-
-        //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "You can`t use 'insert' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n", out.getData());
-    }
-
-    @Test
-    public void TestUnknownCommandBeforeConnect() {
-        //given
-        in.add("somecomand");
         in.add("exit");
 
         //when
@@ -171,8 +84,124 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "Unknown command: somecomand!\r\n" +
+                //list
+                "You can`t use 'list' unless you are not connected.\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestClearWithoutConnect() {
+        //given
+        in.add("clear");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //clear
+                "You can`t use 'clear' unless you are not connected.\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestCreateWithoutConnect() {
+        //given
+        in.add("create");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //create
+                "You can`t use 'create' unless you are not connected.\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestDisplayWithoutConnect() {
+        //given
+        in.add("display");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //display
+                "You can`t use 'display' unless you are not connected.\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestDropWithoutConnect() {
+        //given
+        in.add("drop");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //drop
+                "You can`t use 'drop' unless you are not connected.\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestInsertWithoutConnect() {
+        //given
+        in.add("insert");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //insert
+                "You can`t use 'insert' unless you are not connected.\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //exit
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void TestUnknownCommandBeforeConnect() {
+        //given
+        in.add("someCommand");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //someCommand
+                "Unknown command: someCommand!\r\n" +
                 "Try again.\r\n" +
+                //exit
                 "See you!\r\n", out.getData());
     }
 
@@ -188,8 +217,10 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //connect|yeryery
                 "Error! Wrong number of parameters. Expected 4, and you have entered 2\r\n" +
-                "Try again\r\n" +
+                "Try again.\r\n" +
+                //exit
                 "See you!\r\n", out.getData());
     }
 
@@ -206,7 +237,7 @@ public class IntegrationTest {
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 "Error! Can`t get connection! You have entered incorrect data.\r\n" +
-                "Try again\r\n" +
+                "Try again.\r\n" +
                 "See you!\r\n", out.getData());
     }
 
@@ -214,7 +245,7 @@ public class IntegrationTest {
     public void TestUnknownCommandAfterConnect() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
-        in.add("somecomand");
+        in.add("someCommand");
         in.add("exit");
 
         //when
@@ -223,9 +254,12 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                //connect
                 "Success!\r\n" +
-                "Unknown command: somecomand!\r\n" +
+                //someCommand
+                "Unknown command: someCommand!\r\n" +
                 "Try again.\r\n" +
+                //exit
                 "See you!\r\n", out.getData());
     }
 
@@ -242,8 +276,11 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
                 "Success!\n" +
+                //list
                 "[ttable, test]\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 
@@ -298,11 +335,13 @@ public class IntegrationTest {
                 "1. ttable\n" +
                 "2. test\n" +
                 "0. Exit\n" +
+                //-1
                 "There is no table with this number! Try again.\n" +
                 "Please select number of table you need or '0' to exit\n" +
                 "1. ttable\n" +
                 "2. test\n" +
                 "0. Exit\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 
@@ -327,11 +366,13 @@ public class IntegrationTest {
                 "1. ttable\n" +
                 "2. test\n" +
                 "0. Exit\n" +
+                //notNumber
                 "This is not a number! Try again.\n" +
                 "Please select number of table you need or '0' to exit\n" +
                 "1. ttable\n" +
                 "2. test\n" +
                 "0. Exit\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 }
