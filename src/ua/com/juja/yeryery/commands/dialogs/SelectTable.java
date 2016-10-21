@@ -5,7 +5,7 @@ import ua.com.juja.yeryery.view.View;
 
 import java.util.Arrays;
 
-public class ChooseTable implements Dialog {
+public class SelectTable implements Dialog {
     @Override
     public String askUser(DatabaseManager manager, View view) {
         String[] names = manager.getTableNames();
