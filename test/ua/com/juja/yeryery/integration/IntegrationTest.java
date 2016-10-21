@@ -558,6 +558,7 @@ public class IntegrationTest {
         in.add("somename");
         in.add("drop");
         in.add("somename");
+        in.add("y");
         in.add("exit");
 
         //when
@@ -597,13 +598,14 @@ public class IntegrationTest {
                 "Type command or 'help'\n" +
                 //drop
                 "Please enter the name or select number of table you need\n" +
-                //somename
                 "1. somename\n" +
                 "2. test\n" +
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
-                //1
-                "Table somename successfully dropped\n" +
+                //somename
+                "Are you sure you want to drop table 'somename'? (y/n)\n" +
+                //y
+                "Table 'somename' successfully dropped!\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -678,7 +680,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestInsert() {
+    public void TestInsertAndClear() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
@@ -688,6 +690,9 @@ public class IntegrationTest {
         in.add("25");
         in.add("display");
         in.add("ttable");
+        in.add("clear");
+        in.add("ttable");
+        in.add("y");
         in.add("exit");
 
         //when
@@ -724,6 +729,16 @@ public class IntegrationTest {
                 "-------------------------\n" +
                 "| 10 | somename | 25 | \n" +
                 "------------------------\n" +
+                "Type command or 'help'\n" +
+                //clear
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                //y
+                "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
