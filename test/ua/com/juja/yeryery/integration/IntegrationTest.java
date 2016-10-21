@@ -357,7 +357,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateAfterConnect() {
+    public void TestCreateAfterConnectAndDrop() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -384,7 +384,7 @@ public class IntegrationTest {
                 "Type command or 'help'\n" +
                 //create
                 "Please enter the name of table you want to create or type 'cancel' to go back\n" +
-                //someName
+                //somename
                 "Please enter the number of columns of your table\n" +
                 //2
                 "name of column 1\n" +
@@ -403,18 +403,73 @@ public class IntegrationTest {
                 "2. test\n" +
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
+                //somename
                 "| id | name | age | \n" +
                 "-------------------------\n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //drop
                 "Please enter the name or select number of table you need\n" +
+                //somename
                 "1. somename\n" +
                 "2. test\n" +
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //1
                 "Table somename successfully dropped\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateAndCancel() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("cancel");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or type 'cancel' to go back\n" +
+                //cancel
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestCreateExistingName() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("create");
+        in.add("test");
+        in.add("cancel");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //create
+                "Please enter the name of table you want to create or type 'cancel' to go back\n" +
+                //test
+                "Table 'test' already exists. Try again.\n" +
+                //cancel
                 "Type command or 'help'\n" +
                 "See you!", out.getData().trim().replace("\r",""));
     }

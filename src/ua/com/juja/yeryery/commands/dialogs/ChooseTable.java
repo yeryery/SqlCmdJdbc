@@ -59,7 +59,6 @@ public class ChooseTable implements Dialog {
         return tableName;
     }
 
-
     private boolean isParsable(String read) {
         boolean parsable = true;
         try {
