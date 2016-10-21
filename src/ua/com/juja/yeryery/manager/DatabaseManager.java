@@ -17,7 +17,7 @@ public interface DatabaseManager {
 
     boolean isConnected();
 
-    void insert(String tableName, DataSet input);
+    void insert(String tableName, DataSet input) throws SQLException ;
 
     DataSet[] getDataContent(String tableName);
 }

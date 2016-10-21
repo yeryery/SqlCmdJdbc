@@ -6,6 +6,8 @@ import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.sql.SQLException;
+
 public class Insert implements Command{
 
     private View view;
@@ -27,20 +29,27 @@ public class Insert implements Command{
     public void process(String input) {
         String currentTableName = dialog.askUser(manager, view);
 
-        view.write("Enter the values you require");
-        String[] columnNames = manager.getTableColumns(currentTableName);
-        int tableSize = columnNames.length;
+        if (!currentTableName.equals("cancel")) {
+            view.write("Enter the values you require");
+            String[] columnNames = manager.getTableColumns(currentTableName);
+            int tableSize = columnNames.length;
 
-        String[] values = new String[tableSize];
-        DataSet newRow = new DataSet();
+            String[] values = new String[tableSize];
+            DataSet newRow = new DataSet();
 
-        for (int i = 0; i < tableSize; i++) {
-            view.write(columnNames[i]);
-            values[i] = view.read();
-            newRow.put(columnNames[i], values[i]);
+            for (int i = 0; i < tableSize; i++) {
+                view.write(columnNames[i]);
+                values[i] = view.read();
+                newRow.put(columnNames[i], values[i]);
+            }
+
+
+            try {
+                manager.insert(currentTableName, newRow);
+                view.write("You have successfully entered new data!");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
-
-        manager.insert(currentTableName, newRow);
-        view.write("You have successfully entered new data!");
     }
 }

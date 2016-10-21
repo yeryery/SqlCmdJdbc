@@ -94,23 +94,20 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void insert(String tableName, DataSet input) {
+    public void insert(String tableName, DataSet input) throws SQLException {
         try (Statement st = connection.createStatement()) {
             String columnNames = getColumnNamesFormatted("%s,", input);
             String values = getValuesFormatted("'%s',", input);
 
             st.executeUpdate("INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")");
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
     @Override
     public DataSet[] getDataContent(String tableName) {
         try (
-             Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
             int size = getSize(tableName);
 
             ResultSetMetaData rsmd = rs.getMetaData();
