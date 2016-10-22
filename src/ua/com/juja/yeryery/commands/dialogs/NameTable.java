@@ -8,8 +8,8 @@ public class NameTable implements Dialog {
     public String askUser(DatabaseManager manager, View view) {
         String[] names = manager.getTableNames();
         view.write("Please enter the name of table you want to create or 'cancel' to go back");
-
         String uniqueName = "";
+
         while (uniqueName.equals("")) {
             String tableName = view.read();
 

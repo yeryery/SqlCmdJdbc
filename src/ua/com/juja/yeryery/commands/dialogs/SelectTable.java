@@ -8,48 +8,41 @@ import java.util.Arrays;
 public class SelectTable implements Dialog {
     @Override
     public String askUser(DatabaseManager manager, View view) {
-        String[] names = manager.getTableNames();
-
-        int size = 0;
-        int tableNumber = -1;
-
 
         String tableName = "";
 
         while (tableName.equals("")) {
-        view.write("Please enter the name or select number of table you need");
+            String[] names = manager.getTableNames();
+            Arrays.sort(names);
+            int size = names.length;
+            view.write("Please enter the name or select number of table you need");
 
-        size = names.length;
-        Arrays.sort(names);
-        for (int i = 0; i < size; i++) {
-            view.write((i + 1) + ". " + names[i]);
-        }
-        view.write("0. cancel (to go back)");
+            for (int i = 0; i < size; i++) {
+                view.write((i + 1) + ". " + names[i]);
+            }
+            view.write("0. cancel (to go back)");
+
             String input = view.read();
 
             if (isParsable(input)) {
-                tableNumber = Integer.parseInt(input);
-                String check = "";
+                int tableNumber = Integer.parseInt(input);
+
                 if (tableNumber == 0) {
-                    check = "cancel";
-                }
-                if (tableNumber < 0 || tableNumber > size) {
+                    tableName = "cancel";
+                } else if (tableNumber > 0 && tableNumber < size) {
+                    tableName = names[tableNumber - 1];
+                } else {
                     view.write("There is no table with this number! Try again.");
                 }
-
-                for (int i = 0; i < size; i++) {
-                    if (i == tableNumber - 1) {
-                        check = names[i];
-                    }
-                }
-                tableName = check;
             } else {
                 String check = "";
+
                 for (String name : names) {
                     if (input.equals(name) || input.equals("cancel")) {
                         check = input;
                     }
                 }
+
                 if (check.equals("")) {
                     view.write("Table with name '" + input + "' doesn't exists. Try again.");
                 }

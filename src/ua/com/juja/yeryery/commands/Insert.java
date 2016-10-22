@@ -31,9 +31,9 @@ public class Insert implements Command{
 
         if (!currentTableName.equals("cancel")) {
             view.write("Enter the values you require");
+
             String[] columnNames = manager.getTableColumns(currentTableName);
             int tableSize = columnNames.length;
-
             String[] values = new String[tableSize];
             DataSet newRow = new DataSet();
 
@@ -42,7 +42,6 @@ public class Insert implements Command{
                 values[i] = view.read();
                 newRow.put(columnNames[i], values[i]);
             }
-
 
             try {
                 manager.insert(currentTableName, newRow);
