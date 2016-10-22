@@ -3,8 +3,6 @@ package ua.com.juja.yeryery.commands.dialogs;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Arrays;
-
 public class SelectTable implements Dialog {
     @Override
     public String askUser(DatabaseManager manager, View view) {
@@ -13,7 +11,6 @@ public class SelectTable implements Dialog {
 
         while (tableName.equals("")) {
             String[] names = manager.getTableNames();
-            Arrays.sort(names);
             int size = names.length;
             view.write("Please enter the name or select number of table you need");
 

@@ -437,7 +437,9 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //test
-                "Table 'test' already exists. Try again.\n" +
+                "Table with name 'test' already exists.\n" +
+                "[test, ttable]\n" +
+                "Try again.\n" +
                 //cancel
                 "Type command or 'help'\n" +
                 //exit

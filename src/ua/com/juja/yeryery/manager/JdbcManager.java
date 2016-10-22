@@ -36,6 +36,7 @@ public class JdbcManager implements DatabaseManager {
                 tableNames[index++] = resultSet.getString("table_name");
             }
             tableNames = Arrays.copyOf(tableNames, index, String[].class);
+            Arrays.sort(tableNames);
             return tableNames;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
