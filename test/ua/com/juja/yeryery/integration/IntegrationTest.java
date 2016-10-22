@@ -291,11 +291,11 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDisplayAfterConnect() {
+    public void TestDisplayAndSelectNumberOfTable() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("display");
-        in.add("2");
+        in.add("1");
         in.add("exit");
 
         //when
@@ -312,9 +312,44 @@ public class IntegrationTest {
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
-                //select number
-                "| id | name | age | \n" +
+                //select table number 1
+                "| id | login | password | \n" +
                 "-------------------------\n" +
+                "| 12 | username1 | pass1 | \n" +
+                "| 22 | username2 | pass2 | \n" +
+                "------------------------\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestDisplayAndSelectTablename() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("display");
+        in.add("test");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //display
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //select test
+                "| id | login | password | \n" +
+                "-------------------------\n" +
+                "| 12 | username1 | pass1 | \n" +
+                "| 22 | username2 | pass2 | \n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -739,6 +774,62 @@ public class IntegrationTest {
                 "Are you sure you want to clear table 'ttable'? (y/n)\n" +
                 //y
                 "Table 'ttable' successfully cleared!\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestDropAndCancel() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("drop");
+        in.add("cancel");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //drop
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //cancel
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void TestDropAndSelectNull() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("drop");
+        in.add("0");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //drop
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //0
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
