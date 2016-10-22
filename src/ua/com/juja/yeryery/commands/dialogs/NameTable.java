@@ -1,14 +1,12 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
-import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.Arrays;
 
 public class NameTable implements Dialog {
     @Override
-    public String askUser(DatabaseManager manager, View view) {
-        String[] names = manager.getTableNames();
+    public String askUser(String[] names, View view) {
         view.write("Please enter the name of table you want to create or 'cancel' to go back");
         String uniqueName = "";
 

@@ -27,7 +27,8 @@ public class Insert implements Command{
 
     @Override
     public void process(String input) {
-        String currentTableName = dialog.askUser(manager, view);
+        String[] names = manager.getTableNames();
+        String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
             view.write("Enter the values you require");

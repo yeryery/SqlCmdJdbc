@@ -23,7 +23,8 @@ public class Drop implements Command {
 
     @Override
     public void process(String input) {
-        String currentTableName = dialog.askUser(manager, view);
+        String[] names = manager.getTableNames();
+        String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
             view.write(String.format("Are you sure you want to drop table '%s'? (y/n)", currentTableName));

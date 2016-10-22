@@ -24,7 +24,8 @@ public class Display implements Command {
 
     @Override
     public void process(String input) {
-        String currentTableName = dialog.askUser(manager, view);
+        String[] names = manager.getTableNames();
+        String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
             String[] tableColumns = manager.getTableColumns(currentTableName);

@@ -29,7 +29,8 @@ public class Create implements Command {
 
     @Override
     public void process(String input) {
-        String currentTableName = dialog.askUser(manager, view);
+        String[] names = manager.getTableNames();
+        String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
             int tableSize = -1;
