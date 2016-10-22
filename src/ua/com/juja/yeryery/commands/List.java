@@ -23,6 +23,7 @@ public class List implements Command {
     @Override
     public void process(String input) {
         String[] tableNames = manager.getTableNames();
+        Arrays.sort(tableNames);
         view.write(Arrays.toString(tableNames));
     }
 }
