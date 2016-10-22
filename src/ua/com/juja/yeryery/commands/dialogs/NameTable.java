@@ -3,6 +3,8 @@ package ua.com.juja.yeryery.commands.dialogs;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+
 public class NameTable implements Dialog {
     @Override
     public String askUser(DatabaseManager manager, View view) {
@@ -15,7 +17,9 @@ public class NameTable implements Dialog {
 
             for (String name : names) {
                 if (tableName.equals(name)) {
-                    view.write("Table '" + tableName + "' already exists. Try again.");
+                    view.write("Table with name '" + tableName + "' already exists.");
+                    view.write(Arrays.toString(names));
+                    view.write("Try again.");
                     tableName = "";
                 }
                 uniqueName = tableName;
