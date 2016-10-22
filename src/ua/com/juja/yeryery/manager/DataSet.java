@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class DataSet {
 
-    public Data[] data = new Data[100];
-    public int index = 0;
+    private Data[] data = new Data[100];
+    private int index = 0;
 
     static class Data {
         private String columnName;
