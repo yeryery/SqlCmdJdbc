@@ -23,7 +23,7 @@ public class SelectTable implements Dialog {
 
                 if (tableNumber == 0) {
                     tableName = "cancel";
-                } else if (tableNumber > 0 && tableNumber < size) {
+                } else if (tableNumber > 0 && tableNumber <= size) {
                     tableName = names[tableNumber - 1];
                 } else {
                     view.write("There is no table with this number! Try again.");
