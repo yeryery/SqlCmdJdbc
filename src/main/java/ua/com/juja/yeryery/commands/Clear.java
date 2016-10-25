@@ -47,6 +47,5 @@ public class Clear implements Command {
                 confirm = "";
             }
         } while (confirm.equals("n"));
-
     }
 }

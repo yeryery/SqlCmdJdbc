@@ -7,6 +7,8 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ClearTest {
@@ -120,5 +122,23 @@ public class ClearTest {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeastOnce()).write(captor.capture());
         assertEquals(expected, captor.getAllValues().toString());
+    }
+
+    @Test
+    public void TestCanProcessList() {
+        //when
+        boolean canProcess = command.canProcess("clear");
+
+        //then
+        assertTrue(canProcess);
+    }
+
+    @Test
+    public void TestCantProcessWrongInput() {
+        //when
+        boolean canProcess = command.canProcess("wrong");
+
+        //then
+        assertFalse(canProcess);
     }
 }
