@@ -24,18 +24,27 @@ public class Drop implements Command {
     @Override
     public void process(String input) {
         String[] names = manager.getTableNames();
-        String currentTableName = dialog.askUser(names, view);
+        String confirm = "";
 
-        if (!currentTableName.equals("cancel")) {
-            view.write(String.format("Are you sure you want to drop table '%s'? (y/n)", currentTableName));
-            String confirm = view.read();
+        do {
+            String currentTableName = dialog.askUser(names, view);
 
-            if (confirm.equals("y")) {
-                manager.drop(currentTableName);
-                view.write(String.format("Table '%s' successfully dropped!", currentTableName));
+            if (!currentTableName.equals("cancel")) {
+                while (!confirm.equals("y") && !confirm.equals("n")) {
+                    view.write(String.format("Are you sure you want to drop table '%s'? (y/n)", currentTableName));
+                    confirm = view.read();
+
+                    if (confirm.equals("y")) {
+                        manager.drop(currentTableName);
+                        view.write(String.format("Table '%s' successfully dropped!", currentTableName));
+                    } else if (confirm.equals("n")){
+                        view.write("The dropping of table '" + currentTableName + "' is cancelled");
+                    }
+                }
             } else {
                 view.write("Table dropping canceled");
+                confirm = "";
             }
-        }
+        } while (confirm.equals("n"));
     }
 }
