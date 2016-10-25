@@ -48,7 +48,7 @@ public class Insert implements Command{
                 manager.insert(currentTableName, newRow);
                 view.write("You have successfully entered new data!");
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                view.write(e.getMessage());
             }
         }
     }

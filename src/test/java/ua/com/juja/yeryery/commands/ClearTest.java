@@ -125,7 +125,7 @@ public class ClearTest {
     }
 
     @Test
-    public void TestCanProcessList() {
+    public void testCanProcessList() {
         //when
         boolean canProcess = command.canProcess("clear");
 
@@ -134,7 +134,7 @@ public class ClearTest {
     }
 
     @Test
-    public void TestCantProcessWrongInput() {
+    public void testCantProcessWrongInput() {
         //when
         boolean canProcess = command.canProcess("wrong");
 

@@ -23,7 +23,7 @@ public class ListTest {
     }
 
     @Test
-    public void TestList() {
+    public void testList() {
         //given
         String[] tableNames = new String[] {"test", "ttable"};
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -36,7 +36,7 @@ public class ListTest {
     }
 
     @Test
-    public void TestCanProcessList() {
+    public void testCanProcessList() {
         //when
         boolean canProcess = command.canProcess("list");
 
@@ -45,7 +45,7 @@ public class ListTest {
     }
 
     @Test
-    public void TestCantProcessWrongInput() {
+    public void testCantProcessWrongInput() {
         //when
         boolean canProcess = command.canProcess("wrong");
 
