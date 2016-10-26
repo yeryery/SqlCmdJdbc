@@ -470,7 +470,8 @@ public class IntegrationTest {
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //somename
                 "Please enter the number of columns of your table or '0' to go back\n" +
-                //-1
+                //0
+                "The creating of table 'somename' is cancelled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -503,6 +504,7 @@ public class IntegrationTest {
                 "Number must be positive! Try again (or type '0' to go back).\n" +
                 "Please enter the number of columns of your table or '0' to go back\n" +
                 //0
+                "The creating of table 'somename' is cancelled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));

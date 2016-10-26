@@ -66,6 +66,8 @@ public class Create implements Command {
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 }
+            } else {
+                view.write("The creating of table '" + currentTableName + "' is cancelled");
             }
         } else {
             view.write("Table creating canceled");
