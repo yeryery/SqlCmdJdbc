@@ -7,8 +7,6 @@ import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.sql.SQLException;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -26,7 +24,7 @@ public class InsertTest {
     }
 
     @Test
-    public void testInsertSelectTableAndConfirm() throws SQLException {
+    public void testInsertSelectTableAndConfirm() {
         //given
 
         String[] tableNames = new String[] {"test", "ttable"};
@@ -80,7 +78,7 @@ public class InsertTest {
                 "2. table, " +
                 "0. cancel (to go back), " +
                 //Select 0
-                "Table clearing canceled]");
+                "Table inserting canceled]");
     }
 
     @Test
@@ -99,7 +97,7 @@ public class InsertTest {
                 "2. table, " +
                 "0. cancel (to go back), " +
                 //Cancel
-                "Table clearing canceled]");
+                "Table inserting canceled]");
     }
 
     private void shouldPrint(String expected) {

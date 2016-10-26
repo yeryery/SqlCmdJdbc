@@ -51,7 +51,7 @@ public class Insert implements Command {
                 view.write(e.getMessage());
             }
         } else {
-            view.write("Table clearing canceled");
+            view.write("Table inserting canceled");
         }
     }
 }

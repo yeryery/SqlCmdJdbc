@@ -43,7 +43,6 @@ public class Create implements Command {
                     }
                 } catch (NumberFormatException e) {
                     view.write("This is not number! Try again (or type '0' to go back).");
-
                 }
             }
             while (tableSize < 0);
@@ -68,6 +67,8 @@ public class Create implements Command {
                     System.out.println(e.getMessage());
                 }
             }
+        } else {
+            view.write("Table creating canceled");
         }
     }
 }

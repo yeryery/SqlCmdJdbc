@@ -411,6 +411,7 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
+                "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -441,6 +442,7 @@ public class IntegrationTest {
                 "[test, ttable]\n" +
                 "Try again.\n" +
                 //cancel
+                "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -671,7 +673,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table clearing canceled\n" +
+                "Table inserting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
