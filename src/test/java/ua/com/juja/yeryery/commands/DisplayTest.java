@@ -27,7 +27,7 @@ public class DisplayTest {
     public void TestPrintTableDataSelectNumberOfTable() {
         //given
 
-        String[] tableNames = new String[] {"test", "table"};
+        String[] tableNames = new String[] {"test", "ttable"};
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1");
         when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
@@ -51,7 +51,7 @@ public class DisplayTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "| id | name | password | , " +
@@ -65,7 +65,7 @@ public class DisplayTest {
     public void TestPrintTableDataTypeTableName() {
         //given
 
-        String[] tableNames = new String[] {"test", "table"};
+        String[] tableNames = new String[] {"test", "ttable"};
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("test");
         when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
@@ -89,7 +89,7 @@ public class DisplayTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "| id | name | password | , " +
@@ -103,7 +103,7 @@ public class DisplayTest {
     public void TestPrintEmptyTableData() {
         //given
 
-        String[] tableNames = new String[] {"test", "table"};
+        String[] tableNames = new String[] {"test", "ttable"};
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("test");
         when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
@@ -119,7 +119,7 @@ public class DisplayTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 "| id | name | password | , " +
                 "-------------------------, " +
@@ -131,7 +131,7 @@ public class DisplayTest {
     public void TestSelectCancel() {
         //given
 
-        String[] tableNames = new String[] {"test", "table"};
+        String[] tableNames = new String[] {"test", "ttable"};
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
@@ -141,7 +141,7 @@ public class DisplayTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //cancel
     }
