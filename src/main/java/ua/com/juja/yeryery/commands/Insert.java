@@ -8,7 +8,7 @@ import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
 
-public class Insert implements Command{
+public class Insert implements Command {
 
     private View view;
     private DatabaseManager manager;
@@ -50,6 +50,8 @@ public class Insert implements Command{
             } catch (SQLException e) {
                 view.write(e.getMessage());
             }
+        } else {
+            view.write("Table clearing canceled");
         }
     }
 }
