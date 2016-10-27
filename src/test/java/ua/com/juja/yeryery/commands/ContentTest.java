@@ -13,7 +13,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class ListTest {
+public class ContentTest {
 
     private DatabaseManager manager;
     private View view;
@@ -23,7 +23,7 @@ public class ListTest {
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new List(view, manager);
+        command = new Content(view, manager);
     }
 
     @Test

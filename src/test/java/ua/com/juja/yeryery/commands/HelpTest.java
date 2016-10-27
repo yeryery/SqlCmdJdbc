@@ -39,11 +39,11 @@ public class HelpTest {
         command.process("help");
 
         //then
-        assertEquals("List of commands:\n" +
+        assertEquals("Content of commands:\n" +
                       "\tconnect|database|username|password\n" +
                       "\t\tConnect to Database\n" +
                       "\tlist\n" +
-                      "\t\tList of tables\n" +
+                      "\t\tContent of tables\n" +
                       "\tcreate\n" +
                       "\t\tCreate new table\n" +
                       "\tdisplay\n" +

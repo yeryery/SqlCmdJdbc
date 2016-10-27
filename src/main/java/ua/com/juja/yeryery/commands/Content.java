@@ -5,12 +5,12 @@ import ua.com.juja.yeryery.view.View;
 
 import java.util.Set;
 
-public class List implements Command {
+public class Content implements Command {
 
     private View view;
     private DatabaseManager manager;
 
-    public List(View view, DatabaseManager manager) {
+    public Content(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }

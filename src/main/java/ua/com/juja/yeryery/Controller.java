@@ -17,7 +17,7 @@ public class Controller {
                                        new Clear(view, manager),
                                        new Create(view, manager),
                                        new Drop(view, manager),
-                                       new List(view, manager),
+                                       new Content(view, manager),
                                        new Insert(view, manager),
                                        new Display(view, manager),
                                        new Update(view, manager),

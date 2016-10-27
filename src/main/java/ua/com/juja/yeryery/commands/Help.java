@@ -17,13 +17,13 @@ public class Help implements Command {
 
     @Override
     public void process(String input) {
-        view.write("List of commands:");
+        view.write("Content of commands:");
 
         view.write("\tconnect|database|username|password");
         view.write("\t\tConnect to Database");
 
         view.write("\tlist");
-        view.write("\t\tList of tables");
+        view.write("\t\tContent of tables");
 
         view.write("\tcreate");
         view.write("\t\tCreate new table");
