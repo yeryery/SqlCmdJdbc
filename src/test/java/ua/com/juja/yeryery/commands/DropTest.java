@@ -6,6 +6,10 @@ import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -25,8 +29,7 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndConfirm() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("y").thenReturn("0");
 
@@ -36,7 +39,7 @@ public class DropTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to drop table 'test'? (y/n), " +
@@ -47,8 +50,7 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndDontConfirm() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("n").thenReturn("0");
 
@@ -58,7 +60,7 @@ public class DropTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to drop table 'test'? (y/n), " +
@@ -66,7 +68,7 @@ public class DropTest {
                 "The dropping of table 'test' is cancelled, " +
                 "Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //cancel
                 "Table dropping canceled]");
@@ -75,8 +77,7 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndNeitherInput() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("neither").thenReturn("y");
 
@@ -86,7 +87,7 @@ public class DropTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to drop table 'test'? (y/n), " +
@@ -99,8 +100,7 @@ public class DropTest {
     @Test
     public void testDropAndCancel() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("0");
 
@@ -110,7 +110,7 @@ public class DropTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select cancel
                 "Table dropping canceled]");

@@ -7,6 +7,7 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 import static java.lang.Integer.parseInt;
 
@@ -29,7 +30,7 @@ public class Create implements Command {
 
     @Override
     public void process(String input) {
-        String[] names = manager.getTableNames();
+        Set<String> names = manager.getTableNames();
         String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {

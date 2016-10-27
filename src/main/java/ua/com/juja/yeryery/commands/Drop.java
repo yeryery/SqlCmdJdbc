@@ -5,6 +5,8 @@ import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Set;
+
 public class Drop implements Command {
     private View view;
     private DatabaseManager manager;
@@ -23,7 +25,7 @@ public class Drop implements Command {
 
     @Override
     public void process(String input) {
-        String[] names = manager.getTableNames();
+        Set<String> names = manager.getTableNames();
         String confirm = "";
 
         do {

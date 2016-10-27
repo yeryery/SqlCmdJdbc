@@ -22,7 +22,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestExit() {
+    public void testExit() {
         //given
         in.add("exit");
 
@@ -37,7 +37,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestHelp() {
+    public void testHelp() {
         //given
         in.add("help");
         in.add("exit");
@@ -74,7 +74,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestListWithoutConnect() {
+    public void testListWithoutConnect() {
         //given
         in.add("list");
         in.add("exit");
@@ -93,7 +93,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestClearWithoutConnect() {
+    public void testClearWithoutConnect() {
         //given
         in.add("clear");
         in.add("exit");
@@ -112,7 +112,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateWithoutConnect() {
+    public void testCreateWithoutConnect() {
         //given
         in.add("create");
         in.add("exit");
@@ -131,7 +131,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDisplayWithoutConnect() {
+    public void testDisplayWithoutConnect() {
         //given
         in.add("display");
         in.add("exit");
@@ -150,7 +150,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDropWithoutConnect() {
+    public void testDropWithoutConnect() {
         //given
         in.add("drop");
         in.add("exit");
@@ -169,7 +169,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestInsertWithoutConnect() {
+    public void testInsertWithoutConnect() {
         //given
         in.add("insert");
         in.add("exit");
@@ -188,7 +188,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestUnknownCommandBeforeConnect() {
+    public void testUnknownCommandBeforeConnect() {
         //given
         in.add("someCommand");
         in.add("exit");
@@ -208,7 +208,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestConnectWithWrongNumberOfParameters() {
+    public void testConnectWithWrongNumberOfParameters() {
         //given
         in.add("connect|yeryery");
         in.add("exit");
@@ -227,7 +227,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestConnectWithWrongParameter() {
+    public void testConnectWithWrongParameter() {
         //given
         in.add("connect|yeryery|postgres|wrongpass");
         in.add("exit");
@@ -244,7 +244,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestUnknownCommandAfterConnect() {
+    public void testUnknownCommandAfterConnect() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("someCommand");
@@ -268,7 +268,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestListAfterConnect() {
+    public void testListAfterConnect() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("list");
@@ -291,7 +291,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDisplayAndSelectNumberOfTable() {
+    public void testDisplayAndSelectNumberOfTable() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("display");
@@ -324,7 +324,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDisplayAndSelectTablename() {
+    public void testDisplayAndSelectTablename() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("display");
@@ -357,7 +357,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDisplayChooseWrongNumber() {
+    public void testDisplayChooseWrongNumber() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("display");
@@ -392,7 +392,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateAndCancel() {
+    public void testCreateAndCancel() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -418,7 +418,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateWithExistingName() {
+    public void testCreateWithExistingName() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -449,7 +449,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateAndCancelAfterNaming() {
+    public void testCreateAndCancelAfterNaming() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -478,7 +478,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateWithNegativeTableSize() {
+    public void testCreateWithNegativeTableSize() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -511,7 +511,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateWithSqlErrorWhenNameisNumeric() {
+    public void testCreateWithSqlErrorWhenNameisNumeric() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -548,7 +548,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateWithSqlErrorWhenDatatypeDoesntExist() {
+    public void testCreateWithSqlErrorWhenDatatypeDoesntExist() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -585,7 +585,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestCreateAfterConnectAndDrop() {
+    public void testCreateAfterConnectAndDrop() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
@@ -653,7 +653,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestInsertAndCancel() {
+    public void testInsertAndCancel() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
@@ -682,7 +682,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestInsertWrongSql() {
+    public void testInsertWrongSql() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
@@ -722,7 +722,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestInsertAndClear() {
+    public void testInsertAndClear() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
@@ -787,7 +787,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDropAndCancel() {
+    public void testDropAndCancel() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("drop");
@@ -816,7 +816,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void TestDropAndSelectNull() {
+    public void testDropAndSelectNull() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("drop");

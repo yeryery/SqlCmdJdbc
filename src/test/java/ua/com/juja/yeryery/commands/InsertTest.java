@@ -7,6 +7,10 @@ import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -26,8 +30,7 @@ public class InsertTest {
     @Test
     public void testInsertSelectTableAndConfirm() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(manager.getTableColumns("ttable")).thenReturn(new String[] {"id", "name", "password"});
 
@@ -65,8 +68,7 @@ public class InsertTest {
     @Test
     public void testInsertAndSelectZero() {
         //given
-
-        String[] tableNames = new String[] {"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("0");
 
@@ -75,7 +77,7 @@ public class InsertTest {
 
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select 0
                 "Table inserting canceled]");
@@ -84,8 +86,7 @@ public class InsertTest {
     @Test
     public void testInsertAndCancel() {
         //given
-
-        String[] tableNames = new String[] {"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
@@ -94,7 +95,7 @@ public class InsertTest {
 
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Cancel
                 "Table inserting canceled]");

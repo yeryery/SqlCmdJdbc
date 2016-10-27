@@ -20,6 +20,7 @@ public class Controller {
                                        new List(view, manager),
                                        new Insert(view, manager),
                                        new Display(view, manager),
+                                       new Update(view, manager),
                                        new Exit(view),
                                        new Help(view),
                                        new Unknown(view)};

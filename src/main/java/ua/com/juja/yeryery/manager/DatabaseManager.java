@@ -1,11 +1,12 @@
 package ua.com.juja.yeryery.manager;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 public interface DatabaseManager {
     void connect(String database, String username, String password);
 
-    String[] getTableNames();
+    Set<String> getTableNames();
 
     String[] getTableColumns(String tableName);
 
@@ -18,6 +19,8 @@ public interface DatabaseManager {
     boolean isConnected();
 
     void insert(String tableName, DataSet input) throws SQLException ;
+
+    void update(String tableName, DataSet input, int id) throws SQLException;
 
     DataSet[] getDataContent(String tableName);
 }

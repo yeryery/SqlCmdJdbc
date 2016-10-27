@@ -5,6 +5,10 @@ import ua.com.juja.yeryery.view.View;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -25,7 +29,7 @@ public class ListTest {
     @Test
     public void testList() {
         //given
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
 
         //when

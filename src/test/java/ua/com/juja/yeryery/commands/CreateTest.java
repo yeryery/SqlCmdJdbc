@@ -6,6 +6,10 @@ import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -25,8 +29,7 @@ public class CreateTest {
     @Test
     public void testCreate() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
@@ -50,8 +53,7 @@ public class CreateTest {
     @Test
     public void testCreateAndCancel() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
@@ -65,8 +67,7 @@ public class CreateTest {
     @Test
     public void testCreateAndNegativeNumberOfColumns() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("-1")
@@ -94,8 +95,7 @@ public class CreateTest {
     @Test
     public void testCreateAndNotNumberOfColumns() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("notNumber")
@@ -123,8 +123,7 @@ public class CreateTest {
     @Test
     public void testCreateEnterTableNameAndCancel() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("0");
@@ -142,8 +141,7 @@ public class CreateTest {
     @Test
     public void testCreateEnterTableNameNegativeNumberAndCancel() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("-1")
@@ -165,8 +163,7 @@ public class CreateTest {
     @Test
     public void testCreateEnterTableNameNotNumberOfColumnsAndCancel() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("notNumber")

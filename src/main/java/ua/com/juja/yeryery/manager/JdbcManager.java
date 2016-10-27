@@ -2,6 +2,8 @@ package ua.com.juja.yeryery.manager;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class JdbcManager implements DatabaseManager {
 
@@ -25,22 +27,19 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public String[] getTableNames() {
+    public Set<String> getTableNames() {
+        Set<String> tableNames = new TreeSet<String>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(
-                     "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")) {
-            String[] tableNames = new String[100];
-            int index = 0;
-
+                     "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'"))
+        {
             while (resultSet.next()) {
-                tableNames[index++] = resultSet.getString("table_name");
+                tableNames.add(resultSet.getString("table_name"));
             }
-            tableNames = Arrays.copyOf(tableNames, index, String[].class);
-            Arrays.sort(tableNames);
             return tableNames;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return new String[0];
+            return tableNames;
         }
     }
 
@@ -101,6 +100,21 @@ public class JdbcManager implements DatabaseManager {
             String values = getValuesFormatted("'%s',", input);
 
             st.executeUpdate("INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")");
+        }
+    }
+
+    @Override
+    public void update(String tableName, DataSet input, int id) throws SQLException {
+        String columnNames = getColumnNamesFormatted("%s=?,", input);
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE " + tableName + " SET " + columnNames + " WHERE ID = ?")) {
+            int sqlIndex = 1;
+            Object[] newValues = input.getValues();
+            for (Object newValue : newValues) {
+                ps.setObject(sqlIndex, newValue);
+                sqlIndex++;
+            }
+            ps.setInt(sqlIndex, id);
+            ps.executeUpdate();
         }
     }
 

@@ -5,6 +5,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -20,9 +24,9 @@ public class SelectTableTest {
     }
 
     @Test
-    public void TestSelectTableByNumber() {
+    public void testSelectTableByNumber() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("1");
 
         //when
@@ -31,16 +35,16 @@ public class SelectTableTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //1
         assertEquals("test", actual);
     }
 
     @Test
-    public void TestSelectTableByName() {
+    public void testSelectTableByName() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("test");
 
         //when
@@ -49,16 +53,16 @@ public class SelectTableTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //test
         assertEquals("test", actual);
     }
 
     @Test
-    public void TestSelectCancel() {
+    public void testSelectCancel() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("cancel");
 
         //when
@@ -67,16 +71,16 @@ public class SelectTableTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //cancel
         assertEquals("cancel", actual);
     }
 
     @Test
-    public void TestSelectZero() {
+    public void testSelectZero() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("0");
 
         //when
@@ -85,16 +89,16 @@ public class SelectTableTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //0
         assertEquals("cancel", actual);
     }
 
     @Test
-    public void TestSelectNotExistTable() {
+    public void testSelectNotExistTable() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("notExist").thenReturn("cancel");
 
         //when
@@ -103,22 +107,22 @@ public class SelectTableTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExist
                 "Table with name 'notExist' doesn't exists. Try again., " +
                 "Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //cancel
         assertEquals("cancel", actual);
     }
 
     @Test
-    public void TestSelectOutOfBoundsTableNumber() {
+    public void testSelectOutOfBoundsTableNumber() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("3").thenReturn("cancel");
 
         //when
@@ -127,13 +131,13 @@ public class SelectTableTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExist
                 "There is no table with this number! Try again., " +
                 "Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back)]");
                 //cancel
         assertEquals("cancel", actual);

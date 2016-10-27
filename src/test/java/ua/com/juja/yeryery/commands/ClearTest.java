@@ -6,9 +6,11 @@ import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ClearTest {
@@ -27,8 +29,7 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndConfirm() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("y").thenReturn("0");
 
@@ -38,7 +39,7 @@ public class ClearTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to clear table 'test'? (y/n), " +
@@ -49,8 +50,7 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndDontConfirm() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("n").thenReturn("0");
 
@@ -60,7 +60,7 @@ public class ClearTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to clear table 'test'? (y/n), " +
@@ -68,7 +68,7 @@ public class ClearTest {
                 "The clearing of table 'test' is cancelled, " +
                 "Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //cancel
                 "Table clearing canceled]");
@@ -77,8 +77,7 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndNeitherInput() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("neither").thenReturn("y");
 
@@ -88,7 +87,7 @@ public class ClearTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to clear table 'test'? (y/n), " +
@@ -101,8 +100,7 @@ public class ClearTest {
     @Test
     public void testClearAndCancel() {
         //given
-
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("0");
 
@@ -112,7 +110,7 @@ public class ClearTest {
         //then
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
-                "2. table, " +
+                "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select cancel
                 "Table clearing canceled]");

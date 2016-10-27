@@ -7,6 +7,10 @@ import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -24,10 +28,9 @@ public class DisplayTest {
     }
 
     @Test
-    public void TestPrintTableDataSelectNumberOfTable() {
+    public void testPrintTableDataSelectNumberOfTable() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1");
         when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
@@ -62,10 +65,9 @@ public class DisplayTest {
     }
 
     @Test
-    public void TestPrintTableDataTypeTableName() {
+    public void testPrintTableDataTypeTableName() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("test");
         when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
@@ -100,10 +102,9 @@ public class DisplayTest {
     }
 
     @Test
-    public void TestPrintEmptyTableData() {
+    public void testPrintEmptyTableData() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("test");
         when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
@@ -128,10 +129,9 @@ public class DisplayTest {
     }
 
     @Test
-    public void TestSelectCancel() {
+    public void testSelectCancel() {
         //given
-
-        String[] tableNames = new String[] {"test", "ttable"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
@@ -153,7 +153,7 @@ public class DisplayTest {
     }
 
     @Test
-    public void TestCanProcessDisplay() {
+    public void testCanProcessDisplay() {
         //when
         boolean canProcess = command.canProcess("display");
 
@@ -162,7 +162,7 @@ public class DisplayTest {
     }
 
     @Test
-    public void TestCantProcessWrongInput() {
+    public void testCantProcessWrongInput() {
         //when
         boolean canProcess = command.canProcess("wrong");
 

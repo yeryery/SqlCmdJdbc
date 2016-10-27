@@ -6,6 +6,8 @@ import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Set;
+
 public class Display implements Command {
     private View view;
     private DatabaseManager manager;
@@ -24,7 +26,7 @@ public class Display implements Command {
 
     @Override
     public void process(String input) {
-        String[] names = manager.getTableNames();
+        Set<String> names = manager.getTableNames();
         String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {

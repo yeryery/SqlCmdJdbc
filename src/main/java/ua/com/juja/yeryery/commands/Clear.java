@@ -5,6 +5,8 @@ import ua.com.juja.yeryery.commands.dialogs.SelectTable;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Set;
+
 public class Clear implements Command {
 
     private View view;
@@ -24,7 +26,7 @@ public class Clear implements Command {
 
     @Override
     public void process(String input) {
-        String[] names = manager.getTableNames();
+        Set<String> names = manager.getTableNames();
         String confirm = "";
 
         do {

@@ -5,6 +5,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -22,7 +26,7 @@ public class NameTableTest {
     @Test
     public void testNameTableWithOriginalName() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("myTable");
 
         //when
@@ -37,7 +41,7 @@ public class NameTableTest {
     @Test
     public void testNameTableWithExistingName() {
         //given
-        String[] tableNames = new String[]{"test", "table"};
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("test").thenReturn("myTable");
 
         //when
@@ -47,7 +51,7 @@ public class NameTableTest {
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                     //test
                     "Table with name 'test' already exists., " +
-                    "[test, table], " +
+                    "[test, ttable], " +
                     "Try again.]");
                     //myTable
         assertEquals("myTable", actual);
