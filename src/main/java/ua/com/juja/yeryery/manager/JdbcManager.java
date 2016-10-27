@@ -103,7 +103,7 @@ public class JdbcManager implements DatabaseManager {
         String columnNames = getColumnNamesFormatted("%s=?,", input);
         try (PreparedStatement ps = connection.prepareStatement("UPDATE " + tableName + " SET " + columnNames + " WHERE ID = ?")) {
             int sqlIndex = 1;
-            Object[] newValues = input.getValues();
+            List<Object> newValues = input.getValues();
             for (Object newValue : newValues) {
                 ps.setObject(sqlIndex, newValue);
                 sqlIndex++;
@@ -137,7 +137,7 @@ public class JdbcManager implements DatabaseManager {
 
     private String getColumnNamesFormatted(String format, DataSet input) {
         String result = "";
-        String[] columnNames = input.getColumnNames();
+        Set<String> columnNames = input.getColumnNames();
         for (String columnName : columnNames) {
             result += String.format(format, columnName);
         }
@@ -146,7 +146,7 @@ public class JdbcManager implements DatabaseManager {
 
     private String getValuesFormatted(String format, DataSet input) {
         String result = "";
-        Object[] values = input.getValues();
+        List<Object> values = input.getValues();
         for (Object value : values) {
             result += String.format(format, value);
         }
@@ -155,11 +155,12 @@ public class JdbcManager implements DatabaseManager {
 
     private String getDataSetFormatted(DataSet input) {
         String result = "";
-        String[] columnNames = input.getColumnNames();
-        Object[] values = input.getValues();
-        for (int i = 0; i < columnNames.length; i++) {
-            result += columnNames[i] + " ";
-            result += values[i] + ",";
+        Set<String> columnNames = input.getColumnNames();
+        List<Object> values = input.getValues();
+
+        for (String columnName : columnNames) {
+            result += columnName + " ";
+            result += input.get(columnName) + ",";
         }
         return result.substring(0, result.length() - 1);
     }

@@ -49,7 +49,7 @@ public class Display implements Command {
     }
 
     private String getStringRow(DataSet dataSet) {
-        Object[] values = dataSet.getValues();
+        List<Object> values = dataSet.getValues();
 
         String result = "| ";
         for (Object value : values) {

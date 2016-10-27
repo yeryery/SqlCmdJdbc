@@ -38,9 +38,9 @@ public class InsertTest {
         user.put("name", "username1");
         user.put("password", "pass1");
         when(view.read()).thenReturn("2")
-                         .thenReturn(user.getValues()[0].toString())
-                         .thenReturn(user.getValues()[1].toString())
-                         .thenReturn(user.getValues()[2].toString());
+                         .thenReturn(user.getValues().get(0).toString())
+                         .thenReturn(user.getValues().get(1).toString())
+                         .thenReturn(user.getValues().get(2).toString());
 
         List<DataSet> dataSets = new LinkedList<DataSet>();
         dataSets.add(user);
