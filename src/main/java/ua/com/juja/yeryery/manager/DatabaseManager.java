@@ -1,6 +1,7 @@
 package ua.com.juja.yeryery.manager;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 public interface DatabaseManager {
@@ -22,5 +23,5 @@ public interface DatabaseManager {
 
     void update(String tableName, DataSet input, int id) throws SQLException;
 
-    DataSet[] getDataContent(String tableName);
+    List<DataSet> getDataContent(String tableName);
 }

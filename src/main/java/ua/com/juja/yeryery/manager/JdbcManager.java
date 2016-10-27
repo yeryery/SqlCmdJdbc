@@ -114,17 +114,16 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public DataSet[] getDataContent(String tableName) {
+    public List<DataSet> getDataContent(String tableName) {
+        List<DataSet> result = new LinkedList<DataSet>();
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
-            int size = getSize(tableName);
 
             ResultSetMetaData rsmd = rs.getMetaData();
-            DataSet[] result = new DataSet[size];
             int index = 0;
             while (rs.next()) {
-                DataSet dataSet = new DataSet();
-                result[index++] = dataSet;
+                DataSet dataSet = new DataSetImpl();
+                result.add(dataSet);
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
                 }
@@ -132,7 +131,7 @@ public class JdbcManager implements DatabaseManager {
             return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return new DataSet[0];
+            return result;
         }
     }
 

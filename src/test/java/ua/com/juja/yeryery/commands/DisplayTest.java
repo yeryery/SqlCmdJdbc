@@ -4,12 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -36,18 +35,20 @@ public class DisplayTest {
 
         when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
-        DataSet user1 = new DataSet();
+        DataSet user1 = new DataSetImpl();
         user1.put("id", 12);
         user1.put("name", "username1");
         user1.put("password", "pass1");
 
-        DataSet user2 = new DataSet();
+        DataSet user2 = new DataSetImpl();
         user2.put("id", 22);
         user2.put("name", "username2");
         user2.put("password", "pass2");
 
-        DataSet[] data = new DataSet[] {user1, user2};
-        when(manager.getDataContent("test")).thenReturn(data);
+        List<DataSet> dataSets = new LinkedList<DataSet>();
+        dataSets.add(user1);
+        dataSets.add(user2);
+        when(manager.getDataContent("test")).thenReturn(dataSets);
 
         //when
         command.process("display");
@@ -73,18 +74,20 @@ public class DisplayTest {
         when(view.read()).thenReturn("test");
         when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
-        DataSet user1 = new DataSet();
+        DataSet user1 = new DataSetImpl();
         user1.put("id", 12);
         user1.put("name", "username1");
         user1.put("password", "pass1");
 
-        DataSet user2 = new DataSet();
+        DataSet user2 = new DataSetImpl();
         user2.put("id", 22);
         user2.put("name", "username2");
         user2.put("password", "pass2");
 
-        DataSet[] data = new DataSet[] {user1, user2};
-        when(manager.getDataContent("test")).thenReturn(data);
+        List<DataSet> dataSets = new LinkedList<DataSet>();
+        dataSets.add(user1);
+        dataSets.add(user2);
+        when(manager.getDataContent("test")).thenReturn(dataSets);
 
         //when
         command.process("display");
@@ -110,10 +113,11 @@ public class DisplayTest {
         when(view.read()).thenReturn("test");
         when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
-        DataSet user = new DataSet();
+        DataSet user = new DataSetImpl();
 
-        DataSet[] data = new DataSet[] {user};
-        when(manager.getDataContent("test")).thenReturn(data);
+        List<DataSet> dataSets = new LinkedList<DataSet>();
+        dataSets.add(user);
+        when(manager.getDataContent("test")).thenReturn(dataSets);
 
         //when
         command.process("display");

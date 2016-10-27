@@ -3,6 +3,7 @@ package ua.com.juja.yeryery.commands;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.NameTable;
 import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
@@ -49,7 +50,7 @@ public class Create implements Command {
             while (tableSize < 0);
 
             if (tableSize != 0) {
-                DataSet dataTypes = new DataSet();
+                DataSet dataTypes = new DataSetImpl();
 
                 for (int i = 0; i < tableSize; i++) {
                     view.write("name of column " + (i + 1));

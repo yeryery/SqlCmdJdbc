@@ -6,6 +6,7 @@ import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.util.List;
 import java.util.Set;
 
 public class Display implements Command {
@@ -32,12 +33,12 @@ public class Display implements Command {
         if (!currentTableName.equals("cancel")) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
             printColumnNames(tableColumns);
-            DataSet[] rows = manager.getDataContent(currentTableName);
+            List<DataSet> rows = manager.getDataContent(currentTableName);
             printValues(rows);
         }
     }
 
-    private void printValues(DataSet[] dataSets) {
+    private void printValues(List<DataSet> dataSets) {
         String result = "";
         for (DataSet dataSet : dataSets) {
             result += getStringRow(dataSet);

@@ -4,12 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -34,7 +33,7 @@ public class InsertTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         when(manager.getTableColumns("ttable")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
-        DataSet user = new DataSet();
+        DataSet user = new DataSetImpl();
         user.put("id", 1);
         user.put("name", "username1");
         user.put("password", "pass1");
@@ -43,8 +42,9 @@ public class InsertTest {
                          .thenReturn(user.getValues()[1].toString())
                          .thenReturn(user.getValues()[2].toString());
 
-        DataSet[] data = new DataSet[] {user};
-        when(manager.getDataContent("test")).thenReturn(data);
+        List<DataSet> dataSets = new LinkedList<DataSet>();
+        dataSets.add(user);
+        when(manager.getDataContent("test")).thenReturn(dataSets);
 
         //when
         command.process("insert");
