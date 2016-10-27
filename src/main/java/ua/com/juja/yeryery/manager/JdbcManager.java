@@ -164,11 +164,4 @@ public class JdbcManager implements DatabaseManager {
         }
         return result.substring(0, result.length() - 1);
     }
-
-    private int getSize(String tableName) throws SQLException {
-        Statement st = connection.createStatement();
-        ResultSet rsCount = st.executeQuery("SELECT COUNT (*) FROM " + tableName);
-        rsCount.next();
-        return rsCount.getInt(1);
-    }
 }
