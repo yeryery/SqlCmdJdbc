@@ -17,7 +17,7 @@ public class Content implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("list");
+        return input.equals("content");
     }
 
     @Override

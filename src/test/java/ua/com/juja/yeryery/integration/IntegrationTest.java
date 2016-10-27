@@ -76,7 +76,7 @@ public class IntegrationTest {
     @Test
     public void testListWithoutConnect() {
         //given
-        in.add("list");
+        in.add("content");
         in.add("exit");
 
         //when
@@ -85,8 +85,8 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                //list
-                "You can`t use 'list' unless you are not connected.\r\n" +
+                //content
+                "You can`t use 'content' unless you are not connected.\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 //exit
                 "See you!\r\n", out.getData());
@@ -271,7 +271,7 @@ public class IntegrationTest {
     public void testListAfterConnect() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
-        in.add("list");
+        in.add("content");
         in.add("exit");
 
         //when
@@ -283,7 +283,7 @@ public class IntegrationTest {
                 //connect
                 "Success!\n" +
                 "Type command or 'help'\n" +
-                //list
+                //content
                 "[test, ttable]\n" +
                 "Type command or 'help'\n" +
                 //exit

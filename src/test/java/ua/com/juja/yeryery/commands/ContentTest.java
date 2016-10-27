@@ -33,7 +33,7 @@ public class ContentTest {
         when(manager.getTableNames()).thenReturn(tableNames);
 
         //when
-        command.process("list");
+        command.process("content");
 
         //then
         verify(view).write("[test, ttable]");
@@ -42,7 +42,7 @@ public class ContentTest {
     @Test
     public void testCanProcessList() {
         //when
-        boolean canProcess = command.canProcess("list");
+        boolean canProcess = command.canProcess("content");
 
         //then
         assertTrue(canProcess);
