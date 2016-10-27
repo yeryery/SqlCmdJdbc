@@ -33,7 +33,8 @@ public class DisplayTest {
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1");
-        when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
+
+        when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
         DataSet user1 = new DataSet();
         user1.put("id", 12);
@@ -70,7 +71,7 @@ public class DisplayTest {
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("test");
-        when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
+        when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
         DataSet user1 = new DataSet();
         user1.put("id", 12);
@@ -107,7 +108,7 @@ public class DisplayTest {
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("test");
-        when(manager.getTableColumns("test")).thenReturn(new String[] {"id", "name", "password"});
+        when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
         DataSet user = new DataSet();
 

@@ -49,11 +49,11 @@ public class IntegrationTest {
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 //help
-                "List of commands:\r\n" +
+                "Content of commands:\r\n" +
                 "\tconnect|database|username|password\r\n" +
                 "\t\tConnect to Database\r\n" +
                 "\tlist\r\n" +
-                "\t\tList of tables\r\n" +
+                "\t\tContent of tables\r\n" +
                 "\tcreate\r\n" +
                 "\t\tCreate new table\r\n" +
                 "\tdisplay\r\n" +

@@ -1,9 +1,7 @@
 package ua.com.juja.yeryery.manager;
 
 import java.sql.*;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class JdbcManager implements DatabaseManager {
 
@@ -31,8 +29,7 @@ public class JdbcManager implements DatabaseManager {
         Set<String> tableNames = new TreeSet<String>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(
-                     "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'"))
-        {
+                     "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")) {
             while (resultSet.next()) {
                 tableNames.add(resultSet.getString("table_name"));
             }
@@ -44,21 +41,19 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public String[] getTableColumns(String tableName) {
+    public Set<String> getTableColumns(String tableName) {
+        Set<String> columnNames = new LinkedHashSet<String>();
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM information_schema.columns" +
                      " WHERE table_name='" + tableName + "'")) {
-            String[] columnNames = new String[100];
-            int index = 0;
 
             while (rs.next()) {
-                columnNames[index++] = rs.getString("column_name");
+                columnNames.add(rs.getString("column_name"));
             }
-            columnNames = Arrays.copyOf(columnNames, index, String[].class);
             return columnNames;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return new String[0];
+            return columnNames;
         }
     }
 
@@ -120,9 +115,8 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public DataSet[] getDataContent(String tableName) {
-        try (
-                Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
             int size = getSize(tableName);
 
             ResultSetMetaData rsmd = rs.getMetaData();

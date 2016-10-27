@@ -30,7 +30,7 @@ public class Display implements Command {
         String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
-            String[] tableColumns = manager.getTableColumns(currentTableName);
+            Set<String> tableColumns = manager.getTableColumns(currentTableName);
             printColumnNames(tableColumns);
             DataSet[] rows = manager.getDataContent(currentTableName);
             printValues(rows);
@@ -57,7 +57,7 @@ public class Display implements Command {
         return result;
     }
 
-    private void printColumnNames(String[] tableColumns) {
+    private void printColumnNames(Set<String> tableColumns) {
         String result = "| ";
         for (String column : tableColumns) {
             result += column + " | ";

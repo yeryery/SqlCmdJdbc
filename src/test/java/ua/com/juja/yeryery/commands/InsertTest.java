@@ -32,7 +32,7 @@ public class InsertTest {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
-        when(manager.getTableColumns("ttable")).thenReturn(new String[] {"id", "name", "password"});
+        when(manager.getTableColumns("ttable")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
         DataSet user = new DataSet();
         user.put("id", 1);

@@ -7,7 +7,7 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.Set;
+import java.util.*;
 
 public class Insert implements Command {
 
@@ -28,14 +28,16 @@ public class Insert implements Command {
 
     @Override
     public void process(String input) {
-        Set<String> names = manager.getTableNames();
-        String currentTableName = dialog.askUser(names, view);
+        Set<String> tableNames = manager.getTableNames();
+        String currentTableName = dialog.askUser(tableNames, view);
 
         if (!currentTableName.equals("cancel")) {
             view.write("Enter the values you require");
 
-            String[] columnNames = manager.getTableColumns(currentTableName);
-            int tableSize = columnNames.length;
+            Set<String> tableColumns = manager.getTableColumns(currentTableName);
+            int tableSize = tableColumns.size();
+
+            String[] columnNames = tableColumns.toArray(new String[tableSize]);;
             String[] values = new String[tableSize];
             DataSet newRow = new DataSet();
 
