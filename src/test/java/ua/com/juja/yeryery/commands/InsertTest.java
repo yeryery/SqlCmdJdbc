@@ -27,7 +27,7 @@ public class InsertTest {
     }
 
     @Test
-    public void testInsertSelectTableAndConfirm() {
+    public void testInsert() {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -54,7 +54,7 @@ public class InsertTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table number 1
+                //Select table 'ttable'
                 "Enter the values you require, " +
                 "id, " +
                 //1
@@ -108,7 +108,7 @@ public class InsertTest {
     }
 
     @Test
-    public void testCanProcessList() {
+    public void testCanProcessInsert() {
         //when
         boolean canProcess = command.canProcess("insert");
 
