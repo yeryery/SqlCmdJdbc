@@ -759,7 +759,7 @@ public class IntegrationTest {
                 "name\n" +
                 //25
                 "age\n" +
-                "You have successfully entered new data!\n" +
+                "You have successfully entered new data into table 'ttable'\n" +
                 "Type command or 'help'\n" +
                 //display
                 "Please enter the name or select number of table you need\n" +
@@ -839,6 +839,204 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //0
                 "Table dropping canceled\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void testUpdateAndSelectNull() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("update");
+        in.add("0");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //update
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //0
+                "Table updating canceled\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void testUpdateAndCancel() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("update");
+        in.add("cancel");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //update
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //cancel
+                "Table updating canceled\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void testUpdateWrongSql() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("update");
+        in.add("test");
+        in.add("notNumber|password|newPass");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //update
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Error! For input string: \"notNumber\"\n" +
+                "Try again.\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void testUpdateWrongNumberOfArguments() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("update");
+        in.add("test");
+        in.add("22|password|newPass|smth");
+        in.add("22|password|pass2");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //update
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                //22 password newPass smth
+                "You should enter an odd number of parameters: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Please, try again\n" +
+                //22 password pass2
+                "You have successfully updated table 'test' at id = 22\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
+
+    @Test
+    public void testUpdate() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("update");
+        in.add("test");
+        in.add("22|password|newPass");
+        in.add("display");
+        in.add("test");
+        in.add("update");
+        in.add("test");
+        in.add("22|password|pass2");
+        in.add("display");
+        in.add("test");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //update
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                //22 password newPass
+                "You have successfully updated table 'test' at id = 22\n" +
+                "Type command or 'help'\n" +
+                //display
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "| id | login | password | \n" +
+                "-------------------------\n" +
+                "| 12 | username1 | pass1 | \n" +
+                "| 22 | username2 | newPass | \n" +
+                "------------------------\n" +
+                "Type command or 'help'\n" +
+                //update
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                //22 password pass2
+                "You have successfully updated table 'test' at id = 22\n" +
+                "Type command or 'help'\n" +
+                //display
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "| id | login | password | \n" +
+                "-------------------------\n" +
+                "| 12 | username1 | pass1 | \n" +
+                "| 22 | username2 | pass2 | \n" +
+                "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));

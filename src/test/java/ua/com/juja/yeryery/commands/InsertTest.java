@@ -62,7 +62,7 @@ public class InsertTest {
                 //username1
                 "password, " +
                 //pass1
-                "You have successfully entered new data!]");
+                "You have successfully entered new data into table 'ttable']");
     }
 
     @Test

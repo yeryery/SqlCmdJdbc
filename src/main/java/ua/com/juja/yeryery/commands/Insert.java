@@ -50,7 +50,7 @@ public class Insert implements Command {
 
             try {
                 manager.insert(currentTableName, newRow);
-                view.write("You have successfully entered new data!");
+                view.write("You have successfully entered new data into table '" + currentTableName + "'");
             } catch (SQLException e) {
                 view.write(e.getMessage());
             }

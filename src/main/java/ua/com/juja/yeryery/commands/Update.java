@@ -44,11 +44,8 @@ public class Update implements Command {
                 size = newValues.length;
 
                 if (size % 2 == 0) {
-//                    throw new IllegalArgumentException("You should enter an odd number of parameters. " +
-//                            "id|columnName1|newValue1|columnName2|newValue2..." +
-//                            "Please, try again");
-                    view.write("You should enter an odd number of parameters. " +
-                            "id|columnName1|newValue1|columnName2|newValue2..." +
+                    view.write("You should enter an odd number of parameters: " +
+                            "id|columnName1|newValue1|columnName2|newValue2...\n" +
                             "Please, try again");
                 }
             } while (size % 2 == 0);
@@ -60,11 +57,10 @@ public class Update implements Command {
             }
 
             int id = Integer.parseInt(newValues[0]);
-            view.write(newValues[0] + " " + newValues[1] + " " + newValues[2]);
 
             try {
                 manager.update(currentTableName, updatedRow, id);
-                view.write("You have successfully updated data!");
+                view.write("You have successfully updated table '" + currentTableName + "' at id = " + id);
             } catch (SQLException e) {
                 view.write(e.getMessage());
             }
