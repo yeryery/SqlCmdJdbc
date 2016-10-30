@@ -52,7 +52,7 @@ public class Insert implements Command {
                 manager.insert(currentTableName, newRow);
                 view.write("You have successfully entered new data into table '" + currentTableName + "'");
             } catch (SQLException e) {
-                view.write(e.getMessage());
+                view.write("SQL " + e.getMessage());
             }
         } else {
             view.write("Table inserting canceled");

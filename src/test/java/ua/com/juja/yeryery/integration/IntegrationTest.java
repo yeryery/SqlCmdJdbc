@@ -715,7 +715,7 @@ public class IntegrationTest {
                 "name\n" +
                 //25
                 "age\n" +
-                "ERROR: invalid input syntax for integer: \"notnumber\"\n" +
+                "SQL ERROR: invalid input syntax for integer: \"notnumber\"\n" +
                 "  Position: 41\n" +
                 "Type command or 'help'\n" +
                 //exit
