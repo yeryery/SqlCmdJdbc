@@ -147,7 +147,8 @@ public class DisplayTest {
         shouldPrint("[Please enter the name or select number of table you need, " +
                 "1. test, " +
                 "2. ttable, " +
-                "0. cancel (to go back)]");
+                "0. cancel (to go back), " +
+                "Table displaying canceled]");
                 //cancel
     }
 

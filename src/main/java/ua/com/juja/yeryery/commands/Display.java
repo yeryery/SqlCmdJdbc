@@ -35,7 +35,10 @@ public class Display implements Command {
             printColumnNames(tableColumns);
             List<DataSet> rows = manager.getDataContent(currentTableName);
             printValues(rows);
+        } else {
+            view.write("Table displaying canceled");
         }
+
     }
 
     private void printValues(List<DataSet> dataSets) {
