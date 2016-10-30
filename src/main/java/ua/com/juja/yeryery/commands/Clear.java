@@ -27,12 +27,13 @@ public class Clear implements Command {
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-        String confirm = "";
+        String confirm;
 
         do {
             String currentTableName = dialog.askUser(names, view);
 
             if (!currentTableName.equals("cancel")) {
+                confirm = "";
                 while (!confirm.equals("y") && !confirm.equals("n")) {
                     view.write(String.format("Are you sure you want to clear table '%s'? (y/n)", currentTableName));
                     confirm = view.read();

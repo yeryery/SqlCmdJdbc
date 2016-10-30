@@ -1041,4 +1041,46 @@ public class IntegrationTest {
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
+
+    @Test
+    public void testClearSelectNotConfirmSelectAgainAndConfirm() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("clear");
+        in.add("2");
+        in.add("n");
+        in.add("2");
+        in.add("y");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //clear
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //2
+                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                //n
+                "The clearing of table 'ttable' is cancelled\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //2
+                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                //y
+                "Table 'ttable' successfully cleared!\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r",""));
+    }
 }
