@@ -8,6 +8,7 @@ import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -42,10 +43,6 @@ public class InsertTest {
                          .thenReturn(user.getValues().get(1).toString())
                          .thenReturn(user.getValues().get(2).toString());
 
-        List<DataSet> dataSets = new LinkedList<DataSet>();
-        dataSets.add(user);
-        when(manager.getDataContent("test")).thenReturn(dataSets);
-
         //when
         command.process("insert");
 
@@ -63,6 +60,39 @@ public class InsertTest {
                 "password, " +
                 //pass1
                 "You have successfully entered new data into table 'ttable']");
+    }
+
+    @Test
+    public void testInsertWithSqlException() throws SQLException {
+        //given
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
+        when(manager.getTableColumns("ttable")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
+
+        DataSet user = new DataSetImpl();
+        user.put("id", "notNumber");
+        user.put("name", "username1");
+        user.put("password", "pass1");
+        when(view.read()).thenReturn("ttable")
+                         .thenReturn(user.getValues().get(0).toString())
+                         .thenReturn(user.getValues().get(1).toString())
+                         .thenReturn(user.getValues().get(2).toString());
+
+        doThrow(new SQLException()).when(manager).insert("ttable", user);
+
+        try {
+            manager.insert("ttable", user);
+        } catch (SQLException e) {
+            view.write("SQL ERROR: invalid input syntax for integer: \"notNumber\"\n" +
+                    "  Position: 41");
+        }
+
+        //when
+        command.process("insert");
+
+        //then
+        verify(view).write("SQL ERROR: invalid input syntax for integer: \"notNumber\"\n" +
+                "  Position: 41");
     }
 
     @Test
