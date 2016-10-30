@@ -2,7 +2,6 @@ package ua.com.juja.yeryery.commands.dialogs;
 
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Arrays;
 import java.util.Set;
 
 public class NameTable implements Dialog {
@@ -13,12 +12,11 @@ public class NameTable implements Dialog {
 
         while (uniqueName.equals("")) {
             String tableName = view.read();
-            String[] tableNames = names.toArray(new String[names.size()]);
 
             for (String name : names) {
                 if (tableName.equals(name)) {
                     view.write("Table with name '" + tableName + "' already exists.");
-                    view.write(Arrays.toString(tableNames));
+                    view.write(names.toString());
                     view.write("Try again.");
                     tableName = "";
                 }

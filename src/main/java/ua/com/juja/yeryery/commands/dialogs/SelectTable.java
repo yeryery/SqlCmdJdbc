@@ -10,20 +10,25 @@ public class SelectTable implements Dialog {
 
         String tableName = "";
 
+        Map<Integer, String> tableNames = new HashMap<>();
+        Iterator iterator = names.iterator();
+        int i = 1;
+
+        while (iterator.hasNext()) {
+            tableNames.put(i, (String) iterator.next());
+            i++;
+        }
+
         while (tableName.equals("")) {
             view.write("Please enter the name or select number of table you need");
-            Iterator iterator = names.iterator();
-            Map<Integer, String> tableNames = new HashMap<>();
 
-            int i = 1;
-            while (iterator.hasNext()) {
-                tableNames.put(i, (String) iterator.next());
-                view.write(i + ". " + tableNames.get(i));
-                i++;
+            tableNames.remove(0);
+            for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
+                view.write(entry.getKey() + ". " + entry.getValue());
             }
-            String exit = "cancel (to go back)";
+
             tableNames.put(0, "cancel");
-            view.write(0 + ". " + exit);
+            view.write(0 + ". " + "cancel (to go back)");
 
             String input = view.read();
 
