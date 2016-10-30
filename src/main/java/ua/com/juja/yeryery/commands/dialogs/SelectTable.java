@@ -2,47 +2,50 @@ package ua.com.juja.yeryery.commands.dialogs;
 
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Set;
+import java.util.*;
 
 public class SelectTable implements Dialog {
     @Override
     public String askUser(Set<String> names, View view) {
 
         String tableName = "";
-        names.iterator();
 
         while (tableName.equals("")) {
             view.write("Please enter the name or select number of table you need");
-            String[] tableNames = names.toArray(new String[names.size()]);
+            Iterator iterator = names.iterator();
+            Map<Integer, String> tableNames = new HashMap<>();
 
-            for (int i = 0; i < names.size(); i++) {
-                view.write((i + 1) + ". " + tableNames[i]);
+            int i = 1;
+            while (iterator.hasNext()) {
+                tableNames.put(i, (String) iterator.next());
+                view.write(i + ". " + tableNames.get(i));
+                i++;
             }
-            view.write("0. cancel (to go back)");
+            String exit = "cancel (to go back)";
+            tableNames.put(0, "cancel");
+            view.write(0 + ". " + exit);
 
             String input = view.read();
 
             if (isParsable(input)) {
                 int tableNumber = Integer.parseInt(input);
 
-                if (tableNumber == 0) {
-                    tableName = "cancel";
-                } else if (tableNumber > 0 && tableNumber <= names.size()) {
-                    tableName = tableNames[tableNumber - 1];
+                if (tableNumber >= 0 && tableNumber <= names.size()) {
+                    tableName = tableNames.get(tableNumber);
                 } else {
                     view.write("There is no table with this number! Try again.");
                 }
             } else {
                 String check = "";
 
-                for (String name : names) {
-                    if (input.equals(name) || input.equals("cancel")) {
+                for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
+                    if (input.equals(entry.getValue())) {
                         check = input;
                     }
                 }
 
                 if (check.equals("")) {
-                    view.write("Table with name '" + input + "' doesn't exists. Try again.");
+                    view.write("Table with name '" + input + "' doesn't exists! Try again.");
                 }
                 tableName = check;
             }

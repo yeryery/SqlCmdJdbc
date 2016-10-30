@@ -110,7 +110,7 @@ public class SelectTableTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExist
-                "Table with name 'notExist' doesn't exists. Try again., " +
+                "Table with name 'notExist' doesn't exists! Try again., " +
                 "Please enter the name or select number of table you need, " +
                 "1. test, " +
                 "2. ttable, " +
