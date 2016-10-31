@@ -28,20 +28,31 @@ public class InsertTest {
     }
 
     @Test
-    public void testInsert() {
+    public void testInsert() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
-        when(manager.getTableColumns("ttable")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
-        DataSet user = new DataSetImpl();
-        user.put("id", 1);
-        user.put("name", "username1");
-        user.put("password", "pass1");
+        String columnName1 = "id";
+        int value1 = 1;
+        String columnName2 = "name";
+        String value2 = "username";
+        String columnName3 = "password";
+        String value3 = "pass";
+        when(manager.getTableColumns("ttable"))
+                .thenReturn(new LinkedHashSet<String>(Arrays.asList(columnName1, columnName2, columnName3)));
+
         when(view.read()).thenReturn("2")
-                         .thenReturn(user.getValues().get(0).toString())
-                         .thenReturn(user.getValues().get(1).toString())
-                         .thenReturn(user.getValues().get(2).toString());
+                .thenReturn(Integer.toString(value1))
+                .thenReturn(value2)
+                .thenReturn(value3);
+
+        DataSet input = new DataSetImpl();
+        input.put(columnName1, value1);
+        input.put(columnName2, value2);
+        input.put(columnName3, value3);
+
+        doNothing().when(manager).insert("ttable", input);
 
         //when
         command.process("insert");
@@ -67,21 +78,30 @@ public class InsertTest {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
-        when(manager.getTableColumns("ttable")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
 
-        DataSet user = new DataSetImpl();
-        user.put("id", "notNumber");
-        user.put("name", "username1");
-        user.put("password", "pass1");
-        when(view.read()).thenReturn("ttable")
-                         .thenReturn(user.getValues().get(0).toString())
-                         .thenReturn(user.getValues().get(1).toString())
-                         .thenReturn(user.getValues().get(2).toString());
+        String columnName1 = "id";
+        int value1 = 1;
+        String columnName2 = "name";
+        String value2 = "username";
+        String columnName3 = "password";
+        String value3 = "pass";
+        when(manager.getTableColumns("ttable"))
+                .thenReturn(new LinkedHashSet<String>(Arrays.asList(columnName1, columnName2, columnName3)));
 
-        doThrow(new SQLException()).when(manager).insert("ttable", user);
+        when(view.read()).thenReturn("2")
+                .thenReturn(Integer.toString(value1))
+                .thenReturn(value2)
+                .thenReturn(value3);
+
+        DataSet input = new DataSetImpl();
+        input.put(columnName1, value1);
+        input.put(columnName2, value2);
+        input.put(columnName3, value3);
+
+        doThrow(new SQLException()).when(manager).insert("ttable", input);
 
         try {
-            manager.insert("ttable", user);
+            manager.insert("ttable", input);
         } catch (SQLException e) {
             view.write("SQL ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                     "  Position: 41");

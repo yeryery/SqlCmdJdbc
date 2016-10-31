@@ -39,8 +39,8 @@ public class CreateTest {
 
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
-                .thenReturn("someName")
-                .thenReturn("text");
+                .thenReturn(columnName1)
+                .thenReturn(dataType1);
 
         DataSet dataTypes = new DataSetImpl();
         dataTypes.put(columnName1, dataType1);
