@@ -36,6 +36,11 @@ public class DataSetImpl implements DataSet {
     }
 
     @Override
+    public boolean isEmpty() {
+        return data.isEmpty();
+    }
+
+    @Override
     public String toString() {
         return "{columnNames: " + getColumnNames().toString() + ", " +
                 "values: " + getValues().toString() + "}";
