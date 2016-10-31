@@ -439,9 +439,10 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //test
-                "Table with name 'test' already exists.\n" +
+                "Table with name 'test' already exists!\n" +
                 "[test, ttable]\n" +
                 "Try again.\n" +
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
@@ -512,14 +513,12 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testCreateWithSqlErrorWhenNameisNumeric() {
+    public void testCreateWhenNameIsNumeric() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
-        in.add("111");
-        in.add("1");
-        in.add("name");
-        in.add("text");
+        in.add("1name");
+        in.add("cancel");
         in.add("exit");
 
         //when
@@ -533,30 +532,31 @@ public class IntegrationTest {
                 "Type command or 'help'\n" +
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
-                //111
-                "Please enter the number of columns of your table or '0' to go back\n" +
-                //1
-                "name of column 1\n" +
-                //name
-                "datatype of column 1\n" +
-                //text
-                "SQL ERROR: syntax error at or near \"111\"\n" +
-                "  Position: 14\n" +
-                //0
+                //1name
+                "Table name must begin with a letter! Try again.\n" +
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //cancel
+                "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
     }
 
     @Test
-    public void testCreateWithSqlErrorWhenDatatypeDoesntExist() {
+    public void testCreateWithSqlErrorWhenDataTypeDoesntExist() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("create");
         in.add("somename");
         in.add("1");
         in.add("name");
-        in.add("wrongtype");
+        in.add("wrongType");
+
+        in.add("name");
+        in.add("text");
+        in.add("drop");
+        in.add("somename");
+        in.add("y");
         in.add("exit");
 
         //when
@@ -575,11 +575,21 @@ public class IntegrationTest {
                 //1
                 "name of column 1\n" +
                 //name
-                "datatype of column 1\n" +
-                //wrongtype
+                "dataType of column 1\n" +
+                //wrongType
                 "SQL ERROR: type \"wrongtype\" does not exist\n" +
                 "  Position: 57\n" +
-                //0
+                "name of column 1\n" +
+                "dataType of column 1\n" +
+                "Your table 'somename' have successfully created!\n" +
+                "Type command or 'help'\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. somename\n" +
+                "2. test\n" +
+                "3. ttable\n" +
+                "0. cancel (to go back)\n" +
+                "Are you sure you want to drop table 'somename'? (y/n)\n" +
+                "Table 'somename' successfully dropped!\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -619,11 +629,11 @@ public class IntegrationTest {
                 //2
                 "name of column 1\n" +
                 //name
-                "datatype of column 1\n" +
+                "dataType of column 1\n" +
                 //text
                 "name of column 2\n" +
                 //age
-                "datatype of column 2\n" +
+                "dataType of column 2\n" +
                 //int
                 "Your table 'somename' have successfully created!\n" +
                 "Type command or 'help'\n" +
@@ -691,6 +701,13 @@ public class IntegrationTest {
         in.add("notnumber");
         in.add("somename");
         in.add("25");
+
+        in.add("1");
+        in.add("somename");
+        in.add("25");
+        in.add("clear");
+        in.add("ttable");
+        in.add("y");
         in.add("exit");
 
         //when
@@ -708,7 +725,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the values you require\n" +
+                "Enter new values you require\n" +
                 //notnumber
                 "id\n" +
                 //somename
@@ -717,6 +734,18 @@ public class IntegrationTest {
                 "age\n" +
                 "SQL ERROR: invalid input syntax for integer: \"notnumber\"\n" +
                 "  Position: 41\n" +
+                "Enter new values you require\n" +
+                "id\n" +
+                "name\n" +
+                "age\n" +
+                "You have successfully entered new data into table 'ttable'\n" +
+                "Type command or 'help'\n" +
+                "Please enter the name or select number of table you need\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -753,7 +782,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the values you require\n" +
+                "Enter new values you require\n" +
                 //10
                 "id\n" +
                 //somename
@@ -963,6 +992,7 @@ public class IntegrationTest {
                 //22 password newPass smth
                 "You should enter an odd number of parameters: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "Please, try again\n" +
+                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 //22 password pass2
                 "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +

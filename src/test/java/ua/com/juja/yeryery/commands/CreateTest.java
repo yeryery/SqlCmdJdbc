@@ -35,7 +35,7 @@ public class CreateTest {
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         String columnName1 = "someColumnName";
-        String datatype1 = "notDatatype";
+        String dataType1 = "notDataType";
 
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
@@ -43,7 +43,7 @@ public class CreateTest {
                 .thenReturn("text");
 
         DataSet dataTypes = new DataSetImpl();
-        dataTypes.put(columnName1, datatype1);
+        dataTypes.put(columnName1, dataType1);
 
         doNothing().when(manager).create("newTable", dataTypes);
 
@@ -56,7 +56,7 @@ public class CreateTest {
                 //1
                 "name of column 1, " +
                 //someName
-                "datatype of column 1, " +
+                "dataType of column 1, " +
                 //text
                 "Your table 'newTable' have successfully created!]");
     }
@@ -67,22 +67,22 @@ public class CreateTest {
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         String columnName1 = "someColumnName";
-        String datatype1 = "notDatatype";
+        String dataType1 = "wrongType";
 
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
                 .thenReturn(columnName1)
-                .thenReturn(datatype1);
+                .thenReturn(dataType1);
 
         DataSet dataTypes = new DataSetImpl();
-        dataTypes.put(columnName1, datatype1);
+        dataTypes.put(columnName1, dataType1);
 
         doThrow(new SQLException()).when(manager).create("newTable", dataTypes);
 
         try {
             manager.create("newTable", dataTypes);
         } catch (SQLException e) {
-            view.write("SQL ERROR: type \"notdatatype\" does not exist\n" +
+            view.write("SQL ERROR: type \"wrongType\" does not exist\n" +
                     "  Position: 67");
         }
 
@@ -90,7 +90,7 @@ public class CreateTest {
         command.process("create");
 
         //then
-        verify(view).write("SQL ERROR: type \"notdatatype\" does not exist\n" +
+        verify(view).write("SQL ERROR: type \"wrongType\" does not exist\n" +
                 "  Position: 67");
 
     }
