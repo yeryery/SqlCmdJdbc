@@ -33,26 +33,29 @@ public class Insert implements Command {
         String currentTableName = dialog.askUser(tableNames, view);
 
         if (!currentTableName.equals("cancel")) {
-            view.write("Enter the values you require");
-
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            int tableSize = tableColumns.size();
+            int size = 0;
 
-            String[] columnNames = tableColumns.toArray(new String[tableSize]);;
-            String[] values = new String[tableSize];
-            DataSet newRow = new DataSetImpl();
+            while (size == 0) {
+                view.write("Enter new values you require");
+                size = tableColumns.size();
+                String[] columnNames = tableColumns.toArray(new String[size]);
+                String[] values = new String[size];
+                DataSet newRow = new DataSetImpl();
 
-            for (int i = 0; i < tableSize; i++) {
-                view.write(columnNames[i]);
-                values[i] = view.read();
-                newRow.put(columnNames[i], values[i]);
-            }
+                for (int i = 0; i < size; i++) {
+                    view.write(columnNames[i]);
+                    values[i] = view.read();
+                    newRow.put(columnNames[i], values[i]);
+                }
 
-            try {
-                manager.insert(currentTableName, newRow);
-                view.write("You have successfully entered new data into table '" + currentTableName + "'");
-            } catch (SQLException e) {
-                view.write("SQL " + e.getMessage());
+                try {
+                    manager.insert(currentTableName, newRow);
+                    view.write("You have successfully entered new data into table '" + currentTableName + "'");
+                } catch (SQLException e) {
+                    size = 0;
+                    view.write("SQL " + e.getMessage());
+                }
             }
         } else {
             view.write("Table inserting canceled");

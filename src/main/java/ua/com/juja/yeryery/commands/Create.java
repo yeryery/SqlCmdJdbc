@@ -52,21 +52,24 @@ public class Create implements Command {
             if (tableSize != 0) {
                 DataSet dataTypes = new DataSetImpl();
 
-                for (int i = 0; i < tableSize; i++) {
-                    view.write("name of column " + (i + 1));
-                    String columnName = view.read();
+                while (dataTypes.isEmpty()) {
+                    for (int i = 0; i < tableSize; i++) {
+                        view.write("name of column " + (i + 1));
+                        String columnName = view.read();
 
-                    view.write("datatype of column " + (i + 1));
-                    String dataType = view.read();
+                        view.write("dataType of column " + (i + 1));
+                        String dataType = view.read();
 
-                    dataTypes.put(columnName, dataType);
-                }
+                        dataTypes.put(columnName, dataType);
+                    }
 
-                try {
-                    manager.create(currentTableName, dataTypes);
-                    view.write("Your table '" + currentTableName + "' have successfully created!");
-                } catch (SQLException e) {
-                    view.write("SQL " + e.getMessage());
+                    try {
+                        manager.create(currentTableName, dataTypes);
+                        view.write("Your table '" + currentTableName + "' have successfully created!");
+                    } catch (SQLException e) {
+                        dataTypes = new DataSetImpl();
+                        view.write("SQL " + e.getMessage());
+                    }
                 }
             } else {
                 view.write("The creating of table '" + currentTableName + "' is cancelled");

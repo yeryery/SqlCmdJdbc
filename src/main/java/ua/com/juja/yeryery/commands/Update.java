@@ -33,36 +33,36 @@ public class Update implements Command {
         String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
-            view.write("Enter id you want to update and its new values: " +
-                    "id|columnName1|newValue1|columnName2|newValue2...");
+            int size = 0;
 
-            String[] newValues = new String[0];
-            int size;
-
-            do {
-                newValues = view.read().split("\\|");
+            while (size % 2 == 0) {
+                view.write("Enter id you want to update and its new values: " +
+                        "id|columnName1|newValue1|columnName2|newValue2...");
+                String[] newValues = view.read().split("\\|");
                 size = newValues.length;
 
                 if (size % 2 == 0) {
                     view.write("You should enter an odd number of parameters: " +
                             "id|columnName1|newValue1|columnName2|newValue2...\n" +
                             "Please, try again");
+                } else {
+
+                    DataSet updatedRow = new DataSetImpl();
+
+                    for (int i = 0; i < size / 2; i++) {
+                        updatedRow.put(newValues[2 * i + 1], newValues[2 * i + 2]);
+                    }
+
+                    int id = Integer.parseInt(newValues[0]);
+
+                    try {
+                        manager.update(currentTableName, updatedRow, id);
+                        view.write("You have successfully updated table '" + currentTableName + "' at id = " + id);
+                    } catch (SQLException e) {
+                        size = 0;
+                        view.write("SQL " + e.getMessage());
+                    }
                 }
-            } while (size % 2 == 0);
-
-            DataSet updatedRow = new DataSetImpl();
-
-            for (int i = 0; i < size / 2; i++) {
-                updatedRow.put(newValues[2 * i + 1], newValues[2 * i + 2]);
-            }
-
-            int id = Integer.parseInt(newValues[0]);
-
-            try {
-                manager.update(currentTableName, updatedRow, id);
-                view.write("You have successfully updated table '" + currentTableName + "' at id = " + id);
-            } catch (SQLException e) {
-                view.write(e.getMessage());
             }
         } else {
             view.write("Table updating canceled");
