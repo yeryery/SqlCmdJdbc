@@ -3,9 +3,12 @@ package ua.com.juja.yeryery.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -27,11 +30,20 @@ public class UpdateTest {
     }
 
     @Test
-    public void testUpdate() {
+    public void testUpdate() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("test").thenReturn("22|password|newPass");
+
+        int id = 22;
+        String columnName = "password";
+        String newValue = "newPass";
+        DataSet input = new DataSetImpl();
+        input.put(columnName, newValue);
+
+        when(view.read()).thenReturn("test").thenReturn(id + "|" + columnName + "|" + newValue);
+
+        doNothing().when(manager).update("test", input, id);
 
         //when
         command.process("update");
@@ -43,6 +55,37 @@ public class UpdateTest {
                     "0. cancel (to go back), " +
                     "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2..., " +
                     "You have successfully updated table 'test' at id = 22]");
+    }
+
+    @Test
+    public void testUpdateWithSqlException() throws SQLException {
+        //given
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
+
+        int id = 22;
+        String columnName = "wrongColumnName";
+        String newValue = "newPass";
+        DataSet input = new DataSetImpl();
+        input.put(columnName, newValue);
+
+        when(view.read()).thenReturn("test").thenReturn(id + "|" + columnName + "|" + newValue);
+
+        doThrow(new SQLException()).when(manager).update("test", input, id);
+
+        try {
+            manager.update("test", input, id);
+        } catch (SQLException e) {
+            view.write("SQL ERROR: type \"wrongType\" does not exist\n" +
+                    "  Position: 67");
+        }
+
+        //when
+        command.process("update");
+
+        //then
+        verify(view).write("SQL ERROR: type \"wrongType\" does not exist\n" +
+                "  Position: 67");
     }
 
     @Test
@@ -60,9 +103,13 @@ public class UpdateTest {
                     "1. test, " +
                     "2. ttable, " +
                     "0. cancel (to go back), " +
+                //test
                     "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2..., " +
+                //22|password|newPass|smth
                     "You should enter an odd number of parameters: id|columnName1|newValue1|columnName2|newValue2...\n" +
                     "Please, try again, " +
+                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2..., " +
+                //22|password|newPass
                     "You have successfully updated table 'test' at id = 22]");
     }
 
