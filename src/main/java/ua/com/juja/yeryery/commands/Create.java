@@ -66,7 +66,7 @@ public class Create implements Command {
                     manager.create(currentTableName, dataTypes);
                     view.write("Your table '" + currentTableName + "' have successfully created!");
                 } catch (SQLException e) {
-                    view.write(e.getMessage());
+                    view.write("SQL " + e.getMessage());
                 }
             } else {
                 view.write("The creating of table '" + currentTableName + "' is cancelled");

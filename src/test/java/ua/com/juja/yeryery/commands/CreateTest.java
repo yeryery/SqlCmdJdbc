@@ -3,9 +3,12 @@ package ua.com.juja.yeryery.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -27,14 +30,22 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreate() {
+    public void testCreate() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
+        String columnName1 = "someColumnName";
+        String datatype1 = "notDatatype";
+
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
                 .thenReturn("someName")
                 .thenReturn("text");
+
+        DataSet dataTypes = new DataSetImpl();
+        dataTypes.put(columnName1, datatype1);
+
+        doNothing().when(manager).create("newTable", dataTypes);
 
         //when
         command.process("create");
@@ -48,6 +59,40 @@ public class CreateTest {
                 "datatype of column 1, " +
                 //text
                 "Your table 'newTable' have successfully created!]");
+    }
+
+    @Test
+    public void testCreateWithSqlException() throws SQLException {
+        //given
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
+        String columnName1 = "someColumnName";
+        String datatype1 = "notDatatype";
+
+        when(view.read()).thenReturn("newTable")
+                .thenReturn("1")
+                .thenReturn(columnName1)
+                .thenReturn(datatype1);
+
+        DataSet dataTypes = new DataSetImpl();
+        dataTypes.put(columnName1, datatype1);
+
+        doThrow(new SQLException()).when(manager).create("newTable", dataTypes);
+
+        try {
+            manager.create("newTable", dataTypes);
+        } catch (SQLException e) {
+            view.write("SQL ERROR: type \"notdatatype\" does not exist\n" +
+                    "  Position: 67");
+        }
+
+        //when
+        command.process("create");
+
+        //then
+        verify(view).write("SQL ERROR: type \"notdatatype\" does not exist\n" +
+                "  Position: 67");
+
     }
 
     @Test
@@ -65,31 +110,19 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreateAndNegativeNumberOfColumns() {
+    public void testCreateAndEnterNegativeNumberOfColumns() {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("-1")
-                         .thenReturn("1")
-                         .thenReturn("someName")
-                         .thenReturn("text");
+                         .thenReturn("0");
 
         //when
         command.process("create");
 
-        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                    //newTable
-                    "Please enter the number of columns of your table or '0' to go back, " +
-                    //-1
-                    "Number must be positive! Try again (or type '0' to go back)., " +
-                    "Please enter the number of columns of your table or '0' to go back, " +
-                    //1
-                    "name of column 1, " +
-                    //someName
-                    "datatype of column 1, " +
-                    //text
-                    "Your table 'newTable' have successfully created!]");
+        //then
+        verify(view).write("Number must be positive! Try again (or type '0' to go back).");
     }
 
     @Test
@@ -99,25 +132,13 @@ public class CreateTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("notNumber")
-                         .thenReturn("1")
-                         .thenReturn("someName")
-                         .thenReturn("text");
+                         .thenReturn("0");
 
         //when
         command.process("create");
 
-        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                    //newTable
-                    "Please enter the number of columns of your table or '0' to go back, " +
-                    //-1
-                    "This is not number! Try again (or type '0' to go back)., " +
-                    "Please enter the number of columns of your table or '0' to go back, " +
-                    //1
-                    "name of column 1, " +
-                    //someName
-                    "datatype of column 1, " +
-                    //text
-                    "Your table 'newTable' have successfully created!]");
+        //then
+        verify(view).write("Please enter the name of table you want to create or 'cancel' to go back");
     }
 
     @Test
@@ -136,28 +157,6 @@ public class CreateTest {
                     "Please enter the number of columns of your table or '0' to go back, " +
                     //0
                     "The creating of table 'newTable' is cancelled]");
-    }
-
-    @Test
-    public void testCreateEnterTableNameNegativeNumberAndCancel() {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("newTable")
-                         .thenReturn("-1")
-                         .thenReturn("0");
-
-        //when
-        command.process("create");
-
-        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                //newTable
-                "Please enter the number of columns of your table or '0' to go back, " +
-                //-1
-                "Number must be positive! Try again (or type '0' to go back)., " +
-                "Please enter the number of columns of your table or '0' to go back, " +
-                //0
-                "The creating of table 'newTable' is cancelled]");
     }
 
     @Test

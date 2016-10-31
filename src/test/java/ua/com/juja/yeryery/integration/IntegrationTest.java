@@ -540,7 +540,7 @@ public class IntegrationTest {
                 //name
                 "datatype of column 1\n" +
                 //text
-                "ERROR: syntax error at or near \"111\"\n" +
+                "SQL ERROR: syntax error at or near \"111\"\n" +
                 "  Position: 14\n" +
                 //0
                 "Type command or 'help'\n" +
@@ -577,7 +577,7 @@ public class IntegrationTest {
                 //name
                 "datatype of column 1\n" +
                 //wrongtype
-                "ERROR: type \"wrongtype\" does not exist\n" +
+                "SQL ERROR: type \"wrongtype\" does not exist\n" +
                 "  Position: 57\n" +
                 //0
                 "Type command or 'help'\n" +
