@@ -63,7 +63,7 @@ public class InsertTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'ttable'
-                "Enter new values you require, " +
+                "Enter new values you require or '0' to go back, " +
                 "id, " +
                 //1
                 "name, " +

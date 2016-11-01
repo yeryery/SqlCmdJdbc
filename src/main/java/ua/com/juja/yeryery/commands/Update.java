@@ -33,20 +33,27 @@ public class Update implements Command {
         String currentTableName = dialog.askUser(names, view);
 
         if (!currentTableName.equals("cancel")) {
-            int size = 0;
+            int size = -1;
 
-            while (size % 2 == 0) {
+            while (size < 0) {
                 view.write("Enter id you want to update and its new values: " +
-                        "id|columnName1|newValue1|columnName2|newValue2...");
-                String[] newValues = view.read().split("\\|");
+                        "id|columnName1|newValue1|columnName2|newValue2...\n" +
+                        "or type 'cancel' to go back.");
+
+                String inputValues = view.read();
+                String[] newValues = inputValues.split("\\|");
                 size = newValues.length;
 
-                if (size % 2 == 0) {
-                    view.write("You should enter an odd number of parameters: " +
-                            "id|columnName1|newValue1|columnName2|newValue2...\n" +
-                            "Please, try again");
+                if (size % 2 == 0 || size == 1) {
+                    if (inputValues.equals("cancel")) {
+                        view.write("The updating of table '" + currentTableName + "' is cancelled");
+                        size = 0;
+                    } else {
+                        view.write("You should enter an odd number of parameters (3 or more)!\n" +
+                                "Try again.");
+                        size = -1;
+                    }
                 } else {
-
                     DataSet updatedRow = new DataSetImpl();
 
                     for (int i = 0; i < size / 2; i++) {
@@ -59,14 +66,27 @@ public class Update implements Command {
                         manager.update(currentTableName, updatedRow, id);
                         view.write("You have successfully updated table '" + currentTableName + "' at id = " + id);
                     } catch (SQLException e) {
-                        size = 0;
-                        view.write("SQL " + e.getMessage());
+                        String errorMessage = editErrorMessage(e);
+                        view.write(errorMessage);
+                        size = -1;
                     }
+                        // TODO NumberFormatException
                 }
             }
         } else {
             view.write("Table updating canceled");
         }
+    }
+
+    private String editErrorMessage(SQLException e) {
+        String result = "SQL " + e.getMessage();
+        for (int i = 0; i < result.length(); i++) {
+            if (result.charAt(i) == '\n') {
+                result = result.substring(0, i);
+                break;
+            }
+        }
+        return result + "!\nTry again.";
     }
 }
 

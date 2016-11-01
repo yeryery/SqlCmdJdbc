@@ -503,7 +503,7 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or '0' to go back\n" +
                 //-1
-                "Number must be positive! Try again (or type '0' to go back).\n" +
+                "Number must be positive!\n" +
                 "Please enter the number of columns of your table or '0' to go back\n" +
                 //0
                 "The creating of table 'somename' is cancelled\n" +
@@ -552,11 +552,7 @@ public class IntegrationTest {
         in.add("name");
         in.add("wrongType");
 
-        in.add("name");
-        in.add("text");
-        in.add("drop");
-        in.add("somename");
-        in.add("y");
+        in.add("0");
         in.add("exit");
 
         //when
@@ -573,23 +569,15 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or '0' to go back\n" +
                 //1
-                "name of column 1\n" +
+                "name of column 1:\n" +
                 //name
-                "dataType of column 1\n" +
+                "type of column 1:\n" +
                 //wrongType
-                "SQL ERROR: type \"wrongtype\" does not exist\n" +
-                "  Position: 57\n" +
-                "name of column 1\n" +
-                "dataType of column 1\n" +
-                "Your table 'somename' have successfully created!\n" +
-                "Type command or 'help'\n" +
-                "Please enter the name or select number of table you need\n" +
-                "1. somename\n" +
-                "2. test\n" +
-                "3. ttable\n" +
-                "0. cancel (to go back)\n" +
-                "Are you sure you want to drop table 'somename'? (y/n)\n" +
-                "Table 'somename' successfully dropped!\n" +
+                "SQL ERROR: type \"wrongtype\" does not exist!\n" +
+                "Try again.\n" +
+                "Please enter the number of columns of your table or '0' to go back\n" +
+                //cancel
+                "The creating of table 'somename' is cancelled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));
@@ -627,13 +615,13 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or '0' to go back\n" +
                 //2
-                "name of column 1\n" +
+                "name of column 1:\n" +
                 //name
-                "dataType of column 1\n" +
+                "type of column 1:\n" +
                 //text
-                "name of column 2\n" +
+                "name of column 2:\n" +
                 //age
-                "dataType of column 2\n" +
+                "type of column 2:\n" +
                 //int
                 "Your table 'somename' have successfully created!\n" +
                 "Type command or 'help'\n" +
@@ -725,16 +713,16 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter new values you require\n" +
+                "Enter new values you require or '0' to go back\n" +
                 //notnumber
                 "id\n" +
                 //somename
                 "name\n" +
                 //25
                 "age\n" +
-                "SQL ERROR: invalid input syntax for integer: \"notnumber\"\n" +
-                "  Position: 41\n" +
-                "Enter new values you require\n" +
+                "SQL ERROR: invalid input syntax for integer: \"notnumber\"!\n" +
+                "Try again.\n" +
+                "Enter new values you require or '0' to go back\n" +
                 "id\n" +
                 "name\n" +
                 "age\n" +
@@ -782,7 +770,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter new values you require\n" +
+                "Enter new values you require or '0' to go back\n" +
                 //10
                 "id\n" +
                 //somename
@@ -957,6 +945,7 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back.\n" +
                 "Error! For input string: \"notNumber\"\n" +
                 "Try again.\n" +
                 //exit
@@ -989,10 +978,12 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back.\n" +
                 //22 password newPass smth
-                "You should enter an odd number of parameters: id|columnName1|newValue1|columnName2|newValue2...\n" +
-                "Please, try again\n" +
+                "You should enter an odd number of parameters (3 or more)!\n" +
+                "Try again.\n" +
                 "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back.\n" +
                 //22 password pass2
                 "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +
@@ -1032,6 +1023,7 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back.\n" +
                 //22 password newPass
                 "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +
@@ -1054,6 +1046,7 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back.\n" +
                 //22 password pass2
                 "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +

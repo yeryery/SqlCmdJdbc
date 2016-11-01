@@ -54,9 +54,9 @@ public class CreateTest {
                 //newTable
                 "Please enter the number of columns of your table or '0' to go back, " +
                 //1
-                "name of column 1, " +
+                "name of column 1:, " +
                 //someName
-                "dataType of column 1, " +
+                "type of column 1:, " +
                 //text
                 "Your table 'newTable' have successfully created!]");
     }
@@ -122,7 +122,14 @@ public class CreateTest {
         command.process("create");
 
         //then
-        verify(view).write("Number must be positive! Try again (or type '0' to go back).");
+        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
+                //newTable
+                "Please enter the number of columns of your table or '0' to go back, " +
+                //-1
+                "Number must be positive!, " +
+                "Please enter the number of columns of your table or '0' to go back, " +
+                //cancel
+                "The creating of table 'newTable' is cancelled]");
     }
 
     @Test
@@ -175,7 +182,7 @@ public class CreateTest {
                 //newTable
                 "Please enter the number of columns of your table or '0' to go back, " +
                 //notNumber
-                "This is not number! Try again (or type '0' to go back)., " +
+                "This is not number!, " +
                 "Please enter the number of columns of your table or '0' to go back, " +
                 //0
                 "The creating of table 'newTable' is cancelled]");

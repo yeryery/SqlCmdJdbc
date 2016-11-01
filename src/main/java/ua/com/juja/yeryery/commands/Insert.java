@@ -34,16 +34,17 @@ public class Insert implements Command {
 
         if (!currentTableName.equals("cancel")) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            int size = 0;
+            int tableSize = -1;
 
-            while (size == 0) {
-                view.write("Enter new values you require");
-                size = tableColumns.size();
-                String[] columnNames = tableColumns.toArray(new String[size]);
-                String[] values = new String[size];
+            while (tableSize < 0) {
+                view.write("Enter new values you require or '0' to go back");
+
+                tableSize = tableColumns.size();
+                String[] columnNames = tableColumns.toArray(new String[tableSize]);
+                String[] values = new String[tableSize];
                 DataSet newRow = new DataSetImpl();
 
-                for (int i = 0; i < size; i++) {
+                for (int i = 0; i < tableSize; i++) {
                     view.write(columnNames[i]);
                     values[i] = view.read();
                     newRow.put(columnNames[i], values[i]);
@@ -53,12 +54,24 @@ public class Insert implements Command {
                     manager.insert(currentTableName, newRow);
                     view.write("You have successfully entered new data into table '" + currentTableName + "'");
                 } catch (SQLException e) {
-                    size = 0;
-                    view.write("SQL " + e.getMessage());
+                    String errorMessage = editErrorMessage(e);
+                    view.write(errorMessage);
+                    tableSize = -1;
                 }
             }
         } else {
             view.write("Table inserting canceled");
         }
+    }
+
+    private String editErrorMessage(SQLException e) {
+        String result = "SQL " + e.getMessage();
+        for (int i = 0; i < result.length(); i++) {
+            if (result.charAt(i) == '\n') {
+                result = result.substring(0, i);
+                break;
+            }
+        }
+        return result + "!\nTry again.";
     }
 }

@@ -53,7 +53,8 @@ public class UpdateTest {
                     "1. test, " +
                     "2. ttable, " +
                     "0. cancel (to go back), " +
-                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2..., " +
+                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                    "or type 'cancel' to go back., " +
                     "You have successfully updated table 'test' at id = 22]");
     }
 
@@ -103,14 +104,17 @@ public class UpdateTest {
                     "1. test, " +
                     "2. ttable, " +
                     "0. cancel (to go back), " +
-                //test
-                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2..., " +
-                //22|password|newPass|smth
-                    "You should enter an odd number of parameters: id|columnName1|newValue1|columnName2|newValue2...\n" +
-                    "Please, try again, " +
-                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2..., " +
-                //22|password|newPass
+                    //test
+                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                    "or type 'cancel' to go back., " +
+                    //22|password|newPass|smth
+                    "You should enter an odd number of parameters (3 or more)!\n" +
+                    "Try again., " +
+                    "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                    "or type 'cancel' to go back., " +
+                    //22|password|newPass
                     "You have successfully updated table 'test' at id = 22]");
+
     }
 
     @Test

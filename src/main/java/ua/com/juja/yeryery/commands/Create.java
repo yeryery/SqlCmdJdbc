@@ -36,28 +36,32 @@ public class Create implements Command {
 
         if (!currentTableName.equals("cancel")) {
             int tableSize = -1;
-            do {
+
+            while (tableSize < 0) {
                 view.write("Please enter the number of columns of your table or '0' to go back");
                 try {
                     tableSize = parseInt(view.read());
+
                     if (tableSize < 0) {
-                        view.write("Number must be positive! Try again (or type '0' to go back).");
+                        view.write("Number must be positive!");
                     }
                 } catch (NumberFormatException e) {
-                    view.write("This is not number! Try again (or type '0' to go back).");
+                    view.write("This is not number!");
                 }
-            }
-            while (tableSize < 0);
 
-            if (tableSize != 0) {
-                DataSet dataTypes = new DataSetImpl();
 
-                while (dataTypes.isEmpty()) {
+                if (tableSize == 0) {
+                    view.write("The creating of table '" + currentTableName + "' is cancelled");
+                }
+
+                if (tableSize > 0) {
+                    DataSet dataTypes = new DataSetImpl();
+
                     for (int i = 0; i < tableSize; i++) {
-                        view.write("name of column " + (i + 1));
+                        view.write("name of column " + (i + 1) + ":");
                         String columnName = view.read();
 
-                        view.write("dataType of column " + (i + 1));
+                        view.write("type of column " + (i + 1) + ":");
                         String dataType = view.read();
 
                         dataTypes.put(columnName, dataType);
@@ -67,16 +71,26 @@ public class Create implements Command {
                         manager.create(currentTableName, dataTypes);
                         view.write("Your table '" + currentTableName + "' have successfully created!");
                     } catch (SQLException e) {
-                        dataTypes = new DataSetImpl();
-                        view.write("SQL " + e.getMessage());
+                        String errorMessage = editErrorMessage(e);
+                        view.write(errorMessage);
+                        tableSize = -1;
                     }
                 }
-            } else {
-                view.write("The creating of table '" + currentTableName + "' is cancelled");
             }
         } else {
             view.write("Table creating canceled");
         }
+    }
+
+    private String editErrorMessage(SQLException e) {
+        String result = "SQL " + e.getMessage();
+        for (int i = 0; i < result.length(); i++) {
+            if (result.charAt(i) == '\n') {
+                result = result.substring(0, i);
+                break;
+            }
+        }
+        return result + "!\nTry again.";
     }
 }
 
