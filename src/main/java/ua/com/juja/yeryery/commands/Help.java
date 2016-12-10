@@ -22,7 +22,7 @@ public class Help implements Command {
         view.write("\tconnect|database|username|password");
         view.write("\t\tConnect to Database");
 
-        view.write("\tlist");
+        view.write("\tcontent");
         view.write("\t\tContent of tables");
 
         view.write("\tcreate");

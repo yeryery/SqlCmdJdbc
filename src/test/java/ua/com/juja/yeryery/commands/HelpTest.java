@@ -42,7 +42,7 @@ public class HelpTest {
         assertEquals("Content of commands:\n" +
                       "\tconnect|database|username|password\n" +
                       "\t\tConnect to Database\n" +
-                      "\tlist\n" +
+                      "\tcontent\n" +
                       "\t\tContent of tables\n" +
                       "\tcreate\n" +
                       "\t\tCreate new table\n" +

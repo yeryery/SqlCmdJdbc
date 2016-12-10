@@ -52,7 +52,7 @@ public class IntegrationTest {
                 "Content of commands:\r\n" +
                 "\tconnect|database|username|password\r\n" +
                 "\t\tConnect to Database\r\n" +
-                "\tlist\r\n" +
+                "\tcontent\r\n" +
                 "\t\tContent of tables\r\n" +
                 "\tcreate\r\n" +
                 "\t\tCreate new table\r\n" +

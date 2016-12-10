@@ -52,7 +52,7 @@ public class CreateTest {
 
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //newTable
-                "Please enter the number of columns of your table or '0' to go back, " +
+                "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //1
                 "name of column 1:, " +
                 //someName
@@ -116,7 +116,7 @@ public class CreateTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("-1")
-                         .thenReturn("0");
+                         .thenReturn("cancel");
 
         //when
         command.process("create");
@@ -124,12 +124,12 @@ public class CreateTest {
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //newTable
-                "Please enter the number of columns of your table or '0' to go back, " +
+                "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //-1
                 "Number must be positive!, " +
-                "Please enter the number of columns of your table or '0' to go back, " +
+                "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //cancel
-                "The creating of table 'newTable' is cancelled]");
+                "Table creating canceled]");
     }
 
     @Test
@@ -139,7 +139,7 @@ public class CreateTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("notNumber")
-                         .thenReturn("0");
+                         .thenReturn("cancel");
 
         //when
         command.process("create");
@@ -154,16 +154,16 @@ public class CreateTest {
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
-                         .thenReturn("0");
+                         .thenReturn("cancel");
 
         //when
         command.process("create");
 
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                     //newTable
-                    "Please enter the number of columns of your table or '0' to go back, " +
+                    "Please enter the number of columns of your table or 'cancel' to go back, " +
                     //0
-                    "The creating of table 'newTable' is cancelled]");
+                    "Table creating canceled]");
     }
 
     @Test
@@ -173,19 +173,19 @@ public class CreateTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("newTable")
                          .thenReturn("notNumber")
-                         .thenReturn("0");
+                         .thenReturn("cancel");
 
         //when
         command.process("create");
 
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //newTable
-                "Please enter the number of columns of your table or '0' to go back, " +
+                "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //notNumber
-                "This is not number!, " +
-                "Please enter the number of columns of your table or '0' to go back, " +
+                "This is not a number!, " +
+                "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //0
-                "The creating of table 'newTable' is cancelled]");
+                "Table creating canceled]");
     }
 
     private void shouldPrint(String expected) {
