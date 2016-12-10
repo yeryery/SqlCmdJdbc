@@ -149,7 +149,7 @@ public class DisplayTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 "Table displaying canceled]");
-                //cancel
+        //cancel
     }
 
     private void shouldPrint(String expected) {

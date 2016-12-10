@@ -19,7 +19,7 @@ public interface DatabaseManager {
 
     boolean isConnected();
 
-    void insert(String tableName, DataSet input) throws SQLException ;
+    void insert(String tableName, DataSet input) throws SQLException;
 
     void update(String tableName, DataSet input, int id) throws SQLException;
 

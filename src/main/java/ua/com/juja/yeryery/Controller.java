@@ -8,22 +8,22 @@ public class Controller {
 
     private View view;
     private Command[] commands;
-    private String  connectToDatabase = "Please, enter: " +
-                "'connect|database|username|password' or use command 'help'";
+    private String connectToDatabase = "Please, enter: " +
+            "'connect|database|username|password' or use command 'help'";
 
     public Controller(View view, DatabaseManager manager) {
         this.view = view;
-        this.commands = new Command[] {new Connect(view, manager),
-                                       new Clear(view, manager),
-                                       new Create(view, manager),
-                                       new Drop(view, manager),
-                                       new Content(view, manager),
-                                       new Insert(view, manager),
-                                       new Display(view, manager),
-                                       new Update(view, manager),
-                                       new Exit(view),
-                                       new Help(view),
-                                       new Unknown(view)};
+        this.commands = new Command[]{new Connect(view, manager),
+                new Clear(view, manager),
+                new Create(view, manager),
+                new Drop(view, manager),
+                new Content(view, manager),
+                new Insert(view, manager),
+                new Display(view, manager),
+                new Update(view, manager),
+                new Exit(view),
+                new Help(view),
+                new Unknown(view)};
     }
 
     public void run() {

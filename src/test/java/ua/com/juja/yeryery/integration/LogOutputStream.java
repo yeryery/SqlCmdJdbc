@@ -9,7 +9,7 @@ public class LogOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        log += String.valueOf((char)b);
+        log += String.valueOf((char) b);
     }
 
     public String getData() {

@@ -38,7 +38,7 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-                //1
+        //1
         assertEquals("test", actual);
     }
 
@@ -56,7 +56,7 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-                //test
+        //test
         assertEquals("test", actual);
     }
 
@@ -74,7 +74,7 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-                //cancel
+        //cancel
         assertEquals("cancel", actual);
     }
 
@@ -92,7 +92,7 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-                //0
+        //0
         assertEquals("cancel", actual);
     }
 
@@ -116,7 +116,7 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-                //cancel
+        //cancel
         assertEquals("cancel", actual);
     }
 
@@ -140,7 +140,7 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-                //cancel
+        //cancel
         assertEquals("cancel", actual);
     }
 

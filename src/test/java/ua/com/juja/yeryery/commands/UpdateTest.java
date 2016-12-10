@@ -50,12 +50,12 @@ public class UpdateTest {
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to update, " +
-                    "1. test, " +
-                    "2. ttable, " +
-                    "0. cancel (to go back), " +
-                    "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
-                    "or type 'cancel' to go back., " +
-                    "You have successfully updated table 'test' at id = 22]");
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back., " +
+                "You have successfully updated table 'test' at id = 22]");
     }
 
     @Test
@@ -101,19 +101,19 @@ public class UpdateTest {
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to update, " +
-                    "1. test, " +
-                    "2. ttable, " +
-                    "0. cancel (to go back), " +
-                    //test
-                    "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
-                    "or type 'cancel' to go back., " +
-                    //22|password|newPass|smth
-                    "You should enter an odd number of parameters (3 or more)!\n" +
-                    "Try again., " +
-                    "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
-                    "or type 'cancel' to go back., " +
-                    //22|password|newPass
-                    "You have successfully updated table 'test' at id = 22]");
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //test
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back., " +
+                //22|password|newPass|smth
+                "You should enter an odd number of parameters (3 or more)!\n" +
+                "Try again., " +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "or type 'cancel' to go back., " +
+                //22|password|newPass
+                "You have successfully updated table 'test' at id = 22]");
 
     }
 

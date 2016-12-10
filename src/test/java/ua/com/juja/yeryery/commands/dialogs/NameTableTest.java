@@ -50,12 +50,12 @@ public class NameTableTest {
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                    //test
-                    "Table with name 'test' already exists!, " +
-                    "[test, ttable], " +
-                    "Try again., " +
-                    "Please enter the name of table you want to create or 'cancel' to go back]");
-                    //cancel
+                //test
+                "Table with name 'test' already exists!, " +
+                "[test, ttable], " +
+                "Try again., " +
+                "Please enter the name of table you want to create or 'cancel' to go back]");
+        //cancel
     }
 
     @Test

@@ -3,6 +3,7 @@ package ua.com.juja.yeryery.integration;
 import org.junit.Before;
 import org.junit.Test;
 import ua.com.juja.yeryery.Main;
+
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
@@ -287,7 +288,7 @@ public class IntegrationTest {
                 "[test, ttable]\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -320,7 +321,7 @@ public class IntegrationTest {
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -353,7 +354,7 @@ public class IntegrationTest {
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -389,7 +390,7 @@ public class IntegrationTest {
                 "Table displaying canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -415,7 +416,7 @@ public class IntegrationTest {
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -447,7 +448,7 @@ public class IntegrationTest {
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -476,7 +477,7 @@ public class IntegrationTest {
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -509,7 +510,7 @@ public class IntegrationTest {
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -539,7 +540,7 @@ public class IntegrationTest {
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -580,7 +581,7 @@ public class IntegrationTest {
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -648,7 +649,7 @@ public class IntegrationTest {
                 "Table 'somename' successfully dropped!\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -677,7 +678,7 @@ public class IntegrationTest {
                 "Table inserting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -736,7 +737,7 @@ public class IntegrationTest {
                 "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -801,7 +802,7 @@ public class IntegrationTest {
                 "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -830,7 +831,7 @@ public class IntegrationTest {
                 "Table dropping canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -859,7 +860,7 @@ public class IntegrationTest {
                 "Table dropping canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -888,7 +889,7 @@ public class IntegrationTest {
                 "Table updating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -917,7 +918,7 @@ public class IntegrationTest {
                 "Table updating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -949,7 +950,7 @@ public class IntegrationTest {
                 "Error! For input string: \"notNumber\"\n" +
                 "Try again.\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -988,7 +989,7 @@ public class IntegrationTest {
                 "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -1063,7 +1064,7 @@ public class IntegrationTest {
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -1095,6 +1096,6 @@ public class IntegrationTest {
                 "The clearing of table 'ttable' is cancelled\n" +
                 "Type command or 'help'\n" +
                 //exit
-                "See you!", out.getData().trim().replace("\r",""));
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 }
