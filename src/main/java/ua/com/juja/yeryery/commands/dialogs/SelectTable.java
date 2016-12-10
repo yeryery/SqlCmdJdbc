@@ -5,6 +5,7 @@ import ua.com.juja.yeryery.view.View;
 import java.util.*;
 
 public class SelectTable implements Dialog {
+
     @Override
     public String askUser(Set<String> names, View view, String action) {
 
@@ -41,18 +42,16 @@ public class SelectTable implements Dialog {
                     view.write("There is no table with this number! Try again.");
                 }
             } else {
-                String check = "";
 
                 for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
                     if (input.equals(entry.getValue())) {
-                        check = input;
+                        tableName = input;
                     }
                 }
 
-                if (check.equals("")) {
+                if (tableName.equals("")) {
                     view.write("Table with name '" + input + "' doesn't exists! Try again.");
                 }
-                tableName = check;
             }
         }
         return tableName;

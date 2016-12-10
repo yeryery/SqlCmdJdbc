@@ -8,15 +8,16 @@ public class NameTable implements Dialog {
 
     @Override
     public String askUser(Set<String> names, View view, String action) {
-        String tableName;
+        String tableName = "";
 
-        while (true) {
+        while (tableName.equals("")) {
             view.write("Please enter the name of table you want to " + action + " or 'cancel' to go back");
             tableName = view.read();
 
             char firstLetter = tableName.charAt(0);
             if (!(firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z')) {
                 view.write("Table name must begin with a letter! Try again.");
+                tableName = "";
                 continue;
             }
 
@@ -27,10 +28,6 @@ public class NameTable implements Dialog {
                     view.write("Try again.");
                     tableName = "";
                 }
-            }
-
-            if (!tableName.equals("")) {
-                break;
             }
         }
         return tableName;
