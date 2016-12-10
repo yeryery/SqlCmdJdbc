@@ -65,13 +65,7 @@ public class DropTest {
                 //Select table number 1
                 "Are you sure you want to drop table 'test'? (y/n), " +
                 //no
-                "The dropping of table 'test' is cancelled, " +
-                "Please enter the name or select number of table you want to drop, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Table dropping canceled]");
+                "The dropping of table 'test' is cancelled]");
     }
 
     @Test

@@ -713,7 +713,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter new values you require or '0' to go back\n" +
+                "Enter new values you require\n" +
                 //notnumber
                 "id\n" +
                 //somename
@@ -722,11 +722,11 @@ public class IntegrationTest {
                 "age\n" +
                 "SQL ERROR: invalid input syntax for integer: \"notnumber\"!\n" +
                 "Try again.\n" +
-                "Enter new values you require or '0' to go back\n" +
+                "Enter new values you require\n" +
                 "id\n" +
                 "name\n" +
                 "age\n" +
-                "You have successfully entered new data into table 'ttable'\n" +
+                "You have successfully entered new data into the table 'ttable'\n" +
                 "Type command or 'help'\n" +
                 "Please enter the name or select number of table you want to clear\n" +
                 "1. test\n" +
@@ -770,14 +770,14 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter new values you require or '0' to go back\n" +
+                "Enter new values you require\n" +
                 //10
                 "id\n" +
                 //somename
                 "name\n" +
                 //25
                 "age\n" +
-                "You have successfully entered new data into table 'ttable'\n" +
+                "You have successfully entered new data into the table 'ttable'\n" +
                 "Type command or 'help'\n" +
                 //display
                 "Please enter the name or select number of table you want to display\n" +
@@ -1073,8 +1073,6 @@ public class IntegrationTest {
         in.add("clear");
         in.add("2");
         in.add("n");
-        in.add("2");
-        in.add("y");
         in.add("exit");
 
         //when
@@ -1095,14 +1093,6 @@ public class IntegrationTest {
                 "Are you sure you want to clear table 'ttable'? (y/n)\n" +
                 //n
                 "The clearing of table 'ttable' is cancelled\n" +
-                "Please enter the name or select number of table you want to clear\n" +
-                "1. test\n" +
-                "2. ttable\n" +
-                "0. cancel (to go back)\n" +
-                //2
-                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
-                //y
-                "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r",""));

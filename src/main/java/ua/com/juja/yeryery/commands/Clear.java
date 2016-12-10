@@ -26,29 +26,25 @@ public class Clear implements Command {
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-        String confirm;
+
         Dialog dialog = new SelectTable();
+        String currentTableName = dialog.askUser(names, view, ACTION);
 
-        do {
-            String currentTableName = dialog.askUser(names, view, ACTION);
+        if (!currentTableName.equals("cancel")) {
+            String confirm = "";
+            while (!confirm.equals("y") && !confirm.equals("n")) {
+                view.write(String.format("Are you sure you want to clear table '%s'? (y/n)", currentTableName));
+                confirm = view.read();
 
-            if (!currentTableName.equals("cancel")) {
-                confirm = "";
-                while (!confirm.equals("y") && !confirm.equals("n")) {
-                    view.write(String.format("Are you sure you want to clear table '%s'? (y/n)", currentTableName));
-                    confirm = view.read();
-
-                    if (confirm.equals("y")) {
-                        manager.clear(currentTableName);
-                        view.write(String.format("Table '%s' successfully cleared!", currentTableName));
-                    } else if (confirm.equals("n")){
-                        view.write("The clearing of table '" + currentTableName + "' is cancelled");
-                    }
+                if (confirm.equals("y")) {
+                    manager.clear(currentTableName);
+                    view.write(String.format("Table '%s' successfully cleared!", currentTableName));
+                } else if (confirm.equals("n")) {
+                    view.write("The clearing of table '" + currentTableName + "' is cancelled");
                 }
-            } else {
-                view.write("Table clearing canceled");
-                confirm = "";
             }
-        } while (confirm.equals("n"));
+        } else {
+            view.write("Table clearing canceled");
+        }
     }
 }

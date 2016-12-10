@@ -63,14 +63,14 @@ public class InsertTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'ttable'
-                "Enter new values you require or '0' to go back, " +
+                "Enter new values you require, " +
                 "id, " +
                 //1
                 "name, " +
                 //username1
                 "password, " +
                 //pass1
-                "You have successfully entered new data into table 'ttable']");
+                "You have successfully entered new data into the table 'ttable']");
     }
 
     @Test

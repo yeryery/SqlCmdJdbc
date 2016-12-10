@@ -37,7 +37,7 @@ public class Insert implements Command {
             int tableSize = -1;
 
             while (tableSize < 0) {
-                view.write("Enter new values you require or '0' to go back");
+                view.write("Enter new values you require");
 
                 tableSize = tableColumns.size();
                 String[] columnNames = tableColumns.toArray(new String[tableSize]);
@@ -52,7 +52,7 @@ public class Insert implements Command {
 
                 try {
                     manager.insert(currentTableName, newRow);
-                    view.write("You have successfully entered new data into table '" + currentTableName + "'");
+                    view.write("You have successfully entered new data into the table '" + currentTableName + "'");
                 } catch (SQLException e) {
                     String errorMessage = editErrorMessage(e);
                     view.write(errorMessage);

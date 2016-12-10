@@ -65,13 +65,7 @@ public class ClearTest {
                 //Select table number 1
                 "Are you sure you want to clear table 'test'? (y/n), " +
                 //no
-                "The clearing of table 'test' is cancelled, " +
-                "Please enter the name or select number of table you want to clear, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Table clearing canceled]");
+                "The clearing of table 'test' is cancelled]");
     }
 
     @Test
