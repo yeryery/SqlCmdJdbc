@@ -77,6 +77,7 @@ public class Create implements Command {
                 } catch (SQLException e) {
                     String errorMessage = editErrorMessage(e);
                     view.write(errorMessage);
+                    continue;
                 }
                 break;
             }
