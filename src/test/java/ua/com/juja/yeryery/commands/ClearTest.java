@@ -37,7 +37,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -58,7 +58,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -66,7 +66,7 @@ public class ClearTest {
                 "Are you sure you want to clear table 'test'? (y/n), " +
                 //no
                 "The clearing of table 'test' is cancelled, " +
-                "Please enter the name or select number of table you need, " +
+                "Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -85,7 +85,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -108,7 +108,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

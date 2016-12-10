@@ -16,6 +16,7 @@ public class Create implements Command {
 
     private View view;
     private DatabaseManager manager;
+    private final String ACTION = "create";
 
     public Create(View view, DatabaseManager manager) {
         this.view = view;
@@ -24,7 +25,7 @@ public class Create implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("create");
+        return input.equals(ACTION);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Create implements Command {
         Set<String> names = manager.getTableNames();
 
         Dialog dialog = new NameTable();
-        String currentTableName = dialog.askUser(names, view);
+        String currentTableName = dialog.askUser(names, view, ACTION);
 
         while (true) {
             if (currentTableName.equals("cancel")) {

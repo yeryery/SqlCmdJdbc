@@ -16,6 +16,7 @@ public class NameTableTest {
 
     private View view;
     private Dialog dialog;
+    private final String ACTION = "create";
 
     @Before
     public void setup() {
@@ -30,7 +31,7 @@ public class NameTableTest {
         when(view.read()).thenReturn("myTable");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
         verify(view).write("Please enter the name of table you want to create or 'cancel' to go back");
@@ -45,7 +46,7 @@ public class NameTableTest {
         when(view.read()).thenReturn("test").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
@@ -64,7 +65,7 @@ public class NameTableTest {
         when(view.read()).thenReturn("1name").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
         verify(view).write("Table name must begin with a letter! Try again.");

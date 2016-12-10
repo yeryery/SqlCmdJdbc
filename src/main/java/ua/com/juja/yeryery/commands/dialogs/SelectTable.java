@@ -6,7 +6,7 @@ import java.util.*;
 
 public class SelectTable implements Dialog {
     @Override
-    public String askUser(Set<String> names, View view) {
+    public String askUser(Set<String> names, View view, String action) {
 
         String tableName = "";
 
@@ -20,7 +20,7 @@ public class SelectTable implements Dialog {
         }
 
         while (tableName.equals("")) {
-            view.write("Please enter the name or select number of table you need");
+            view.write("Please enter the name or select number of table you want to " + action);
 
             tableNames.remove(0);
             for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {

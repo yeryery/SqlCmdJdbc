@@ -16,6 +16,7 @@ public class SelectTableTest {
 
     private View view;
     private Dialog dialog;
+    private final String ACTION = "display";
 
     @Before
     public void setup() {
@@ -30,10 +31,10 @@ public class SelectTableTest {
         when(view.read()).thenReturn("1");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -48,10 +49,10 @@ public class SelectTableTest {
         when(view.read()).thenReturn("test");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -66,10 +67,10 @@ public class SelectTableTest {
         when(view.read()).thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -84,10 +85,10 @@ public class SelectTableTest {
         when(view.read()).thenReturn("0");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -102,16 +103,16 @@ public class SelectTableTest {
         when(view.read()).thenReturn("notExist").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExist
                 "Table with name 'notExist' doesn't exists! Try again., " +
-                "Please enter the name or select number of table you need, " +
+                "Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -126,16 +127,16 @@ public class SelectTableTest {
         when(view.read()).thenReturn("3").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view);
+        String actual = dialog.askUser(tableNames, view, ACTION);
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExist
                 "There is no table with this number! Try again., " +
-                "Please enter the name or select number of table you need, " +
+                "Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");

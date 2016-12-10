@@ -11,26 +11,26 @@ public class Clear implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private Dialog dialog;
+    private final String ACTION = "clear";
 
     public Clear(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        dialog = new SelectTable();
     }
 
     @Override
     public boolean canProcess(String input) {
-        return input.startsWith("clear");
+        return input.startsWith(ACTION);
     }
 
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
         String confirm;
+        Dialog dialog = new SelectTable();
 
         do {
-            String currentTableName = dialog.askUser(names, view);
+            String currentTableName = dialog.askUser(names, view, ACTION);
 
             if (!currentTableName.equals("cancel")) {
                 confirm = "";

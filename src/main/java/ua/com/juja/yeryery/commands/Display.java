@@ -12,23 +12,23 @@ import java.util.Set;
 public class Display implements Command {
     private View view;
     private DatabaseManager manager;
-    private Dialog dialog;
+    private final String ACTION = "display";
 
     public Display(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        dialog = new SelectTable();
     }
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("display");
+        return input.equals(ACTION);
     }
 
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-        String currentTableName = dialog.askUser(names, view);
+        Dialog dialog = new SelectTable();
+        String currentTableName = dialog.askUser(names, view, ACTION);
 
         if (!currentTableName.equals("cancel")) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);

@@ -14,23 +14,23 @@ public class Insert implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private Dialog dialog;
+    private final String ACTION = "insert";
 
     public Insert(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        dialog = new SelectTable();
     }
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("insert");
+        return input.equals(ACTION);
     }
 
     @Override
     public void process(String input) {
         Set<String> tableNames = manager.getTableNames();
-        String currentTableName = dialog.askUser(tableNames, view);
+        Dialog dialog = new SelectTable();
+        String currentTableName = dialog.askUser(tableNames, view, ACTION);
 
         if (!currentTableName.equals("cancel")) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);

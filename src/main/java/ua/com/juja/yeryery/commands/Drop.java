@@ -10,26 +10,26 @@ import java.util.Set;
 public class Drop implements Command {
     private View view;
     private DatabaseManager manager;
-    private Dialog dialog;
+    private final String ACTION = "drop";
 
     public Drop(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        dialog = new SelectTable();
     }
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("drop");
+        return input.equals(ACTION);
     }
 
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
+        Dialog dialog = new SelectTable();
         String confirm = "";
 
         do {
-            String currentTableName = dialog.askUser(names, view);
+            String currentTableName = dialog.askUser(names, view, ACTION);
 
             if (!currentTableName.equals("cancel")) {
                 confirm = "";

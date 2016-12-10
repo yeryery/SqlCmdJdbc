@@ -5,13 +5,20 @@ import ua.com.juja.yeryery.view.View;
 import java.util.Set;
 
 public class NameTable implements Dialog {
-    @Override
-    public String askUser(Set<String> names, View view) {
-        String uniqueName = "";
 
-        while (uniqueName.equals("")) {
-            view.write("Please enter the name of table you want to create or 'cancel' to go back");
-            String tableName = view.read();
+    @Override
+    public String askUser(Set<String> names, View view, String action) {
+        String tableName;
+
+        while (true) {
+            view.write("Please enter the name of table you want to " + action + " or 'cancel' to go back");
+            tableName = view.read();
+
+            char firstLetter = tableName.charAt(0);
+            if (!(firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z')) {
+                view.write("Table name must begin with a letter! Try again.");
+                continue;
+            }
 
             for (String name : names) {
                 if (tableName.equals(name)) {
@@ -20,17 +27,12 @@ public class NameTable implements Dialog {
                     view.write("Try again.");
                     tableName = "";
                 }
-                uniqueName = tableName;
             }
 
-            if (!uniqueName.equals("")) {
-                char firstLetter = uniqueName.charAt(0);
-                if (!(firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z')) {
-                    view.write("Table name must begin with a letter! Try again.");
-                    uniqueName = "";
-                }
+            if (!tableName.equals("")) {
+                break;
             }
         }
-        return uniqueName;
+        return tableName;
     }
 }

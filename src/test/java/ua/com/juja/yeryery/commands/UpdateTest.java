@@ -49,7 +49,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to update, " +
                     "1. test, " +
                     "2. ttable, " +
                     "0. cancel (to go back), " +
@@ -100,7 +100,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to update, " +
                     "1. test, " +
                     "2. ttable, " +
                     "0. cancel (to go back), " +
@@ -128,7 +128,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -147,7 +147,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

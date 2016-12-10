@@ -54,7 +54,7 @@ public class DisplayTest {
         command.process("display");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -93,7 +93,7 @@ public class DisplayTest {
         command.process("display");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -123,7 +123,7 @@ public class DisplayTest {
         command.process("display");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -144,7 +144,7 @@ public class DisplayTest {
         command.process("display");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you need, " +
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
