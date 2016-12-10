@@ -10,6 +10,8 @@ import ua.com.juja.yeryery.view.View;
 import java.sql.SQLException;
 import java.util.Set;
 
+import static java.lang.Integer.parseInt;
+
 public class Update implements Command {
 
     private View view;
@@ -36,7 +38,7 @@ public class Update implements Command {
             int size = -1;
 
             while (size < 0) {
-                view.write("Enter id you want to update and its new values: " +
+                view.write("Enter id you want to update, columnName and its new values: " +
                         "id|columnName1|newValue1|columnName2|newValue2...\n" +
                         "or type 'cancel' to go back.");
 
@@ -57,10 +59,16 @@ public class Update implements Command {
                     DataSet updatedRow = new DataSetImpl();
 
                     for (int i = 0; i < size / 2; i++) {
-                        updatedRow.put(newValues[2 * i + 1], newValues[2 * i + 2]);
+                        String updatedColumn = newValues[i + 1];
+                        String newValue = newValues[i + 2];
+                        if (isParsable(newValue)) {
+                            updatedRow.put(updatedColumn, parseInt(newValue));
+                        } else {
+                            updatedRow.put(updatedColumn, newValue);
+                        }
                     }
 
-                    int id = Integer.parseInt(newValues[0]);
+                    int id = parseInt(newValues[0]);
 
                     try {
                         manager.update(currentTableName, updatedRow, id);
@@ -70,7 +78,6 @@ public class Update implements Command {
                         view.write(errorMessage);
                         size = -1;
                     }
-                        // TODO NumberFormatException
                 }
             }
         } else {
@@ -87,6 +94,16 @@ public class Update implements Command {
             }
         }
         return result + "!\nTry again.";
+    }
+
+    private boolean isParsable(String read) {
+        boolean parsable = true;
+        try {
+            Integer.parseInt(read);
+        } catch (NumberFormatException e) {
+            parsable = false;
+        }
+        return parsable;
     }
 }
 

@@ -156,7 +156,6 @@ public class JdbcManager implements DatabaseManager {
     private String getDataSetFormatted(DataSet input) {
         String result = "";
         Set<String> columnNames = input.getColumnNames();
-        List<Object> values = input.getValues();
 
         for (String columnName : columnNames) {
             result += columnName + " ";

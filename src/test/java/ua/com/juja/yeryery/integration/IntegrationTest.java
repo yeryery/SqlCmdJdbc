@@ -944,7 +944,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
                 "Error! For input string: \"notNumber\"\n" +
                 "Try again.\n" +
@@ -977,12 +977,12 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
                 //22 password newPass smth
                 "You should enter an odd number of parameters (3 or more)!\n" +
                 "Try again.\n" +
-                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
                 //22 password pass2
                 "You have successfully updated table 'test' at id = 22\n" +
@@ -1022,7 +1022,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
                 //22 password newPass
                 "You have successfully updated table 'test' at id = 22\n" +
@@ -1045,7 +1045,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter id you want to update and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
+                "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
                 //22 password pass2
                 "You have successfully updated table 'test' at id = 22\n" +
