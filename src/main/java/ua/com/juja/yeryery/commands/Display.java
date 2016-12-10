@@ -38,7 +38,6 @@ public class Display implements Command {
         } else {
             view.write("Table displaying canceled");
         }
-
     }
 
     private void printValues(List<DataSet> dataSets) {
