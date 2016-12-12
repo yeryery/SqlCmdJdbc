@@ -7,11 +7,11 @@ import java.util.Set;
 public class NameTable implements Dialog {
 
     @Override
-    public String askUser(Set<String> names, View view, String action) {
+    public String askUser(Set<String> names, View view, String act) {
         String tableName = "";
 
         while (tableName.equals("")) {
-            view.write("Please enter the name of table you want to " + action + " or 'cancel' to go back");
+            view.write(String.format("Please enter the name of table you want to %s or 'cancel' to go back", act));
             tableName = view.read();
 
             char firstLetter = tableName.charAt(0);
@@ -23,7 +23,7 @@ public class NameTable implements Dialog {
 
             for (String name : names) {
                 if (tableName.equals(name)) {
-                    view.write("Table with name '" + tableName + "' already exists!");
+                    view.write(String.format("Table with name '%s' already exists!", tableName));
                     view.write(names.toString());
                     view.write("Try again.");
                     tableName = "";
@@ -31,5 +31,10 @@ public class NameTable implements Dialog {
             }
         }
         return tableName;
+    }
+
+    @Override
+    public boolean isConfirmed(String name, View view, String act) {
+        return true;
     }
 }

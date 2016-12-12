@@ -31,18 +31,15 @@ public class Clear implements Command {
         String currentTableName = dialog.askUser(names, view, ACTION);
 
         if (!currentTableName.equals("cancel")) {
-            String confirm = "";
-            while (!confirm.equals("y") && !confirm.equals("n")) {
-                view.write(String.format("Are you sure you want to clear table '%s'? (y/n)", currentTableName));
-                confirm = view.read();
+            boolean confirmed = dialog.isConfirmed(currentTableName, view, ACTION);
 
-                if (confirm.equals("y")) {
-                    manager.clear(currentTableName);
-                    view.write(String.format("Table '%s' successfully cleared!", currentTableName));
-                } else if (confirm.equals("n")) {
-                    view.write("The clearing of table '" + currentTableName + "' is cancelled");
-                }
+            if (confirmed) {
+                manager.clear(currentTableName);
+                view.write(String.format("Table '%s' successfully cleared!", currentTableName));
+            } else {
+                view.write(String.format("The clearing of table '%s' is cancelled", currentTableName));
             }
+
         } else {
             view.write("Table clearing canceled");
         }

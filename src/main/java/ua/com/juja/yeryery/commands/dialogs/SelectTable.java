@@ -21,7 +21,7 @@ public class SelectTable implements Dialog {
         }
 
         while (tableName.equals("")) {
-            view.write("Please enter the name or select number of table you want to " + action);
+            view.write(String.format("Please enter the name or select number of table you want to %s", action));
 
             tableNames.remove(0);
             for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
@@ -50,11 +50,27 @@ public class SelectTable implements Dialog {
                 }
 
                 if (tableName.equals("")) {
-                    view.write("Table with name '" + input + "' doesn't exists! Try again.");
+                    view.write(String.format("Table with name '%s' doesn't exist! Try again.", input));
                 }
             }
         }
         return tableName;
+    }
+
+    @Override
+    public boolean isConfirmed(String name, View view, String act) {
+        String confirm = "";
+
+        while (!confirm.equals("y") && !confirm.equals("n")) {
+            view.write(String.format("Are you sure you want to %s table '%s'? (y/n)", act, name));
+            confirm = view.read();
+        }
+
+        boolean result = false;
+        if (confirm.equals("y")) {
+            result = true;
+        }
+        return result;
     }
 
     private boolean isParsable(String read) {

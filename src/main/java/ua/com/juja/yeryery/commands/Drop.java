@@ -30,18 +30,15 @@ public class Drop implements Command {
         String currentTableName = dialog.askUser(names, view, ACTION);
 
         if (!currentTableName.equals("cancel")) {
-            String confirm = "";
-            while (!confirm.equals("y") && !confirm.equals("n")) {
-                view.write(String.format("Are you sure you want to drop table '%s'? (y/n)", currentTableName));
-                confirm = view.read();
+            boolean confirmed = dialog.isConfirmed(currentTableName, view, ACTION);
 
-                if (confirm.equals("y")) {
-                    manager.drop(currentTableName);
-                    view.write(String.format("Table '%s' successfully dropped!", currentTableName));
-                } else if (confirm.equals("n")) {
-                    view.write("The dropping of table '" + currentTableName + "' is cancelled");
-                }
+            if (confirmed) {
+                manager.drop(currentTableName);
+                view.write(String.format("Table '%s' successfully dropped!", currentTableName));
+            } else {
+                view.write(String.format("The dropping of table '%s' is cancelled", currentTableName));
             }
+
         } else {
             view.write("Table dropping canceled");
         }
