@@ -998,12 +998,12 @@ public class IntegrationTest {
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("update");
         in.add("test");
-        in.add("12|password|newPass");
+        in.add("22|password|newPass");
         in.add("display");
         in.add("test");
         in.add("update");
         in.add("test");
-        in.add("12|password|pass1");
+        in.add("22|password|pass2");
         in.add("display");
         in.add("test");
         in.add("exit");
@@ -1025,8 +1025,8 @@ public class IntegrationTest {
                 //test
                 "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
-                //12 password newPass
-                "You have successfully updated table 'test' at id = 12\n" +
+                //22 password newPass
+                "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +
                 //display
                 "Please enter the name or select number of table you want to display\n" +
@@ -1036,8 +1036,8 @@ public class IntegrationTest {
                 //test
                 "| id | login | password | \n" +
                 "-------------------------\n" +
-                "| 12 | username1 | newPass | \n" +
-                "| 22 | username2 | pass2 | \n" +
+                "| 12 | username1 | pass1 | \n" +
+                "| 22 | username2 | newPass | \n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //update
@@ -1048,8 +1048,8 @@ public class IntegrationTest {
                 //test
                 "Enter id you want to update, columnName and its new values: id|columnName1|newValue1|columnName2|newValue2...\n" +
                 "or type 'cancel' to go back.\n" +
-                //12 password pass1
-                "You have successfully updated table 'test' at id = 12\n" +
+                //22 password pass2
+                "You have successfully updated table 'test' at id = 22\n" +
                 "Type command or 'help'\n" +
                 //display
                 "Please enter the name or select number of table you want to display\n" +

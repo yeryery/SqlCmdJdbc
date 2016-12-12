@@ -35,16 +35,15 @@ public class Update implements Command {
         String currentTableName = dialog.askUser(names, view, ACTION);
 
         if (!currentTableName.equals("cancel")) {
-            int size = -1;
 
-            while (size < 0) {
+            while (true) {
                 view.write("Enter id you want to update, columnName and its new values: " +
                         "id|columnName1|newValue1|columnName2|newValue2...\n" +
                         "or type 'cancel' to go back.");
 
                 String inputValues = view.read();
                 String[] newValues = inputValues.split("\\|");
-                size = newValues.length;
+                int size = newValues.length;
 
                 if (size % 2 == 0 || size == 1) {
                     if (inputValues.equals("cancel")) {
@@ -73,29 +72,31 @@ public class Update implements Command {
                     try {
                         manager.update(currentTableName, updatedRow, id);
                         view.write("You have successfully updated table '" + currentTableName + "' at id = " + id);
+                        break;
 //                        printTable(currentTableName);
 
                     } catch (SQLException e) {
-                        String errorMessage = editErrorMessage(e);
-                        view.write(errorMessage);
-                        size = -1;
+                        printSQLError(e);
                     }
                 }
             }
         } else {
             view.write("Table updating canceled");
         }
+        //TODO rewrite
     }
 
-    private String editErrorMessage(SQLException e) {
+    private void printSQLError(SQLException e) {
         String result = "SQL " + e.getMessage();
+
         for (int i = 0; i < result.length(); i++) {
             if (result.charAt(i) == '\n') {
                 result = result.substring(0, i);
                 break;
             }
         }
-        return result + "!\nTry again.";
+        view.write(result + "!");
+        view.write("Try again.");
     }
 
     private boolean isParsable(String read) {

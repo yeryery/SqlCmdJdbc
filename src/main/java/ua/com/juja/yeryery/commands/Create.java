@@ -58,6 +58,7 @@ public class Create implements Command {
                         view.write("This is not a number!");
                     }
                     continue;
+                    //TODO убрать try/catch
                 }
 
                 DataSet dataTypes = new DataSetImpl();
@@ -70,30 +71,31 @@ public class Create implements Command {
                     String dataType = view.read();
 
                     dataTypes.put(columnName, dataType);
+                    //TODO name|type
                 }
 
                 try {
                     manager.create(currentTableName, dataTypes);
                     view.write("Your table '" + currentTableName + "' have successfully created!");
+                    break;
                 } catch (SQLException e) {
-                    String errorMessage = editErrorMessage(e);
-                    view.write(errorMessage);
-                    continue;
+                    printSQLError(e);
                 }
-                break;
             }
         }
     }
 
-    private String editErrorMessage(SQLException e) {
+    private void printSQLError(SQLException e) {
         String result = "SQL " + e.getMessage();
+
         for (int i = 0; i < result.length(); i++) {
             if (result.charAt(i) == '\n') {
                 result = result.substring(0, i);
                 break;
             }
         }
-        return result + "!\nTry again.";
+        view.write(result + "!");
+        view.write("Try again.");
     }
 }
 

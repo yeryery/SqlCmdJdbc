@@ -54,8 +54,7 @@ public class Insert implements Command {
                     view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
                     break;
                 } catch (SQLException e) {
-                    String errorMessage = editErrorMessage(e);
-                    view.write(errorMessage);
+                    printSQLError(e);
                 }
             }
         } else {
@@ -63,14 +62,17 @@ public class Insert implements Command {
         }
     }
 
-    private String editErrorMessage(SQLException e) {
+    private void printSQLError(SQLException e) {
         String result = "SQL " + e.getMessage();
+
         for (int i = 0; i < result.length(); i++) {
             if (result.charAt(i) == '\n') {
                 result = result.substring(0, i);
                 break;
             }
         }
-        return result + "!\nTry again.";
+        view.write(result + "!");
+        view.write("Try again.");
+        //TODO merge methods printSQLError from insert update create
     }
 }
