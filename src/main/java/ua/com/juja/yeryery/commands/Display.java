@@ -31,13 +31,17 @@ public class Display implements Command {
         String currentTableName = dialog.askUser(names, view, ACTION);
 
         if (!currentTableName.equals("cancel")) {
-            Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            printColumnNames(tableColumns);
-            List<DataSet> rows = manager.getDataContent(currentTableName);
-            printValues(rows);
+            printTable(currentTableName);
         } else {
             view.write("Table displaying canceled");
         }
+    }
+
+    private void printTable(String currentTableName) {
+        Set<String> tableColumns = manager.getTableColumns(currentTableName);
+        printColumnNames(tableColumns);
+        List<DataSet> rows = manager.getDataContent(currentTableName);
+        printValues(rows);
     }
 
     private void printValues(List<DataSet> dataSets) {

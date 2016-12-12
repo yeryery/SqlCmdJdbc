@@ -73,6 +73,8 @@ public class Update implements Command {
                     try {
                         manager.update(currentTableName, updatedRow, id);
                         view.write("You have successfully updated table '" + currentTableName + "' at id = " + id);
+//                        printTable(currentTableName);
+
                     } catch (SQLException e) {
                         String errorMessage = editErrorMessage(e);
                         view.write(errorMessage);

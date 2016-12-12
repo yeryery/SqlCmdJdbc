@@ -34,15 +34,14 @@ public class Insert implements Command {
 
         if (!currentTableName.equals("cancel")) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            int tableSize = -1;
 
-            while (tableSize < 0) {
+            int tableSize = tableColumns.size();
+            String[] columnNames = tableColumns.toArray(new String[tableSize]);
+            String[] values = new String[tableSize];
+            DataSet newRow = new DataSetImpl();
+
+            while (true) {
                 view.write("Enter new values you require");
-
-                tableSize = tableColumns.size();
-                String[] columnNames = tableColumns.toArray(new String[tableSize]);
-                String[] values = new String[tableSize];
-                DataSet newRow = new DataSetImpl();
 
                 for (int i = 0; i < tableSize; i++) {
                     view.write(columnNames[i]);
@@ -52,11 +51,11 @@ public class Insert implements Command {
 
                 try {
                     manager.insert(currentTableName, newRow);
-                    view.write("You have successfully entered new data into the table '" + currentTableName + "'");
+                    view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
+                    break;
                 } catch (SQLException e) {
                     String errorMessage = editErrorMessage(e);
                     view.write(errorMessage);
-                    tableSize = -1;
                 }
             }
         } else {
