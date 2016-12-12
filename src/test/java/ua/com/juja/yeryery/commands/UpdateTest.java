@@ -59,7 +59,7 @@ public class UpdateTest {
     }
 
     @Test
-    public void testUpdateWithSqlException() throws SQLException {
+    public void testUpdateWithSqlExceptionNotExistingColumn() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -77,16 +77,14 @@ public class UpdateTest {
         try {
             manager.update("test", input, id);
         } catch (SQLException e) {
-            view.write("SQL ERROR: type \"wrongType\" does not exist\n" +
-                    "  Position: 67");
+            view.write("SQL ERROR: column \"wrongColumnName\" of relation \"ttable\" does not exist");
         }
 
         //when
         command.process("update");
 
         //then
-        verify(view).write("SQL ERROR: type \"wrongType\" does not exist\n" +
-                "  Position: 67");
+        verify(view).write("SQL ERROR: column \"wrongColumnName\" of relation \"ttable\" does not exist");
     }
 
     @Test
