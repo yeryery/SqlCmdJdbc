@@ -550,9 +550,7 @@ public class IntegrationTest {
         in.add("create");
         in.add("somename");
         in.add("1");
-        in.add("name");
-        in.add("wrongType");
-
+        in.add("name|wrongType");
         in.add("cancel");
         in.add("exit");
 
@@ -570,10 +568,8 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //1
-                "name of column 1:\n" +
-                //name
-                "type of column 1:\n" +
-                //wrongType
+                "Please enter name|type of column 1:\n" +
+                //name|wrongType
                 "SQL ERROR: type \"wrongtype\" does not exist!\n" +
                 "Try again.\n" +
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
@@ -591,10 +587,8 @@ public class IntegrationTest {
         in.add("create");
         in.add("somename");
         in.add("2");
-        in.add("name");
-        in.add("text");
-        in.add("age");
-        in.add("int");
+        in.add("name|text");
+        in.add("age|int");
         in.add("display");
         in.add("somename");
         in.add("drop");
@@ -616,14 +610,10 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //2
-                "name of column 1:\n" +
-                //name
-                "type of column 1:\n" +
-                //text
-                "name of column 2:\n" +
-                //age
-                "type of column 2:\n" +
-                //int
+                "Please enter name|type of column 1:\n" +
+                //name|text
+                "Please enter name|type of column 2:\n" +
+                //age|int
                 "Your table 'somename' have successfully created!\n" +
                 "Type command or 'help'\n" +
                 //display

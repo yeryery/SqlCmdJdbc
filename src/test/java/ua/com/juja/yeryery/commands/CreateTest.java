@@ -34,16 +34,13 @@ public class CreateTest {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
-        String columnName1 = "someColumnName";
-        String dataType1 = "notDataType";
+        String inputNameType = "someColumnName|text";
 
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
-                .thenReturn(columnName1)
-                .thenReturn(dataType1);
+                .thenReturn(inputNameType);
 
         DataSet dataTypes = new DataSetImpl();
-        dataTypes.put(columnName1, dataType1);
 
         doNothing().when(manager).create("newTable", dataTypes);
 
@@ -54,10 +51,8 @@ public class CreateTest {
                 //newTable
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //1
-                "name of column 1:, " +
-                //someName
-                "type of column 1:, " +
-                //text
+                "Please enter name|type of column 1:, " +
+                //someColumnName|text
                 "Your table 'newTable' have successfully created!]");
     }
 
@@ -66,32 +61,29 @@ public class CreateTest {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
-        String columnName1 = "someColumnName";
-        String dataType1 = "wrongType";
+        String inputNameType = "someColumnName|WrongType";
 
         when(view.read()).thenReturn("newTable")
                 .thenReturn("1")
-                .thenReturn(columnName1)
-                .thenReturn(dataType1);
+                .thenReturn(inputNameType);
 
         DataSet dataTypes = new DataSetImpl();
-        dataTypes.put(columnName1, dataType1);
 
         doThrow(new SQLException()).when(manager).create("newTable", dataTypes);
 
         try {
             manager.create("newTable", dataTypes);
         } catch (SQLException e) {
-            view.write("SQL ERROR: type \"wrongType\" does not exist\n" +
-                    "  Position: 67");
+            view.write("SQL ERROR: type \"wrongType\" does not exist!\n" +
+                    "Try again.");
         }
 
         //when
         command.process("create");
 
         //then
-        verify(view).write("SQL ERROR: type \"wrongType\" does not exist\n" +
-                "  Position: 67");
+        verify(view).write("SQL ERROR: type \"wrongType\" does not exist!\n" +
+                "Try again.");
 
     }
 

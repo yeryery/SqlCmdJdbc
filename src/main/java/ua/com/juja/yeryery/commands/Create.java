@@ -35,11 +35,9 @@ public class Create implements Command {
         Dialog dialog = new NameTable();
         String currentTableName = dialog.askUser(names, view, ACTION);
 
-        while (true) {
-            if (currentTableName.equals("cancel")) {
-                view.write("Table creating canceled");
-                break;
-            } else {
+        if (!currentTableName.equals("cancel")) {
+
+            while (true) {
                 view.write("Please enter the number of columns of your table or 'cancel' to go back");
                 String read = view.read();
                 int tableSize;
@@ -53,26 +51,15 @@ public class Create implements Command {
                     }
                 } catch (NumberFormatException e) {
                     if (read.equals("cancel")) {
-                        currentTableName = read;
+                        currentTableName = "cancel";
+                        break;
                     } else {
                         view.write("This is not a number!");
+                        continue;
                     }
-                    continue;
-                    //TODO убрать try/catch
                 }
 
-                DataSet dataTypes = new DataSetImpl();
-
-                for (int i = 0; i < tableSize; i++) {
-                    view.write("name of column " + (i + 1) + ":");
-                    String columnName = view.read();
-
-                    view.write("type of column " + (i + 1) + ":");
-                    String dataType = view.read();
-
-                    dataTypes.put(columnName, dataType);
-                    //TODO name|type
-                }
+                DataSet dataTypes = putColumnNames(tableSize);
 
                 try {
                     manager.create(currentTableName, dataTypes);
@@ -83,6 +70,33 @@ public class Create implements Command {
                 }
             }
         }
+
+        if (currentTableName.equals("cancel")){
+            view.write("Table creating canceled");
+        }
+
+    }
+
+    private DataSet putColumnNames(int tableSize) {
+        DataSet dataTypes = new DataSetImpl();
+
+        for (int i = 0; i < tableSize; i++) {
+            view.write("Please enter name|type of column " + (i + 1) + ":");
+            String inputNameType = view.read();
+            String[] nameType = inputNameType.split("\\|");
+
+            if (nameType.length != 2) {
+                view.write("You should enter two parameters: name|type\n" +
+                        "Try again.");
+                i--;
+                continue;
+            }
+
+            String columnName = nameType[0];
+            String dataType = nameType[1];
+            dataTypes.put(columnName, dataType);
+        }
+        return dataTypes;
     }
 
     private void printSQLError(SQLException e) {
