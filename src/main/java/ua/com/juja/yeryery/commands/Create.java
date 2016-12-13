@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.NameTable;
 import ua.com.juja.yeryery.manager.DataSet;
@@ -66,7 +67,8 @@ public class Create implements Command {
                     view.write("Your table '" + currentTableName + "' have successfully created!");
                     break;
                 } catch (SQLException e) {
-                    printSQLError(e);
+                    SQLErrorPrinter error = new SQLErrorPrinter(e);
+                    error.printSQLError();
                 }
             }
         }
@@ -97,19 +99,6 @@ public class Create implements Command {
             dataTypes.put(columnName, dataType);
         }
         return dataTypes;
-    }
-
-    private void printSQLError(SQLException e) {
-        String result = "SQL " + e.getMessage();
-
-        for (int i = 0; i < result.length(); i++) {
-            if (result.charAt(i) == '\n') {
-                result = result.substring(0, i);
-                break;
-            }
-        }
-        view.write(result + "!");
-        view.write("Try again.");
     }
 }
 
