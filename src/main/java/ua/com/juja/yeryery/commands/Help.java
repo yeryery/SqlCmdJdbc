@@ -28,6 +28,9 @@ public class Help implements Command {
         view.write("\tcreate");
         view.write("\t\tCreate new table");
 
+        view.write("\tdelete");
+        view.write("\t\tDelete data from require table");
+
         view.write("\tdisplay");
         view.write("\t\tDisplay require table");
 

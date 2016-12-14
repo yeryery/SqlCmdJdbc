@@ -46,6 +46,8 @@ public class HelpTest {
                 "\t\tContent of tables\n" +
                 "\tcreate\n" +
                 "\t\tCreate new table\n" +
+                "\tdelete\n" +
+                "\t\tDelete data from require table\n" +
                 "\tdisplay\n" +
                 "\t\tDisplay require table\n" +
                 "\tinsert\n" +
