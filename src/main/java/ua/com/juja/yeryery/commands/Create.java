@@ -35,8 +35,9 @@ public class Create implements Command {
 
         Dialog dialog = new NameTable();
         String currentTableName = dialog.askUser(names, view, ACTION);
+        boolean cancel = currentTableName.equals("cancel");
 
-        if (!currentTableName.equals("cancel")) {
+        if (!cancel) {
 
             while (true) {
                 view.write("Please enter the number of columns of your table or 'cancel' to go back");
@@ -52,7 +53,7 @@ public class Create implements Command {
                     }
                 } catch (NumberFormatException e) {
                     if (read.equals("cancel")) {
-                        currentTableName = "cancel";
+                        cancel = true;
                         break;
                     } else {
                         view.write("This is not a number!");
@@ -73,10 +74,9 @@ public class Create implements Command {
             }
         }
 
-        if (currentTableName.equals("cancel")){
+        if (cancel){
             view.write("Table creating canceled");
         }
-
     }
 
     private DataSet putColumnNames(int tableSize) {

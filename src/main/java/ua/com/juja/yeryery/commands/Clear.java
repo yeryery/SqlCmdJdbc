@@ -1,10 +1,12 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.SelectTable;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.sql.SQLException;
 import java.util.Set;
 
 public class Clear implements Command {
@@ -29,18 +31,25 @@ public class Clear implements Command {
 
         Dialog dialog = new SelectTable();
         String currentTableName = dialog.askUser(names, view, ACTION);
+        boolean cancel = currentTableName.equals("cancel");
 
-        if (!currentTableName.equals("cancel")) {
+        if (!cancel) {
             boolean confirmed = dialog.isConfirmed(currentTableName, view, ACTION);
 
             if (confirmed) {
-                manager.clear(currentTableName);
-                view.write(String.format("Table '%s' successfully cleared!", currentTableName));
+                try {
+                    manager.clear(currentTableName);
+                    view.write(String.format("Table '%s' successfully cleared!", currentTableName));
+                } catch (SQLException e) {
+                    SQLErrorPrinter error = new SQLErrorPrinter(e);
+                    error.printSQLError();
+                }
             } else {
-                view.write(String.format("The clearing of table '%s' is cancelled", currentTableName));
+                cancel = true;
             }
+        }
 
-        } else {
+        if (cancel) {
             view.write("Table clearing canceled");
         }
     }

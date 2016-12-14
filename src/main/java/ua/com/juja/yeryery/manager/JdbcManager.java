@@ -58,11 +58,10 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void clear(String tableName) {
+    public void clear(String tableName) throws SQLException {
         try (Statement st = connection.createStatement()) {
-            st.executeUpdate("DELETE FROM " + tableName);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            String sql = "DELETE FROM " + tableName;
+            st.executeUpdate(sql);
         }
     }
 
@@ -70,16 +69,15 @@ public class JdbcManager implements DatabaseManager {
     public void create(String tableName, DataSet dataSet) throws SQLException {
         try (Statement st = connection.createStatement()) {
             String dataTypes = getDataSetFormatted(dataSet);
-            st.executeUpdate("CREATE TABLE " + tableName + "(ID INT PRIMARY KEY NOT NULL, " + dataTypes + ")");
+            String sql = "CREATE TABLE " + tableName + "(ID INT PRIMARY KEY NOT NULL, " + dataTypes + ")";
+            st.executeUpdate(sql);
         }
     }
 
     @Override
-    public void drop(String tableName) {
+    public void drop(String tableName) throws SQLException {
         try (Statement st = connection.createStatement()) {
             st.executeUpdate("DROP TABLE " + tableName);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -93,23 +91,33 @@ public class JdbcManager implements DatabaseManager {
         try (Statement st = connection.createStatement()) {
             String columnNames = getColumnNamesFormatted("%s,", input);
             String values = getValuesFormatted("'%s',", input);
-
-            st.executeUpdate("INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")");
+            String sql = "INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")";
+            st.executeUpdate(sql);
         }
     }
 
     @Override
-    public void update(String tableName, DataSet input, int id) throws SQLException {
-        String columnNames = getColumnNamesFormatted("%s=?,", input);
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE " + tableName + " SET " + columnNames + " WHERE ID = ?")) {
+    public void update(String tableName, DataSet newDataSet, String definingColumn, Object definingValue) throws SQLException {
+        String updatedColumns = getColumnNamesFormatted("%s=?,", newDataSet);
+
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE " + tableName + " SET " + updatedColumns +
+                " WHERE " + definingColumn + "= ?")) {
             int sqlIndex = 1;
-            List<Object> newValues = input.getValues();
+            List<Object> newValues = newDataSet.getValues();
             for (Object newValue : newValues) {
                 ps.setObject(sqlIndex, newValue);
                 sqlIndex++;
             }
-            ps.setInt(sqlIndex, id);
+            ps.setObject(sqlIndex, definingValue);
             ps.executeUpdate();
+        }
+    }
+
+    @Override
+    public void delete(String tableName, String columnName, Object value) throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM " + tableName + " WHERE " + columnName + " = '" + value + "'";
+            st.executeUpdate(sql);
         }
     }
 

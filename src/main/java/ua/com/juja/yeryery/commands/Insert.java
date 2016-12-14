@@ -32,10 +32,10 @@ public class Insert implements Command {
         Set<String> tableNames = manager.getTableNames();
         Dialog dialog = new SelectTable();
         String currentTableName = dialog.askUser(tableNames, view, ACTION);
+        boolean cancel = currentTableName.equals("cancel");
 
-        if (!currentTableName.equals("cancel")) {
+        if (!cancel) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
-
             int tableSize = tableColumns.size();
             String[] columnNames = tableColumns.toArray(new String[tableSize]);
             String[] values = new String[tableSize];
@@ -59,7 +59,9 @@ public class Insert implements Command {
                     error.printSQLError();
                 }
             }
-        } else {
+        }
+
+        if (cancel) {
             view.write("Table inserting canceled");
         }
     }

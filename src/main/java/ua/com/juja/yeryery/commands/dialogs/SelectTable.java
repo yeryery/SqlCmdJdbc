@@ -48,6 +48,7 @@ public class SelectTable implements Dialog {
                         tableName = input;
                     }
                 }
+                //TODO contain method
 
                 if (tableName.equals("")) {
                     view.write(String.format("Table with name '%s' doesn't exist! Try again.", input));

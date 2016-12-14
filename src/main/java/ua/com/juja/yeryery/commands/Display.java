@@ -29,22 +29,33 @@ public class Display implements Command {
         Set<String> names = manager.getTableNames();
         Dialog dialog = new SelectTable();
         String currentTableName = dialog.askUser(names, view, ACTION);
+        boolean cancel = currentTableName.equals("cancel");
 
-        if (!currentTableName.equals("cancel")) {
+        if (!cancel) {
             printTable(currentTableName);
         } else {
             view.write("Table displaying canceled");
         }
     }
 
-    private void printTable(String currentTableName) {
+    public void printTable(String currentTableName) {
         Set<String> tableColumns = manager.getTableColumns(currentTableName);
         printColumnNames(tableColumns);
         List<DataSet> rows = manager.getDataContent(currentTableName);
         printValues(rows);
+        //TODO rows in order
     }
 
-    private void printValues(List<DataSet> dataSets) {
+    public void printColumnNames(Set<String> tableColumns) {
+        String result = "| ";
+        for (String column : tableColumns) {
+            result += column + " | ";
+        }
+        view.write(result);
+        view.write("-------------------------");
+    }
+
+    public void printValues(List<DataSet> dataSets) {
         String result = "";
         for (DataSet dataSet : dataSets) {
             result += getStringRow(dataSet);
@@ -62,14 +73,5 @@ public class Display implements Command {
             result += value + " | ";
         }
         return result;
-    }
-
-    private void printColumnNames(Set<String> tableColumns) {
-        String result = "| ";
-        for (String column : tableColumns) {
-            result += column + " | ";
-        }
-        view.write(result);
-        view.write("-------------------------");
     }
 }

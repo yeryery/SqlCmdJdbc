@@ -28,6 +28,7 @@ public class NameTable implements Dialog {
                     view.write("Try again.");
                     tableName = "";
                 }
+                //TODO method contain
             }
         }
         return tableName;

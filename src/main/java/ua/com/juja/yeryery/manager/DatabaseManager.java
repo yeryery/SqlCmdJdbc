@@ -11,17 +11,19 @@ public interface DatabaseManager {
 
     Set<String> getTableColumns(String tableName);
 
-    void clear(String tableName);
+    void clear(String tableName) throws SQLException;
 
     void create(String tableName, DataSet columns) throws SQLException;
 
-    void drop(String tableName);
+    void drop(String tableName) throws SQLException;
 
     boolean isConnected();
 
     void insert(String tableName, DataSet input) throws SQLException;
 
-    void update(String tableName, DataSet input, int id) throws SQLException;
+    void update(String tableName, DataSet input, String columnName, Object value) throws SQLException;
+
+    void delete(String tableName, String columnName, Object value) throws SQLException;
 
     List<DataSet> getDataContent(String tableName);
 }
