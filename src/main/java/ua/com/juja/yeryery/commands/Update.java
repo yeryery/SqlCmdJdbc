@@ -75,6 +75,7 @@ public class Update implements Command {
 
                 if (isParsable((String) value)) {
                     value = parseInt((String) value);
+                    //TODO переделать метод для объектов а не для стринг
                 }
 
                 if (!columnValues.contains(value)) {
@@ -82,6 +83,8 @@ public class Update implements Command {
                     view.write("Try again.");
                     continue;
                 }
+
+                List<DataSet> updatedRows = getRows(tableContent, columnName, value);
 
                 DataSet newValues = new DataSetImpl();
                 newValues = getNewValues(currentTableName);
@@ -91,8 +94,15 @@ public class Update implements Command {
                     break;
                 }
 
+                if (!checkNewValues(newValues, updatedRows)) {
+                    view.write("The new values are equivalent to the updated");
+                    break;
+                }
+
+                newValues.put(columnName, value);
+
                 try {
-                    manager.update(currentTableName, newValues, columnName, value);
+                    manager.update(currentTableName, newValues, columnName);
                     view.write(String.format("You have successfully updated table '%s' at %s = %s", currentTableName, columnName, value));
                     Display display = new Display(view, manager);
                     display.printColumnNames(tableColumns);
@@ -108,6 +118,28 @@ public class Update implements Command {
         if (cancel) {
             view.write("Table updating canceled");
         }
+    }
+
+    private boolean checkNewValues(DataSet newValues, List<DataSet> updatedRows) {
+        for (String columnName : newValues.getColumnNames()) {
+            for (DataSet row : updatedRows) {
+                if (!newValues.get(columnName).equals(row.get(columnName))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<DataSet> getRows(List<DataSet> rows, String columnName, Object value) {
+        List<DataSet> result = new LinkedList<>();
+
+        for (DataSet row : rows) {
+            if (row.get(columnName).equals(value)) {
+                result.add(row);
+            }
+        }
+        return result;
     }
 
     private DataSet getNewValues(String currentTableName) {
@@ -151,14 +183,6 @@ public class Update implements Command {
                 }
 
                 List<Object> columnValues = getColumnValues(tableContent, updatedColumn);
-
-//                if (columnValues.contains(newValue)) {
-//                    view.write(String.format("Column '%s' already contains value '%s' in required row!", updatedColumn, newValue));
-//                    view.write("Try again.");
-//                    newValues = new DataSetImpl();
-//                    break;
-//                }
-                //TODO
                 newValues.put(updatedColumn, newValue);
             }
             if (!newValues.isEmpty()) {

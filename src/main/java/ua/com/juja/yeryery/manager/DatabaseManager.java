@@ -21,7 +21,7 @@ public interface DatabaseManager {
 
     void insert(String tableName, DataSet input) throws SQLException;
 
-    void update(String tableName, DataSet input, String columnName, Object value) throws SQLException;
+    void update(String tableName, DataSet input, String columnName) throws SQLException;
 
     void delete(String tableName, String columnName, Object value) throws SQLException;
 

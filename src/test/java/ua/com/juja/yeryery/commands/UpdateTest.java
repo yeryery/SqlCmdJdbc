@@ -91,7 +91,7 @@ public class UpdateTest {
                 thenReturn(updatedColumn1 + "|" + newValue1 + "|" + updatedColumn2 + "|" + newValue2);
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).update(tableName, input, columnName, definingValue);
+        doNothing().when(manager).update(tableName, input, columnName);
 
         //when
         command.process("update");
@@ -133,7 +133,7 @@ public class UpdateTest {
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
-        doNothing().when(manager).update(tableName, input, columnName, definingValue);
+        doNothing().when(manager).update(tableName, input, columnName);
 
         //when
         command.process("update");
@@ -450,8 +450,8 @@ public class UpdateTest {
                 "Table updating canceled]");
     }
 
-    /*@Test
-    public void testUpdateInputNotExistingNewValue() throws SQLException {
+    @Test
+    public void testUpdateNewValueEqualsToUpdated() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -459,7 +459,7 @@ public class UpdateTest {
         String columnName = column2;
         Object definingValue = value22;
         String updatedColumn = column1;
-        Object newValue = 2;
+        Object newValue = value12;
 
         when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
                 thenReturn(updatedColumn + "|" + newValue).thenReturn("cancel");
@@ -480,15 +480,8 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
-                //id|2
-                "Column 'id' already contains value '2' in required row!\n, " +
-                "Try again., " +
-                "Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Table updating canceled]");
-    }*/
+                "The new values are equivalent to the updated]");
+    }
 
     @Test
     public void testUpdateSQLException() throws SQLException {
@@ -506,10 +499,10 @@ public class UpdateTest {
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
-        doThrow(new SQLException()).when(manager).update(tableName, input, columnName, definingValue);
+        doThrow(new SQLException()).when(manager).update(tableName, input, columnName);
 
         try {
-            manager.update("test", input, columnName, definingValue);
+            manager.update("test", input, columnName);
         } catch (SQLException e) {
             view.write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
                         "Try again.");
