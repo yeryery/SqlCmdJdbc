@@ -42,7 +42,7 @@ public class DropTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
-                "Are you sure you want to drop table 'test'? (y/n), " +
+                "Table 'test' will be dropped! Continue? (y/n), " +
                 //yes
                 "Table 'test' successfully dropped!]");
     }
@@ -63,7 +63,7 @@ public class DropTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
-                "Are you sure you want to drop table 'test'? (y/n), " +
+                "Table 'test' will be dropped! Continue? (y/n), " +
                 //no
                 "Table dropping canceled]");
     }
@@ -84,9 +84,9 @@ public class DropTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
-                "Are you sure you want to drop table 'test'? (y/n), " +
+                "Table 'test' will be dropped! Continue? (y/n), " +
                 //neither 'y' nor 'n'
-                "Are you sure you want to drop table 'test'? (y/n), " +
+                "Table 'test' will be dropped! Continue? (y/n), " +
                 //yes
                 "Table 'test' successfully dropped!]");
     }

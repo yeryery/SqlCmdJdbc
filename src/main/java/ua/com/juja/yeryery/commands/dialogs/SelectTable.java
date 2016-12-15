@@ -57,11 +57,11 @@ public class SelectTable implements Dialog {
     }
 
     @Override
-    public boolean isConfirmed(String name, View view, String act) {
+    public boolean isConfirmed(String warning, View view) {
         String confirm = "";
 
         while (!confirm.equals("y") && !confirm.equals("n")) {
-            view.write(String.format("Are you sure you want to %s table '%s'? (y/n)", act, name));
+            view.write(warning + " (y/n)");
             confirm = view.read();
         }
 

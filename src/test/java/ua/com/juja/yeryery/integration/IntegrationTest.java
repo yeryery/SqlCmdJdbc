@@ -77,7 +77,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testListWithoutConnect() {
+    public void testContentWithoutConnect() {
         //given
         in.add("content");
         in.add("exit");
@@ -309,7 +309,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testListAfterConnect() {
+    public void testContentAfterConnect() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("content");
@@ -365,7 +365,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testDisplayAndSelectTablename() {
+    public void testDisplayAndSelectTableName() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("display");
@@ -611,7 +611,6 @@ public class IntegrationTest {
                 "Please enter name|type of column 1:\n" +
                 //name|wrongType
                 "SQL ERROR: type \"wrongtype\" does not exist!\n" +
-                "Try again.\n" +
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //cancel
                 "Table creating canceled\n" +
@@ -674,7 +673,7 @@ public class IntegrationTest {
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //somename
-                "Are you sure you want to drop table 'somename'? (y/n)\n" +
+                "Table 'somename' will be dropped! Continue? (y/n)\n" +
                 //y
                 "Table 'somename' successfully dropped!\n" +
                 "Type command or 'help'\n" +
@@ -717,16 +716,10 @@ public class IntegrationTest {
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
         in.add("ttable");
-        in.add("notnumber");
+        in.add("notNumber");
         in.add("somename");
         in.add("25");
-
-        in.add("1");
-        in.add("somename");
-        in.add("25");
-        in.add("clear");
-        in.add("ttable");
-        in.add("y");
+        in.add("n");
         in.add("exit");
 
         //when
@@ -745,26 +738,16 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //ttable
                 "Enter new values you require\n" +
-                //notnumber
                 "id\n" +
+                //notNumber
+                "name\n" +
                 //somename
-                "name\n" +
+                "age\n" +
                 //25
-                "age\n" +
-                "SQL ERROR: invalid input syntax for integer: \"notnumber\"!\n" +
-                "Try again.\n" +
-                "Enter new values you require\n" +
-                "id\n" +
-                "name\n" +
-                "age\n" +
-                "You have successfully entered new data into the table 'ttable'\n" +
-                "Type command or 'help'\n" +
-                "Please enter the name or select number of table you want to clear\n" +
-                "1. test\n" +
-                "2. ttable\n" +
-                "0. cancel (to go back)\n" +
-                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
-                "Table 'ttable' successfully cleared!\n" +
+                "SQL ERROR: invalid input syntax for integer: \"notNumber\"!\n" +
+                "Do you want to try again? (y/n)\n" +
+                //n
+                "Table inserting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -827,7 +810,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                "Table 'ttable' will be cleared! Continue? (y/n)\n" +
                 //y
                 "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
@@ -917,7 +900,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //2
-                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                "Table 'ttable' will be cleared! Continue? (y/n)\n" +
                 //n
                 "Table clearing canceled\n" +
                 "Type command or 'help'\n" +
@@ -1512,7 +1495,6 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|notNumber
                 "SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
-                "Try again.\n" +
                 "Enter columnName and defining value of updated row: columnName|definingValue\n" +
                 "or type 'cancel' to go back.\n" +
                 //cancel
@@ -1556,7 +1538,6 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|12
                 "SQL ERROR: duplicate key value violates unique constraint \"test_pkey\"!\n" +
-                "Try again.\n" +
                 "Enter columnName and defining value of updated row: columnName|definingValue\n" +
                 "or type 'cancel' to go back.\n" +
                 //cancel

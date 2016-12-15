@@ -32,7 +32,7 @@ public class NameTable implements Dialog {
     }
 
     @Override
-    public boolean isConfirmed(String name, View view, String act) {
+    public boolean isConfirmed(String warning, View view) {
         return true;
     }
 }

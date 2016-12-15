@@ -34,7 +34,8 @@ public class Clear implements Command {
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
-            boolean confirmed = dialog.isConfirmed(currentTableName, view, ACTION);
+            String warning = "Table '" + currentTableName + "' will be cleared! Continue?";
+            boolean confirmed = dialog.isConfirmed(warning, view);
 
             if (confirmed) {
                 try {

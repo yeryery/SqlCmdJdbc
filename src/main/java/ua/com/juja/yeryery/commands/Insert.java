@@ -57,6 +57,12 @@ public class Insert implements Command {
                 } catch (SQLException e) {
                     SQLErrorPrinter error = new SQLErrorPrinter(e);
                     error.printSQLError();
+
+                    boolean confirmed = dialog.isConfirmed("Do you want to try again?", view);
+                    if (!confirmed) {
+                        cancel = true;
+                        break;
+                    }
                 }
             }
         }
