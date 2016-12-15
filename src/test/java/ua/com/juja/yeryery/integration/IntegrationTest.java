@@ -31,10 +31,10 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -86,13 +86,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //content
-                "You can`t use 'content' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'content' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -105,13 +105,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //clear
-                "You can`t use 'clear' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'clear' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -124,13 +124,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //create
-                "You can`t use 'create' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'create' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -143,13 +143,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //create
-                "You can`t use 'update' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'update' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -162,13 +162,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //display
-                "You can`t use 'display' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'display' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -181,13 +181,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //drop
-                "You can`t use 'drop' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'drop' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -200,13 +200,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //insert
-                "You can`t use 'insert' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'insert' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -219,13 +219,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //delete
-                "You can`t use 'delete' unless you are not connected.\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "You can`t use 'delete' unless you are not connected.\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -238,14 +238,14 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //someCommand
-                "Unknown command: someCommand!\r\n" +
-                "Try again.\r\n" +
-                "Type command or 'help'\r\n" +
+                "Unknown command: someCommand!\n" +
+                "Try again.\n" +
+                "Type command or 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -258,13 +258,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect|yeryery
-                "Error! Wrong number of parameters. Expected 4, and you have entered 2\r\n" +
-                "Try again.\r\n" +
+                "Error! Wrong number of parameters. Expected 4, and you have entered 2\n" +
+                "Try again.\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -277,11 +277,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"postgres\"\r\n" +
-                "Try again.\r\n" +
-                "See you!\r\n", out.getData());
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"postgres\"\n" +
+                "Try again.\n" +
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -294,11 +294,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"wrongUsername\"\r\n" +
-                "Try again.\r\n" +
-                "See you!\r\n", out.getData());
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"wrongUsername\"\n" +
+                "Try again.\n" +
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -311,11 +311,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
-                "Error! org.postgresql.util.PSQLException: FATAL: database \"wrongDatabase\" does not exist\r\n" +
-                "Try again.\r\n" +
-                "See you!\r\n", out.getData());
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                "Error! org.postgresql.util.PSQLException: FATAL: database \"wrongDatabase\" does not exist\n" +
+                "Try again.\n" +
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -329,17 +329,17 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect
-                "Success!\r\n" +
-                "Type command or 'help'\r\n" +
+                "Success!\n" +
+                "Type command or 'help'\n" +
                 //someCommand
-                "Unknown command: someCommand!\r\n" +
-                "Try again.\r\n" +
-                "Type command or 'help'\r\n" +
+                "Unknown command: someCommand!\n" +
+                "Try again.\n" +
+                "Type command or 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
