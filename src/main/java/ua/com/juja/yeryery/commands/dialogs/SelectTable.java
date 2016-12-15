@@ -9,9 +9,8 @@ public class SelectTable implements Dialog {
     @Override
     public String askUser(Set<String> names, View view, String action) {
 
-        String tableName = "";
-
         Map<Integer, String> tableNames = new HashMap<>();
+
         Iterator iterator = names.iterator();
         int i = 1;
 
@@ -20,7 +19,9 @@ public class SelectTable implements Dialog {
             i++;
         }
 
-        while (tableName.equals("")) {
+        String tableName;
+
+        while (true) {
             view.write(String.format("Please enter the name or select number of table you want to %s", action));
 
             tableNames.remove(0);
@@ -28,8 +29,8 @@ public class SelectTable implements Dialog {
                 view.write(entry.getKey() + ". " + entry.getValue());
             }
 
-            tableNames.put(0, "cancel");
             view.write(0 + ". " + "cancel (to go back)");
+            tableNames.put(0, "cancel");
 
             String input = view.read();
 
@@ -38,19 +39,16 @@ public class SelectTable implements Dialog {
 
                 if (tableNumber >= 0 && tableNumber <= names.size()) {
                     tableName = tableNames.get(tableNumber);
+                    break;
                 } else {
                     view.write("There is no table with this number! Try again.");
                 }
             } else {
 
-                for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
-                    if (input.equals(entry.getValue())) {
-                        tableName = input;
-                    }
-                }
-                //TODO contain method
-
-                if (tableName.equals("")) {
+                if (tableNames.containsValue(input)) {
+                    tableName = input;
+                    break;
+                } else {
                     view.write(String.format("Table with name '%s' doesn't exist! Try again.", input));
                 }
             }
@@ -74,10 +72,10 @@ public class SelectTable implements Dialog {
         return result;
     }
 
-    private boolean isParsable(String read) {
+    private boolean isParsable(Object read) {
         boolean parsable = true;
         try {
-            Integer.parseInt(read);
+            Integer.parseInt((String) read);
         } catch (NumberFormatException e) {
             parsable = false;
         }
