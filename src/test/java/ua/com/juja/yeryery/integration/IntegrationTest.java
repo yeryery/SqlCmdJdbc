@@ -268,7 +268,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testConnectWithWrongParameter() {
+    public void testConnectWithWrongPassword() {
         //given
         in.add("connect|yeryery|postgres|wrongpass");
         in.add("exit");
@@ -280,6 +280,40 @@ public class IntegrationTest {
         assertEquals("Hello, user!\r\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
                 "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"postgres\"\r\n" +
+                "Try again.\r\n" +
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void testConnectWithWrongUsername() {
+        //given
+        in.add("connect|yeryery|wrongUsername|postgrespass");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"wrongUsername\"\r\n" +
+                "Try again.\r\n" +
+                "See you!\r\n", out.getData());
+    }
+
+    @Test
+    public void testConnectToWrongDatabase() {
+        //given
+        in.add("connect|wrongDatabase|postgres|postgrespass");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\r\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+                "Error! org.postgresql.util.PSQLException: FATAL: database \"wrongDatabase\" does not exist\r\n" +
                 "Try again.\r\n" +
                 "See you!\r\n", out.getData());
     }
@@ -711,13 +745,13 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testInsertWrongSql() {
+    public void testInsertSQLExceptionAndExit() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
         in.add("ttable");
         in.add("notNumber");
-        in.add("somename");
+        in.add("Mike");
         in.add("25");
         in.add("n");
         in.add("exit");
@@ -741,7 +775,7 @@ public class IntegrationTest {
                 "id\n" +
                 //notNumber
                 "name\n" +
-                //somename
+                //Mike
                 "age\n" +
                 //25
                 "SQL ERROR: invalid input syntax for integer: \"notNumber\"!\n" +
@@ -754,13 +788,84 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testInsertAndClear() {
+    public void testInsertSQLExceptionTryAgainAndDelete() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("insert");
+        in.add("ttable");
+        in.add("notNumber");
+        in.add("Mike");
+        in.add("25");
+        in.add("y");
+        in.add("10");
+        in.add("Mike");
+        in.add("25");
+        in.add("delete");
+        in.add("ttable");
+        in.add("id|10");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //insert
+                "Please enter the name or select number of table you want to insert\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "Enter new values you require\n" +
+                "id\n" +
+                //notNumber
+                "name\n" +
+                //Mike
+                "age\n" +
+                //25
+                "SQL ERROR: invalid input syntax for integer: \"notNumber\"!\n" +
+                "Do you want to try again? (y/n)\n" +
+                //y
+                "Enter new values you require\n" +
+                "id\n" +
+                //10
+                "name\n" +
+                //Mike
+                "age\n" +
+                //25
+                "You have successfully entered new data into the table 'ttable'\n" +
+                "Type command or 'help'\n" +
+                //delete
+                "Please enter the name or select number of table you want to delete\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "or type 'cancel' to go back.\n" +
+                //id|10
+                "You have successfully deleted data from 'ttable' at id = 10\n" +
+                "| id | name | age | \n" +
+                "-------------------------\n" +
+                "| 10 | Mike | 25 | \n" +
+                "------------------------\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r", ""));
+    }
+
+    @Test
+    public void testInsertDataClearAndConfirm() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
         in.add("ttable");
         in.add("10");
-        in.add("somename");
+        in.add("Mike");
         in.add("25");
         in.add("display");
         in.add("ttable");
@@ -785,12 +890,12 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //ttable
                 "Enter new values you require\n" +
-                //10
                 "id\n" +
-                //somename
+                //10
                 "name\n" +
-                //25
+                //Mike
                 "age\n" +
+                //25
                 "You have successfully entered new data into the table 'ttable'\n" +
                 "Type command or 'help'\n" +
                 //display
@@ -801,7 +906,7 @@ public class IntegrationTest {
                 //ttable
                 "| id | name | age | \n" +
                 "-------------------------\n" +
-                "| 10 | somename | 25 | \n" +
+                "| 10 | Mike | 25 | \n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //clear
@@ -877,11 +982,43 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testClearSelectNotConfirmSelectAgainAndConfirm() {
+    public void testDropSelectTableAndNotConfirm() {
+        //given
+        in.add("connect|yeryery|postgres|postgrespass");
+        in.add("drop");
+        in.add("ttable");
+        in.add("n");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+        //then
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
+                //connect
+                "Success!\n" +
+                "Type command or 'help'\n" +
+                //drop
+                "Please enter the name or select number of table you want to drop\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
+                "Table 'ttable' will be dropped! Continue? (y/n)\n" +
+                //n
+                "Table dropping canceled\n" +
+                "Type command or 'help'\n" +
+                //exit
+                "See you!", out.getData().trim().replace("\r", ""));
+    }
+
+    @Test
+    public void testClearSelectTableNotConfirm() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("clear");
-        in.add("2");
+        in.add("ttable");
         in.add("n");
         in.add("exit");
 
@@ -899,7 +1036,7 @@ public class IntegrationTest {
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
-                //2
+                //ttable
                 "Table 'ttable' will be cleared! Continue? (y/n)\n" +
                 //n
                 "Table clearing canceled\n" +
