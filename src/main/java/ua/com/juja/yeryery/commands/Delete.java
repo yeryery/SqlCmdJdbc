@@ -39,6 +39,7 @@ public class Delete implements Command {
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
+
             while (true) {
                 view.write("Enter columnName and value of the row you want to delete: " +
                         "columnName|value\n" +
@@ -83,7 +84,7 @@ public class Delete implements Command {
 
                 try {
                     manager.delete(currentTableName, columnName, value);
-                    view.write(String.format("You have successfully deleted data from '%s'", currentTableName));
+                    view.write(String.format("You have successfully deleted data from '%s' at %s = %s", currentTableName, columnName, value));
                     Display display = new Display(view, manager);
                     display.printColumnNames(tableColumns);
                     display.printValues(tableContent);

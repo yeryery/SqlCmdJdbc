@@ -20,6 +20,5 @@ public class SQLErrorPrinter {
             }
         }
         System.out.println(result + "!");
-        System.out.println("Try again.");
     }
 }

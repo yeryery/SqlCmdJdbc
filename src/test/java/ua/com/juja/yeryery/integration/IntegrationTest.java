@@ -1449,7 +1449,7 @@ public class IntegrationTest {
                 "Enter columnName and value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back.\n" +
                 //id|30
-                "You have successfully deleted data from 'test'\n" +
+                "You have successfully deleted data from 'test' at id = 30\n" +
                 "| id | login | password | \n" +
                 "-------------------------\n" +
                 "| 12 | username1 | pass1 | \n" +
@@ -1593,7 +1593,7 @@ public class IntegrationTest {
                 "Enter columnName and value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back.\n" +
                 //name|Jack
-                "You have successfully deleted data from 'ttable'\n" +
+                "You have successfully deleted data from 'ttable' at name = Jack\n" +
                 "| id | name | age | \n" +
                 "-------------------------\n" +
                 "| 1 | Jack | 20 | \n" +

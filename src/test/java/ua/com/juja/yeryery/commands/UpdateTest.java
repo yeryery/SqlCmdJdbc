@@ -532,6 +532,7 @@ public class UpdateTest {
 //                "or type 'cancel' to go back., " +
 //                //cancel
 //                "Table updating canceled]");
+        //TODO SQLException
     }
 
     private void shouldPrint(String expected) {
