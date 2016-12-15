@@ -1489,26 +1489,24 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testUpdateTwoRows() {
+    public void testInsertUpdateAndDeleteTwoRows() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
         in.add("test");
-        in.add("30"); in.add("username2"); in.add("pass2");
+        in.add("30"); in.add("username3"); in.add("pass3");
+        in.add("insert");
+        in.add("test");
+        in.add("31"); in.add("username4"); in.add("pass3");
 
         in.add("update");
         in.add("test");
-        in.add("login|username2");
-        in.add("password|pass5");
-
-        in.add("update");
-        in.add("test");
-        in.add("login|username2");
-        in.add("password|pass2");
+        in.add("password|pass3");
+        in.add("login|username10");
 
         in.add("delete");
         in.add("test");
-        in.add("id|30");
+        in.add("password|pass3");
         in.add("exit");
 
         //when
@@ -1530,9 +1528,24 @@ public class IntegrationTest {
                 "id\n" +
                 //30
                 "login\n" +
-                //username2
+                //username3
                 "password\n" +
-                //pass2
+                //pass3
+                "You have successfully entered new data into the table 'test'\n" +
+                "Type command or 'help'\n" +
+                //insert
+                "Please enter the name or select number of table you want to insert\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "Enter new values you require\n" +
+                "id\n" +
+                //31
+                "login\n" +
+                //username4
+                "password\n" +
+                //pass3
                 "You have successfully entered new data into the table 'test'\n" +
                 "Type command or 'help'\n" +
                 //update
@@ -1543,38 +1556,18 @@ public class IntegrationTest {
                 //test
                 "Enter columnName and defining value of updated row: columnName|definingValue\n" +
                 "or type 'cancel' to go back.\n" +
-                //login|username2
+                //password|pass3
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back.\n" +
-                //password|pass5
-                "You have successfully updated table 'test' at login = username2\n" +
+                //login|username10
+                "You have successfully updated table 'test' at password = pass3\n" +
                 "| id | login | password | \n" +
                 "-------------------------\n" +
                 "| 12 | username1 | pass1 | \n" +
                 "| 22 | username2 | pass2 | \n" +
-                "| 30 | username2 | pass2 | \n" +
-                "------------------------\n" +
-                "Type command or 'help'\n" +
-                //update
-                "Please enter the name or select number of table you want to update\n" +
-                "1. test\n" +
-                "2. ttable\n" +
-                "0. cancel (to go back)\n" +
-                //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
-                "or type 'cancel' to go back.\n" +
-                //login|username2
-                "Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
-                //password|pass2
-                "You have successfully updated table 'test' at login = username2\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass5 | \n" +
-                "| 30 | username2 | pass5 | \n" +
+                "| 30 | username3 | pass3 | \n" +
+                "| 31 | username4 | pass3 | \n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //delete
@@ -1582,16 +1575,17 @@ public class IntegrationTest {
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
-                //text
+                //test
                 "Enter columnName and value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back.\n" +
-                //id|30
-                "You have successfully deleted data from 'test' at id = 30\n" +
+                //password|pass3
+                "You have successfully deleted data from 'test' at password = pass3\n" +
                 "| id | login | password | \n" +
                 "-------------------------\n" +
                 "| 12 | username1 | pass1 | \n" +
                 "| 22 | username2 | pass2 | \n" +
-                "| 30 | username2 | pass2 | \n" +
+                "| 30 | username10 | pass3 | \n" +
+                "| 31 | username10 | pass3 | \n" +
                 "------------------------\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -1685,7 +1679,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testDelete() {
+    public void testInsertAndDelete() {
         //given
         in.add("connect|yeryery|postgres|postgrespass");
         in.add("insert");
