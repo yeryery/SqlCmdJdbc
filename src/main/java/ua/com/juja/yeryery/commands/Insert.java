@@ -36,18 +36,15 @@ public class Insert implements Command {
 
         if (!cancel) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            int tableSize = tableColumns.size();
-            String[] columnNames = tableColumns.toArray(new String[tableSize]);
-            String[] values = new String[tableSize];
             DataSet newRow = new DataSetImpl();
 
             while (true) {
                 view.write("Enter new values you require");
 
-                for (int i = 0; i < tableSize; i++) {
-                    view.write(columnNames[i]);
-                    values[i] = view.read();
-                    newRow.put(columnNames[i], values[i]);
+                for (String columnName : tableColumns) {
+                    view.write(columnName);
+                    Object value = view.read();
+                    newRow.put(columnName, value);
                 }
 
                 try {
