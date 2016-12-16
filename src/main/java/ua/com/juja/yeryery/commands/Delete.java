@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.Parser;
 import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.SelectTable;
@@ -11,8 +12,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import static java.lang.Integer.parseInt;
 
 public class Delete implements Command {
 
@@ -41,18 +40,23 @@ public class Delete implements Command {
         if (!cancel) {
 
             while (true) {
-                view.write("Enter columnName and value of the row you want to delete: " +
-                        "columnName|value\n" +
+                final String COMMAND_SAMPLE = "columnName|value";
+                view.write("Enter columnName and value of the row you want to delete: " + COMMAND_SAMPLE + "\n" +
                         "or type 'cancel' to go back.");
                 String inputDataSet = view.read();
-                String[] split = inputDataSet.split("\\|");
+                final String delimiter = "\\|";
+                String[] split = inputDataSet.split(delimiter);
 
                 if (split[0].equals("cancel")) {
                     cancel = true;
                     break;
                 }
 
-                if (split.length != 2) {
+                Parser parser = new Parser();
+                int count = parser.count(COMMAND_SAMPLE, delimiter);
+                int size = split.length;
+
+                if (size != count) {
                     view.write("You should enter two parameters!\n" +
                             "Try again.");
                     continue;
@@ -72,9 +76,7 @@ public class Delete implements Command {
                 List<DataSet> tableContent = manager.getDataContent(currentTableName);
                 List<Object> columnValues = getColumnValues(tableContent, columnName);
 
-                if (isParsable((String) value)) {
-                    value = parseInt((String) value);
-                }
+                value = parser.defineType((String) value);
 
                 if (!columnValues.contains(value)) {
                     view.write(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
@@ -108,15 +110,5 @@ public class Delete implements Command {
             result.add(dataSet.get(columnName));
         }
         return result;
-    }
-
-    private boolean isParsable(String read) {
-        boolean parsable = true;
-        try {
-            parseInt(read);
-        } catch (NumberFormatException e) {
-            parsable = false;
-        }
-        return parsable;
     }
 }

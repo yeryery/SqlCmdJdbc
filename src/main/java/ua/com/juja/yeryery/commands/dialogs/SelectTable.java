@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
+import ua.com.juja.yeryery.Parser;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
@@ -10,6 +11,10 @@ public class SelectTable implements Dialog {
     public String askUser(Set<String> names, View view, String action) {
 
         Map<Integer, String> tableNames = new HashMap<>();
+
+//        for (int i = 1; names.iterator().hasNext(); i++) {
+//            tableNames.put(i, names.iterator().next());
+//        }
 
         Iterator iterator = names.iterator();
         int i = 1;
@@ -25,6 +30,7 @@ public class SelectTable implements Dialog {
             view.write(String.format("Please enter the name or select number of table you want to %s", action));
 
             tableNames.remove(0);
+
             for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
                 view.write(entry.getKey() + ". " + entry.getValue());
             }
@@ -33,9 +39,10 @@ public class SelectTable implements Dialog {
             tableNames.put(0, "cancel");
 
             String input = view.read();
+            Parser parser = new Parser();
 
-            if (isParsable(input)) {
-                int tableNumber = Integer.parseInt(input);
+            if (parser.isParsable(input)) {
+                int tableNumber = parser.getParsedInt();
 
                 if (tableNumber >= 0 && tableNumber <= names.size()) {
                     tableName = tableNames.get(tableNumber);
@@ -62,7 +69,7 @@ public class SelectTable implements Dialog {
 
         while (!confirm.equals("y") && !confirm.equals("n")) {
             view.write(warning + " (y/n)");
-            confirm = view.read();
+            confirm =(String) view.read();
         }
 
         boolean result = false;
@@ -70,15 +77,5 @@ public class SelectTable implements Dialog {
             result = true;
         }
         return result;
-    }
-
-    private boolean isParsable(Object read) {
-        boolean parsable = true;
-        try {
-            Integer.parseInt((String) read);
-        } catch (NumberFormatException e) {
-            parsable = false;
-        }
-        return parsable;
     }
 }

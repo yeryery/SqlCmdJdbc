@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.Parser;
 import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.SelectTable;
@@ -12,8 +13,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import static java.lang.Integer.parseInt;
 
 public class Update implements Command {
 
@@ -60,7 +59,6 @@ public class Update implements Command {
 
                 String columnName = columnNameValue[0];
                 Object value = columnNameValue[1];
-                //TODO выделить разделитель в отдельный метод
 
                 Set<String> tableColumns = manager.getTableColumns(currentTableName);
 
@@ -73,10 +71,8 @@ public class Update implements Command {
                 List<DataSet> tableContent = manager.getDataContent(currentTableName);
                 List<Object> columnValues = getColumnValues(tableContent, columnName);
 
-                if (isParsable((String) value)) {
-                    value = parseInt((String) value);
-                    //TODO переделать метод для объектов а не для стринг
-                }
+                Parser parser = new Parser();
+                value = parser.defineType((String) value);
 
                 if (!columnValues.contains(value)) {
                     view.write(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
@@ -178,9 +174,8 @@ public class Update implements Command {
                     break;
                 }
 
-                if (isParsable((String) newValue)) {
-                    newValue = parseInt((String) newValue);
-                }
+                Parser parser = new Parser();
+                newValue = parser.defineType((String) newValue);
 
                 List<Object> columnValues = getColumnValues(tableContent, updatedColumn);
                 newValues.put(updatedColumn, newValue);
@@ -199,16 +194,6 @@ public class Update implements Command {
             result.add(dataSet.get(columnName));
         }
         return result;
-    }
-
-    private boolean isParsable(String read) {
-        boolean parsable = true;
-        try {
-            parseInt(read);
-        } catch (NumberFormatException e) {
-            parsable = false;
-        }
-        return parsable;
     }
 }
 
