@@ -388,11 +388,13 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //select table number 1
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -421,11 +423,13 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //select test
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -609,7 +613,8 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //1name
-                "Table name must begin with a letter! Try again.\n" +
+                "You have entered '1name' and table name must begin with a letter!\n" +
+                "Try again.\n" +
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
                 "Table creating canceled\n" +
@@ -698,9 +703,9 @@ public class IntegrationTest {
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //somename
-                "| id | name | age | \n" +
-                "-------------------------\n" +
-                "------------------------\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //drop
                 "Please enter the name or select number of table you want to drop\n" +
@@ -853,10 +858,11 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|10
                 "You have successfully deleted data from 'ttable' at id = 10\n" +
-                "| id | name | age | \n" +
-                "-------------------------\n" +
-                "| 10 | Mike | 25 | \n" +
-                "------------------------\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
+                "|10|Mike|25 |\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -908,10 +914,11 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "| id | name | age | \n" +
-                "-------------------------\n" +
-                "| 10 | Mike | 25 | \n" +
-                "------------------------\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
+                "|10|Mike|25 |\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //clear
                 "Please enter the name or select number of table you want to clear\n" +
@@ -1116,11 +1123,13 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //password|newPass
                 "You have successfully updated table 'test' at id = 22\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
                 "Please enter the name or select number of table you want to update\n" +
@@ -1136,11 +1145,13 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //password|pass2
                 "You have successfully updated table 'test' at id = 22\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | newPass | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|newPass |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1184,11 +1195,13 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|30
                 "You have successfully updated table 'test' at login = username2\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
                 "Please enter the name or select number of table you want to update\n" +
@@ -1204,11 +1217,13 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|22
                 "You have successfully updated table 'test' at login = username2\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 30 | username2 | pass2 | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|30|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1566,13 +1581,17 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //login|username10
                 "You have successfully updated table 'test' at password = pass3\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "| 30 | username3 | pass3 | \n" +
-                "| 31 | username4 | pass3 | \n" +
-                "------------------------\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
+                "|30|username3|pass3   |\n" +
+                "+--+---------+--------+\n" +
+                "|31|username4|pass3   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Please enter the name or select number of table where you want to delete rows\n" +
@@ -1584,13 +1603,17 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //password|pass3
                 "You have successfully deleted data from 'test' at password = pass3\n" +
-                "| id | login | password | \n" +
-                "-------------------------\n" +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "| 30 | username10 | pass3 | \n" +
-                "| 31 | username10 | pass3 | \n" +
-                "------------------------\n" +
+                "+--+----------+--------+\n" +
+                "|id|login     |password|\n" +
+                "+--+----------+--------+\n" +
+                "|12|username1 |pass1   |\n" +
+                "+--+----------+--------+\n" +
+                "|22|username2 |pass2   |\n" +
+                "+--+----------+--------+\n" +
+                "|30|username10|pass3   |\n" +
+                "+--+----------+--------+\n" +
+                "|31|username10|pass3   |\n" +
+                "+--+----------+--------+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1730,10 +1753,11 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //name|Jack
                 "You have successfully deleted data from 'ttable' at name = Jack\n" +
-                "| id | name | age | \n" +
-                "-------------------------\n" +
-                "| 1 | Jack | 20 | \n" +
-                "------------------------\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
+                "|1 |Jack|20 |\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));

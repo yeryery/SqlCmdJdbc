@@ -1,13 +1,13 @@
 package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.Parser;
+import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +15,8 @@ public class Delete implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private final String ACTION = "delete";
+    private static final String ACTION = "delete";
+    private static final String COMMAND_SAMPLE = "columnName|value";
 
     public Delete(View view, DatabaseManager manager) {
         this.view = view;
@@ -30,9 +31,9 @@ public class Delete implements Command {
     @Override
     public void process(String input) {
         Set<String> tableNames = manager.getTableNames();
-        Dialog dialog = new DialogImpl(view);
+        Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table where you want to %s rows", ACTION);
-        String currentTableName = dialog.SelectTable(tableNames, message);
+        String currentTableName = dialog.SelectTable(message);
 
         boolean cancel = currentTableName.equals("cancel");
 
@@ -41,7 +42,7 @@ public class Delete implements Command {
 
                 String[] splitInput;
                 try {
-                    splitInput = findRow(currentTableName);
+                    splitInput = dialog.findRow(currentTableName, ACTION, COMMAND_SAMPLE);
                 } catch (CancelException e) {
                     cancel = true;
                     break;
@@ -56,15 +57,14 @@ public class Delete implements Command {
                 Object value = parser.defineType(splitInput[1]);
                 //TODO
 
-                List<DataSet> tableContent = manager.getDataContent(currentTableName);
+                Set<String> tableColumns = manager.getTableColumns(currentTableName);
+                List<DataSet> originRows = manager.getDataContent(currentTableName);
 
                 manager.delete(currentTableName, columnName, value);
                 view.write(String.format("You have successfully deleted data from '%s' at %s = %s", currentTableName, columnName, value));
 
-                Display display = new Display(view, manager);
-                Set<String> tableColumns = manager.getTableColumns(currentTableName);
-                display.printColumnNames(tableColumns);
-                display.printValues(tableContent);
+                TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
+                view.write(tableConstructor.getTableString());
                 break;
             }
         }
@@ -72,59 +72,5 @@ public class Delete implements Command {
         if (cancel) {
             view.write("Table deleting canceled");
         }
-
-    }
-
-    private String[] findRow(String tableName) {
-        String[] input = getInput();
-
-        Parser parser = new Parser();
-        String columnName = input[0];
-        Object value = parser.defineType(input[1]);
-
-        checkColumn(tableName, columnName);
-        checkValue(tableName, columnName, value);
-
-        return input;
-    }
-
-    private String[] getInput() {
-        final String COMMAND_SAMPLE = "columnName|value";
-        view.write("Enter columnName and defining value of deleted row: " + COMMAND_SAMPLE + "\n" +
-                "or type 'cancel' to go back.");
-
-        final String inputData = view.read();
-        final String delimiter = "\\|";
-
-        Parser parser = new Parser();
-        String[] splitInput = parser.splitData(inputData, COMMAND_SAMPLE, delimiter);
-
-        return splitInput;
-    }
-
-    private void checkColumn(String currentTableName, String columnName) {
-        Set<String> tableColumns = manager.getTableColumns(currentTableName);
-
-        if (!tableColumns.contains(columnName)) {
-            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", currentTableName, columnName));
-        }
-    }
-
-    private void checkValue(String currentTableName, String columnName, Object value) {
-        List<DataSet> tableContent = manager.getDataContent(currentTableName);
-        List<Object> columnValues = getColumnValues(tableContent, columnName);
-
-        if (!columnValues.contains(value)) {
-            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
-        }
-    }
-
-    private List<Object> getColumnValues(List<DataSet> dataSets, String columnName) {
-        List<Object> result = new LinkedList<>();
-
-        for (DataSet dataSet : dataSets) {
-            result.add(dataSet.get(columnName));
-        }
-        return result;
     }
 }

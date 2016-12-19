@@ -1,5 +1,7 @@
 package ua.com.juja.yeryery.commands;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -46,6 +48,7 @@ public class UpdateTest {
 
     @Before
     public void setup() {
+        Logger.getRootLogger().setLevel(Level.OFF);
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Update(view, manager);
@@ -110,11 +113,13 @@ public class UpdateTest {
                 "or type 'cancel' to go back., " +
                 //name|Mike|password|newPass
                 "You have successfully updated table 'test' at id = 2, " +
-                "| id | name | password | , " +
-                "-------------------------, " +
-                "| 1 | John | pass1 | \n" +
-                "| 2 | Mike | pass2 | \n" +
-                "------------------------]");
+                "+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+\n" +
+                "|1 |John|pass1   |\n" +
+                "+--+----+--------+\n" +
+                "|2 |Mike|pass2   |\n" +
+                "+--+----+--------+]");
     }
 
     @Test
@@ -152,11 +157,13 @@ public class UpdateTest {
                 "or type 'cancel' to go back., " +
                 //id|5
                 "You have successfully updated table 'test' at name = Mike, " +
-                "| id | name | password | , " +
-                "-------------------------, " +
-                "| 1 | John | pass1 | \n" +
-                "| 2 | Mike | pass2 | \n" +
-                "------------------------]");
+                "+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+\n" +
+                "|1 |John|pass1   |\n" +
+                "+--+----+--------+\n" +
+                "|2 |Mike|pass2   |\n" +
+                "+--+----+--------+]");
     }
 
     @Test

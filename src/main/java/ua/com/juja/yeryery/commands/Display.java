@@ -1,7 +1,8 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
+import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
+import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -26,25 +27,20 @@ public class Display implements Command {
 
     @Override
     public void process(String input) {
-        Set<String> names = manager.getTableNames();
-        Dialog dialog = new DialogImpl(view);
+        Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
-        String currentTableName = dialog.SelectTable(names, message);
+        String currentTableName = dialog.SelectTable(message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
-            printTable(currentTableName);
+
+            Set<String> tableColumns = manager.getTableColumns(currentTableName);
+            List<DataSet> tableContent = manager.getDataContent(currentTableName);
+            TableConstructor tableConstructor = new TableConstructor(tableColumns, tableContent);
+            view.write(tableConstructor.getTableString());
         } else {
             view.write("Table displaying canceled");
         }
-    }
-
-    public void printTable(String currentTableName) {
-        Set<String> tableColumns = manager.getTableColumns(currentTableName);
-        printColumnNames(tableColumns);
-        List<DataSet> rows = manager.getDataContent(currentTableName);
-        printValues(rows);
-        //TODO rows in order
     }
 
     public void printColumnNames(Set<String> tableColumns) {

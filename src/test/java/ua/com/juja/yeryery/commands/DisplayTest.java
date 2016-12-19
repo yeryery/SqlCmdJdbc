@@ -1,5 +1,7 @@
 package ua.com.juja.yeryery.commands;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -21,6 +23,7 @@ public class DisplayTest {
 
     @Before
     public void setup() {
+        Logger.getRootLogger().setLevel(Level.OFF);
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Display(view, manager);
@@ -58,12 +61,14 @@ public class DisplayTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table number 1
-                "| id | name | password | , " +
-                "-------------------------, " +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "------------------------]");
+                //select table #1
+                "+--+---------+--------+\n" +
+                "|id|name     |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+]");
     }
 
     @Test
@@ -97,12 +102,14 @@ public class DisplayTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table 'test'
-                "| id | name | password | , " +
-                "-------------------------, " +
-                "| 12 | username1 | pass1 | \n" +
-                "| 22 | username2 | pass2 | \n" +
-                "------------------------]");
+                //test
+                "+--+---------+--------+\n" +
+                "|id|name     |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+]");
     }
 
     @Test
@@ -127,10 +134,10 @@ public class DisplayTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                "| id | name | password | , " +
-                "-------------------------, " +
-                "| \n" +
-                "------------------------]");
+                //test
+                "+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+]");
     }
 
     @Test

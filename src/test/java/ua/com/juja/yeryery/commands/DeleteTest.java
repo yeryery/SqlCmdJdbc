@@ -1,5 +1,7 @@
 package ua.com.juja.yeryery.commands;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -38,6 +40,7 @@ public class DeleteTest {
 
     @Before
     public void setup() {
+        Logger.getRootLogger().setLevel(Level.OFF);
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Delete(view, manager);
@@ -86,11 +89,13 @@ public class DeleteTest {
                 "or type 'cancel' to go back., " +
                 //name|Mike
                 "You have successfully deleted data from 'test' at name = Mike, " +
-                "| id | name | , " +
-                "-------------------------, " +
-                "| 1 | John | \n" +
-                "| 2 | Mike | \n" +
-                "------------------------]");
+                "+--+----+\n" +
+                "|id|name|\n" +
+                "+--+----+\n" +
+                "|1 |John|\n" +
+                "+--+----+\n" +
+                "|2 |Mike|\n" +
+                "+--+----+]");
     }
 
     @Test
@@ -120,11 +125,13 @@ public class DeleteTest {
                 "or type 'cancel' to go back., " +
                 //id|2
                 "You have successfully deleted data from 'test' at id = 2, " +
-                "| id | name | , " +
-                "-------------------------, " +
-                "| 1 | John | \n" +
-                "| 2 | Mike | \n" +
-                "------------------------]");
+                "+--+----+\n" +
+                "|id|name|\n" +
+                "+--+----+\n" +
+                "|1 |John|\n" +
+                "+--+----+\n" +
+                "|2 |Mike|\n" +
+                "+--+----+]");
     }
 
     @Test

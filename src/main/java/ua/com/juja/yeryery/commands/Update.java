@@ -1,6 +1,7 @@
 package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.Parser;
+import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
@@ -17,7 +18,8 @@ public class Update implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private final String ACTION = "update";
+    private static final String ACTION = "update";
+    private static final String COMMAND_SAMPLE = "columnName|value";
 
     public Update(View view, DatabaseManager manager) {
         this.view = view;
@@ -32,9 +34,9 @@ public class Update implements Command {
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-        Dialog dialog = new DialogImpl(view);
+        Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
-        String currentTableName = dialog.SelectTable(names, message);
+        String currentTableName = dialog.SelectTable(message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
@@ -43,7 +45,7 @@ public class Update implements Command {
 
                 String[] splitInput;
                 try {
-                    splitInput = findRow(currentTableName);
+                    splitInput = dialog.findRow(currentTableName, ACTION, COMMAND_SAMPLE);
                 } catch (CancelException e) {
                     cancel = true;
                     break;
@@ -57,12 +59,9 @@ public class Update implements Command {
                 String columnName = splitInput[0];
                 Object value = parser.defineType(splitInput[1]);
 
-                List<DataSet> tableContent = manager.getDataContent(currentTableName);
-                List<DataSet> updatedRows = getRows(tableContent, columnName, value);
-
                 DataSet newValues = null;
                 try {
-                    newValues = getNewValues(currentTableName, updatedRows);
+                    newValues = getNewValues(currentTableName, columnName, value);
                 } catch (CancelException e) {
                     cancel = true;
                     break;
@@ -70,12 +69,14 @@ public class Update implements Command {
                 newValues.put(columnName, value);
 
                 try {
+                    Set<String> tableColumns = manager.getTableColumns(currentTableName);
+                    List<DataSet> originRows = manager.getDataContent(currentTableName);
+
                     manager.update(currentTableName, newValues, columnName);
                     view.write(String.format("You have successfully updated table '%s' at %s = %s", currentTableName, columnName, value));
-                    Display display = new Display(view, manager);
-                    Set<String> tableColumns = manager.getTableColumns(currentTableName);
-                    display.printColumnNames(tableColumns);
-                    display.printValues(tableContent);
+
+                    TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
+                    view.write(tableConstructor.getTableString());
                     break;
                 } catch (SQLException e) {
                     view.write(e.getMessage());
@@ -94,54 +95,11 @@ public class Update implements Command {
         }
     }
 
-    private String[] findRow(String tableName) {
-        String[] input = getInput();
-
-        Parser parser = new Parser();
-        String columnName = input[0];
-        Object value = parser.defineType(input[1]);
-
-        checkColumn(tableName, columnName);
-        checkValue(tableName, columnName, value);
-
-        return input;
-    }
-
-    private String[] getInput() {
-        final String COMMAND_SAMPLE = "columnName|value";
-        view.write("Enter columnName and defining value of updated row: " + COMMAND_SAMPLE + "\n" +
-                "or type 'cancel' to go back.");
-
-        final String inputData = view.read();
-        final String delimiter = "\\|";
-
-        Parser parser = new Parser();
-        String[] splitInput = parser.splitData(inputData, COMMAND_SAMPLE, delimiter);
-
-        return splitInput;
-    }
-
-    private void checkValue(String currentTableName, String columnName, Object value) {
-        List<DataSet> tableContent = manager.getDataContent(currentTableName);
-        List<Object> columnValues = getColumnValues(tableContent, columnName);
-
-        if (!columnValues.contains(value)) {
-            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
-        }
-    }
-
-    private void checkColumn(String currentTableName, String columnName) {
-        Set<String> tableColumns = manager.getTableColumns(currentTableName);
-
-        if (!tableColumns.contains(columnName)) {
-            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", currentTableName, columnName));
-        }
-    }
-
-    private List<DataSet> getRows(List<DataSet> rows, String columnName, Object value) {
+    private List<DataSet> getUpdatedRows(String tableName, String columnName, Object value) {
+        List<DataSet> dataSets = manager.getDataContent(tableName);
         List<DataSet> result = new LinkedList<>();
 
-        for (DataSet row : rows) {
+        for (DataSet row : dataSets) {
             if (row.get(columnName).equals(value)) {
                 result.add(row);
             }
@@ -149,18 +107,7 @@ public class Update implements Command {
         return result;
     }
 
-    private boolean checkNewValues(DataSet newValues, List<DataSet> updatedRows) {
-        for (String columnName : newValues.getColumnNames()) {
-            for (DataSet row : updatedRows) {
-                if (!newValues.get(columnName).equals(row.get(columnName))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private DataSet getNewValues(String tableName, List<DataSet> updatedRows) {
+    private DataSet getNewValues(String tableName, String columnName, Object value) {
         while (true) {
             DataSet newValues = null;
             try {
@@ -172,26 +119,14 @@ public class Update implements Command {
                 continue;
             }
 
+            List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
+
             if (!checkNewValues(newValues, updatedRows)) {
                 view.write("The new values are equivalent to the updated");
                 continue;
             }
             return newValues;
         }
-    }
-
-    private DataSet getDataSet(String currentTableName, String[] splitInput) {
-        DataSet newValues = new DataSetImpl();
-
-        for (int i = 0; i < splitInput.length; i++) {
-            Parser parser = new Parser();
-            String updatedColumn = splitInput[i++];
-            Object newValue = parser.defineType(splitInput[i]);
-            checkColumn(currentTableName, updatedColumn);
-
-            newValues.put(updatedColumn, newValue);
-        }
-        return newValues;
     }
 
     private String[] getNewData() throws IllegalArgumentException {
@@ -208,13 +143,37 @@ public class Update implements Command {
         return splitInput;
     }
 
-    private List<Object> getColumnValues(List<DataSet> dataSets, String columnName) {
-        List<Object> result = new LinkedList<>();
+    private DataSet getDataSet(String currentTableName, String[] splitInput) {
+        DataSet newValues = new DataSetImpl();
 
-        for (DataSet dataSet : dataSets) {
-            result.add(dataSet.get(columnName));
+        for (int i = 0; i < splitInput.length; i++) {
+            Parser parser = new Parser();
+            String updatedColumn = splitInput[i++];
+            Object newValue = parser.defineType(splitInput[i]);
+            checkColumn(currentTableName, updatedColumn);
+
+            newValues.put(updatedColumn, newValue);
         }
-        return result;
+        return newValues;
+    }
+
+    private void checkColumn(String tableName, String columnName) {
+        Set<String> tableColumns = manager.getTableColumns(tableName);
+
+        if (!tableColumns.contains(columnName)) {
+            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
+        }
+    }
+
+    private boolean checkNewValues(DataSet newValues, List<DataSet> updatedRows) {
+        for (String columnName : newValues.getColumnNames()) {
+            for (DataSet row : updatedRows) {
+                if (!newValues.get(columnName).equals(row.get(columnName))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 
