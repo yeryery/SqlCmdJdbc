@@ -1,8 +1,6 @@
 package ua.com.juja.yeryery;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import ua.com.juja.yeryery.commands.CancelCommandException;
 
 public class Parser {
 
@@ -12,43 +10,58 @@ public class Parser {
         return parsedInt;
     }
 
-    public boolean isParsable(String input) {
+    public boolean isParsable(String data) {
         boolean parsable = true;
         try {
-            parsedInt = Integer.parseInt(input);
+            parsedInt = Integer.parseInt(data);
         } catch (NumberFormatException e) {
             parsable = false;
         }
         return parsable;
     }
 
-    public Object defineType(String input) {
-        if (isParsable(input)) {
-            return parsedInt;
-        } else {
-            return input;
+    public Object defineType(String data) {
+        try {
+            return Integer.parseInt(data);
+        } catch (NumberFormatException e) {
+            return data;
         }
     }
 
-    public List<Object> parseByDelimiter(String input, String delimiter) {
-        List<Object> result = new LinkedList<>();
-
-        Scanner scanner = new Scanner(input).useDelimiter(delimiter);
-
-        while (scanner.hasNext()) {
-            if (scanner.hasNextInt()) {
-                result.add(scanner.nextInt());
-            } else {
-                result.add(scanner.next());
-            }
-        }
-
-        scanner.close();
-        return result;
+    private int count(String data, String delimiter) {
+        String[] splitData = data.split(delimiter);
+        return splitData.length;
     }
 
-    public int count(String input, String delimiter) {
-        String[] data = input.split("\\|");
-        return data.length;
+    public String[] splitData(String data, String sample, String delimiter) {
+        int sampleSize = count(sample, delimiter);
+        int dataSize = count(data, delimiter);
+
+        if (data.equals("cancel")) {
+            throw new CancelCommandException();
+        }
+
+        if (dataSize != sampleSize) {
+            throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
+                    "Expected %s, and you have entered %s!", sampleSize, dataSize));
+        }
+
+        return data.split(delimiter);
+    }
+
+    public String[] splitByTwo(String data, String delimiter) {
+        int dataSize = count(data, delimiter);
+
+        if (data.equals("cancel")) {
+            throw new CancelCommandException();
+        }
+
+
+        if (dataSize % 2 != 0) {
+            throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
+                    "Expected even number of parameters (2, 4 and so on) and you have entered %s!", dataSize));
+        }
+
+        return data.split(delimiter);
     }
 }
