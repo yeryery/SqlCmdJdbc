@@ -77,12 +77,12 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike
                 "You have successfully deleted data from 'test' at name = Mike, " +
@@ -111,12 +111,12 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|2
                 "You have successfully deleted data from 'test' at id = 2, " +
@@ -139,7 +139,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -159,12 +159,12 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table deleting canceled]");
@@ -187,17 +187,17 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|2|something
-                "You should enter two parameters!\n" +
+                "Wrong number of parameters. Expected 2, and you have entered 3!, " +
                 "Try again., " +
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table deleting canceled]");
@@ -220,17 +220,17 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|2|something
                 "Table 'test' doesn't contain column 'notExistingColumn'!, " +
                 "Try again., " +
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table deleting canceled]");
@@ -254,17 +254,17 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to delete, " +
+        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|2|something
                 "Column 'id' doesn't contain value 'notExistingValue'!, " +
                 "Try again., " +
-                "Enter columnName and value of the row you want to delete: columnName|value\n" +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table deleting canceled]");
