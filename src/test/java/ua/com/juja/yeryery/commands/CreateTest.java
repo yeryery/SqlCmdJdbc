@@ -88,7 +88,7 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreateAndCancel() {
+    public void testCreateAndCancel() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -102,7 +102,7 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreateAndEnterNegativeNumberOfColumns() {
+    public void testCreateAndEnterNegativeNumberOfColumns() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -119,13 +119,14 @@ public class CreateTest {
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //-1
                 "Number must be positive!, " +
+                "Try again., " +
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //cancel
                 "Table creating canceled]");
     }
 
     @Test
-    public void testCreateAndNotNumberOfColumns() {
+    public void testCreateAndNotNumberOfColumns() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -175,6 +176,7 @@ public class CreateTest {
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //notNumber
                 "This is not a number!, " +
+                "Try again., " +
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //0
                 "Table creating canceled]");

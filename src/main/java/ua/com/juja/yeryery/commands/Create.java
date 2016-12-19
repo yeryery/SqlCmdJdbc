@@ -2,7 +2,7 @@ package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
-import ua.com.juja.yeryery.commands.dialogs.NameTable;
+import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
@@ -10,6 +10,7 @@ import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 
 import static java.lang.Integer.parseInt;
 
@@ -33,43 +34,42 @@ public class Create implements Command {
     public void process(String input) {
         Set<String> names = manager.getTableNames();
 
-        Dialog dialog = new NameTable();
-        String currentTableName = dialog.askUser(names, view, ACTION);
+        Dialog dialog = new DialogImpl(view);
+        String message = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
+        String currentTableName = dialog.NameTable(names, message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
 
             while (true) {
-                view.write("Please enter the number of columns of your table or 'cancel' to go back");
-                String read = view.read();
-                int tableSize;
 
+                int tableSize = 0;
                 try {
-                    tableSize = parseInt(read);
-
-                    if (tableSize <= 0) {
-                        view.write("Number must be positive!");
-                        continue;
-                    }
-                } catch (NumberFormatException e) {
-                    if (read.equals("cancel")) {
-                        cancel = true;
-                        break;
-                    } else {
-                        view.write("This is not a number!");
-                        continue;
-                    }
+                    tableSize = getTableSize();
+                } catch (CancellationException e) {
+                    cancel = true;
+                    break;
+                } catch (IllegalArgumentException e) {
+                    view.write(e.getMessage());
+                    view.write("Try again.");
+                    continue;
                 }
 
                 DataSet dataTypes = putColumnNames(tableSize);
 
                 try {
                     manager.create(currentTableName, dataTypes);
-                    view.write("Your table '" + currentTableName + "' have successfully created!");
+                    view.write(String.format("Your table '%s' have successfully created!", currentTableName));
                     break;
                 } catch (SQLException e) {
                     SQLErrorPrinter error = new SQLErrorPrinter(e);
                     error.printSQLError();
+
+                    boolean confirmed = dialog.isConfirmed("Do you want to try again?");
+                    if (!confirmed) {
+                        cancel = true;
+                        break;
+                    }
                 }
             }
         }
@@ -77,6 +77,25 @@ public class Create implements Command {
         if (cancel){
             view.write("Table creating canceled");
         }
+    }
+
+    private int getTableSize() {
+        view.write("Please enter the number of columns of your table or 'cancel' to go back");
+        String read = view.read();
+        int tableSize;
+        try {
+            tableSize = parseInt(read);
+        } catch (NumberFormatException e) {
+            if (read.equals("cancel")) {
+                throw new CancellationException();
+            } else {
+                throw new IllegalArgumentException("This is not a number!");
+            }
+        }
+        if (tableSize <= 0) {
+            throw new IllegalArgumentException("Number must be positive!");
+        }
+        return tableSize;
     }
 
     private DataSet putColumnNames(int tableSize) {
