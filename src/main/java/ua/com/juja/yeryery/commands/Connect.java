@@ -22,20 +22,14 @@ public class Connect implements Command {
     @Override
     public void process(String input) {
         final String delimiter = "\\|";
-        String[] data = input.split(delimiter);
-
         final String COMMAND_SAMPLE = "connect|yeryery|postgres|postgrespass";
+
         Parser parser = new Parser();
-        int count = parser.count(COMMAND_SAMPLE, delimiter);
+        String[] splitInput = parser.splitData(input, COMMAND_SAMPLE, delimiter);
 
-        if (data.length != count) {
-            throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
-                    "Expected %s, and you have entered %s", count, data.length));
-        }
-
-        String database = data[1];
-        String username = data[2];
-        String password = data[3];
+        String database = splitInput[1];
+        String username = splitInput[2];
+        String password = splitInput[3];
 
         manager.connect(database, username, password);
         view.write("Success!");
