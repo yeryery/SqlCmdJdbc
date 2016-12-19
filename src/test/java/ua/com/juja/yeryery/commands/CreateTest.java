@@ -118,7 +118,7 @@ public class CreateTest {
                 //newTable
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //-1
-                "Number must be positive!, " +
+                "You have entered '-1' and number of columns must be positive!, " +
                 "Try again., " +
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //cancel
@@ -175,7 +175,7 @@ public class CreateTest {
                 //newTable
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //notNumber
-                "This is not a number!, " +
+                "You have entered 'notNumber' and this is not a number!, " +
                 "Try again., " +
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //0

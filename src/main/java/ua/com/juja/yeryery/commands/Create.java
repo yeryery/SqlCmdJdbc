@@ -56,12 +56,9 @@ public class Create implements Command {
                 }
 
                 DataSet dataTypes = putColumnNames(tableSize);
-
                 try {
                     manager.create(currentTableName, dataTypes);
-                    view.write(String.format("Your table '%s' have successfully created!", currentTableName));
-                    break;
-                } catch (SQLException e) {
+                }  catch (SQLException e) {
                     SQLErrorPrinter error = new SQLErrorPrinter(e);
                     error.printSQLError();
 
@@ -71,10 +68,13 @@ public class Create implements Command {
                         break;
                     }
                 }
+
+                view.write(String.format("Your table '%s' have successfully created!", currentTableName));
+                break;
             }
         }
 
-        if (cancel){
+        if (cancel) {
             view.write("Table creating canceled");
         }
     }
@@ -89,11 +89,11 @@ public class Create implements Command {
             if (read.equals("cancel")) {
                 throw new CancellationException();
             } else {
-                throw new IllegalArgumentException("This is not a number!");
+                throw new IllegalArgumentException(String.format("You have entered '%s' and this is not a number!", read));
             }
         }
         if (tableSize <= 0) {
-            throw new IllegalArgumentException("Number must be positive!");
+            throw new IllegalArgumentException(String.format("You have entered '%s' and number of columns must be positive!", tableSize));
         }
         return tableSize;
     }
