@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.commands.dialogs.SelectTable;
+import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
@@ -27,8 +27,9 @@ public class Display implements Command {
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-        Dialog dialog = new SelectTable();
-        String currentTableName = dialog.askUser(names, view, ACTION);
+        Dialog dialog = new DialogImpl(view);
+        String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
+        String currentTableName = dialog.SelectTable(names, message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {

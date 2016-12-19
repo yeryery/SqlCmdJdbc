@@ -21,17 +21,18 @@ public class NameTableTest {
     @Before
     public void setup() {
         view = mock(View.class);
-        dialog = new NameTable();
+        dialog = new DialogImpl(view);
     }
 
     @Test
     public void testNameTableWithOriginalName() {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        String message = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
         when(view.read()).thenReturn("myTable");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.NameTable(tableNames, message);
 
         //then
         verify(view).write("Please enter the name of table you want to create or 'cancel' to go back");
@@ -43,10 +44,11 @@ public class NameTableTest {
     public void testNameTableWithExistingName() {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        String message = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
         when(view.read()).thenReturn("test").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.NameTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
@@ -62,10 +64,11 @@ public class NameTableTest {
     public void testNameTableWhenNameStartsWithNumber() {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        String message = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
         when(view.read()).thenReturn("1name").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.NameTable(tableNames, message);
 
         //then
         verify(view).write("Table name must begin with a letter! Try again.");

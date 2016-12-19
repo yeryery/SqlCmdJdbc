@@ -1,7 +1,7 @@
 package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.SQLErrorPrinter;
-import ua.com.juja.yeryery.commands.dialogs.SelectTable;
+import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
@@ -30,8 +30,9 @@ public class Insert implements Command {
     @Override
     public void process(String input) {
         Set<String> tableNames = manager.getTableNames();
-        Dialog dialog = new SelectTable();
-        String currentTableName = dialog.askUser(tableNames, view, ACTION);
+        Dialog dialog = new DialogImpl(view);
+        String message = String.format("Please enter the name or select number of table where you want to %s new rows", ACTION);
+        String currentTableName = dialog.SelectTable(tableNames, message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
@@ -39,13 +40,8 @@ public class Insert implements Command {
             DataSet newRow = new DataSetImpl();
 
             while (true) {
-                view.write("Enter new values you require");
 
-                for (String columnName : tableColumns) {
-                    view.write(columnName);
-                    Object value = view.read();
-                    newRow.put(columnName, value);
-                }
+                newRow = getNewValues(tableColumns);
 
                 try {
                     manager.insert(currentTableName, newRow);
@@ -55,7 +51,7 @@ public class Insert implements Command {
                     SQLErrorPrinter error = new SQLErrorPrinter(e);
                     error.printSQLError();
 
-                    boolean confirmed = dialog.isConfirmed("Do you want to try again?", view);
+                    boolean confirmed = dialog.isConfirmed("Do you want to try again?");
                     if (!confirmed) {
                         cancel = true;
                         break;
@@ -67,5 +63,17 @@ public class Insert implements Command {
         if (cancel) {
             view.write("Table inserting canceled");
         }
+    }
+
+    private DataSet getNewValues(Set<String> tableColumns) {
+        view.write("Enter new values you require");
+        DataSet newRow = new DataSetImpl();
+        for (String columnName : tableColumns) {
+            view.write(columnName);
+            Object value = view.read();
+            newRow.put(columnName, value);
+        }
+
+        return newRow;
     }
 }

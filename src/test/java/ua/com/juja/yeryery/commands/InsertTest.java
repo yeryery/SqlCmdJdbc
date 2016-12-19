@@ -58,7 +58,7 @@ public class InsertTest {
         command.process("insert");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to insert, " +
+        shouldPrint("[Please enter the name or select number of table where you want to insert new rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -116,7 +116,7 @@ public class InsertTest {
     }
 
     @Test
-    public void testInsertAndSelectZero() {
+    public void testInsertAndSelectZero() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -125,7 +125,7 @@ public class InsertTest {
         //when
         command.process("insert");
 
-        shouldPrint("[Please enter the name or select number of table you want to insert, " +
+        shouldPrint("[Please enter the name or select number of table where you want to insert new rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -134,7 +134,7 @@ public class InsertTest {
     }
 
     @Test
-    public void testInsertAndCancel() {
+    public void testInsertAndCancel() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -143,7 +143,7 @@ public class InsertTest {
         //when
         command.process("insert");
 
-        shouldPrint("[Please enter the name or select number of table you want to insert, " +
+        shouldPrint("[Please enter the name or select number of table where you want to insert new rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

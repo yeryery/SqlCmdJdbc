@@ -12,16 +12,16 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class SelectTableTest {
+public class DialogImplTest {
 
     private View view;
     private Dialog dialog;
-    private final String ACTION = "display";
+    private final String message = "Please enter the name or select number of table you want to display";
 
     @Before
     public void setup() {
         view = mock(View.class);
-        dialog = new SelectTable();
+        dialog = new DialogImpl(view);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("1");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.SelectTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -49,7 +49,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("test");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.SelectTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -67,7 +67,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.SelectTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -85,7 +85,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("0");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.SelectTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -103,7 +103,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("notExist").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.SelectTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -127,7 +127,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("3").thenReturn("cancel");
 
         //when
-        String actual = dialog.askUser(tableNames, view, ACTION);
+        String actual = dialog.SelectTable(tableNames, message);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +

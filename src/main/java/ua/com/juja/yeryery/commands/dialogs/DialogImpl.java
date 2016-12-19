@@ -5,16 +5,18 @@ import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
 
-public class SelectTable implements Dialog {
+public class DialogImpl implements Dialog {
+
+    private View view;
+
+    public DialogImpl(View view) {
+        this.view = view;
+    }
 
     @Override
-    public String askUser(Set<String> names, View view, String action) {
+    public String SelectTable(Set<String> names, String message) {
 
         Map<Integer, String> tableNames = new HashMap<>();
-
-//        for (int i = 1; names.iterator().hasNext(); i++) {
-//            tableNames.put(i, names.iterator().next());
-//        }
 
         Iterator iterator = names.iterator();
         int i = 1;
@@ -27,7 +29,7 @@ public class SelectTable implements Dialog {
         String tableName;
 
         while (true) {
-            view.write(String.format("Please enter the name or select number of table you want to %s", action));
+            view.write(message);
 
             tableNames.remove(0);
 
@@ -64,12 +66,37 @@ public class SelectTable implements Dialog {
     }
 
     @Override
-    public boolean isConfirmed(String warning, View view) {
+    public String NameTable(Set<String> names, String message) {
+        String tableName;
+
+        while (true) {
+            view.write(message);
+            tableName = view.read();
+
+            char firstLetter = tableName.charAt(0);
+            if (!(firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z')) {
+                view.write("Table name must begin with a letter! Try again.");
+                continue;
+            }
+
+            if (names.contains(tableName)) {
+                view.write(String.format("Table with name '%s' already exists!", tableName));
+                view.write(names.toString());
+                view.write("Try again.");
+            } else {
+                break;
+            }
+        }
+        return tableName;
+    }
+
+    @Override
+    public boolean isConfirmed(String warning) {
         String confirm = "";
 
         while (!confirm.equals("y") && !confirm.equals("n")) {
             view.write(warning + " (y/n)");
-            confirm =(String) view.read();
+            confirm = (String) view.read();
         }
 
         boolean result = false;
