@@ -41,11 +41,11 @@ public class Update implements Command {
         if (!cancel) {
 
             while (true) {
-                String[] splitInput;
 
+                String[] splitInput;
                 try {
                     splitInput = findRow(currentTableName);
-                } catch (CancelCommandException e) {
+                } catch (CancelException e) {
                     cancel = true;
                     break;
                 } catch (IllegalArgumentException e) {
@@ -58,18 +58,16 @@ public class Update implements Command {
                 String columnName = splitInput[0];
                 Object value = parser.defineType(splitInput[1]);
 
-
                 List<DataSet> tableContent = manager.getDataContent(currentTableName);
                 List<DataSet> updatedRows = getRows(tableContent, columnName, value);
-                DataSet newValues = null;
 
+                DataSet newValues = null;
                 try {
                     newValues = getNewValues(currentTableName, updatedRows);
-                } catch (CancelCommandException e) {
+                } catch (CancelException e) {
                     cancel = true;
                     break;
                 }
-
                 newValues.put(columnName, value);
 
                 try {
@@ -83,6 +81,12 @@ public class Update implements Command {
                 } catch (SQLException e) {
                     SQLErrorPrinter error = new SQLErrorPrinter(e);
                     error.printSQLError();
+
+                    boolean confirmed = dialog.isConfirmed("Do you want to try again?");
+                    if (!confirmed) {
+                        cancel = true;
+                        break;
+                    }
                 }
             }
         }

@@ -37,14 +37,14 @@ public class Insert implements Command {
 
         if (!cancel) {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            DataSet newRow = new DataSetImpl();
+            DataSet insertedRow = new DataSetImpl();
 
             while (true) {
 
-                newRow = getNewValues(tableColumns);
+                insertedRow = getNewValues(tableColumns);
 
                 try {
-                    manager.insert(currentTableName, newRow);
+                    manager.insert(currentTableName, insertedRow);
                     view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
                     break;
                 } catch (SQLException e) {
@@ -67,13 +67,13 @@ public class Insert implements Command {
 
     private DataSet getNewValues(Set<String> tableColumns) {
         view.write("Enter new values you require");
-        DataSet newRow = new DataSetImpl();
+        DataSet dataSet = new DataSetImpl();
         for (String columnName : tableColumns) {
             view.write(columnName);
             Object value = view.read();
-            newRow.put(columnName, value);
+            dataSet.put(columnName, value);
         }
 
-        return newRow;
+        return dataSet;
     }
 }

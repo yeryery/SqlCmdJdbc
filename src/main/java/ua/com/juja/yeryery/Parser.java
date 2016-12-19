@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery;
 
-import ua.com.juja.yeryery.commands.CancelCommandException;
+import ua.com.juja.yeryery.commands.CancelException;
 
 public class Parser {
 
@@ -38,7 +38,7 @@ public class Parser {
         int dataSize = count(data, delimiter);
 
         if (data.equals("cancel")) {
-            throw new CancelCommandException();
+            throw new CancelException();
         }
 
         if (dataSize != sampleSize) {
@@ -53,9 +53,8 @@ public class Parser {
         int dataSize = count(data, delimiter);
 
         if (data.equals("cancel")) {
-            throw new CancelCommandException();
+            throw new CancelException();
         }
-
 
         if (dataSize % 2 != 0) {
             throw new IllegalArgumentException(String.format("Wrong number of parameters. " +

@@ -578,7 +578,8 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //-1
-                "Number must be positive!\n" +
+                "You have entered '-1' and number of columns must be positive!\n" +
+                "Try again.\n" +
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //0
                 "Table creating canceled\n" +
@@ -1600,7 +1601,7 @@ public class IntegrationTest {
         in.add("test");
         in.add("login|username2");
         in.add("id|notNumber");
-        in.add("cancel");
+        in.add("n");
         in.add("exit");
 
         //when
@@ -1626,9 +1627,8 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|notNumber
                 "SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
-                "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
-                //cancel
+                "Do you want to try again? (y/n)\n" +
+                //n
                 "Table updating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -1643,7 +1643,7 @@ public class IntegrationTest {
         in.add("test");
         in.add("login|username2");
         in.add("id|12");
-        in.add("cancel");
+        in.add("n");
         in.add("exit");
 
         //when
@@ -1669,9 +1669,8 @@ public class IntegrationTest {
                 "or type 'cancel' to go back.\n" +
                 //id|12
                 "SQL ERROR: duplicate key value violates unique constraint \"test_pkey\"!\n" +
-                "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
-                //cancel
+                "Do you want to try again? (y/n)\n" +
+                //n
                 "Table updating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit

@@ -17,7 +17,7 @@ public class JdbcManager implements DatabaseManager {
 
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/" + database, username, password);
+                    String.format("jdbc:postgresql://127.0.0.1:5432/%s", database), username, password);
         } catch (SQLException e) {
             connection = null;
             throw new RuntimeException(e);
@@ -27,41 +27,42 @@ public class JdbcManager implements DatabaseManager {
     @Override
     public Set<String> getTableNames() {
         Set<String> tableNames = new TreeSet<String>();
+        String sql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'";
+
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(
-                     "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 tableNames.add(resultSet.getString("table_name"));
             }
-            return tableNames;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return tableNames;
+            throw new RuntimeException(e);
         }
+        return tableNames;
     }
 
     @Override
     public Set<String> getTableColumns(String tableName) {
         Set<String> columnNames = new LinkedHashSet<String>();
-        try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM information_schema.columns" +
-                     " WHERE table_name='" + tableName + "'")) {
+        String sql = String.format("SELECT * FROM information_schema.columns WHERE table_name='%s'", tableName);
 
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 columnNames.add(rs.getString("column_name"));
             }
-            return columnNames;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return columnNames;
+            throw new RuntimeException(e);
         }
+        return columnNames;
     }
 
     @Override
-    public void clear(String tableName) throws SQLException {
+    public void clear(String tableName) {
         try (Statement st = connection.createStatement()) {
             String sql = "DELETE FROM " + tableName;
             st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -69,15 +70,18 @@ public class JdbcManager implements DatabaseManager {
     public void create(String tableName, DataSet dataSet) throws SQLException {
         try (Statement st = connection.createStatement()) {
             String dataTypes = getDataSetFormatted(dataSet);
-            String sql = "CREATE TABLE " + tableName + "(ID INT PRIMARY KEY NOT NULL, " + dataTypes + ")";
+            String sql = String.format("CREATE TABLE %s(ID INT PRIMARY KEY NOT NULL, %s)", tableName, dataTypes);
             st.executeUpdate(sql);
         }
     }
 
     @Override
-    public void drop(String tableName) throws SQLException {
+    public void drop(String tableName) {
         try (Statement st = connection.createStatement()) {
-            st.executeUpdate("DROP TABLE " + tableName);
+            String sql = String.format("DROP TABLE %s", tableName);
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -91,7 +95,7 @@ public class JdbcManager implements DatabaseManager {
         try (Statement st = connection.createStatement()) {
             String columnNames = getColumnNamesFormatted("%s,", input);
             String values = getValuesFormatted("'%s',", input);
-            String sql = "INSERT INTO " + tableName + " (" + columnNames + ")" + "VALUES (" + values + ")";
+            String sql = String.format("INSERT INTO %s (%s)VALUES (%s)", tableName, columnNames, values);
             st.executeUpdate(sql);
         }
     }
@@ -99,9 +103,9 @@ public class JdbcManager implements DatabaseManager {
     @Override
     public void update(String tableName, DataSet newDataSet, String definingColumn) throws SQLException {
         String updatedColumns = getColumnNamesFormatted("%s=?,", newDataSet);
+        String sql = String.format("UPDATE %s SET %s WHERE %s= ?", tableName, updatedColumns, definingColumn);
 
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE " + tableName + " SET " + updatedColumns +
-                " WHERE " + definingColumn + "= ?")) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             int sqlIndex = 1;
             List<Object> newValues = newDataSet.getValues();
             for (Object newValue : newValues) {
@@ -115,18 +119,22 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void delete(String tableName, String columnName, Object value) throws SQLException {
+    public void delete(String tableName, String columnName, Object value) {
         try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM " + tableName + " WHERE " + columnName + " = '" + value + "'";
+            String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, columnName, value);
             st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public List<DataSet> getDataContent(String tableName) {
         List<DataSet> result = new LinkedList<DataSet>();
+        String sql = String.format("SELECT * FROM %s", tableName);
+
         try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM " + tableName)) {
+             ResultSet rs = st.executeQuery(sql)) {
 
             ResultSetMetaData rsmd = rs.getMetaData();
             int index = 0;
@@ -137,11 +145,10 @@ public class JdbcManager implements DatabaseManager {
                     dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
                 }
             }
-            return result;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return result;
+            throw new RuntimeException(e);
         }
+        return result;
     }
 
     private String getColumnNamesFormatted(String format, DataSet input) {

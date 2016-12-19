@@ -11,11 +11,11 @@ public interface DatabaseManager {
 
     Set<String> getTableColumns(String tableName);
 
-    void clear(String tableName) throws SQLException;
+    void clear(String tableName);
 
     void create(String tableName, DataSet columns) throws SQLException;
 
-    void drop(String tableName) throws SQLException;
+    void drop(String tableName);
 
     boolean isConnected();
 
@@ -23,7 +23,7 @@ public interface DatabaseManager {
 
     void update(String tableName, DataSet input, String columnName) throws SQLException;
 
-    void delete(String tableName, String columnName, Object value) throws SQLException;
+    void delete(String tableName, String columnName, Object value);
 
     List<DataSet> getDataContent(String tableName);
 }

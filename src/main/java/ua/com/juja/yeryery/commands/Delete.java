@@ -42,7 +42,7 @@ public class Delete implements Command {
                 String[] splitInput;
                 try {
                     splitInput = findRow(currentTableName);
-                } catch (CancelCommandException e) {
+                } catch (CancelException e) {
                     cancel = true;
                     break;
                 } catch (IllegalArgumentException e) {
@@ -54,6 +54,7 @@ public class Delete implements Command {
                 Parser parser = new Parser();
                 String columnName = splitInput[0];
                 Object value = parser.defineType(splitInput[1]);
+                //TODO
 
                 List<DataSet> tableContent = manager.getDataContent(currentTableName);
 
