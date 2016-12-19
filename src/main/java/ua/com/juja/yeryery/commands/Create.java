@@ -1,6 +1,5 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
@@ -59,8 +58,7 @@ public class Create implements Command {
                 try {
                     manager.create(currentTableName, dataTypes);
                 }  catch (SQLException e) {
-                    SQLErrorPrinter error = new SQLErrorPrinter(e);
-                    error.printSQLError();
+                    view.write(e.getMessage());
 
                     boolean confirmed = dialog.isConfirmed("Do you want to try again?");
                     if (!confirmed) {

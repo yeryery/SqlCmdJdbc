@@ -645,7 +645,8 @@ public class IntegrationTest {
                 //1
                 "Please enter name|type of column 1:\n" +
                 //name|wrongType
-                "SQL ERROR: type \"wrongtype\" does not exist!\n" +
+                "ERROR: type \"wrongtype\" does not exist\n" +
+                "  Position: 57\n" +
                 "Do you want to try again? (y/n)\n" +
                 //n
                 "Table creating canceled\n" +
@@ -779,7 +780,8 @@ public class IntegrationTest {
                 //Mike
                 "age\n" +
                 //25
-                "SQL ERROR: invalid input syntax for integer: \"notNumber\"!\n" +
+                "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
+                "  Position: 41\n" +
                 "Do you want to try again? (y/n)\n" +
                 //n
                 "Table inserting canceled\n" +
@@ -828,7 +830,8 @@ public class IntegrationTest {
                 //Mike
                 "age\n" +
                 //25
-                "SQL ERROR: invalid input syntax for integer: \"notNumber\"!\n" +
+                "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
+                "  Position: 41\n" +
                 "Do you want to try again? (y/n)\n" +
                 //y
                 "Enter new values you require\n" +
@@ -1626,7 +1629,9 @@ public class IntegrationTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back.\n" +
                 //id|notNumber
-                "SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
+                "ERROR: column \"id\" is of type integer but expression is of type character varying\n" +
+                "  Hint: You will need to rewrite or cast the expression.\n" +
+                "  Position: 20\n" +
                 "Do you want to try again? (y/n)\n" +
                 //n
                 "Table updating canceled\n" +
@@ -1668,7 +1673,8 @@ public class IntegrationTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back.\n" +
                 //id|12
-                "SQL ERROR: duplicate key value violates unique constraint \"test_pkey\"!\n" +
+                "ERROR: duplicate key value violates unique constraint \"test_pkey\"\n" +
+                "  Detail: Key (id)=(12) already exists.\n" +
                 "Do you want to try again? (y/n)\n" +
                 //n
                 "Table updating canceled\n" +

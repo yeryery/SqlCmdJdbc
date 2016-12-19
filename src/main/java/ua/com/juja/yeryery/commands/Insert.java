@@ -1,15 +1,14 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.SQLErrorPrinter;
-import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
+import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Set;
 
 public class Insert implements Command {
 
@@ -48,8 +47,7 @@ public class Insert implements Command {
                     view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
                     break;
                 } catch (SQLException e) {
-                    SQLErrorPrinter error = new SQLErrorPrinter(e);
-                    error.printSQLError();
+                    view.write(e.getMessage());
 
                     boolean confirmed = dialog.isConfirmed("Do you want to try again?");
                     if (!confirmed) {
