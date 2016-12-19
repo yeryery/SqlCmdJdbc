@@ -1,12 +1,10 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.SQLErrorPrinter;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
-import ua.com.juja.yeryery.commands.dialogs.SelectTable;
+import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 public class Clear implements Command {
@@ -28,23 +26,18 @@ public class Clear implements Command {
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-
-        Dialog dialog = new SelectTable();
-        String currentTableName = dialog.askUser(names, view, ACTION);
+        Dialog dialog = new DialogImpl(view);
+        String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
+        String currentTableName = dialog.SelectTable(names, message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
-            String warning = "Table '" + currentTableName + "' will be cleared! Continue?";
-            boolean confirmed = dialog.isConfirmed(warning, view);
+            String warning = String.format("Table '%s' will be cleared! Continue?", currentTableName);
+            boolean confirmed = dialog.isConfirmed(warning);
 
             if (confirmed) {
-                try {
-                    manager.clear(currentTableName);
-                    view.write(String.format("Table '%s' successfully cleared!", currentTableName));
-                } catch (SQLException e) {
-                    SQLErrorPrinter error = new SQLErrorPrinter(e);
-                    error.printSQLError();
-                }
+                manager.clear(currentTableName);
+                view.write(String.format("Table '%s' successfully cleared!", currentTableName));
             } else {
                 cancel = true;
             }
