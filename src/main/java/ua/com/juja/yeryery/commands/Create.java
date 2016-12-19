@@ -8,7 +8,6 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.Set;
 import java.util.concurrent.CancellationException;
 
 import static java.lang.Integer.parseInt;
@@ -31,11 +30,9 @@ public class Create implements Command {
 
     @Override
     public void process(String input) {
-        Set<String> names = manager.getTableNames();
-
-        Dialog dialog = new DialogImpl(view);
+        Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
-        String currentTableName = dialog.NameTable(names, message);
+        String currentTableName = dialog.NameTable(message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {

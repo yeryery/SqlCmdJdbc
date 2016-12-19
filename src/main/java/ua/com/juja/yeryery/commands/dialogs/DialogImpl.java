@@ -1,6 +1,8 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
 import ua.com.juja.yeryery.Parser;
+import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
@@ -8,14 +10,21 @@ import java.util.*;
 public class DialogImpl implements Dialog {
 
     private View view;
+    private DatabaseManager manager;
+
+    public DialogImpl(View view, DatabaseManager manager) {
+        this.view = view;
+        this.manager = manager;
+    }
 
     public DialogImpl(View view) {
         this.view = view;
     }
 
     @Override
-    public String SelectTable(Set<String> names, String message) {
+    public String SelectTable(String message) {
 
+        Set<String> names = manager.getTableNames();
         Map<Integer, String> tableNames = new HashMap<>();
 
         Iterator iterator = names.iterator();
@@ -66,28 +75,41 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public String NameTable(Set<String> names, String message) {
+    public String NameTable(String message) {
         String tableName;
+        Set<String> names = manager.getTableNames();
 
         while (true) {
             view.write(message);
             tableName = view.read();
 
-            char firstLetter = tableName.charAt(0);
-            if (!(firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z')) {
-                view.write("Table name must begin with a letter! Try again.");
-                continue;
-            }
-
-            if (names.contains(tableName)) {
-                view.write(String.format("Table with name '%s' already exists!", tableName));
-                view.write(names.toString());
-                view.write("Try again.");
-            } else {
+            try {
+                checkName(names, tableName);
                 break;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+                view.write("Try again.");
             }
         }
         return tableName;
+    }
+
+    private void checkName(Set<String> names, String tableName) {
+        if (!checkFirstChar(tableName)) {
+            throw new IllegalArgumentException(String.format("You have entered '%s' and table name must begin with a letter!", tableName));
+        }
+        if (existName(names, tableName)) {
+            throw new IllegalArgumentException(String.format("Table with name '%s' already exists!\n%s", tableName, names.toString()));
+        }
+    }
+
+    private boolean checkFirstChar(String tableName) {
+        char firstLetter = tableName.charAt(0);
+        return (firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z');
+    }
+
+    private boolean existName(Set<String> names, String tableName) {
+        return names.contains(tableName);
     }
 
     @Override
@@ -102,6 +124,57 @@ public class DialogImpl implements Dialog {
         boolean result = false;
         if (confirm.equals("y")) {
             result = true;
+        }
+        return result;
+    }
+
+    @Override
+    public String[] findRow(String tableName, String action, String sample) {
+        String[] input = getInput(action, sample);
+
+        Parser parser = new Parser();
+        String columnName = input[0];
+        Object value = parser.defineType(input[1]);
+
+        if (!existColumn(tableName, columnName)) {
+            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
+        }
+        if (!existValue(tableName, columnName, value)) {
+            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
+        }
+
+        return input;
+    }
+
+    private String[] getInput(String action, String sample) {
+        view.write(String.format("Enter columnName and defining value of %sd row: %s\nor type 'cancel' to go back.", action, sample));
+
+        final String inputData = view.read();
+        final String delimiter = "\\|";
+
+        Parser parser = new Parser();
+        String[] splitInput = parser.splitData(inputData, sample, delimiter);
+
+        return splitInput;
+    }
+
+    private boolean existColumn(String tableName, String columnName) {
+        Set<String> tableColumns = manager.getTableColumns(tableName);
+        return tableColumns.contains(columnName);
+    }
+
+    private boolean existValue(String tableName, String columnName, Object value) {
+        List<DataSet> tableContent = manager.getDataContent(tableName);
+        List<Object> columnValues = getColumnValues(tableContent, columnName);
+
+        return columnValues.contains(value);
+    }
+
+    private List<Object> getColumnValues(List<DataSet> dataSets, String columnName) {
+        List<Object> result = new LinkedList<>();
+
+        for (DataSet dataSet : dataSets) {
+            result.add(dataSet.get(columnName));
         }
         return result;
     }

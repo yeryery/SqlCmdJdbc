@@ -3,6 +3,7 @@ package ua.com.juja.yeryery.commands.dialogs;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.Arrays;
@@ -12,26 +13,29 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class DialogImplTest {
+public class SelectTableTest {
 
+    private DatabaseManager manager;
     private View view;
     private Dialog dialog;
-    private final String message = "Please enter the name or select number of table you want to display";
+    private static final String MESSAGE = "Please enter the name or select number of table you want to display";
 
     @Before
     public void setup() {
+        manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        dialog = new DialogImpl(view);
+        dialog = new DialogImpl(view, manager);
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
     }
 
     @Test
     public void testSelectTableByNumber() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("1");
 
         //when
-        String actual = dialog.SelectTable(tableNames, message);
+        String actual = dialog.SelectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -45,11 +49,10 @@ public class DialogImplTest {
     @Test
     public void testSelectTableByName() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("test");
 
         //when
-        String actual = dialog.SelectTable(tableNames, message);
+        String actual = dialog.SelectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -63,11 +66,10 @@ public class DialogImplTest {
     @Test
     public void testSelectCancel() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("cancel");
 
         //when
-        String actual = dialog.SelectTable(tableNames, message);
+        String actual = dialog.SelectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -81,11 +83,10 @@ public class DialogImplTest {
     @Test
     public void testSelectZero() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("0");
 
         //when
-        String actual = dialog.SelectTable(tableNames, message);
+        String actual = dialog.SelectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -99,11 +100,10 @@ public class DialogImplTest {
     @Test
     public void testSelectNotExistTable() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("notExist").thenReturn("cancel");
 
         //when
-        String actual = dialog.SelectTable(tableNames, message);
+        String actual = dialog.SelectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -123,11 +123,10 @@ public class DialogImplTest {
     @Test
     public void testSelectOutOfBoundsTableNumber() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(view.read()).thenReturn("3").thenReturn("cancel");
 
         //when
-        String actual = dialog.SelectTable(tableNames, message);
+        String actual = dialog.SelectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +

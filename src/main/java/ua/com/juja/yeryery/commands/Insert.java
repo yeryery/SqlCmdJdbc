@@ -28,10 +28,9 @@ public class Insert implements Command {
 
     @Override
     public void process(String input) {
-        Set<String> tableNames = manager.getTableNames();
-        Dialog dialog = new DialogImpl(view);
+        Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table where you want to %s new rows", ACTION);
-        String currentTableName = dialog.SelectTable(tableNames, message);
+        String currentTableName = dialog.SelectTable(message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {

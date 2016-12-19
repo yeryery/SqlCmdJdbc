@@ -5,8 +5,6 @@ import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Set;
-
 public class Clear implements Command {
 
     private View view;
@@ -25,10 +23,9 @@ public class Clear implements Command {
 
     @Override
     public void process(String input) {
-        Set<String> names = manager.getTableNames();
-        Dialog dialog = new DialogImpl(view);
+        Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
-        String currentTableName = dialog.SelectTable(names, message);
+        String currentTableName = dialog.SelectTable(message);
         boolean cancel = currentTableName.equals("cancel");
 
         if (!cancel) {
