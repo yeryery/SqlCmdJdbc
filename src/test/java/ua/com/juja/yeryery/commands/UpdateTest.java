@@ -102,7 +102,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|2
                 "Enter columnNames and its new values for updated row: \n" +
@@ -144,7 +144,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
@@ -194,7 +194,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table updating canceled]");
@@ -222,12 +222,12 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike|something
-                "You should enter two parameters!\n" +
+                "Wrong number of parameters. Expected 2, and you have entered 3!, " +
                 "Try again., " +
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table updating canceled]");
@@ -255,12 +255,12 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //notExistingColumn|Mike
                 "Table 'test' doesn't contain column 'notExistingColumn'!, " +
                 "Try again., " +
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table updating canceled]");
@@ -289,12 +289,12 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|notExistingValue
                 "Column 'name' doesn't contain value 'notExistingValue'!, " +
                 "Try again., " +
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table updating canceled]");
@@ -323,12 +323,12 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|5
                 "Column 'id' doesn't contain value '5'!, " +
                 "Try again., " +
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
                 "Table updating canceled]");
@@ -357,7 +357,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
@@ -393,14 +393,14 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
                 //id|2|password
-                "You should enter an even number of parameters (2, 4 and so on): \n" +
+                "Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3!, " +
                 "Try again., " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
@@ -434,7 +434,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
@@ -475,15 +475,19 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
-                "The new values are equivalent to the updated]");
+                "The new values are equivalent to the updated, " +
+                "Enter columnNames and its new values for updated row: \n" +
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
+                "or type 'cancel' to go back., " +
+                "Table updating canceled]");
     }
 
-    @Test
+    @Test(expected = SQLException.class)
     public void testUpdateSQLException() throws SQLException {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
@@ -499,39 +503,38 @@ public class UpdateTest {
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
-        doThrow(new SQLException()).when(manager).update(tableName, input, columnName);
-
         try {
-            manager.update("test", input, columnName);
+            doThrow(new SQLException()).when(manager).update(tableName, input, columnName);
         } catch (SQLException e) {
             view.write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
-                        "Try again.");
+                    "Try again.");
         }
+        manager.update(tableName, input, columnName);
 
         //when
         command.process("update");
 
         //then
-        verify(view).write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
-                    "Try again.");
-//        shouldPrint("[Please enter the name or select number of table you want to update, " +
-//                "1. test, " +
-//                "2. ttable, " +
-//                "0. cancel (to go back), " +
-//                //test
-//                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
-//                "or type 'cancel' to go back., " +
-//                "Enter columnNames and its new values for updated row: \n" +
-//                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-//                "or type 'cancel' to go back., " +
-//                //id|2
-//                "Column 'id' already contains value '2' in required row!\n, " +
-//                "Try again., " +
-//                "Enter columnNames and its new values for updated row: \n" +
-//                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-//                "or type 'cancel' to go back., " +
-//                //cancel
-//                "Table updating canceled]");
+//        verify(view).write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
+//                    "Try again.");
+        shouldPrint("[Please enter the name or select number of table you want to update, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //test
+                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
+                "or type 'cancel' to go back., " +
+                "Enter columnNames and its new values for updated row: \n" +
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
+                "or type 'cancel' to go back., " +
+                //id|2
+                "Column 'id' already contains value '2' in required row!\n, " +
+                "Try again., " +
+                "Enter columnNames and its new values for updated row: \n" +
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
+                "or type 'cancel' to go back., " +
+                //cancel
+                "Table updating canceled]");
         //TODO SQLException
     }
 
