@@ -9,13 +9,19 @@ public interface DatabaseManager {
 
     Set<String> getTableNames();
 
+    Set<String> getDatabases();
+
     Set<String> getTableColumns(String tableName);
 
     void clear(String tableName);
 
     void create(String tableName, DataSet columns) throws SQLException;
 
+    void createDB(String dataBase);
+
     void drop(String tableName);
+
+    void dropDB(String dataBaseName);
 
     boolean isConnected();
 

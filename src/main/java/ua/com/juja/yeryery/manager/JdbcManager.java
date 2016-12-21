@@ -41,6 +41,23 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
+    public Set<String> getDatabases() {
+        Set<String> list = new LinkedHashSet<>();
+        String sql = "SELECT datname FROM pg_database WHERE datistemplate = false;";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                list.add(rs.getString(1));
+            }
+        } catch (Exception e) {
+            list = null;
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
     public Set<String> getTableColumns(String tableName) {
         Set<String> columnNames = new LinkedHashSet<String>();
         String sql = String.format("SELECT * FROM information_schema.columns WHERE table_name='%s'", tableName);
@@ -76,9 +93,29 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
+    public void createDB(String dataBaseName) {
+        try (Statement st = connection.createStatement()) {
+            String sql = String.format("CREATE DATABASE %s", dataBaseName);
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void drop(String tableName) {
         try (Statement st = connection.createStatement()) {
             String sql = String.format("DROP TABLE %s", tableName);
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void dropDB(String dataBaseName) {
+        try (Statement st = connection.createStatement()) {
+            String sql = String.format("DROP DATABASE %s", dataBaseName);
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
