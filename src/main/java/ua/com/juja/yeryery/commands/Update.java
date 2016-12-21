@@ -55,22 +55,20 @@ public class Update implements Command {
                     continue;
                 }
 
-                Parser parser = new Parser();
-                String columnName = splitInput[0];
-                Object value = parser.defineType(splitInput[1]);
 
-                DataSet newValues = null;
+                DataSet newValues = new DataSetImpl();
                 try {
-                    newValues = getNewValues(currentTableName, columnName, value);
+                    newValues = getNewValues(currentTableName, splitInput);
                 } catch (CancelException e) {
                     cancel = true;
                     break;
                 }
-                newValues.put(columnName, value);
 
                 try {
                     Set<String> tableColumns = manager.getTableColumns(currentTableName);
                     List<DataSet> originRows = manager.getDataContent(currentTableName);
+                    String columnName = splitInput[0];
+                    Object value = splitInput[1];
 
                     manager.update(currentTableName, newValues, columnName);
                     view.write(String.format("You have successfully updated table '%s' at %s = %s", currentTableName, columnName, value));
@@ -107,9 +105,14 @@ public class Update implements Command {
         return result;
     }
 
-    private DataSet getNewValues(String tableName, String columnName, Object value) {
+    private DataSet getNewValues(String tableName, String[] input) {
+
         while (true) {
-            DataSet newValues = null;
+            Parser parser = new Parser();
+            String columnName = input[0];
+            Object value = parser.defineType(input[1]);
+
+            DataSet newValues = new DataSetImpl();
             try {
                 String[] splitInput = getNewData();
                 newValues = getDataSet(tableName, splitInput);
@@ -125,6 +128,8 @@ public class Update implements Command {
                 view.write("The new values are equivalent to the updated");
                 continue;
             }
+
+            newValues.put(columnName, value);
             return newValues;
         }
     }

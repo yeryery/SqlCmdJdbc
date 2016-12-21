@@ -8,7 +8,6 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.concurrent.CancellationException;
 
 import static java.lang.Integer.parseInt;
 
@@ -42,7 +41,7 @@ public class Create implements Command {
                 int tableSize = 0;
                 try {
                     tableSize = getTableSize();
-                } catch (CancellationException e) {
+                } catch (CancelException e) {
                     cancel = true;
                     break;
                 } catch (IllegalArgumentException e) {
@@ -52,6 +51,7 @@ public class Create implements Command {
                 }
 
                 DataSet dataTypes = putColumnNames(tableSize);
+
                 try {
                     manager.create(currentTableName, dataTypes);
                 }  catch (SQLException e) {
@@ -82,7 +82,7 @@ public class Create implements Command {
             tableSize = parseInt(read);
         } catch (NumberFormatException e) {
             if (read.equals("cancel")) {
-                throw new CancellationException();
+                throw new CancelException();
             } else {
                 throw new IllegalArgumentException(String.format("You have entered '%s' and this is not a number!", read));
             }

@@ -5,10 +5,11 @@ import org.mockito.Mockito;
 import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 public class ExitTest {
 
-    private View view = Mockito.mock(View.class);
+    private View view = mock(View.class);
 
     @Test
     public void TestCanProcessExitString() {

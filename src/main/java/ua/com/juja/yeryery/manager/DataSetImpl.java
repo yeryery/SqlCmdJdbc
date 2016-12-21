@@ -28,19 +28,6 @@ public class DataSetImpl implements DataSet {
     }
 
     @Override
-    public void updateFrom(DataSet newValue) {
-        for (String columnName : newValue.getColumnNames()) {
-            Object value = newValue.get(columnName);
-            put(columnName, value);
-        }
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return data.isEmpty();
-    }
-
-    @Override
     public String toString() {
         return "{columnNames: " + getColumnNames().toString() + ", " +
                 "values: " + getValues().toString() + "}";

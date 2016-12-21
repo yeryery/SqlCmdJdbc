@@ -12,8 +12,4 @@ public interface DataSet {
     Set<String> getColumnNames();
 
     Object get(String columnName);
-
-    void updateFrom(DataSet newValue);
-
-    boolean isEmpty();
 }
