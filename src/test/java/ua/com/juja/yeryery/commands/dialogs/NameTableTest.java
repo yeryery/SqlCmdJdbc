@@ -36,7 +36,7 @@ public class NameTableTest {
         when(view.read()).thenReturn("myTable");
 
         //when
-        String actual = dialog.NameTable(MESSAGE);
+        String actual = dialog.nameTable(MESSAGE);
 
         //then
         verify(view).write("Please enter the name of table you want to create or 'cancel' to go back");
@@ -47,10 +47,10 @@ public class NameTableTest {
     @Test
     public void testNameTableWithExistingName() {
         //given
-        when(view.read()).thenReturn("test").thenReturn("cancel");
+        when(view.read()).thenReturn("test").thenReturn("correctName");
 
         //when
-        String actual = dialog.NameTable(MESSAGE);
+        dialog.nameTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
@@ -59,16 +59,15 @@ public class NameTableTest {
                 "[test, ttable], " +
                 "Try again., " +
                 "Please enter the name of table you want to create or 'cancel' to go back]");
-                //cancel
     }
 
     @Test
     public void testNameTableWhenNameStartsWithNumber() {
         //given
-        when(view.read()).thenReturn("1name").thenReturn("cancel");
+        when(view.read()).thenReturn("1name").thenReturn("correctName");
 
         //when
-        String actual = dialog.NameTable(MESSAGE);
+            dialog.nameTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
@@ -76,7 +75,6 @@ public class NameTableTest {
                 "You have entered '1name' and table name must begin with a letter!, " +
                 "Try again., " +
                 "Please enter the name of table you want to create or 'cancel' to go back]");
-                //cancel
     }
 
     private void shouldPrint(String expected) {

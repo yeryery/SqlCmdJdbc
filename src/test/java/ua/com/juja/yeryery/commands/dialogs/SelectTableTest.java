@@ -3,6 +3,7 @@ package ua.com.juja.yeryery.commands.dialogs;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.commands.CancelException;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
@@ -11,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 public class SelectTableTest {
@@ -35,7 +37,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("1");
 
         //when
-        String actual = dialog.SelectTable(MESSAGE);
+        String actual = dialog.selectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -52,7 +54,7 @@ public class SelectTableTest {
         when(view.read()).thenReturn("test");
 
         //when
-        String actual = dialog.SelectTable(MESSAGE);
+        String actual = dialog.selectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -69,15 +71,18 @@ public class SelectTableTest {
         when(view.read()).thenReturn("cancel");
 
         //when
-        String actual = dialog.SelectTable(MESSAGE);
+        try {
+            dialog.selectTable(MESSAGE);
+            fail();
+        } catch (CancelException e) {
+            assertEquals("ua.com.juja.yeryery.commands.CancelException", e.toString());
+        }
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-        //cancel
-        assertEquals("cancel", actual);
     }
 
     @Test
@@ -86,24 +91,27 @@ public class SelectTableTest {
         when(view.read()).thenReturn("0");
 
         //when
-        String actual = dialog.SelectTable(MESSAGE);
+        try {
+            dialog.selectTable(MESSAGE);
+            fail();
+        } catch (CancelException e) {
+            assertEquals("ua.com.juja.yeryery.commands.CancelException", e.toString());
+        }
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-        //0
-        assertEquals("cancel", actual);
     }
 
     @Test
     public void testSelectNotExistTable() {
         //given
-        when(view.read()).thenReturn("notExist").thenReturn("cancel");
+        when(view.read()).thenReturn("notExist").thenReturn("test");
 
         //when
-        String actual = dialog.SelectTable(MESSAGE);
+        String actual = dialog.selectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -116,17 +124,17 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-        //cancel
-        assertEquals("cancel", actual);
+        //test
+        assertEquals("test", actual);
     }
 
     @Test
     public void testSelectOutOfBoundsTableNumber() {
         //given
-        when(view.read()).thenReturn("3").thenReturn("cancel");
+        when(view.read()).thenReturn("3").thenReturn("1");
 
         //when
-        String actual = dialog.SelectTable(MESSAGE);
+        String actual = dialog.selectTable(MESSAGE);
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
@@ -139,8 +147,8 @@ public class SelectTableTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
-        //cancel
-        assertEquals("cancel", actual);
+        //1
+        assertEquals("test", actual);
     }
 
 

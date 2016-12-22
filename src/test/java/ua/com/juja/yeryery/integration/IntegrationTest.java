@@ -17,14 +17,13 @@ public class IntegrationTest {
     private ConfigurableInputStream in;
     private LogOutputStream out;
     private static final String DATABASE = "testbase";
+    //put here your own username and password
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgrespass";
 
-    private static DatabaseManager testManager;
-
     @BeforeClass
     public static void createTestDatabase() {
-        testManager = new JdbcManager();
+        DatabaseManager testManager = new JdbcManager();
         Preparation.setupDatabase(testManager);
     }
 
@@ -646,7 +645,7 @@ public class IntegrationTest {
         in.add("somename");
         in.add("1");
         in.add("name|wrongType");
-        in.add("n");
+        in.add("cancel");
         in.add("exit");
 
         //when
@@ -663,12 +662,14 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //1
-                "Please enter name|type of column 1:\n" +
+                "Please enter name and type of column 1: columnName|columnType\n" +
+                "or type 'cancel' to go back.\n" +
                 //name|wrongType
                 "ERROR: type \"wrongtype\" does not exist\n" +
                 "  Position: 57\n" +
-                "Do you want to try again? (y/n)\n" +
-                //n
+                "Try again.\n" +
+                "Please enter the name of table you want to create or 'cancel' to go back\n" +
+                //cancel
                 "Table creating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -705,9 +706,11 @@ public class IntegrationTest {
                 //somename
                 "Please enter the number of columns of your table or 'cancel' to go back\n" +
                 //2
-                "Please enter name|type of column 1:\n" +
+                "Please enter name and type of column 1: columnName|columnType\n" +
+                "or type 'cancel' to go back.\n" +
                 //name|text
-                "Please enter name|type of column 2:\n" +
+                "Please enter name and type of column 2: columnName|columnType\n" +
+                "or type 'cancel' to go back.\n" +
                 //age|int
                 "Your table 'somename' have successfully created!\n" +
                 "Type command or 'help'\n" +
@@ -775,7 +778,7 @@ public class IntegrationTest {
         in.add("notNumber");
         in.add("Mike");
         in.add("25");
-        in.add("n");
+        in.add("cancel");
         in.add("exit");
 
         //when
@@ -802,8 +805,12 @@ public class IntegrationTest {
                 //25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 41\n" +
-                "Do you want to try again? (y/n)\n" +
-                //n
+                "Try again.\n" +
+                "Please enter the name or select number of table where you want to insert new rows\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //cancel
                 "Table inserting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -819,7 +826,7 @@ public class IntegrationTest {
         in.add("notNumber");
         in.add("Mike");
         in.add("25");
-        in.add("y");
+        in.add("ttable");
         in.add("10");
         in.add("Mike");
         in.add("25");
@@ -852,8 +859,12 @@ public class IntegrationTest {
                 //25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 41\n" +
-                "Do you want to try again? (y/n)\n" +
-                //y
+                "Try again.\n" +
+                "Please enter the name or select number of table where you want to insert new rows\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //ttable
                 "Enter new values you require\n" +
                 "id\n" +
                 //10
@@ -972,7 +983,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table dropping canceled\n" +
+                "Table deleting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1001,7 +1012,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //0
-                "Table dropping canceled\n" +
+                "Table deleting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1033,7 +1044,7 @@ public class IntegrationTest {
                 //ttable
                 "Table 'ttable' will be dropped! Continue? (y/n)\n" +
                 //n
-                "Table dropping canceled\n" +
+                "Table deleting canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1646,7 +1657,7 @@ public class IntegrationTest {
         in.add("test");
         in.add("login|username2");
         in.add("id|notNumber");
-        in.add("n");
+        in.add("cancel");
         in.add("exit");
 
         //when
@@ -1674,8 +1685,12 @@ public class IntegrationTest {
                 "ERROR: column \"id\" is of type integer but expression is of type character varying\n" +
                 "  Hint: You will need to rewrite or cast the expression.\n" +
                 "  Position: 20\n" +
-                "Do you want to try again? (y/n)\n" +
-                //n
+                "Try again.\n" +
+                "Please enter the name or select number of table you want to update\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //cancel
                 "Table updating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -1690,7 +1705,7 @@ public class IntegrationTest {
         in.add("test");
         in.add("login|username2");
         in.add("id|12");
-        in.add("n");
+        in.add("cancel");
         in.add("exit");
 
         //when
@@ -1717,8 +1732,12 @@ public class IntegrationTest {
                 //id|12
                 "ERROR: duplicate key value violates unique constraint \"test_pkey\"\n" +
                 "  Detail: Key (id)=(12) already exists.\n" +
-                "Do you want to try again? (y/n)\n" +
-                //n
+                "Try again.\n" +
+                "Please enter the name or select number of table you want to update\n" +
+                "1. test\n" +
+                "2. ttable\n" +
+                "0. cancel (to go back)\n" +
+                //cancel
                 "Table updating canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
