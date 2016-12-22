@@ -1,6 +1,8 @@
 package ua.com.juja.yeryery;
 
 import ua.com.juja.yeryery.commands.CancelException;
+import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 
 public class Parser {
 
@@ -20,7 +22,7 @@ public class Parser {
         return parsable;
     }
 
-    public Object defineType(String data) {
+    public static Object defineType(String data) {
         try {
             return Integer.parseInt(data);
         } catch (NumberFormatException e) {
@@ -28,12 +30,12 @@ public class Parser {
         }
     }
 
-    private int count(String data, String delimiter) {
+    private static int count(String data, String delimiter) {
         String[] splitData = data.split(delimiter);
         return splitData.length;
     }
 
-    public String[] splitData(String data, String sample, String delimiter) {
+    public static String[] splitData(String data, String sample, String delimiter) {
         int sampleSize = count(sample, delimiter);
         int dataSize = count(data, delimiter);
 
@@ -49,10 +51,10 @@ public class Parser {
         return data.split(delimiter);
     }
 
-    public String[] splitByTwo(String data, String delimiter) {
-        int dataSize = count(data, delimiter);
+    public static DataSet splitByTwo(String input, String delimiter) {
+        int dataSize = count(input, delimiter);
 
-        if (data.equals("cancel")) {
+        if (input.equals("cancel")) {
             throw new CancelException();
         }
 
@@ -61,6 +63,16 @@ public class Parser {
                     "Expected even number of parameters (2, 4 and so on) and you have entered %s!", dataSize));
         }
 
-        return data.split(delimiter);
+        String[] splitInput = input.split(delimiter);
+        DataSet splitDataSet = new DataSetImpl();
+
+        for (int i = 0; i < dataSize; i++) {
+            String columnName = splitInput[i];
+            i++;
+            Object value = defineType(splitInput[i]);
+            splitDataSet.put(columnName, value);
+        }
+
+        return splitDataSet;
     }
 }
