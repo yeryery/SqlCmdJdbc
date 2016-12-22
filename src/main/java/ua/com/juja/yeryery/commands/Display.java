@@ -29,46 +29,15 @@ public class Display implements Command {
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
-        String currentTableName = dialog.SelectTable(message);
-        boolean cancel = currentTableName.equals("cancel");
 
-        if (!cancel) {
-
+        try {
+            String currentTableName = dialog.selectTable(message);
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
             List<DataSet> tableContent = manager.getDataContent(currentTableName);
             TableConstructor tableConstructor = new TableConstructor(tableColumns, tableContent);
             view.write(tableConstructor.getTableString());
-        } else {
+        } catch (CancelException e) {
             view.write("Table displaying canceled");
         }
-    }
-
-    public void printColumnNames(Set<String> tableColumns) {
-        String result = "| ";
-        for (String column : tableColumns) {
-            result += column + " | ";
-        }
-        view.write(result);
-        view.write("-------------------------");
-    }
-
-    public void printValues(List<DataSet> dataSets) {
-        String result = "";
-        for (DataSet dataSet : dataSets) {
-            result += getStringRow(dataSet);
-            result += "\n";
-        }
-        result += "-------------------------";
-        view.write(result.substring(0, result.length() - 1));
-    }
-
-    private String getStringRow(DataSet dataSet) {
-        List<Object> values = dataSet.getValues();
-
-        String result = "| ";
-        for (Object value : values) {
-            result += value + " | ";
-        }
-        return result;
     }
 }
