@@ -138,7 +138,7 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void update(String tableName, DataSet newDataSet, String definingColumn) throws SQLException {
+    public void update(String tableName, DataSet newDataSet, String definingColumn, Object definingValue) throws SQLException {
         String updatedColumns = getColumnNamesFormatted("%s=?,", newDataSet);
         String sql = String.format("UPDATE %s SET %s WHERE %s= ?", tableName, updatedColumns, definingColumn);
 
@@ -149,7 +149,6 @@ public class JdbcManager implements DatabaseManager {
                 ps.setObject(sqlIndex, newValue);
                 sqlIndex++;
             }
-            Object definingValue = newDataSet.get(definingColumn);
             ps.setObject(sqlIndex, definingValue);
             ps.executeUpdate();
         }
