@@ -51,7 +51,8 @@ public class CreateTest {
                 //newTable
                 "Please enter the number of columns of your table or 'cancel' to go back, " +
                 //1
-                "Please enter name|type of column 1:, " +
+                "Please enter name and type of column 1: columnName|columnType\n" +
+                "or type 'cancel' to go back., " +
                 //someColumnName|text
                 "Your table 'newTable' have successfully created!]");
     }
