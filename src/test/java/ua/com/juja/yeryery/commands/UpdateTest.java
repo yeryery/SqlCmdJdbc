@@ -94,7 +94,7 @@ public class UpdateTest {
                 thenReturn(updatedColumn1 + "|" + newValue1 + "|" + updatedColumn2 + "|" + newValue2);
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).update(tableName, input, columnName);
+        doNothing().when(manager).update(tableName, input, columnName, definingValue);
 
         //when
         command.process("update");
@@ -138,7 +138,7 @@ public class UpdateTest {
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
-        doNothing().when(manager).update(tableName, input, columnName);
+        doNothing().when(manager).update(tableName, input, columnName, definingValue);
 
         //when
         command.process("update");
@@ -511,12 +511,12 @@ public class UpdateTest {
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
         try {
-            doThrow(new SQLException()).when(manager).update(tableName, input, columnName);
+            doThrow(new SQLException()).when(manager).update(tableName, input, columnName, definingValue);
         } catch (SQLException e) {
             view.write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
                     "Try again.");
         }
-        manager.update(tableName, input, columnName);
+        manager.update(tableName, input, columnName, definingValue);
 
         //when
         command.process("update");
