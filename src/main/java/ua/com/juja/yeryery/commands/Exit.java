@@ -5,6 +5,7 @@ import ua.com.juja.yeryery.view.View;
 public class Exit implements Command {
 
     private View view;
+    private static final String ACTION = "exit";
 
     public Exit(View view) {
         this.view = view;
@@ -12,7 +13,7 @@ public class Exit implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("exit");
+        return input.equals(ACTION);
     }
 
     @Override

@@ -5,6 +5,7 @@ import ua.com.juja.yeryery.view.View;
 public class Help implements Command {
 
     private View view;
+    private static final String ACTION = "help";
 
     public Help(View view) {
         this.view = view;
@@ -12,7 +13,7 @@ public class Help implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("help");
+        return input.equals(ACTION);
     }
 
     @Override

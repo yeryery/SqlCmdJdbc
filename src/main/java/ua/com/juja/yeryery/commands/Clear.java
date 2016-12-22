@@ -9,7 +9,7 @@ public class Clear implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private final String ACTION = "clear";
+    private static final String ACTION = "clear";
 
     public Clear(View view, DatabaseManager manager) {
         this.view = view;
@@ -24,10 +24,10 @@ public class Clear implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
-        String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
+        String selectMessage = String.format("Please enter the name or select number of table you want to %s", ACTION);
 
         try {
-            String currentTableName = dialog.selectTable(message);
+            String currentTableName = dialog.selectTable(selectMessage);
             String warning = String.format("Table '%s' will be cleared! Continue?", currentTableName);
             dialog.confirmAction(warning);
             manager.clear(currentTableName);

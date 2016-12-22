@@ -12,6 +12,7 @@ public class Preparation {
     private static final String DATABASE = "testbase";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgrespass";
+    //TODO сделать чтобы переменные зависили от переменных в инт тестах
 
     public static void setupDatabase(DatabaseManager manager) {
         manager.connect("", USERNAME, PASSWORD);

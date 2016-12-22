@@ -9,6 +9,7 @@ public class Content implements Command {
 
     private View view;
     private DatabaseManager manager;
+    private static final String ACTION = "content";
 
     public Content(View view, DatabaseManager manager) {
         this.view = view;
@@ -17,7 +18,7 @@ public class Content implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.equals("content");
+        return input.equals(ACTION);
     }
 
     @Override
