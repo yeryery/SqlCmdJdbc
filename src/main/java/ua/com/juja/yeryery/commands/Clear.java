@@ -25,23 +25,16 @@ public class Clear implements Command {
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
-        String currentTableName = dialog.SelectTable(message);
-        boolean cancel = currentTableName.equals("cancel");
 
-        if (!cancel) {
+        try {
+            String currentTableName = dialog.selectTable(message);
             String warning = String.format("Table '%s' will be cleared! Continue?", currentTableName);
-            boolean confirmed = dialog.isConfirmed(warning);
-
-            if (confirmed) {
-                manager.clear(currentTableName);
-                view.write(String.format("Table '%s' successfully cleared!", currentTableName));
-            } else {
-                cancel = true;
-            }
-        }
-
-        if (cancel) {
+            dialog.confirmAction(warning);
+            manager.clear(currentTableName);
+            view.write(String.format("Table '%s' successfully cleared!", currentTableName));
+        } catch (CancelException e) {
             view.write("Table clearing canceled");
         }
     }
+
 }

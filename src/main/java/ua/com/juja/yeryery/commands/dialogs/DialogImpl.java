@@ -1,11 +1,15 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
 import ua.com.juja.yeryery.Parser;
+import ua.com.juja.yeryery.commands.CancelException;
 import ua.com.juja.yeryery.manager.DataSet;
+import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
+
+import static java.lang.Integer.parseInt;
 
 public class DialogImpl implements Dialog {
 
@@ -22,8 +26,7 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public String SelectTable(String message) {
-
+    public String selectTable(String message) {
         Set<String> names = manager.getTableNames();
         Map<Integer, String> tableNames = new HashMap<>();
 
@@ -60,6 +63,7 @@ public class DialogImpl implements Dialog {
                     break;
                 } else {
                     view.write("There is no table with this number! Try again.");
+                    //TODO Exceptions
                 }
             } else {
 
@@ -71,11 +75,13 @@ public class DialogImpl implements Dialog {
                 }
             }
         }
+        checkCancel(tableName);
+
         return tableName;
     }
 
     @Override
-    public String NameTable(String message) {
+    public String nameTable(String message) {
         String tableName;
         Set<String> names = manager.getTableNames();
 
@@ -91,11 +97,21 @@ public class DialogImpl implements Dialog {
                 view.write("Try again.");
             }
         }
+
         return tableName;
     }
 
+    private void checkCancel(String input) {
+        if (input.equals("cancel")) {
+            throw new CancelException();
+        }
+    }
+
     private void checkName(Set<String> names, String tableName) {
-        if (!checkFirstChar(tableName)) {
+        if (tableName.equals("cancel")) {
+            throw new CancelException();
+        }
+        if (!isFirstLetter(tableName)) {
             throw new IllegalArgumentException(String.format("You have entered '%s' and table name must begin with a letter!", tableName));
         }
         if (existName(names, tableName)) {
@@ -103,7 +119,7 @@ public class DialogImpl implements Dialog {
         }
     }
 
-    private boolean checkFirstChar(String tableName) {
+    private boolean isFirstLetter(String tableName) {
         char firstLetter = tableName.charAt(0);
         return (firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z');
     }
@@ -113,7 +129,7 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public boolean isConfirmed(String warning) {
+    public void confirmAction(String warning) {
         String confirm = "";
 
         while (!confirm.equals("y") && !confirm.equals("n")) {
@@ -121,53 +137,55 @@ public class DialogImpl implements Dialog {
             confirm = (String) view.read();
         }
 
-        boolean result = false;
-        if (confirm.equals("y")) {
-            result = true;
+        if (confirm.equals("n")) {
+            throw new CancelException();
         }
-        return result;
     }
 
     @Override
-    public String[] findRow(String tableName, String action, String sample) {
-        String[] input = getInput(action, sample);
+    public String[] findRow(String tableName, String message, String sample) throws CancelException {
+        String[] input = new String[0];
 
-        Parser parser = new Parser();
-        String columnName = input[0];
-        Object value = parser.defineType(input[1]);
-
-        if (!existColumn(tableName, columnName)) {
-            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
+        while (true) {
+            try {
+                input = getInput(message, sample);
+                String columnName = input[0];
+                Object value = Parser.defineType(input[1]);
+                checkColumn(tableName, columnName);
+                checkValue(tableName, columnName, value);
+                break;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+                view.write("Try again.");
+            }
         }
-        if (!existValue(tableName, columnName, value)) {
-            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
-        }
-
         return input;
     }
 
-    private String[] getInput(String action, String sample) {
-        view.write(String.format("Enter columnName and defining value of %sd row: %s\nor type 'cancel' to go back.", action, sample));
+    private String[] getInput(String message, String sample) throws CancelException {
+        view.write(String.format("%s: %s\nor type 'cancel' to go back.", message, sample));
 
         final String inputData = view.read();
         final String delimiter = "\\|";
 
-        Parser parser = new Parser();
-        String[] splitInput = parser.splitData(inputData, sample, delimiter);
+        String[] splitInput = Parser.splitData(inputData, sample, delimiter);
 
         return splitInput;
     }
 
-    private boolean existColumn(String tableName, String columnName) {
+    private void checkColumn(String tableName, String columnName) {
         Set<String> tableColumns = manager.getTableColumns(tableName);
-        return tableColumns.contains(columnName);
+        if (!tableColumns.contains(columnName)) {
+            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
+        }
     }
 
-    private boolean existValue(String tableName, String columnName, Object value) {
+    private void checkValue(String tableName, String columnName, Object value) {
         List<DataSet> tableContent = manager.getDataContent(tableName);
         List<Object> columnValues = getColumnValues(tableContent, columnName);
-
-        return columnValues.contains(value);
+        if (!columnValues.contains(value)) {
+            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
+        }
     }
 
     private List<Object> getColumnValues(List<DataSet> dataSets, String columnName) {
@@ -177,5 +195,131 @@ public class DialogImpl implements Dialog {
             result.add(dataSet.get(columnName));
         }
         return result;
+    }
+
+    @Override
+    public DataSet setValues(String tableName, String[] input) {
+
+        while (true) {
+            String columnName = input[0];
+            Object value = Parser.defineType(input[1]);
+            DataSet newValues = new DataSetImpl();
+            try {
+                newValues = getInputByTwo(tableName);
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+                view.write("Try again.");
+                continue;
+            }
+
+            List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
+
+            if (!isNewValues(newValues, updatedRows)) {
+                view.write("The new values are equivalent to the updated");
+                continue;
+            }
+
+            newValues.put(columnName, value);
+            // TODO убрать
+            return newValues;
+        }
+    }
+
+    private DataSet getInputByTwo(String tableName) {
+        view.write("Enter columnNames and its new values for updated row: \n" +
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
+                "or type 'cancel' to go back.");
+
+        String inputData = view.read();
+        String delimiter = "\\|";
+        DataSet splitInput = Parser.splitByTwo(inputData, delimiter);
+        checkColumns(tableName, splitInput);
+
+        return splitInput;
+    }
+
+    private void checkColumns(String tableName, DataSet checkedDataSet) {
+        Set<String> tableColumns = manager.getTableColumns(tableName);
+        Set<String> checkedColumns = checkedDataSet.getColumnNames();
+
+        for (String columnName : checkedColumns) {
+            if (!tableColumns.contains(columnName)) {
+                throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
+            }
+        }
+    }
+
+    private List<DataSet> getUpdatedRows(String tableName, String columnName, Object value) {
+        List<DataSet> dataSets = manager.getDataContent(tableName);
+        List<DataSet> result = new LinkedList<>();
+
+        for (DataSet row : dataSets) {
+            if (row.get(columnName).equals(value)) {
+                result.add(row);
+            }
+        }
+        return result;
+    }
+
+    private boolean isNewValues(DataSet newValues, List<DataSet> updatedRows) {
+        for (String columnName : newValues.getColumnNames()) {
+            for (DataSet row : updatedRows) {
+                Object newValue = newValues.get(columnName);
+                Object updatedValue = row.get(columnName);
+                if (!newValue.equals(updatedValue)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public DataSet setColumnNames(String message, String sample) {
+        int tableSize = getTableSize();
+        DataSet dataTypes = new DataSetImpl();
+
+        for (int i = 0; i < tableSize; i++) {
+            String setMessage = message + (i + 1);
+            String[] input = new String[0];
+            try {
+                input = getInput(setMessage, sample);
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+                i--;
+                continue;
+            }
+
+            String columnName = input[0];
+            String dataType = input[1];
+            dataTypes.put(columnName, dataType);
+        }
+        return dataTypes;
+    }
+
+    private int getTableSize() {
+        int tableSize = 0;
+
+        while (true) {
+            view.write("Please enter the number of columns of your table or 'cancel' to go back");
+            String read = view.read();
+            try {
+                tableSize = parseInt(read);
+            } catch (NumberFormatException e) {
+                if (read.equals("cancel")) {
+                    throw new CancelException();
+                } else {
+                    view.write(String.format("You have entered '%s' and this is not a number!", read));
+                    view.write("Try again.");
+                    continue;
+                }
+            }
+            if (tableSize <= 0) {
+                view.write(String.format("You have entered '%s' and number of columns must be positive!", tableSize));
+                view.write("Try again.");
+                continue;
+            }
+            return tableSize;
+        }
     }
 }

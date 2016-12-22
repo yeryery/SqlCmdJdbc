@@ -151,7 +151,7 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //cancel
-                "Table deleting canceled]");
+                "Row removal canceled]");
     }
 
     @Test
@@ -174,7 +174,7 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
-                "Table deleting canceled]");
+                "Row removal canceled]");
     }
 
     @Test
@@ -207,7 +207,7 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
-                "Table deleting canceled]");
+                "Row removal canceled]");
     }
 
     @Test
@@ -240,7 +240,7 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
-                "Table deleting canceled]");
+                "Row removal canceled]");
     }
 
     @Test
@@ -274,7 +274,7 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //cancel
-                "Table deleting canceled]");
+                "Row removal canceled]");
     }
 
     private void shouldPrint(String expected) {

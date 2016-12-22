@@ -6,6 +6,7 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 public class Drop implements Command {
+
     private View view;
     private DatabaseManager manager;
     private final String ACTION = "drop";
@@ -24,23 +25,15 @@ public class Drop implements Command {
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table you want to %s", ACTION);
-        String currentTableName = dialog.SelectTable(message);
-        boolean cancel = currentTableName.equals("cancel");
 
-        if (!cancel) {
+        try {
+            String currentTableName = dialog.selectTable(message);
             String warning = String.format("Table '%s' will be dropped! Continue?", currentTableName);
-            boolean confirmed = dialog.isConfirmed(warning);
-
-            if (confirmed) {
-                manager.drop(currentTableName);
-                view.write(String.format("Table '%s' successfully dropped!", currentTableName));
-            } else {
-                cancel = true;
-            }
-        }
-
-        if (cancel) {
-            view.write("Table dropping canceled");
+            dialog.confirmAction(warning);
+            manager.drop(currentTableName);
+            view.write(String.format("Table '%s' successfully dropped!", currentTableName));
+        } catch (CancelException e) {
+            view.write("Table deleting canceled");
         }
     }
 }

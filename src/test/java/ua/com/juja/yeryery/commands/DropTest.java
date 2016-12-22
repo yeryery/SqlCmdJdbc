@@ -65,7 +65,7 @@ public class DropTest {
                 //Select table number 1
                 "Table 'test' will be dropped! Continue? (y/n), " +
                 //no
-                "Table dropping canceled]");
+                "Table deleting canceled]");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class DropTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select cancel
-                "Table dropping canceled]");
+                "Table deleting canceled]");
     }
 
     private void shouldPrint(String expected) {

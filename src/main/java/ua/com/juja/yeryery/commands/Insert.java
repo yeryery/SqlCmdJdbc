@@ -14,7 +14,7 @@ public class Insert implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private final String ACTION = "insert";
+    private static final String ACTION = "insert";
 
     public Insert(View view, DatabaseManager manager) {
         this.view = view;
@@ -30,47 +30,32 @@ public class Insert implements Command {
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
         String message = String.format("Please enter the name or select number of table where you want to %s new rows", ACTION);
-        String currentTableName = dialog.SelectTable(message);
-        boolean cancel = currentTableName.equals("cancel");
 
-        if (!cancel) {
-            Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            DataSet insertedRow = new DataSetImpl();
+        try {
+            String currentTableName = dialog.selectTable(message);
+            DataSet insertedRow = getNewValues(currentTableName);
 
-            while (true) {
-
-                insertedRow = getNewValues(tableColumns);
-
-                try {
-                    manager.insert(currentTableName, insertedRow);
-                    view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
-                    break;
-                } catch (SQLException e) {
-                    view.write(e.getMessage());
-
-                    boolean confirmed = dialog.isConfirmed("Do you want to try again?");
-                    if (!confirmed) {
-                        cancel = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (cancel) {
+            manager.insert(currentTableName, insertedRow);
+            view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
+        } catch (SQLException e1) {
+            view.write(e1.getMessage());
+            view.write("Try again.");
+            process(input);
+        } catch (CancelException e2) {
             view.write("Table inserting canceled");
         }
     }
 
-    private DataSet getNewValues(Set<String> tableColumns) {
+    private DataSet getNewValues(String currentTableName) {
+        Set<String> tableColumns = manager.getTableColumns(currentTableName);
         view.write("Enter new values you require");
+
         DataSet dataSet = new DataSetImpl();
         for (String columnName : tableColumns) {
             view.write(columnName);
             Object value = view.read();
             dataSet.put(columnName, value);
         }
-
         return dataSet;
     }
 }
