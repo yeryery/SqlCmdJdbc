@@ -58,7 +58,7 @@ public class InsertTest {
         command.process("insert");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to insert new rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to insert new rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -125,7 +125,7 @@ public class InsertTest {
         //when
         command.process("insert");
 
-        shouldPrint("[Please enter the name or select number of table where you want to insert new rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to insert new rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -143,7 +143,7 @@ public class InsertTest {
         //when
         command.process("insert");
 
-        shouldPrint("[Please enter the name or select number of table where you want to insert new rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to insert new rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

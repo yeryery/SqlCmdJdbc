@@ -138,8 +138,10 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void update(String tableName, DataSet newDataSet, String definingColumn, Object definingValue) throws SQLException {
+    public void update(String tableName, DataSet newDataSet, DataEntry definingEntry) throws SQLException {
         String updatedColumns = getColumnNamesFormatted("%s=?,", newDataSet);
+        String definingColumn = definingEntry.getColumn();
+        Object definingValue = definingEntry.getValue();
         String sql = String.format("UPDATE %s SET %s WHERE %s= ?", tableName, updatedColumns, definingColumn);
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -155,9 +157,11 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void delete(String tableName, String columnName, Object value) {
+    public void delete(String tableName, DataEntry definingEntry) {
+        String definingColumn = definingEntry.getColumn();
+        Object definingValue = definingEntry.getValue();
         try (Statement st = connection.createStatement()) {
-            String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, columnName, value);
+            String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, definingColumn, definingValue);
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);

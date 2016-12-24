@@ -29,7 +29,7 @@ public class DataSetImpl implements DataSet {
 
     @Override
     public String toString() {
-        return "{columnNames: " + getColumnNames().toString() + ", " +
-                "values: " + getValues().toString() + "}";
+        return "{columnNames: " + getColumnNames() + ", " +
+                "values: " + getValues() + "}";
     }
 }

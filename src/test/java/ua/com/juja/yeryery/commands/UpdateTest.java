@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
@@ -85,6 +86,7 @@ public class UpdateTest {
 
         String columnName = column1;
         Object definingValue = value12;
+        DataEntry definingEntry = new DataEntry(columnName, definingValue);
         String updatedColumn1 = column2;
         Object newValue1 = newValue22;
         String updatedColumn2 = column3;
@@ -94,13 +96,13 @@ public class UpdateTest {
                 thenReturn(updatedColumn1 + "|" + newValue1 + "|" + updatedColumn2 + "|" + newValue2);
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).update(tableName, input, columnName, definingValue);
+        doNothing().when(manager).update(tableName, input, definingEntry);
 
         //when
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -112,7 +114,7 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike|password|newPass
-                "You have successfully updated table 'test' at id = 2, " +
+                "You have successfully updated table 'test', " +
                 "+--+----+--------+\n" +
                 "|id|name|password|\n" +
                 "+--+----+--------+\n" +
@@ -130,6 +132,7 @@ public class UpdateTest {
 
         String columnName = column2;
         Object definingValue = value22;
+        DataEntry definingEntry = new DataEntry(columnName, definingValue);
         String updatedColumn = column1;
         Object newValue = newValue12;
 
@@ -138,13 +141,13 @@ public class UpdateTest {
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
-        doNothing().when(manager).update(tableName, input, columnName, definingValue);
+        doNothing().when(manager).update(tableName, input, definingEntry);
 
         //when
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -156,7 +159,7 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
                 //id|5
-                "You have successfully updated table 'test' at name = Mike, " +
+                "You have successfully updated table 'test', " +
                 "+--+----+--------+\n" +
                 "|id|name|password|\n" +
                 "+--+----+--------+\n" +
@@ -177,7 +180,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -196,7 +199,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -224,7 +227,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -257,7 +260,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -291,7 +294,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -325,7 +328,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -359,7 +362,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -395,7 +398,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -436,7 +439,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -477,7 +480,7 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
+        shouldPrint("[Enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -502,6 +505,7 @@ public class UpdateTest {
 
         String columnName = column2;
         Object definingValue = value22;
+        DataEntry definingEntry = new DataEntry(columnName, definingValue);
         String updatedColumn = column1;
         Object newValue = "notNumber";
 
@@ -511,12 +515,12 @@ public class UpdateTest {
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
 
         try {
-            doThrow(new SQLException()).when(manager).update(tableName, input, columnName, definingValue);
+            doThrow(new SQLException()).when(manager).update(tableName, input, definingEntry);
         } catch (SQLException e) {
             view.write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
                     "Try again.");
         }
-        manager.update(tableName, input, columnName, definingValue);
+        manager.update(tableName, input, definingEntry);
 
         //when
         command.process("update");

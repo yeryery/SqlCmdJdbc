@@ -1,9 +1,9 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.Parser;
 import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
+import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -32,32 +32,38 @@ public class Update implements Command {
     public void process(String input) {
         Set<String> names = manager.getTableNames();
         Dialog dialog = new DialogImpl(view, manager);
-        String selectMessage = String.format("Please enter the name or select number of table you want to %s", ACTION);
+        String selectMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
         String findMessage = "Enter columnName and defining value of updated row";
+        String setValuesMessage = "Enter columnNames and its new values for updated row: \n" +
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...";
         String commandSample = "columnName|value";
 
-        try {
-            String currentTableName = dialog.selectTable(selectMessage);
-            String[] splitInput = dialog.findRow(currentTableName, findMessage, commandSample);
-            DataSet newValues = dialog.setValues(currentTableName, splitInput);
+        String currentTableName = "";
+        DataEntry definingEntry = null;
+        DataSet newValues = null;
 
+        try {
+            currentTableName = dialog.selectTable(selectMessage);
+            definingEntry = dialog.findRow(currentTableName, findMessage, commandSample);
+            newValues = dialog.setValues(currentTableName, setValuesMessage, definingEntry);
+        } catch (CancelException e) {
+            view.write("Table updating canceled");
+            return;
+        }
+
+        try {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
             List<DataSet> originRows = manager.getDataContent(currentTableName);
             TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
-
-            String columnName = splitInput[0];
-            Object value = Parser.defineType(splitInput[1]);
-            manager.update(currentTableName, newValues, columnName, value);
-
-            view.write(String.format("You have successfully updated table '%s' at %s = %s", currentTableName, columnName, value));
+            manager.update(currentTableName, newValues, definingEntry);
+            view.write(String.format("You have successfully updated table '%s'", currentTableName));
             view.write(tableConstructor.getTableString());
-        } catch (SQLException e1) {
-            view.write(e1.getMessage());
+        } catch (SQLException e) {
+            view.write(e.getMessage());
             view.write("Try again.");
             process(input);
-        } catch (CancelException e2) {
-            view.write("Table updating canceled");
         }
+
     }
 }
 

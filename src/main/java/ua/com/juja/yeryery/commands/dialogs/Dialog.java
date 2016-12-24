@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
+import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 
 public interface Dialog {
@@ -9,9 +10,9 @@ public interface Dialog {
 
     void confirmAction(String warning);
 
-    String[] findRow(String tableName, String action, String sample);
+    DataEntry findRow(String tableName, String action, String sample);
 
-    DataSet setValues(String tableName, String[] input);
+    DataSet setValues(String tableName, String message, DataEntry entry);
 
-    DataSet setColumnNames(String message, String sample);
+    DataSet getInputByTwo(String message);
 }

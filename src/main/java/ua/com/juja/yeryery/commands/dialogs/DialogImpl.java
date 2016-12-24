@@ -1,15 +1,13 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
-import ua.com.juja.yeryery.Parser;
 import ua.com.juja.yeryery.commands.CancelException;
+import ua.com.juja.yeryery.commands.Parser;
+import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
-import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
-
-import static java.lang.Integer.parseInt;
 
 public class DialogImpl implements Dialog {
 
@@ -97,7 +95,6 @@ public class DialogImpl implements Dialog {
                 view.write("Try again.");
             }
         }
-
         return tableName;
     }
 
@@ -143,34 +140,38 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public String[] findRow(String tableName, String message, String sample) throws CancelException {
-        String[] input = new String[0];
+    public DataEntry findRow(String tableName, String message, String sample) throws CancelException {
+        DataEntry input = null;
 
-        while (true) {
-            try {
-                input = getInput(message, sample);
-                String columnName = input[0];
-                Object value = Parser.defineType(input[1]);
-                checkColumn(tableName, columnName);
-                checkValue(tableName, columnName, value);
-                break;
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-                view.write("Try again.");
-            }
+        try {
+            input = getInput(message, sample);
+            checkEntry(tableName, input);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            view.write("Try again.");
+            findRow(tableName, message, sample);
         }
         return input;
     }
 
-    private String[] getInput(String message, String sample) throws CancelException {
+    private DataEntry getInput(String message, String sample) throws CancelException {
         view.write(String.format("%s: %s\nor type 'cancel' to go back.", message, sample));
 
-        final String inputData = view.read();
-        final String delimiter = "\\|";
-
-        String[] splitInput = Parser.splitData(inputData, sample, delimiter);
+        String inputData = view.read();
+        String delimiter = "\\|";
+        String[] split = Parser.splitData(inputData, sample, delimiter);
+        String columnName = split[0];
+        Object value = Parser.defineType(split[1]);
+        DataEntry splitInput = new DataEntry(columnName, value);
 
         return splitInput;
+    }
+
+    private void checkEntry(String tableName, DataEntry entry) {
+        String columnName = entry.getColumn();
+        checkColumn(tableName, columnName);
+        Object value = entry.getValue();
+        checkValue(tableName, columnName, value);
     }
 
     private void checkColumn(String tableName, String columnName) {
@@ -198,54 +199,47 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public DataSet setValues(String tableName, String[] input) {
+    public DataSet setValues(String tableName, String message, DataEntry entry) {
 
         while (true) {
-            String columnName = input[0];
-            Object value = Parser.defineType(input[1]);
-            DataSet newValues = new DataSetImpl();
+            DataSet newValues;
             try {
-                newValues = getInputByTwo(tableName);
+                newValues = getInputByTwo(message);
+                checkColumns(tableName, newValues);
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
                 view.write("Try again.");
                 continue;
             }
 
+            String columnName = entry.getColumn();
+            Object value = entry.getValue();
             List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
 
             if (!isNewValues(newValues, updatedRows)) {
                 view.write("The new values are equivalent to the updated");
                 continue;
             }
-
-            newValues.put(columnName, value);
-            // TODO убрать
             return newValues;
         }
     }
 
-    private DataSet getInputByTwo(String tableName) {
-        view.write("Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.");
+    @Override
+    public DataSet getInputByTwo(String message) {
+        view.write(String.format("%s\nor type 'cancel' to go back.", message));
 
         String inputData = view.read();
         String delimiter = "\\|";
         DataSet splitInput = Parser.splitByTwo(inputData, delimiter);
-        checkColumns(tableName, splitInput);
 
         return splitInput;
     }
 
     private void checkColumns(String tableName, DataSet checkedDataSet) {
-        Set<String> tableColumns = manager.getTableColumns(tableName);
         Set<String> checkedColumns = checkedDataSet.getColumnNames();
 
         for (String columnName : checkedColumns) {
-            if (!tableColumns.contains(columnName)) {
-                throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
-            }
+            checkColumn(tableName, columnName);
         }
     }
 
@@ -272,54 +266,5 @@ public class DialogImpl implements Dialog {
             }
         }
         return false;
-    }
-
-    @Override
-    public DataSet setColumnNames(String message, String sample) {
-        int tableSize = getTableSize();
-        DataSet dataTypes = new DataSetImpl();
-
-        for (int i = 0; i < tableSize; i++) {
-            String setMessage = message + (i + 1);
-            String[] input = new String[0];
-            try {
-                input = getInput(setMessage, sample);
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-                i--;
-                continue;
-            }
-
-            String columnName = input[0];
-            String dataType = input[1];
-            dataTypes.put(columnName, dataType);
-        }
-        return dataTypes;
-    }
-
-    private int getTableSize() {
-        int tableSize = 0;
-
-        while (true) {
-            view.write("Please enter the number of columns of your table or 'cancel' to go back");
-            String read = view.read();
-            try {
-                tableSize = parseInt(read);
-            } catch (NumberFormatException e) {
-                if (read.equals("cancel")) {
-                    throw new CancelException();
-                } else {
-                    view.write(String.format("You have entered '%s' and this is not a number!", read));
-                    view.write("Try again.");
-                    continue;
-                }
-            }
-            if (tableSize <= 0) {
-                view.write(String.format("You have entered '%s' and number of columns must be positive!", tableSize));
-                view.write("Try again.");
-                continue;
-            }
-            return tableSize;
-        }
     }
 }

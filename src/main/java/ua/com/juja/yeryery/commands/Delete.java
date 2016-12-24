@@ -1,9 +1,9 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.Parser;
 import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
+import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -30,31 +30,27 @@ public class Delete implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
-        String selectMessage = String.format("Please enter the name or select number of table where you want to %s rows", ACTION);
+        String selectMessage = String.format("Enter the name or select number of table where you want to %s rows", ACTION);
         String findMessage = "Enter columnName and defining value of deleted row";
         String commandSample = "columnName|value";
 
         String currentTableName;
-        String[] splitInput;
+        DataEntry definingEntry;
 
         try {
             currentTableName = dialog.selectTable(selectMessage);
-            splitInput = dialog.findRow(currentTableName, findMessage, commandSample);
+            definingEntry = dialog.findRow(currentTableName, findMessage, commandSample);
         } catch (CancelException e) {
             view.write("Row removal canceled");
             return;
         }
 
-        String columnName = splitInput[0];
-        Object value = Parser.defineType(splitInput[1]);
-        //TODO
-
         Set<String> tableColumns = manager.getTableColumns(currentTableName);
         List<DataSet> originRows = manager.getDataContent(currentTableName);
         TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
 
-        manager.delete(currentTableName, columnName, value);
-        view.write(String.format("You have successfully deleted data from '%s' at %s = %s", currentTableName, columnName, value));
+        manager.delete(currentTableName, definingEntry);
+        view.write(String.format("You have successfully deleted data from '%s'", currentTableName));
 
         view.write(tableConstructor.getTableString());
     }

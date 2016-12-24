@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
@@ -70,17 +71,18 @@ public class DeleteTest {
 
         String columnName = column2;
         Object definingValue = value22;
+        DataEntry definingEntry = new DataEntry(columnName, definingValue);
 
         when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue);
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).delete(tableName, columnName, definingValue);
+        doNothing().when(manager).delete(tableName, definingEntry);
 
         //when
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -88,7 +90,7 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //name|Mike
-                "You have successfully deleted data from 'test' at name = Mike, " +
+                "You have successfully deleted data from 'test', " +
                 "+--+----+\n" +
                 "|id|name|\n" +
                 "+--+----+\n" +
@@ -106,17 +108,18 @@ public class DeleteTest {
 
         String columnName = column1;
         Object definingValue = value12;
+        DataEntry definingEntry = new DataEntry(columnName, definingValue);
 
         when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue);
         when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
         when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).delete(tableName, columnName, definingValue);
+        doNothing().when(manager).delete(tableName, definingEntry);
 
         //when
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -124,7 +127,7 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
                 //id|2
-                "You have successfully deleted data from 'test' at id = 2, " +
+                "You have successfully deleted data from 'test', " +
                 "+--+----+\n" +
                 "|id|name|\n" +
                 "+--+----+\n" +
@@ -146,7 +149,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -166,7 +169,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -194,7 +197,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -227,7 +230,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -261,7 +264,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
