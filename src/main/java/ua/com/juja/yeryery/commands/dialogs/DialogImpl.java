@@ -52,10 +52,9 @@ public class DialogImpl implements Dialog {
             tableNames.put(0, "cancel");
 
             String input = view.read();
-            Parser parser = new Parser();
 
-            if (parser.isParsable(input)) {
-                int tableNumber = parser.getParsedInt();
+            if (Parser.isParsable(input)) {
+                int tableNumber = Parser.parsedInt;
 
                 if (tableNumber >= 0 && tableNumber <= names.size()) {
                     tableName = tableNames.get(tableNumber);

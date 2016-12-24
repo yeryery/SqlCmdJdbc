@@ -5,13 +5,9 @@ import ua.com.juja.yeryery.manager.DataSetImpl;
 
 public class Parser {
 
-    private int parsedInt;
+    public static int parsedInt;
 
-    public int getParsedInt() {
-        return parsedInt;
-    }
-
-    public boolean isParsable(String data) {
+    public static boolean isParsable(String data) {
         boolean parsable = true;
         try {
             parsedInt = Integer.parseInt(data);
