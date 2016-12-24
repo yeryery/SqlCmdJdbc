@@ -21,9 +21,9 @@ public class Connect implements Command {
     @Override
     public void process(String input) {
         String delimiter = "\\|";
-        String COMMAND_SAMPLE = "connect|yeryery|postgres|postgrespass";
+        String commandSample = "connect|yeryery|postgres|postgrespass";
 
-        String[] splitInput = Parser.splitData(input, COMMAND_SAMPLE, delimiter);
+        String[] splitInput = Parser.splitData(input, commandSample, delimiter);
         String database = splitInput[1];
         String username = splitInput[2];
         String password = splitInput[3];

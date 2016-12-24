@@ -141,7 +141,7 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public DataEntry findRow(String tableName, String message, String sample) throws CancelException {
+    public DataEntry defineRow(String tableName, String message, String sample) throws CancelException {
         DataEntry input = null;
 
         try {
@@ -150,7 +150,7 @@ public class DialogImpl implements Dialog {
         } catch (IllegalArgumentException e) {
             view.write(e.getMessage());
             view.write("Try again.");
-            findRow(tableName, message, sample);
+            defineRow(tableName, message, sample);
         }
         return input;
     }
@@ -200,7 +200,7 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public DataSet setValues(String tableName, String message, DataEntry entry) {
+    public DataSet getNewValues(String tableName, String message, DataEntry entry) {
 
         while (true) {
             DataSet newValues;
@@ -227,8 +227,7 @@ public class DialogImpl implements Dialog {
 
     @Override
     public DataSet getInputByTwo(String message) {
-        view.write(String.format("%s\nor type 'cancel' to go back.", message));
-
+        view.write(message);
         String inputData = view.read();
         String delimiter = "\\|";
         DataSet splitInput = Parser.splitByTwo(inputData, delimiter);

@@ -10,9 +10,9 @@ public interface Dialog {
 
     void confirmAction(String warning);
 
-    DataEntry findRow(String tableName, String action, String sample);
+    DataEntry defineRow(String tableName, String action, String sample);
 
-    DataSet setValues(String tableName, String message, DataEntry entry);
+    DataSet getNewValues(String tableName, String message, DataEntry entry);
 
     DataSet getInputByTwo(String message);
 }

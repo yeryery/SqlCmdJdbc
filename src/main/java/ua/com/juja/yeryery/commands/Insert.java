@@ -33,7 +33,7 @@ public class Insert implements Command {
 
         try {
             String currentTableName = dialog.selectTable(selectMessage);
-            DataSet insertedRow = getNewValues(currentTableName);
+            DataSet insertedRow = getNewRow(currentTableName);
 
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
@@ -46,7 +46,7 @@ public class Insert implements Command {
         }
     }
 
-    private DataSet getNewValues(String currentTableName) {
+    private DataSet getNewRow(String currentTableName) {
         Set<String> tableColumns = manager.getTableColumns(currentTableName);
         view.write("Enter new values you require");
 

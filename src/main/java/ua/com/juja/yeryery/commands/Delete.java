@@ -30,16 +30,16 @@ public class Delete implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
-        String selectMessage = String.format("Enter the name or select number of table where you want to %s rows", ACTION);
-        String findMessage = "Enter columnName and defining value of deleted row";
+        String selectTableMessage = String.format("Enter the name or select number of table where you want to %s rows", ACTION);
+        String findRowMessage = "Enter columnName and defining value of deleted row";
         String commandSample = "columnName|value";
 
         String currentTableName;
         DataEntry definingEntry;
 
         try {
-            currentTableName = dialog.selectTable(selectMessage);
-            definingEntry = dialog.findRow(currentTableName, findMessage, commandSample);
+            currentTableName = dialog.selectTable(selectTableMessage);
+            definingEntry = dialog.defineRow(currentTableName, findRowMessage, commandSample);
         } catch (CancelException e) {
             view.write("Row removal canceled");
             return;

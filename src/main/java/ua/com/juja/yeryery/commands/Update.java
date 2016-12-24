@@ -32,10 +32,10 @@ public class Update implements Command {
     public void process(String input) {
         Set<String> names = manager.getTableNames();
         Dialog dialog = new DialogImpl(view, manager);
-        String selectMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
+        String selectTableMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
         String findMessage = "Enter columnName and defining value of updated row";
         String setValuesMessage = "Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...";
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back.";
         String commandSample = "columnName|value";
 
         String currentTableName = "";
@@ -43,9 +43,9 @@ public class Update implements Command {
         DataSet newValues = null;
 
         try {
-            currentTableName = dialog.selectTable(selectMessage);
-            definingEntry = dialog.findRow(currentTableName, findMessage, commandSample);
-            newValues = dialog.setValues(currentTableName, setValuesMessage, definingEntry);
+            currentTableName = dialog.selectTable(selectTableMessage);
+            definingEntry = dialog.defineRow(currentTableName, findMessage, commandSample);
+            newValues = dialog.getNewValues(currentTableName, setValuesMessage, definingEntry);
         } catch (CancelException e) {
             view.write("Table updating canceled");
             return;
@@ -55,6 +55,7 @@ public class Update implements Command {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
             List<DataSet> originRows = manager.getDataContent(currentTableName);
             TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
+
             manager.update(currentTableName, newValues, definingEntry);
             view.write(String.format("You have successfully updated table '%s'", currentTableName));
             view.write(tableConstructor.getTableString());

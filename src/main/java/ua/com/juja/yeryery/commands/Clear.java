@@ -24,10 +24,10 @@ public class Clear implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
-        String selectMessage = String.format("Please enter the name or select number of table you want to %s", ACTION);
+        String selectTableMessage = String.format("Please enter the name or select number of table you want to %s", ACTION);
 
         try {
-            String currentTableName = dialog.selectTable(selectMessage);
+            String currentTableName = dialog.selectTable(selectTableMessage);
             String warning = String.format("Table '%s' will be cleared! Continue?", currentTableName);
             dialog.confirmAction(warning);
             manager.clear(currentTableName);
