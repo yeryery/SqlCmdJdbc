@@ -36,9 +36,7 @@ public class CreateTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         String inputNameType = "someColumnName|text";
 
-        when(view.read()).thenReturn("newTable")
-                .thenReturn("1")
-                .thenReturn(inputNameType);
+        when(view.read()).thenReturn("newTable").thenReturn(inputNameType);
 
         DataSet dataTypes = new DataSetImpl();
 
@@ -49,9 +47,8 @@ public class CreateTest {
 
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //newTable
-                "Please enter the number of columns of your table or 'cancel' to go back, " +
-                //1
-                "Please enter name and type of column 1: columnName|columnType\n" +
+                "Enter name of columns and its type for new table: \n" +
+                "columnName1|columnType1|columnName2|columnType2|...\n" +
                 "or type 'cancel' to go back., " +
                 //someColumnName|text
                 "Your table 'newTable' have successfully created!]");
@@ -64,9 +61,7 @@ public class CreateTest {
         when(manager.getTableNames()).thenReturn(tableNames);
         String inputNameType = "someColumnName|WrongType";
 
-        when(view.read()).thenReturn("newTable")
-                .thenReturn("1")
-                .thenReturn(inputNameType);
+        when(view.read()).thenReturn("newTable").thenReturn(inputNameType);
 
         DataSet dataTypes = new DataSetImpl();
 
@@ -103,46 +98,6 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreateAndEnterNegativeNumberOfColumns() throws SQLException {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("newTable")
-                         .thenReturn("-1")
-                         .thenReturn("cancel");
-
-        //when
-        command.process("create");
-
-        //then
-        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                //newTable
-                "Please enter the number of columns of your table or 'cancel' to go back, " +
-                //-1
-                "You have entered '-1' and number of columns must be positive!, " +
-                "Try again., " +
-                "Please enter the number of columns of your table or 'cancel' to go back, " +
-                //cancel
-                "Table creating canceled]");
-    }
-
-    @Test
-    public void testCreateAndNotNumberOfColumns() throws SQLException {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("newTable")
-                         .thenReturn("notNumber")
-                         .thenReturn("cancel");
-
-        //when
-        command.process("create");
-
-        //then
-        verify(view).write("Please enter the name of table you want to create or 'cancel' to go back");
-    }
-
-    @Test
     public void testCreateEnterTableNameAndCancel() {
         //given
         Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
@@ -155,32 +110,11 @@ public class CreateTest {
 
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                     //newTable
-                    "Please enter the number of columns of your table or 'cancel' to go back, " +
+                    "Enter name of columns and its type for new table: \n" +
+                    "columnName1|columnType1|columnName2|columnType2|...\n" +
+                    "or type 'cancel' to go back., " +
                     //0
                     "Table creating canceled]");
-    }
-
-    @Test
-    public void testCreateEnterTableNameNotNumberOfColumnsAndCancel() {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("newTable")
-                         .thenReturn("notNumber")
-                         .thenReturn("cancel");
-
-        //when
-        command.process("create");
-
-        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                //newTable
-                "Please enter the number of columns of your table or 'cancel' to go back, " +
-                //notNumber
-                "You have entered 'notNumber' and this is not a number!, " +
-                "Try again., " +
-                "Please enter the number of columns of your table or 'cancel' to go back, " +
-                //0
-                "Table creating canceled]");
     }
 
     private void shouldPrint(String expected) {
