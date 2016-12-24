@@ -3,6 +3,7 @@ package ua.com.juja.yeryery.commands.dialogs;
 import ua.com.juja.yeryery.commands.CancelException;
 import ua.com.juja.yeryery.commands.Parser;
 import ua.com.juja.yeryery.manager.DataEntry;
+import ua.com.juja.yeryery.manager.DataEntryImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -162,7 +163,7 @@ public class DialogImpl implements Dialog {
         String[] split = Parser.splitData(inputData, sample, delimiter);
         String columnName = split[0];
         Object value = Parser.defineType(split[1]);
-        DataEntry splitInput = new DataEntry(columnName, value);
+        DataEntry splitInput = new DataEntryImpl(columnName, value);
 
         return splitInput;
     }

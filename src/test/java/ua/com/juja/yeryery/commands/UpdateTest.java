@@ -5,10 +5,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.manager.DataEntry;
-import ua.com.juja.yeryery.manager.DataSet;
-import ua.com.juja.yeryery.manager.DataSetImpl;
-import ua.com.juja.yeryery.manager.DatabaseManager;
+import ua.com.juja.yeryery.manager.*;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
@@ -86,7 +83,7 @@ public class UpdateTest {
 
         String columnName = column1;
         Object definingValue = value12;
-        DataEntry definingEntry = new DataEntry(columnName, definingValue);
+        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
         String updatedColumn1 = column2;
         Object newValue1 = newValue22;
         String updatedColumn2 = column3;
@@ -132,7 +129,7 @@ public class UpdateTest {
 
         String columnName = column2;
         Object definingValue = value22;
-        DataEntry definingEntry = new DataEntry(columnName, definingValue);
+        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
         String updatedColumn = column1;
         Object newValue = newValue12;
 
@@ -505,7 +502,7 @@ public class UpdateTest {
 
         String columnName = column2;
         Object definingValue = value22;
-        DataEntry definingEntry = new DataEntry(columnName, definingValue);
+        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
         String updatedColumn = column1;
         Object newValue = "notNumber";
 
