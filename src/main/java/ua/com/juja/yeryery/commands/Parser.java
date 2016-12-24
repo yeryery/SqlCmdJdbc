@@ -1,6 +1,5 @@
-package ua.com.juja.yeryery;
+package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.commands.CancelException;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 
@@ -48,7 +47,9 @@ public class Parser {
                     "Expected %s, and you have entered %s!", sampleSize, dataSize));
         }
 
-        return data.split(delimiter);
+        String[] inputData = data.split(delimiter);
+
+        return inputData ;
     }
 
     public static DataSet splitByTwo(String input, String delimiter) {
