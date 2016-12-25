@@ -473,7 +473,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //-1
-                "There is no table with this number! Try again.\n" +
+                "There is no table with this number!\nTry again.\n" +
                 "Please enter the name or select number of table you want to display\n" +
                 "1. test\n" +
                 "2. ttable\n" +

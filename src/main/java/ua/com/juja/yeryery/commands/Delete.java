@@ -31,7 +31,7 @@ public class Delete implements Command {
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
         String selectTableMessage = String.format("Enter the name or select number of table where you want to %s rows", ACTION);
-        String findRowMessage = "Enter columnName and defining value of deleted row";
+        String findRowMessage = "Enter columnName and defining value of deleted row: %s\nor type 'cancel' to go back.";
         String commandSample = "columnName|value";
 
         String currentTableName;

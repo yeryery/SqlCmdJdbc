@@ -20,62 +20,88 @@ public class DialogImpl implements Dialog {
         this.manager = manager;
     }
 
-    public DialogImpl(View view) {
-        this.view = view;
-    }
-
     @Override
     public String selectTable(String message) {
-        Set<String> names = manager.getTableNames();
-        Map<Integer, String> tableNames = new HashMap<>();
+        Map<Integer, String> tableList = getTableList();
 
+        String tableName;
+        while (true) {
+            printTableList(message, tableList);
+            String input = view.read();
+            checkCancel(input);
+
+            try {
+                tableName = getTableName(input, tableList);
+                break;
+            } catch (Exception e) {
+                view.write(e.getMessage());
+                view.write("Try again.");
+            }
+        }
+        return tableName;
+    }
+
+    private String getTableName(String input, Map<Integer, String> tableList) {
+        String tableName;
+//        checkCancel(input);
+
+        if (Parser.isParsable(input)) {
+            int tableNumber = Parser.parsedInt;
+            checkTableNumber(tableNumber, tableList);
+            tableName = tableList.get(tableNumber);
+        } else {
+            checkTableName(input, tableList);
+            tableName = input;
+        }
+        return tableName;
+    }
+
+    private Map<Integer, String> getTableList() {
+        Set<String> names = manager.getTableNames();
+        Map<Integer, String> tableList = new HashMap<>();
         Iterator iterator = names.iterator();
         int i = 1;
 
         while (iterator.hasNext()) {
-            tableNames.put(i, (String) iterator.next());
+            tableList.put(i, (String) iterator.next());
             i++;
         }
+        return tableList;
+    }
 
-        String tableName;
+    private void printTableList(String message, Map<Integer, String> tableList) {
+        view.write(message);
+        tableList.remove(0);
 
-        while (true) {
-            view.write(message);
-
-            tableNames.remove(0);
-
-            for (Map.Entry<Integer, String> entry : tableNames.entrySet()) {
-                view.write(entry.getKey() + ". " + entry.getValue());
-            }
-
-            view.write(0 + ". " + "cancel (to go back)");
-            tableNames.put(0, "cancel");
-
-            String input = view.read();
-
-            if (Parser.isParsable(input)) {
-                int tableNumber = Parser.parsedInt;
-
-                if (tableNumber >= 0 && tableNumber <= names.size()) {
-                    tableName = tableNames.get(tableNumber);
-                    break;
-                } else {
-                    view.write("There is no table with this number! Try again.");
-                    //TODO Exceptions
-                }
-            } else {
-
-                if (tableNames.containsValue(input)) {
-                    tableName = input;
-                    break;
-                } else {
-                    view.write(String.format("Table with name '%s' doesn't exist! Try again.", input));
-                }
-            }
+        for (Map.Entry<Integer, String> entry : tableList.entrySet()) {
+            view.write(entry.getKey() + ". " + entry.getValue());
         }
-        checkCancel(tableName);
 
-        return tableName;
+        view.write(0 + ". " + "cancel (to go back)");
+    }
+
+    private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
+//        if (tableNumber == 0) {
+//            throw new CancelException();
+//        }
+        if (!tableList.containsKey(tableNumber)) {
+            throw new IllegalArgumentException("There is no table with this number!");
+        }
+    }
+
+    private void checkTableName(String tableName, Map<Integer, String> tableList) {
+//        if (tableName.equals("cancel")) {
+//            throw new CancelException();
+//        }
+        if (!tableList.containsValue(tableName)) {
+            throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist!", tableName));
+        }
+    }
+
+    private void checkCancel(String input) {
+        if (input.equals("cancel") || input.equals("0")) {
+            throw new CancelException();
+        }
     }
 
     @Override
@@ -88,7 +114,7 @@ public class DialogImpl implements Dialog {
             tableName = view.read();
 
             try {
-                checkName(names, tableName);
+                checkNewName(names, tableName);
                 break;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
@@ -98,13 +124,7 @@ public class DialogImpl implements Dialog {
         return tableName;
     }
 
-    private void checkCancel(String input) {
-        if (input.equals("cancel")) {
-            throw new CancelException();
-        }
-    }
-
-    private void checkName(Set<String> names, String tableName) {
+    private void checkNewName(Set<String> names, String tableName) {
         if (tableName.equals("cancel")) {
             throw new CancelException();
         }
@@ -114,6 +134,7 @@ public class DialogImpl implements Dialog {
         if (existName(names, tableName)) {
             throw new IllegalArgumentException(String.format("Table with name '%s' already exists!\n%s", tableName, names.toString()));
         }
+        //TODO refactor
     }
 
     private boolean isFirstLetter(String tableName) {
@@ -140,7 +161,7 @@ public class DialogImpl implements Dialog {
     }
 
     @Override
-    public DataEntry defineRow(String tableName, String message, String sample) throws CancelException {
+    public DataEntry defineRow(String tableName, String message, String sample) {
         DataEntry input = null;
 
         try {
@@ -154,8 +175,8 @@ public class DialogImpl implements Dialog {
         return input;
     }
 
-    private DataEntry getInput(String message, String sample) throws CancelException {
-        view.write(String.format("%s: %s\nor type 'cancel' to go back.", message, sample));
+    private DataEntry getInput(String message, String sample) {
+        view.write(String.format(message, sample));
 
         String inputData = view.read();
         String delimiter = "\\|";

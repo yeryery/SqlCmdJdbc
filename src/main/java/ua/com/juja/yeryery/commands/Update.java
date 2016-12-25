@@ -33,7 +33,7 @@ public class Update implements Command {
         Set<String> names = manager.getTableNames();
         Dialog dialog = new DialogImpl(view, manager);
         String selectTableMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
-        String findMessage = "Enter columnName and defining value of updated row";
+        String findMessage = "Enter columnName and defining value of updated row: %s\nor type 'cancel' to go back.";
         String setValuesMessage = "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back.";
         String commandSample = "columnName|value";
