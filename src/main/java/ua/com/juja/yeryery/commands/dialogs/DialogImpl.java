@@ -28,12 +28,11 @@ public class DialogImpl implements Dialog {
         while (true) {
             printTableList(message, tableList);
             String input = view.read();
-            checkCancel(input);
 
             try {
                 tableName = getTableName(input, tableList);
                 break;
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
                 view.write("Try again.");
             }
@@ -43,7 +42,7 @@ public class DialogImpl implements Dialog {
 
     private String getTableName(String input, Map<Integer, String> tableList) {
         String tableName;
-//        checkCancel(input);
+        checkCancel(input);
 
         if (Parser.isParsable(input)) {
             int tableNumber = Parser.parsedInt;
@@ -81,18 +80,12 @@ public class DialogImpl implements Dialog {
     }
 
     private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
-//        if (tableNumber == 0) {
-//            throw new CancelException();
-//        }
         if (!tableList.containsKey(tableNumber)) {
             throw new IllegalArgumentException("There is no table with this number!");
         }
     }
 
     private void checkTableName(String tableName, Map<Integer, String> tableList) {
-//        if (tableName.equals("cancel")) {
-//            throw new CancelException();
-//        }
         if (!tableList.containsValue(tableName)) {
             throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist!", tableName));
         }

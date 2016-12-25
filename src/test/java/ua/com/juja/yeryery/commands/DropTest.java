@@ -18,20 +18,21 @@ public class DropTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
+    private Set<String> tableNames;
 
     @Before
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Drop(view, manager);
+        tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
     }
 
     @Test
     public void testDropSelectTableAndConfirm() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("1").thenReturn("y").thenReturn("0");
+        when(view.read()).thenReturn("1").thenReturn("y");
 
         //when
         command.process("drop");
@@ -50,9 +51,7 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndDontConfirm() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("1").thenReturn("n").thenReturn("0");
+        when(view.read()).thenReturn("1").thenReturn("n");
 
         //when
         command.process("drop");
@@ -71,8 +70,6 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndNeitherInput() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("neither").thenReturn("y");
 
         //when
@@ -94,8 +91,6 @@ public class DropTest {
     @Test
     public void testDropAndCancel() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("0");
 
         //when
@@ -117,7 +112,7 @@ public class DropTest {
     }
 
     @Test
-    public void testCanProcessList() {
+    public void testCanProcessDrop() {
         //when
         boolean canProcess = command.canProcess("drop");
 

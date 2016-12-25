@@ -1,11 +1,11 @@
 package ua.com.juja.yeryery.commands;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class ExitTest {
 
@@ -49,7 +49,7 @@ public class ExitTest {
         }
 
         //then
-        Mockito.verify(view).write("See you!");
+        verify(view).write("See you!");
     }
 }
 

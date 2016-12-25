@@ -18,20 +18,21 @@ public class ClearTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
+    private Set<String> tableNames;
 
     @Before
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Clear(view, manager);
+        tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
     }
 
     @Test
     public void testClearSelectTableAndConfirm() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("1").thenReturn("y").thenReturn("0");
+        when(view.read()).thenReturn("1").thenReturn("y");
 
         //when
         command.process("clear");
@@ -50,9 +51,7 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndDontConfirm() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("1").thenReturn("n").thenReturn("0");
+        when(view.read()).thenReturn("1").thenReturn("n");
 
         //when
         command.process("clear");
@@ -71,8 +70,6 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndNeitherInput() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("1").thenReturn("neither").thenReturn("y");
 
         //when
@@ -92,11 +89,26 @@ public class ClearTest {
     }
 
     @Test
-    public void testClearAndCancel() {
+    public void testClearAndSelectNull() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("0");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select cancel
+                "Table clearing canceled]");
+    }
+
+    @Test
+    public void testClearAndSelectCancel() {
+        //given
+        when(view.read()).thenReturn("cancel");
 
         //when
         command.process("clear");
@@ -117,7 +129,7 @@ public class ClearTest {
     }
 
     @Test
-    public void testCanProcessList() {
+    public void testCanProcessClear() {
         //when
         boolean canProcess = command.canProcess("clear");
 

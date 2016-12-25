@@ -155,8 +155,8 @@ public class DisplayTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
+                //cancel
                 "Table displaying canceled]");
-        //cancel
     }
 
     private void shouldPrint(String expected) {
