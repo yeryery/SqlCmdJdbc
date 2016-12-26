@@ -7,6 +7,7 @@ public class Connect implements Command {
 
     private View view;
     private DatabaseManager manager;
+    private static final String ACTION = "connect|";
 
     public Connect(View view, DatabaseManager manager) {
         this.view = view;
@@ -15,7 +16,7 @@ public class Connect implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.startsWith("connect|");
+        return input.startsWith(ACTION);
     }
 
     @Override

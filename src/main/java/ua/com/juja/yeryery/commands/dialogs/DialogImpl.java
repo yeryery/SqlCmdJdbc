@@ -23,8 +23,8 @@ public class DialogImpl implements Dialog {
     @Override
     public String selectTable(String message) {
         Map<Integer, String> tableList = getTableList();
-
         String tableName;
+
         while (true) {
             printTableList(message, tableList);
             String input = view.read();
@@ -81,7 +81,7 @@ public class DialogImpl implements Dialog {
 
     private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
         if (!tableList.containsKey(tableNumber)) {
-            throw new IllegalArgumentException("There is no table with this number!");
+            throw new IllegalArgumentException(String.format("There is no table with number %d!", tableNumber));
         }
     }
 
@@ -99,8 +99,8 @@ public class DialogImpl implements Dialog {
 
     @Override
     public String nameTable(String message) {
-        String tableName;
         Set<String> names = manager.getTableNames();
+        String tableName;
 
         while (true) {
             view.write(message);
@@ -127,7 +127,6 @@ public class DialogImpl implements Dialog {
         if (existName(names, tableName)) {
             throw new IllegalArgumentException(String.format("Table with name '%s' already exists!\n%s", tableName, names.toString()));
         }
-        //TODO refactor
     }
 
     private boolean isFirstLetter(String tableName) {
@@ -235,6 +234,7 @@ public class DialogImpl implements Dialog {
                 continue;
             }
             return newValues;
+            //TODO refactor
         }
     }
 
