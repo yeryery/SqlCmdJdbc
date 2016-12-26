@@ -473,7 +473,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //-1
-                "There is no table with this number!\nTry again.\n" +
+                "There is no table with number -1!\nTry again.\n" +
                 "Please enter the name or select number of table you want to display\n" +
                 "1. test\n" +
                 "2. ttable\n" +
@@ -718,7 +718,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -751,7 +751,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -766,7 +766,7 @@ public class IntegrationTest {
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 41\n" +
                 "Try again.\n" +
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -805,7 +805,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -820,7 +820,7 @@ public class IntegrationTest {
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 41\n" +
                 "Try again.\n" +
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -833,6 +833,9 @@ public class IntegrationTest {
                 "age\n" +
                 //25
                 "You have successfully entered new data into the table 'ttable'\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Enter the name or select number of table where you want to delete rows\n" +
@@ -880,7 +883,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -893,6 +896,9 @@ public class IntegrationTest {
                 "age\n" +
                 //25
                 "You have successfully entered new data into the table 'ttable'\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //display
                 "Please enter the name or select number of table you want to display\n" +
@@ -1528,7 +1534,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1541,9 +1547,16 @@ public class IntegrationTest {
                 "password\n" +
                 //pass3
                 "You have successfully entered new data into the table 'test'\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1556,6 +1569,15 @@ public class IntegrationTest {
                 "password\n" +
                 //pass3
                 "You have successfully entered new data into the table 'test'\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
+                "|30|username3|pass3   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
                 "Enter the name or select number of table you want to update\n" +
@@ -1729,7 +1751,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Enter the name or select number of table where you want to insert new rows\n" +
+                "Enter the name or select number of table where you want to insert new row\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1742,6 +1764,9 @@ public class IntegrationTest {
                 "age\n" +
                 //30
                 "You have successfully entered new data into the table 'ttable'\n" +
+                "+--+----+---+\n" +
+                "|id|name|age|\n" +
+                "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Enter the name or select number of table where you want to delete rows\n" +
