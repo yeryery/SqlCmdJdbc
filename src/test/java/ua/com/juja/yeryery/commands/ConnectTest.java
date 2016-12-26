@@ -50,19 +50,25 @@ public class ConnectTest {
     }
 
     @Test
-    public void TestProcessConnectCommand_ThrowsException() {
+    public void TestProcessConnectCommandWithOneArgument() {
         //when
         try {
-            command.process("connect|argument2|argument3");
+            command.process("connect|");
             fail("IllegalArgumentException");
         } catch (IllegalArgumentException e) {
-            view.write("Error! Wrong number of parameters. Expected 4, and you have entered 3\n" +
-                        "Try again.");
+            assertEquals("Wrong number of parameters. Expected 4, and you have entered 1!", e.getMessage());
         }
+    }
 
-        //then
-        verify(view).write("Error! Wrong number of parameters. Expected 4, and you have entered 3\n" +
-                                    "Try again.");
+    @Test
+    public void TestProcessConnectCommandWith5Args() {
+        //when
+        try {
+            command.process("connect|argument2|argument3|argument4|argument5");
+            fail("IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Wrong number of parameters. Expected 4, and you have entered 5!", e.getMessage());
+        }
     }
 }
 

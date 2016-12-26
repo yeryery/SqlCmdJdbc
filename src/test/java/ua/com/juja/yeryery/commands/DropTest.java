@@ -15,22 +15,41 @@ import static org.mockito.Mockito.*;
 
 public class DropTest {
 
-    private DatabaseManager manager;
     private View view;
     private Command command;
-    private Set<String> tableNames;
+    private String selectedTable;
 
     @Before
     public void setup() {
-        manager = mock(DatabaseManager.class);
+        DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Drop(view, manager);
-        tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
+        selectedTable = "test";
     }
 
     @Test
-    public void testDropSelectTableAndConfirm() {
+    public void testDropSelectTableNameAndConfirm() {
+        //given
+        when(view.read()).thenReturn(selectedTable).thenReturn("y");
+
+        //when
+        command.process("drop");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to drop, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select table 'test'
+                "Table 'test' will be dropped! Continue? (y/n), " +
+                //yes
+                "Table 'test' successfully dropped!]");
+    }
+
+    @Test
+    public void testDropSelectTableNumberAndConfirm() {
         //given
         when(view.read()).thenReturn("1").thenReturn("y");
 
@@ -51,7 +70,7 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndDontConfirm() {
         //given
-        when(view.read()).thenReturn("1").thenReturn("n");
+        when(view.read()).thenReturn(selectedTable).thenReturn("n");
 
         //when
         command.process("drop");
@@ -61,7 +80,7 @@ public class DropTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table number 1
+                //Select table 'test'
                 "Table 'test' will be dropped! Continue? (y/n), " +
                 //no
                 "Table deleting canceled]");
@@ -70,7 +89,7 @@ public class DropTest {
     @Test
     public void testDropSelectTableAndNeitherInput() {
         //given
-        when(view.read()).thenReturn("1").thenReturn("neither").thenReturn("y");
+        when(view.read()).thenReturn(selectedTable).thenReturn("neither").thenReturn("y");
 
         //when
         command.process("drop");
@@ -80,7 +99,7 @@ public class DropTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table number 1
+                //Select table 'test'
                 "Table 'test' will be dropped! Continue? (y/n), " +
                 //neither 'y' nor 'n'
                 "Table 'test' will be dropped! Continue? (y/n), " +
@@ -89,7 +108,24 @@ public class DropTest {
     }
 
     @Test
-    public void testDropAndCancel() {
+    public void testDropAndSelectCancel() {
+        //given
+        when(view.read()).thenReturn("cancel");
+
+        //when
+        command.process("drop");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to drop, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select 'cancel'
+                "Table deleting canceled]");
+    }
+
+    @Test
+    public void testDropAndSelectZero() {
         //given
         when(view.read()).thenReturn("0");
 
@@ -101,14 +137,56 @@ public class DropTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select cancel
+                //Select '0'
                 "Table deleting canceled]");
     }
 
-    private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(expected, captor.getAllValues().toString());
+    @Test
+    public void testDropAndSelectNotExistingTable() {
+        //given
+        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
+
+        //when
+        command.process("drop");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to drop, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select notExistingTable
+                "Table with name 'notExistingTable' doesn't exist!, " +
+                "Try again., " +
+                "Please enter the name or select number of table you want to drop, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table deleting canceled]");
+    }
+
+    @Test
+    public void testDropAndSelectWrongTableNumber() {
+        //given
+        when(view.read()).thenReturn("22").thenReturn("cancel");
+
+        //when
+        command.process("drop");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to drop, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select 22
+                "There is no table with number 22!, " +
+                "Try again., " +
+                "Please enter the name or select number of table you want to drop, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table deleting canceled]");
     }
 
     @Test
@@ -127,5 +205,11 @@ public class DropTest {
 
         //then
         assertFalse(canProcess);
+    }
+
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }

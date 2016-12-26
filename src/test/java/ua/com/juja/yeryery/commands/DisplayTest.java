@@ -20,6 +20,7 @@ public class DisplayTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
+    private String selectedTable;
 
     @Before
     public void setup() {
@@ -27,72 +28,29 @@ public class DisplayTest {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Display(view, manager);
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
+        selectedTable = "test";
     }
 
     @Test
-    public void testPrintTableDataSelectNumberOfTable() {
+    public void testDisplayTableData() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("1");
-
-        when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
+        when(view.read()).thenReturn(selectedTable);
+        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<String>(Arrays.asList("name", "age")));
 
         DataSet user1 = new DataSetImpl();
-        user1.put("id", 12);
-        user1.put("name", "username1");
-        user1.put("password", "pass1");
+        user1.put("name", "Mike");
+        user1.put("age", "25");
 
         DataSet user2 = new DataSetImpl();
-        user2.put("id", 22);
-        user2.put("name", "username2");
-        user2.put("password", "pass2");
+        user2.put("name", "Jack");
+        user2.put("age", "28");
 
         List<DataSet> dataSets = new LinkedList<DataSet>();
         dataSets.add(user1);
         dataSets.add(user2);
-        when(manager.getDataContent("test")).thenReturn(dataSets);
-
-        //when
-        command.process("display");
-
-        //then
-        shouldPrint("[Please enter the name or select number of table you want to display, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //select table #1
-                "+--+---------+--------+\n" +
-                "|id|name     |password|\n" +
-                "+--+---------+--------+\n" +
-                "|12|username1|pass1   |\n" +
-                "+--+---------+--------+\n" +
-                "|22|username2|pass2   |\n" +
-                "+--+---------+--------+]");
-    }
-
-    @Test
-    public void testPrintTableDataTypeTableName() {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("test");
-        when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
-
-        DataSet user1 = new DataSetImpl();
-        user1.put("id", 12);
-        user1.put("name", "username1");
-        user1.put("password", "pass1");
-
-        DataSet user2 = new DataSetImpl();
-        user2.put("id", 22);
-        user2.put("name", "username2");
-        user2.put("password", "pass2");
-
-        List<DataSet> dataSets = new LinkedList<DataSet>();
-        dataSets.add(user1);
-        dataSets.add(user2);
-        when(manager.getDataContent("test")).thenReturn(dataSets);
+        when(manager.getDataContent(selectedTable)).thenReturn(dataSets);
 
         //when
         command.process("display");
@@ -103,28 +61,26 @@ public class DisplayTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "+--+---------+--------+\n" +
-                "|id|name     |password|\n" +
-                "+--+---------+--------+\n" +
-                "|12|username1|pass1   |\n" +
-                "+--+---------+--------+\n" +
-                "|22|username2|pass2   |\n" +
-                "+--+---------+--------+]");
+                "+----+---+\n" +
+                "|name|age|\n" +
+                "+----+---+\n" +
+                "|Mike|25 |\n" +
+                "+----+---+\n" +
+                "|Jack|28 |\n" +
+                "+----+---+]");
     }
 
     @Test
-    public void testPrintEmptyTableData() {
+    public void testDisplayEmptyTableData() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("test");
-        when(manager.getTableColumns("test")).thenReturn(new LinkedHashSet<String>(Arrays.asList("id", "name", "password")));
+        when(view.read()).thenReturn(selectedTable);
+        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<String>(Arrays.asList("name", "age")));
 
         DataSet user = new DataSetImpl();
 
         List<DataSet> dataSets = new LinkedList<DataSet>();
         dataSets.add(user);
-        when(manager.getDataContent("test")).thenReturn(dataSets);
+        when(manager.getDataContent(selectedTable)).thenReturn(dataSets);
 
         //when
         command.process("display");
@@ -135,16 +91,14 @@ public class DisplayTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "+--+----+--------+\n" +
-                "|id|name|password|\n" +
-                "+--+----+--------+]");
+                "+----+---+\n" +
+                "|name|age|\n" +
+                "+----+---+]");
     }
 
     @Test
-    public void testSelectCancel() {
+    public void testDisplayAndSelectCancel() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
         //when
@@ -152,6 +106,71 @@ public class DisplayTest {
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to display, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table displaying canceled]");
+    }
+
+    @Test
+    public void testDisplayAndSelectZero() {
+        //given
+        when(view.read()).thenReturn("0");
+
+        //when
+        command.process("display");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //0
+                "Table displaying canceled]");
+    }
+
+    @Test
+    public void testDisplayAndSelectNotExistingTable() {
+        //given
+        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select notExistingTable
+                "Table with name 'notExistingTable' doesn't exist!, " +
+                "Try again., " +
+                "Please enter the name or select number of table you want to display, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table displaying canceled]");
+    }
+
+    @Test
+    public void testDisplayAndSelectWrongTableNumber() {
+        //given
+        when(view.read()).thenReturn("22").thenReturn("cancel");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to display, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select 22
+                "There is no table with number 22!, " +
+                "Try again., " +
+                "Please enter the name or select number of table you want to display, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

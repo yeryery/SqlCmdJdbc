@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.atLeastOnce;
 
@@ -20,21 +22,9 @@ public class DeleteTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
-
-    private final String tableName = "test";
-
-    private final String column1 = "id";
-    private final int value11 = 1;
-    private final int value12 = 2;
-    private final String column2 = "name";
-    private final String value21 = "John";
-    private final String value22 = "Mike";
-
     private Set<String> tableColumns;
-
-    private DataSet dataSet1;
-    private DataSet dataSet2;
     private List<DataSet> tableContent;
+    private String selectedTable;
 
     @Before
     public void setup() {
@@ -43,37 +33,21 @@ public class DeleteTest {
         view = mock(View.class);
         command = new Delete(view, manager);
 
-        tableColumns = new LinkedHashSet<>();
-        tableColumns.add(column1);
-        tableColumns.add(column2);
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
+        selectedTable = "test";
 
-        dataSet1 = new DataSetImpl();
-        dataSet1.put(column1, value11);
-        dataSet1.put(column2, value21);
-
-        dataSet2 = new DataSetImpl();
-        dataSet2.put(column1, value12);
-        dataSet2.put(column2, value22);
-
-        tableContent = new LinkedList<DataSet>();
-        tableContent.add(dataSet1);
-        tableContent.add(dataSet2);
+        TestTable testTable = new TestTable();
+        tableColumns = testTable.getTableColumns();
+        tableContent = testTable.getTableContent();
     }
 
     @Test
     public void testDeleteByStringValue() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue);
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).delete(tableName, definingEntry);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("delete");
@@ -100,17 +74,9 @@ public class DeleteTest {
     @Test
     public void testDeleteByIntValue() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column1;
-        Object definingValue = value12;
-        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue);
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).delete(tableName, definingEntry);
+        when(view.read()).thenReturn(selectedTable).thenReturn("id|1");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("delete");
@@ -123,7 +89,7 @@ public class DeleteTest {
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
-                //id|2
+                //id|1
                 "You have successfully deleted data from 'test', " +
                 "+--+----+\n" +
                 "|id|name|\n" +
@@ -135,11 +101,159 @@ public class DeleteTest {
     }
 
     @Test
-    public void testDeleteAndCancel() throws SQLException {
+    public void testDeleteThreeParameters() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike|something")
+                .thenReturn("cancel");
 
+        //when
+        command.process("delete");
+
+        //then
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //test
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //name|Mike|something
+                "Wrong number of parameters. Expected 2, and you have entered 3!, " +
+                "Try again., " +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //cancel
+                "Row removal canceled]");
+    }
+
+    @Test
+    public void testDeleteNotExistingColumn() throws SQLException {
+        //given
+        String selectedTable = "test";
+
+        when(view.read()).thenReturn(selectedTable).thenReturn("notExistingColumn|Mike")
+                .thenReturn("cancel");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+
+        //when
+        command.process("delete");
+
+        //then
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //test
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //notExistingColumn|Mike
+                "Table 'test' doesn't contain column 'notExistingColumn'!, " +
+                "Try again., " +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //cancel
+                "Row removal canceled]");
+    }
+
+    @Test
+    public void testDeleteNotExistingValue() throws SQLException {
+        //given
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|notExistingValue")
+                .thenReturn("cancel");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
+
+        //when
+        command.process("delete");
+
+        //then
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //test
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //name|notExistingValue
+                "Column 'name' doesn't contain value 'notExistingValue'!, " +
+                "Try again., " +
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //cancel
+                "Row removal canceled]");
+    }
+
+    @Test
+    public void testDeleteSelectTableAndCancel() throws SQLException {
+        //given
+        when(view.read()).thenReturn(selectedTable).thenReturn("cancel");
+
+        //when
+        command.process("delete");
+
+        //then
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //test
+                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "or type 'cancel' to go back., " +
+                //cancel
+                "Row removal canceled]");
+    }
+
+    @Test
+    public void testDeleteAndSelectNotExistingTable() throws SQLException {
+        //given
+        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
+
+        //when
+        command.process("delete");
+
+        //then
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                "Table with name 'notExistingTable' doesn't exist!, " +
+                //notExistingTable
+                "Try again., " +
+                "Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Row removal canceled]");
+    }
+
+    @Test
+    public void testDeleteAndSelectWrongTableNumber() throws SQLException {
+        //given
+        when(view.read()).thenReturn("22").thenReturn("cancel");
+
+        //when
+        command.process("delete");
+
+        //then
+        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                "There is no table with number 22!, " +
+                //22
+                "Try again., " +
+                "Enter the name or select number of table where you want to delete rows, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Row removal canceled]");
+    }
+
+    @Test
+    public void testDeleteAndSelectCancel() throws SQLException {
+        //given
         when(view.read()).thenReturn("cancel");
 
         //when
@@ -155,12 +269,9 @@ public class DeleteTest {
     }
 
     @Test
-    public void testDeleteSelectTableAndCancel() throws SQLException {
+    public void testDeleteAndSelectZero() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        when(view.read()).thenReturn(tableName).thenReturn("cancel");
+        when(view.read()).thenReturn("0");
 
         //when
         command.process("delete");
@@ -170,111 +281,26 @@ public class DeleteTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
+                //0
                 "Row removal canceled]");
     }
 
     @Test
-    public void testDeleteThreeParameters() throws SQLException {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column1;
-        Object definingValue = value12;
-        String excessParameter = "something";
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue + "|" + excessParameter)
-                            .thenReturn("cancel");
-
+    public void testCanProcessDelete() {
         //when
-        command.process("delete");
+        boolean canProcess = command.canProcess("delete");
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //id|2|something
-                "Wrong number of parameters. Expected 2, and you have entered 3!, " +
-                "Try again., " +
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Row removal canceled]");
+        assertTrue(canProcess);
     }
 
     @Test
-    public void testDeleteNotExistingColumn() throws SQLException {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = "notExistingColumn";
-        Object definingValue = value12;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue)
-                            .thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-
+    public void testCantProcessWrongInput() {
         //when
-        command.process("delete");
+        boolean canProcess = command.canProcess("wrong");
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //id|2|something
-                "Table 'test' doesn't contain column 'notExistingColumn'!, " +
-                "Try again., " +
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Row removal canceled]");
-    }
-
-    @Test
-    public void testDeleteNotExistingValue() throws SQLException {
-        //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column1;
-        Object definingValue = "notExistingValue";
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue)
-                            .thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
-
-        //when
-        command.process("delete");
-
-        //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //id|2|something
-                "Column 'id' doesn't contain value 'notExistingValue'!, " +
-                "Try again., " +
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Row removal canceled]");
+        assertFalse(canProcess);
     }
 
     private void shouldPrint(String expected) {

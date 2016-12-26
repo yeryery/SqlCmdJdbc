@@ -27,24 +27,21 @@ public class CreateTest {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Create(view, manager);
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
     }
 
     @Test
     public void testCreate() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        String inputNameType = "someColumnName|text";
-
-        when(view.read()).thenReturn("newTable").thenReturn(inputNameType);
-
-        DataSet dataTypes = new DataSetImpl();
-
-        doNothing().when(manager).create("newTable", dataTypes);
+        String inputTableName = "newTable";
+        String inputNameAndType = "someColumnName|text";
+        when(view.read()).thenReturn(inputTableName).thenReturn(inputNameAndType);
 
         //when
         command.process("create");
 
+        //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //newTable
                 "Enter name of columns and its type for new table: \n" +
@@ -57,74 +54,106 @@ public class CreateTest {
     @Test
     public void testCreateWithSqlException() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        String inputNameType = "someColumnName|WrongType";
-
-        when(view.read()).thenReturn("newTable").thenReturn(inputNameType);
+        String inputTableName = "newTable";
+        String inputNameAndType = "someColumnName|wrongType";
+        when(view.read()).thenReturn(inputTableName).thenReturn(inputNameAndType);
 
         DataSet dataTypes = new DataSetImpl();
-
-        doThrow(new SQLException()).when(manager).create("newTable", dataTypes);
+        doThrow(new SQLException()).when(manager).create(inputTableName, dataTypes);
 
         try {
-            manager.create("newTable", dataTypes);
+            manager.create(inputTableName, dataTypes);
         } catch (SQLException e) {
-            view.write("SQL ERROR: type \"wrongType\" does not exist!\n" +
-                    "Try again.");
+            view.write("ERROR: type \"wrongtype\" does not exist\n" +
+                    "  Position: 67");
         }
 
         //when
         command.process("create");
 
         //then
-        verify(view).write("SQL ERROR: type \"wrongType\" does not exist!\n" +
-                "Try again.");
+        verify(view).write("ERROR: type \"wrongtype\" does not exist\n" +
+                    "  Position: 67");
 
     }
 
     @Test
     public void testCreateAndCancel() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
         //when
         command.process("create");
 
+        //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                    "Table creating canceled]");
+                //cancel
+                "Table creating canceled]");
     }
 
     @Test
     public void testCreateEnterTableNameAndCancel() {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn("newTable")
+        String inputTableName = "newTable";
+        when(view.read()).thenReturn(inputTableName)
                          .thenReturn("cancel");
 
         //when
         command.process("create");
 
+        //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                    //newTable
-                    "Enter name of columns and its type for new table: \n" +
-                    "columnName1|columnType1|columnName2|columnType2|...\n" +
-                    "or type 'cancel' to go back., " +
-                    //0
-                    "Table creating canceled]");
-    }
-
-    private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(expected, captor.getAllValues().toString());
+                //newTable
+                "Enter name of columns and its type for new table: \n" +
+                "columnName1|columnType1|columnName2|columnType2|...\n" +
+                "or type 'cancel' to go back., " +
+                //cancel
+                "Table creating canceled]");
     }
 
     @Test
-    public void testCanProcessList() {
+    public void testCreateEnterTableNameStartsWithNumber() {
+        //given
+        String TableNameWithNumber = "1newTable";
+        when(view.read()).thenReturn(TableNameWithNumber)
+                         .thenReturn("cancel");
+
+        //when
+        command.process("create");
+
+        //then
+        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
+                //1newTable
+                "You have entered '1newTable' and table name must begin with a letter!, " +
+                "Try again., " +
+                "Please enter the name of table you want to create or 'cancel' to go back, " +
+                //cancel
+                "Table creating canceled]");
+    }
+
+    @Test
+    public void testCreateEnterExistsTableName() {
+        //given
+        String TableNameWithNumber = "test";
+        when(view.read()).thenReturn(TableNameWithNumber)
+                         .thenReturn("cancel");
+
+        //when
+        command.process("create");
+
+        //then
+        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
+                //1newTable
+                "Table with name 'test' already exists!\n" +
+                "[test, ttable], " +
+                "Try again., " +
+                "Please enter the name of table you want to create or 'cancel' to go back, " +
+                //cancel
+                "Table creating canceled]");
+    }
+
+    @Test
+    public void testCanProcessCreate() {
         //when
         boolean canProcess = command.canProcess("create");
 
@@ -139,5 +168,11 @@ public class CreateTest {
 
         //then
         assertFalse(canProcess);
+    }
+
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }

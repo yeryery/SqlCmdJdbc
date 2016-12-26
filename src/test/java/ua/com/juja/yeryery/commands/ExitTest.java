@@ -1,21 +1,26 @@
 package ua.com.juja.yeryery.commands;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class ExitTest {
 
-    private View view = mock(View.class);
+    private View view = Mockito.mock(View.class);
+    private Command command;
+
+    @Before
+    public void setup() {
+        view = Mockito.mock(View.class);
+        command = new Exit(view);
+    }
 
     @Test
-    public void TestCanProcessExitString() {
-        //given
-        Command command = new Exit(view);
-
+    public void testCanProcessExitString() {
         //when
         boolean canProcess = command.canProcess("exit");
 
@@ -24,9 +29,7 @@ public class ExitTest {
     }
 
     @Test
-    public void TestCantProcessWrongString() {
-        //given
-        Command command = new Exit(view);
+    public void testCantProcessWrongString() {
 
         //when
         boolean canProcess = command.canProcess("wrong");
@@ -36,10 +39,7 @@ public class ExitTest {
     }
 
     @Test
-    public void TestProcessExitCommand_ThrowsExitException() {
-        //given
-        Command command = new Exit(view);
-
+    public void testProcessExitCommand_ThrowsExitException() {
         //when
         try {
             command.process("exit");

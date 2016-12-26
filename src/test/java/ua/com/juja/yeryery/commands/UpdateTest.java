@@ -19,30 +19,9 @@ public class UpdateTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
-
-    private final String tableName = "test";
-
-    private final String column1 = "id";
-    private final int value11 = 1;
-    private final int value12 = 2;
-    private final String column2 = "name";
-    private final String value21 = "John";
-    private final String value22 = "Mike";
-    private final String column3 = "password";
-    private final String value31 = "pass1";
-    private final String value32 = "pass2";
-
-    private final int newValue12 = 5;
-    private final String newValue22 = "newName";
-    private final String newValue32 = "newPass";
-
     private Set<String> tableColumns;
-
-    private DataSet dataSet1;
-    private DataSet dataSet2;
-
     private List<DataSet> tableContent;
-    private DataSet input;
+    private String selectedTable;
 
     @Before
     public void setup() {
@@ -51,49 +30,21 @@ public class UpdateTest {
         view = mock(View.class);
         command = new Update(view, manager);
 
-        tableColumns = new LinkedHashSet<>();
-        tableColumns.add(column1);
-        tableColumns.add(column2);
-        tableColumns.add(column3);
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        when(manager.getTableNames()).thenReturn(tableNames);
+        selectedTable = "test";
 
-        dataSet1 = new DataSetImpl();
-        dataSet1.put(column1, value11);
-        dataSet1.put(column2, value21);
-        dataSet1.put(column3, value31);
-
-        dataSet2 = new DataSetImpl();
-        dataSet2.put(column1, value12);
-        dataSet2.put(column2, value22);
-        dataSet2.put(column3, value32);
-
-        tableContent = new LinkedList<DataSet>();
-        tableContent.add(dataSet1);
-        tableContent.add(dataSet2);
-
-        input = new DataSetImpl();
-        input.put(column2, newValue22);
-        input.put(column3, newValue32);
+        TestTable testTable = new TestTable();
+        tableColumns = testTable.getTableColumns();
+        tableContent = testTable.getTableContent();
     }
 
     @Test
     public void testUpdateStringValues() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column1;
-        Object definingValue = value12;
-        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
-        String updatedColumn1 = column2;
-        Object newValue1 = newValue22;
-        String updatedColumn2 = column3;
-        Object newValue2 = newValue32;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
-                thenReturn(updatedColumn1 + "|" + newValue1 + "|" + updatedColumn2 + "|" + newValue2);
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
-        doNothing().when(manager).update(tableName, input, definingEntry);
+        when(view.read()).thenReturn(selectedTable).thenReturn("id|1").thenReturn("name|Bob");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -110,35 +61,23 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
-                //name|Mike|password|newPass
+                //name|Mike
                 "You have successfully updated table 'test', " +
-                "+--+----+--------+\n" +
-                "|id|name|password|\n" +
-                "+--+----+--------+\n" +
-                "|1 |John|pass1   |\n" +
-                "+--+----+--------+\n" +
-                "|2 |Mike|pass2   |\n" +
-                "+--+----+--------+]");
+                "+--+----+\n" +
+                "|id|name|\n" +
+                "+--+----+\n" +
+                "|1 |John|\n" +
+                "+--+----+\n" +
+                "|2 |Mike|\n" +
+                "+--+----+]");
     }
 
     @Test
     public void testUpdateIntValue() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
-        String updatedColumn = column1;
-        Object newValue = newValue12;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
-                thenReturn(updatedColumn + "|" + newValue);
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
-
-        doNothing().when(manager).update(tableName, input, definingEntry);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").thenReturn("id|5");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -157,20 +96,18 @@ public class UpdateTest {
                 "or type 'cancel' to go back., " +
                 //id|5
                 "You have successfully updated table 'test', " +
-                "+--+----+--------+\n" +
-                "|id|name|password|\n" +
-                "+--+----+--------+\n" +
-                "|1 |John|pass1   |\n" +
-                "+--+----+--------+\n" +
-                "|2 |Mike|pass2   |\n" +
-                "+--+----+--------+]");
+                "+--+----+\n" +
+                "|id|name|\n" +
+                "+--+----+\n" +
+                "|1 |John|\n" +
+                "+--+----+\n" +
+                "|2 |Mike|\n" +
+                "+--+----+]");
     }
 
     @Test
-    public void testUpdateAndCancel() throws SQLException {
+    public void testUpdateAndSelectCancel() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
         when(view.read()).thenReturn("cancel");
 
         //when
@@ -186,11 +123,74 @@ public class UpdateTest {
     }
 
     @Test
+    public void testUpdateAndSelectZero() throws SQLException {
+        //given
+        when(view.read()).thenReturn("0");
+
+        //when
+        command.process("update");
+
+        //then
+        shouldPrint("[Enter the name or select number of table you want to update, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //0
+                "Table updating canceled]");
+    }
+
+    @Test
+    public void testUpdateAndSelectNotExistingTable() throws SQLException {
+        //given
+        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
+
+        //when
+        command.process("update");
+
+        //then
+        shouldPrint("[Enter the name or select number of table you want to update, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                "Table with name 'notExistingTable' doesn't exist!, " +
+                //notExistingTable
+                "Try again., " +
+                "Enter the name or select number of table you want to update, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table updating canceled]");
+    }
+
+    @Test
+    public void testUpdateAndSelectWrongTableNumber() throws SQLException {
+        //given
+        when(view.read()).thenReturn("22").thenReturn("cancel");
+
+        //when
+        command.process("update");
+
+        //then
+        shouldPrint("[Enter the name or select number of table you want to update, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                "There is no table with number 22!, " +
+                //22
+                "Try again., " +
+                "Enter the name or select number of table you want to update, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table updating canceled]");
+    }
+
+    @Test
     public void testUpdateSelectTableAndCancel() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        when(view.read()).thenReturn(tableName).thenReturn("cancel");
+        when(view.read()).thenReturn(selectedTable).thenReturn("cancel");
 
         //when
         command.process("update");
@@ -210,14 +210,7 @@ public class UpdateTest {
     @Test
     public void testUpdateAndInputThreeParameters() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-        String excessParameter = "something";
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue + "|" + excessParameter).
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|John|something").
                 thenReturn("cancel");
 
         //when
@@ -243,15 +236,9 @@ public class UpdateTest {
     @Test
     public void testUpdateAndInputNotExistingColumn() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = "notExistingColumn";
-        Object definingValue = value22;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
+        when(view.read()).thenReturn(selectedTable).thenReturn("notExistingColumn|Mike").
                 thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
 
         //when
         command.process("update");
@@ -276,16 +263,10 @@ public class UpdateTest {
     @Test
     public void testUpdateAndInputNotExistingValueString() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = "notExistingValue";
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|notExistingValue").
                 thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -310,16 +291,10 @@ public class UpdateTest {
     @Test
     public void testUpdateAndInputNotExistingValueInt() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column1;
-        Object definingValue = 5;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
+        when(view.read()).thenReturn(selectedTable).thenReturn("id|22").
                 thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -332,8 +307,8 @@ public class UpdateTest {
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
-                //id|5
-                "Column 'id' doesn't contain value '5'!, " +
+                //id|22
+                "Column 'id' doesn't contain value '22'!, " +
                 "Try again., " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
@@ -344,16 +319,10 @@ public class UpdateTest {
     @Test
     public void testUpdateDefineUpdatedRowAndCancel() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").
                 thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -377,19 +346,10 @@ public class UpdateTest {
     @Test
     public void testUpdateDefineUpdatedRowAndInputThreeParameters() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-        String parameter1 = column1;
-        Object parameter2 = newValue12;
-        String parameter3 = column3;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
-                thenReturn(parameter1 + "|" + parameter2 + "|" + parameter3).thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").
+                thenReturn("id|22|thirdParameter").thenReturn("cancel");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -406,7 +366,7 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
-                //id|2|password
+                //id|22|thirdParameter
                 "Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3!, " +
                 "Try again., " +
                 "Enter columnNames and its new values for updated row: \n" +
@@ -419,18 +379,10 @@ public class UpdateTest {
     @Test
     public void testUpdateInputNotExistingUpdatedColumn() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-        String updatedColumn = "notExistingColumn";
-        Object newValue = newValue12;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
-                thenReturn(updatedColumn + "|" + newValue).thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").
+                thenReturn("notExistingColumn|2").thenReturn("cancel");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -460,18 +412,10 @@ public class UpdateTest {
     @Test
     public void testUpdateNewValueEqualsToUpdated() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-
-        String columnName = column2;
-        Object definingValue = value22;
-        String updatedColumn = column1;
-        Object newValue = value12;
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
-                thenReturn(updatedColumn + "|" + newValue).thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").
+                thenReturn("id|2").thenReturn("cancel");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
         command.process("update");
@@ -484,9 +428,11 @@ public class UpdateTest {
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back., " +
+                //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
+                //id|2
                 "The new values are equivalent to the updated, " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
@@ -497,53 +443,30 @@ public class UpdateTest {
     @Test(expected = SQLException.class)
     public void testUpdateSQLException() throws SQLException {
         //given
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
-        when(manager.getTableNames()).thenReturn(tableNames);
+        when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").
+                thenReturn("id|notNumber").thenReturn("cancel");
+        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
-        String columnName = column2;
-        Object definingValue = value22;
-        DataEntry definingEntry = new DataEntryImpl(columnName, definingValue);
-        String updatedColumn = column1;
-        Object newValue = "notNumber";
-
-        when(view.read()).thenReturn(tableName).thenReturn(columnName + "|" + definingValue).
-                thenReturn(updatedColumn + "|" + newValue).thenReturn("cancel");
-        when(manager.getTableColumns(tableName)).thenReturn(tableColumns);
-        when(manager.getDataContent(tableName)).thenReturn(tableContent);
+        DataSet newValues = new DataSetImpl();
+        newValues.put("id", "notNumber");
+        DataEntry definingEntry = new DataEntryImpl("name", "Mike");
 
         try {
-            doThrow(new SQLException()).when(manager).update(tableName, input, definingEntry);
+            doThrow(new SQLException()).when(manager).update(selectedTable, newValues, definingEntry);
         } catch (SQLException e) {
             view.write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
                     "Try again.");
         }
-        manager.update(tableName, input, definingEntry);
+        manager.update(selectedTable, newValues, definingEntry);
 
         //when
         command.process("update");
 
         //then
-//        verify(view).write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
-//                    "Try again.");
-        shouldPrint("[Please enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of updated row: columnName|definingValue\n" +
-                "or type 'cancel' to go back., " +
-                "Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
-                //id|2
-                "Column 'id' already contains value '2' in required row!\n, " +
-                "Try again., " +
-                "Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Table updating canceled]");
-        //TODO SQLException
+        verify(view).write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
+                    "Try again.");
+        //TODO
     }
 
     private void shouldPrint(String expected) {

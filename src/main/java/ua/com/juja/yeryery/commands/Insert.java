@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.commands.dialogs.Dialog;
 import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
@@ -8,6 +9,7 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 public class Insert implements Command {
@@ -29,14 +31,19 @@ public class Insert implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new DialogImpl(view, manager);
-        String selectMessage = String.format("Enter the name or select number of table where you want to %s new rows", ACTION);
+        String selectMessage = String.format("Enter the name or select number of table where you want to %s new row", ACTION);
 
         try {
             String currentTableName = dialog.selectTable(selectMessage);
-            DataSet insertedRow = getNewRow(currentTableName);
 
+            Set<String> tableColumns = manager.getTableColumns(currentTableName);
+            List<DataSet> originRows = manager.getDataContent(currentTableName);
+            TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
+
+            DataSet insertedRow = getNewRow(currentTableName);
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
+            view.write(tableConstructor.getTableString());
         } catch (SQLException e1) {
             view.write(e1.getMessage());
             view.write("Try again.");

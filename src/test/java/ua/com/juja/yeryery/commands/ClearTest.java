@@ -15,22 +15,41 @@ import static org.mockito.Mockito.*;
 
 public class ClearTest {
 
-    private DatabaseManager manager;
     private View view;
     private Command command;
-    private Set<String> tableNames;
+    private String selectedTable;
 
     @Before
     public void setup() {
-        manager = mock(DatabaseManager.class);
+        DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Clear(view, manager);
-        tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
+        selectedTable = "test";
     }
 
     @Test
-    public void testClearSelectTableAndConfirm() {
+    public void testClearSelectTableNameAndConfirm() {
+        //given
+        when(view.read()).thenReturn(selectedTable).thenReturn("y");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select table 'test'
+                "Table 'test' will be cleared! Continue? (y/n), " +
+                //yes
+                "Table 'test' successfully cleared!]");
+    }
+
+    @Test
+    public void testClearSelectTableNumberAndConfirm() {
         //given
         when(view.read()).thenReturn("1").thenReturn("y");
 
@@ -51,7 +70,7 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndDontConfirm() {
         //given
-        when(view.read()).thenReturn("1").thenReturn("n");
+        when(view.read()).thenReturn(selectedTable).thenReturn("n");
 
         //when
         command.process("clear");
@@ -61,7 +80,7 @@ public class ClearTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table number 1
+                //Select table 'test'
                 "Table 'test' will be cleared! Continue? (y/n), " +
                 //no
                 "Table clearing canceled]");
@@ -70,7 +89,7 @@ public class ClearTest {
     @Test
     public void testClearSelectTableAndNeitherInput() {
         //given
-        when(view.read()).thenReturn("1").thenReturn("neither").thenReturn("y");
+        when(view.read()).thenReturn(selectedTable).thenReturn("neither").thenReturn("y");
 
         //when
         command.process("clear");
@@ -80,29 +99,12 @@ public class ClearTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select table number 1
+                //Select table 'test'
                 "Table 'test' will be cleared! Continue? (y/n), " +
                 //neither 'y' nor 'n'
                 "Table 'test' will be cleared! Continue? (y/n), " +
                 //yes
                 "Table 'test' successfully cleared!]");
-    }
-
-    @Test
-    public void testClearAndSelectNull() {
-        //given
-        when(view.read()).thenReturn("0");
-
-        //when
-        command.process("clear");
-
-        //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //Select cancel
-                "Table clearing canceled]");
     }
 
     @Test
@@ -118,14 +120,73 @@ public class ClearTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                //Select cancel
+                //Select 'cancel'
                 "Table clearing canceled]");
     }
 
-    private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(expected, captor.getAllValues().toString());
+    @Test
+    public void testClearAndSelectZero() {
+        //given
+        when(view.read()).thenReturn("0");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select '0'
+                "Table clearing canceled]");
+    }
+
+    @Test
+    public void testClearAndSelectNotExistingTable() {
+        //given
+        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select notExistingTable
+                "Table with name 'notExistingTable' doesn't exist!, " +
+                "Try again., " +
+                "Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table clearing canceled]");
+    }
+
+    @Test
+    public void testClearAndSelectWrongTableNumber() {
+        //given
+        when(view.read()).thenReturn("22").thenReturn("cancel");
+
+        //when
+        command.process("clear");
+
+        //then
+        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //Select 22
+                "There is no table with number 22!, " +
+                "Try again., " +
+                "Please enter the name or select number of table you want to clear, " +
+                "1. test, " +
+                "2. ttable, " +
+                "0. cancel (to go back), " +
+                //cancel
+                "Table clearing canceled]");
     }
 
     @Test
@@ -144,5 +205,11 @@ public class ClearTest {
 
         //then
         assertFalse(canProcess);
+    }
+
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }

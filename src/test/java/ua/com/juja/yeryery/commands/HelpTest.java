@@ -1,18 +1,28 @@
 package ua.com.juja.yeryery.commands;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 
 public class HelpTest {
 
-    private FakeView view = new FakeView();
+    private View view = Mockito.mock(View.class);
     private Command command = new Help(view);
+
+    @Before
+    public void setup() {
+        view = Mockito.mock(View.class);
+        command = new Help(view);
+    }
 
     @Test
     public void TestCanProcessHelpString() {
-        //given
-
         //when
         boolean canProcess = command.canProcess("help");
 
@@ -22,8 +32,6 @@ public class HelpTest {
 
     @Test
     public void TestCantProcessHelpWrongString() {
-        //given
-
         //when
         boolean canProcess = command.canProcess("wrong");
 
@@ -39,26 +47,32 @@ public class HelpTest {
         command.process("help");
 
         //then
-        assertEquals("Content of commands:\n" +
-                "\tconnect|database|username|password\n" +
-                "\t\tConnect to Database\n" +
-                "\tcontent\n" +
-                "\t\tContent of tables\n" +
-                "\tcreate\n" +
-                "\t\tCreate new table\n" +
-                "\tdelete\n" +
-                "\t\tDelete data from require table\n" +
-                "\tdisplay\n" +
-                "\t\tDisplay require table\n" +
-                "\tinsert\n" +
-                "\t\tInsert new data in require table\n" +
-                "\tclear\n" +
-                "\t\tClear require table\n" +
-                "\tdrop\n" +
-                "\t\tDrop require table\n" +
-                "\texit\n" +
-                "\t\tProgram exit\n" +
-                "\thelp\n" +
-                "\t\tAll commands\n", view.getContent());
+        shouldPrint("[Content of commands:, " +
+                "\tconnect|database|username|password, " +
+                    "\t\tConnect to Database, " +
+                "\tcontent, " +
+                    "\t\tContent of tables, " +
+                "\tcreate, " +
+                    "\t\tCreate new table, " +
+                "\tdelete, " +
+                    "\t\tDelete data from require table, " +
+                "\tdisplay, " +
+                    "\t\tDisplay require table, " +
+                "\tinsert, " +
+                    "\t\tInsert new data in require table, " +
+                "\tclear, " +
+                    "\t\tClear require table, " +
+                "\tdrop, " +
+                    "\t\tDrop require table, " +
+                "\texit, " +
+                    "\t\tProgram exit, " +
+                "\thelp, " +
+                    "\t\tAll commands]");
+    }
+
+    private void shouldPrint(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(expected, captor.getAllValues().toString());
     }
 }
