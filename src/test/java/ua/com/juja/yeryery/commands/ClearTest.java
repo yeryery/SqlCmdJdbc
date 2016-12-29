@@ -73,7 +73,10 @@ public class ClearTest {
         when(view.read()).thenReturn(selectedTable).thenReturn("n");
 
         //when
-        command.process("clear");
+        try {
+            command.process("clear");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to clear, " +
@@ -81,9 +84,8 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
-                "Table 'test' will be cleared! Continue? (y/n), " +
+                "Table 'test' will be cleared! Continue? (y/n)]");
                 //no
-                "Table clearing canceled]");
     }
 
     @Test
@@ -113,15 +115,16 @@ public class ClearTest {
         when(view.read()).thenReturn("cancel");
 
         //when
-        command.process("clear");
+        boolean checkException = false;
+        try {
+            command.process("clear");
+            fail("Expected CancelException");
+        } catch (Exception e) {
+            checkException = e instanceof CancelException;
+        }
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //Select 'cancel'
-                "Table clearing canceled]");
+        assertTrue(checkException);
     }
 
     @Test
@@ -130,15 +133,16 @@ public class ClearTest {
         when(view.read()).thenReturn("0");
 
         //when
-        command.process("clear");
+        boolean checkException = false;
+        try {
+            command.process("clear");
+            fail("Expected CancelException");
+        } catch (Exception e) {
+            checkException = e instanceof CancelException;
+        }
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //Select '0'
-                "Table clearing canceled]");
+        assertTrue(checkException);
     }
 
     @Test
@@ -147,7 +151,10 @@ public class ClearTest {
         when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
 
         //when
-        command.process("clear");
+        try {
+            command.process("clear");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to clear, " +
@@ -160,9 +167,8 @@ public class ClearTest {
                 "Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Table clearing canceled]");
+                "0. cancel (to go back)]");
+                //cancel)
     }
 
     @Test
@@ -171,7 +177,10 @@ public class ClearTest {
         when(view.read()).thenReturn("22").thenReturn("cancel");
 
         //when
-        command.process("clear");
+        try {
+            command.process("clear");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Please enter the name or select number of table you want to clear, " +
@@ -184,9 +193,8 @@ public class ClearTest {
                 "Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
-                "0. cancel (to go back), " +
+                "0. cancel (to go back)]");
                 //cancel
-                "Table clearing canceled]");
     }
 
     @Test

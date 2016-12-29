@@ -43,10 +43,11 @@ public class Controller {
             String input = view.read();
 
             for (Command command : commands) {
+                String typeCommand = "Type command or 'help'";
                 try {
                     if (command.canProcess(input)) {
                         command.process(input);
-                        view.write("Type command or 'help'");
+                        view.write(typeCommand);
                         break;
                     }
                 } catch (Exception e) {
@@ -57,6 +58,11 @@ public class Controller {
                     }
                     if (e instanceof ExitException) {
                         return;
+                    }
+                    if (e instanceof CancelException) {
+                        view.write("Command execution is canceled");
+                        view.write(typeCommand);
+                        break;
                     }
                     printError(e);
                     break;

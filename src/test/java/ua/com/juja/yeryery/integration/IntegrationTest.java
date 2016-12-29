@@ -1042,7 +1042,7 @@ public class IntegrationTest {
                 //ttable
                 "Table 'ttable' will be cleared! Continue? (y/n)\n" +
                 //n
-                "Table clearing canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
