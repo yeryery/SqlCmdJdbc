@@ -7,27 +7,32 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import java.sql.SQLException;
 import java.util.Set;
 
-public class Preparation {
+public class Preparator {
 
-    private static final String DATABASE = "testbase";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "postgrespass";
-    //TODO сделать чтобы переменные зависили от переменных в инт тестах
+    private String database;
+    private String username;
+    private String password;
 
-    public static void setupDatabase(DatabaseManager manager) {
-        manager.connect("", USERNAME, PASSWORD);
+    public Preparator(String database, String username, String password) {
+        this.database = database;
+        this.username = username;
+        this.password = password;
+    }
+
+    public void setupDatabase(DatabaseManager manager) {
+        manager.connect("", username, password);
         Set<String> databases = manager.getDatabases();
 
-        if (!databases.contains(DATABASE)) {
-        manager.createDB(DATABASE);
-        manager.connect(DATABASE, USERNAME, PASSWORD);
+        if (!databases.contains(database)) {
+        manager.createDB(database);
+        manager.connect(database, username, password);
 
         setupTables(manager);
-        manager.connect("", USERNAME, PASSWORD);
+        manager.connect("", username, password);
         }
     }
 
-    private static void setupTables(DatabaseManager manager) {
+    private void setupTables(DatabaseManager manager) {
         DataSet testColumns = new DataSetImpl();
         testColumns.put("login", "text");
         testColumns.put("password", "text");
