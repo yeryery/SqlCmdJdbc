@@ -433,10 +433,12 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
                 //id|2
-                "The new values are equivalent to the updated, " +
+                "Your entries are equivalent to the updated!, " +
+                "Try again., " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back., " +
+                //cancel
                 "Table updating canceled]");
     }
 
