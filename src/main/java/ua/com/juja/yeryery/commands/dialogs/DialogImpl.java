@@ -40,63 +40,6 @@ public class DialogImpl implements Dialog {
         return tableName;
     }
 
-    private String getTableName(String input, Map<Integer, String> tableList) {
-        String tableName;
-        checkCancel(input);
-
-        if (Parser.isParsable(input)) {
-            int tableNumber = Parser.parsedInt;
-            checkTableNumber(tableNumber, tableList);
-            tableName = tableList.get(tableNumber);
-        } else {
-            checkTableName(input, tableList);
-            tableName = input;
-        }
-        return tableName;
-    }
-
-    private Map<Integer, String> getTableList() {
-        Set<String> names = manager.getTableNames();
-        Map<Integer, String> tableList = new HashMap<>();
-        Iterator iterator = names.iterator();
-        int i = 1;
-
-        while (iterator.hasNext()) {
-            tableList.put(i, (String) iterator.next());
-            i++;
-        }
-        return tableList;
-    }
-
-    private void printTableList(String message, Map<Integer, String> tableList) {
-        view.write(message);
-        tableList.remove(0);
-
-        for (Map.Entry<Integer, String> entry : tableList.entrySet()) {
-            view.write(entry.getKey() + ". " + entry.getValue());
-        }
-
-        view.write(0 + ". " + "cancel (to go back)");
-    }
-
-    private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
-        if (!tableList.containsKey(tableNumber)) {
-            throw new IllegalArgumentException(String.format("There is no table with number %d!", tableNumber));
-        }
-    }
-
-    private void checkTableName(String tableName, Map<Integer, String> tableList) {
-        if (!tableList.containsValue(tableName)) {
-            throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist!", tableName));
-        }
-    }
-
-    private void checkCancel(String input) {
-        if (input.equals("cancel") || input.equals("0")) {
-            throw new CancelException();
-        }
-    }
-
     @Override
     public String nameTable(String message) {
         Set<String> names = manager.getTableNames();
@@ -115,6 +58,63 @@ public class DialogImpl implements Dialog {
             }
         }
         return tableName;
+    }
+
+    private void printTableList(String message, Map<Integer, String> tableList) {
+        view.write(message);
+        tableList.remove(0);
+
+        for (Map.Entry<Integer, String> entry : tableList.entrySet()) {
+            view.write(entry.getKey() + ". " + entry.getValue());
+        }
+
+        view.write(0 + ". " + "cancel (to go back)");
+    }
+
+    private Map<Integer, String> getTableList() {
+        Set<String> names = manager.getTableNames();
+        Map<Integer, String> tableList = new HashMap<>();
+        Iterator iterator = names.iterator();
+        int i = 1;
+
+        while (iterator.hasNext()) {
+            tableList.put(i, (String) iterator.next());
+            i++;
+        }
+        return tableList;
+    }
+
+    private String getTableName(String input, Map<Integer, String> tableList) {
+        String tableName;
+        checkCancel(input);
+
+        if (Parser.isParsable(input)) {
+            int tableNumber = Parser.parsedInt;
+            checkTableNumber(tableNumber, tableList);
+            tableName = tableList.get(tableNumber);
+        } else {
+            checkTableName(input, tableList);
+            tableName = input;
+        }
+        return tableName;
+    }
+
+    private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
+        if (!tableList.containsKey(tableNumber)) {
+            throw new IllegalArgumentException(String.format("There is no table with number %d!", tableNumber));
+        }
+    }
+
+    private void checkTableName(String tableName, Map<Integer, String> tableList) {
+        if (!tableList.containsValue(tableName)) {
+            throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist!", tableName));
+        }
+    }
+
+    private void checkCancel(String input) {
+        if (input.equals("cancel") || input.equals("0")) {
+            throw new CancelException();
+        }
     }
 
     private void checkNewName(Set<String> names, String tableName) {
@@ -154,17 +154,16 @@ public class DialogImpl implements Dialog {
 
     @Override
     public DataEntry defineRow(String tableName, String message, String sample) {
-        DataEntry input = null;
-
-        try {
-            input = getInput(message, sample);
-            checkEntry(tableName, input);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
-            view.write("Try again.");
-            defineRow(tableName, message, sample);
+        while (true) {
+            try {
+                DataEntry input = getInput(message, sample);
+                checkEntry(tableName, input);
+                return input;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+                view.write("Try again.");
+            }
         }
-        return input;
     }
 
     private DataEntry getInput(String message, String sample) {
@@ -175,9 +174,8 @@ public class DialogImpl implements Dialog {
         String[] split = Parser.splitData(inputData, sample, delimiter);
         String columnName = split[0];
         Object value = Parser.defineType(split[1]);
-        DataEntry splitInput = new DataEntryImpl(columnName, value);
 
-        return splitInput;
+        return new DataEntryImpl(columnName, value);
     }
 
     private void checkEntry(String tableName, DataEntry entry) {
@@ -208,33 +206,35 @@ public class DialogImpl implements Dialog {
         for (DataSet dataSet : dataSets) {
             result.add(dataSet.get(columnName));
         }
+
         return result;
     }
 
     @Override
     public DataSet getNewValues(String tableName, String message, DataEntry entry) {
-
         while (true) {
             DataSet newValues;
             try {
                 newValues = getInputByTwo(message);
                 checkColumns(tableName, newValues);
+                checkNewValues(tableName, entry, newValues);
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
                 view.write("Try again.");
                 continue;
             }
 
-            String columnName = entry.getColumn();
-            Object value = entry.getValue();
-            List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
-
-            if (!isNewValues(newValues, updatedRows)) {
-                view.write("The new values are equivalent to the updated");
-                continue;
-            }
             return newValues;
-            //TODO refactor
+        }
+    }
+
+    private void checkNewValues(String tableName, DataEntry entry, DataSet newValues) {
+        String columnName = entry.getColumn();
+        Object value = entry.getValue();
+        List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
+
+        if (!isNewValues(newValues, updatedRows)) {
+            throw new IllegalArgumentException("Your entries are equivalent to the updated!");
         }
     }
 
@@ -244,7 +244,6 @@ public class DialogImpl implements Dialog {
         String inputData = view.read();
         String delimiter = "\\|";
         DataSet splitInput = Parser.splitByTwo(inputData, delimiter);
-
         return splitInput;
     }
 
@@ -265,6 +264,7 @@ public class DialogImpl implements Dialog {
                 result.add(row);
             }
         }
+
         return result;
     }
 
@@ -278,6 +278,7 @@ public class DialogImpl implements Dialog {
                 }
             }
         }
+
         return false;
     }
 }
