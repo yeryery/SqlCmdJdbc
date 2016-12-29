@@ -20,11 +20,16 @@ public class Connect implements Command {
     }
 
     @Override
-    public void process(String input) {
+    public void process(String input) throws ConnectException {
         String delimiter = "\\|";
         String commandSample = "connect|yeryery|postgres|postgrespass";
 
-        String[] splitInput = Parser.splitData(input, commandSample, delimiter);
+        String[] splitInput;
+        try {
+            splitInput = Parser.splitData(input, commandSample, delimiter);
+        } catch (IllegalArgumentException e) {
+            throw new ConnectException(e.getCutMessage());
+        }
         String database = splitInput[1];
         String username = splitInput[2];
         String password = splitInput[3];

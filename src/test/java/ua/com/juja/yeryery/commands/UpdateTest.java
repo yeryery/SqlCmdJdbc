@@ -150,8 +150,8 @@ public class UpdateTest {
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|notExistingValue
-                "Column 'name' doesn't contain value 'notExistingValue'!, " +
-                "Try again., " +
+                "Error! Column 'name' doesn't contain value 'notExistingValue'\n" +
+                "Try again, " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
@@ -180,8 +180,8 @@ public class UpdateTest {
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|22
-                "Column 'id' doesn't contain value '22'!, " +
-                "Try again., " +
+                "Error! Column 'id' doesn't contain value '22'\n" +
+                "Try again, " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
@@ -243,8 +243,8 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|22|thirdParameter
-                "Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3!, " +
-                "Try again., " +
+                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
+                "Try again, " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
@@ -278,8 +278,8 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //notExistingColumn|2
-                "Table 'test' doesn't contain column 'notExistingColumn'!, " +
-                "Try again., " +
+                "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
+                "Try again, " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
@@ -313,8 +313,8 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
-                "Your entries are equivalent to the updated!, " +
-                "Try again., " +
+                "Error! Your entries are equivalent to the updated\n" +
+                "Try again, " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");

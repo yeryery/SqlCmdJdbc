@@ -162,8 +162,8 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select notExistingTable
-                "Table with name 'notExistingTable' doesn't exist!, " +
-                "Try again., " +
+                "Error! Table with name 'notExistingTable' doesn't exist\n" +
+                "Try again, " +
                 "Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
@@ -188,8 +188,8 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select 22
-                "There is no table with number 22!, " +
-                "Try again., " +
+                "Error! There is no table with number 22\n" +
+                "Try again, " +
                 "Please enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +

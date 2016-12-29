@@ -1,6 +1,7 @@
 package ua.com.juja.yeryery.commands.dialogs;
 
 import ua.com.juja.yeryery.commands.CancelException;
+import ua.com.juja.yeryery.commands.IllegalArgumentException;
 import ua.com.juja.yeryery.commands.Parser;
 import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataEntryImpl;
@@ -34,7 +35,6 @@ public class DialogImpl implements Dialog {
                 break;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
-                view.write("Try again.");
             }
         }
         return tableName;
@@ -54,7 +54,6 @@ public class DialogImpl implements Dialog {
                 break;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
-                view.write("Try again.");
             }
         }
         return tableName;
@@ -101,13 +100,13 @@ public class DialogImpl implements Dialog {
 
     private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
         if (!tableList.containsKey(tableNumber)) {
-            throw new IllegalArgumentException(String.format("There is no table with number %d!", tableNumber));
+            throw new IllegalArgumentException(String.format("There is no table with number %d", tableNumber));
         }
     }
 
     private void checkTableName(String tableName, Map<Integer, String> tableList) {
         if (!tableList.containsValue(tableName)) {
-            throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist!", tableName));
+            throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist", tableName));
         }
     }
 
@@ -122,10 +121,10 @@ public class DialogImpl implements Dialog {
             throw new CancelException();
         }
         if (!isFirstLetter(tableName)) {
-            throw new IllegalArgumentException(String.format("You have entered '%s' and table name must begin with a letter!", tableName));
+            throw new IllegalArgumentException(String.format("You have entered '%s' and tablename must begin with a letter", tableName));
         }
         if (existName(names, tableName)) {
-            throw new IllegalArgumentException(String.format("Table with name '%s' already exists!\n%s", tableName, names.toString()));
+            throw new IllegalArgumentException(String.format("Table with name '%s' already exists\n%s", tableName, names.toString()));
         }
     }
 
@@ -161,12 +160,11 @@ public class DialogImpl implements Dialog {
                 return input;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
-                view.write("Try again.");
             }
         }
     }
 
-    private DataEntry getInput(String message, String sample) {
+    private DataEntry getInput(String message, String sample) throws IllegalArgumentException {
         view.write(String.format(message, sample));
 
         String inputData = view.read();
@@ -188,7 +186,7 @@ public class DialogImpl implements Dialog {
     private void checkColumn(String tableName, String columnName) {
         Set<String> tableColumns = manager.getTableColumns(tableName);
         if (!tableColumns.contains(columnName)) {
-            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'!", tableName, columnName));
+            throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'", tableName, columnName));
         }
     }
 
@@ -196,7 +194,7 @@ public class DialogImpl implements Dialog {
         List<DataSet> tableContent = manager.getDataContent(tableName);
         List<Object> columnValues = getColumnValues(tableContent, columnName);
         if (!columnValues.contains(value)) {
-            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'!", columnName, value));
+            throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'", columnName, value));
         }
     }
 
@@ -220,7 +218,6 @@ public class DialogImpl implements Dialog {
                 checkNewValues(tableName, entry, newValues);
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
-                view.write("Try again.");
                 continue;
             }
 
@@ -234,7 +231,7 @@ public class DialogImpl implements Dialog {
         List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
 
         if (!isNewValues(newValues, updatedRows)) {
-            throw new IllegalArgumentException("Your entries are equivalent to the updated!");
+            throw new IllegalArgumentException("Your entries are equivalent to the updated");
         }
     }
 

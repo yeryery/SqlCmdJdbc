@@ -1,5 +1,7 @@
 package ua.com.juja.yeryery.manager;
 
+import ua.com.juja.yeryery.commands.ConnectException;
+
 import java.sql.*;
 import java.util.*;
 
@@ -36,6 +38,8 @@ public class JdbcManager implements DatabaseManager {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException e) {
+            throw new ConnectException("You can`t use '%s' unless you are not connected");
         }
         return tableNames;
     }

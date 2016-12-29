@@ -103,7 +103,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //content
-                "You can`t use 'content' unless you are not connected.\n" +
+                "Error! You can`t use 'content' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -122,7 +123,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //clear
-                "You can`t use 'clear' unless you are not connected.\n" +
+                "Error! You can`t use 'clear' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -141,7 +143,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //create
-                "You can`t use 'create' unless you are not connected.\n" +
+                "Error! You can`t use 'create' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -160,7 +163,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //create
-                "You can`t use 'update' unless you are not connected.\n" +
+                "Error! You can`t use 'update' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -179,7 +183,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //display
-                "You can`t use 'display' unless you are not connected.\n" +
+                "Error! You can`t use 'display' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -198,7 +203,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //drop
-                "You can`t use 'drop' unless you are not connected.\n" +
+                "Error! You can`t use 'drop' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -217,7 +223,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //insert
-                "You can`t use 'insert' unless you are not connected.\n" +
+                "Error! You can`t use 'insert' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -236,7 +243,8 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //delete
-                "You can`t use 'delete' unless you are not connected.\n" +
+                "Error! You can`t use 'delete' unless you are not connected\n" +
+                "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -274,9 +282,10 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
-                //connect|yeryery
-                "Error! Wrong number of parameters. Expected 4, and you have entered 2!\n" +
-                "Try again.\n" +
+                //connect|testbase
+                "Error! Wrong number of parameters. Expected 4, and you have entered 2\n" +
+                "Try again\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
@@ -473,7 +482,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //-1
-                "There is no table with number -1!\nTry again.\n" +
+                "Error! There is no table with number -1\nTry again\n" +
                 "Please enter the name or select number of table you want to display\n" +
                 "1. test\n" +
                 "2. ttable\n" +
@@ -532,9 +541,9 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //test
-                "Table with name 'test' already exists!\n" +
+                "Error! Table with name 'test' already exists\n" +
                 "[test, ttable]\n" +
-                "Try again.\n" +
+                "Try again\n" +
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -595,8 +604,8 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //1name
-                "You have entered '1name' and table name must begin with a letter!\n" +
-                "Try again.\n" +
+                "Error! You have entered '1name' and tablename must begin with a letter\n" +
+                "Try again\n" +
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1282,8 +1291,8 @@ public class IntegrationTest {
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22|something
-                "Wrong number of parameters. Expected 2, and you have entered 3!\n" +
-                "Try again.\n" +
+                "Error! Wrong number of parameters. Expected 2, and you have entered 3\n" +
+                "Try again\n" +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
@@ -1321,8 +1330,8 @@ public class IntegrationTest {
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //notExistingColumn|22
-                "Table 'test' doesn't contain column 'notExistingColumn'!\n" +
-                "Try again.\n" +
+                "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
+                "Try again\n" +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
@@ -1360,8 +1369,8 @@ public class IntegrationTest {
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notExistingValue
-                "Column 'id' doesn't contain value 'notExistingValue'!\n" +
-                "Try again.\n" +
+                "Error! Column 'id' doesn't contain value 'notExistingValue'\n" +
+                "Try again\n" +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
@@ -1442,8 +1451,8 @@ public class IntegrationTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass2|pass3
-                "Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3!\n" +
-                "Try again.\n" +
+                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
+                "Try again\n" +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
@@ -1487,8 +1496,8 @@ public class IntegrationTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //notExistingColumn|pass2
-                "Table 'test' doesn't contain column 'notExistingColumn'!\n" +
-                "Try again.\n" +
+                "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
+                "Try again\n" +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +

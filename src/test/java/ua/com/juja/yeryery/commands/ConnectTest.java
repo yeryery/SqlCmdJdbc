@@ -54,9 +54,10 @@ public class ConnectTest {
         //when
         try {
             command.process("connect|");
-            fail("IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Wrong number of parameters. Expected 4, and you have entered 1!", e.getMessage());
+            fail("Expect ConnectException");
+        } catch (ConnectException e) {
+            assertEquals("Error! Wrong number of parameters. Expected 4, and you have entered 1\n" +
+                    "Try again", e.getMessage());
         }
     }
 
@@ -65,9 +66,10 @@ public class ConnectTest {
         //when
         try {
             command.process("connect|argument2|argument3|argument4|argument5");
-            fail("IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Wrong number of parameters. Expected 4, and you have entered 5!", e.getMessage());
+            fail("Expect ConnectException");
+        } catch (ConnectException e) {
+            assertEquals("Error! Wrong number of parameters. Expected 4, and you have entered 5\n" +
+                    "Try again", e.getMessage());
         }
     }
 }

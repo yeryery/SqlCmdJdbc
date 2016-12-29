@@ -40,7 +40,7 @@ public class Parser {
 
         if (dataSize != sampleSize) {
             throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
-                    "Expected %s, and you have entered %s!", sampleSize, dataSize));//TODO add sample
+                    "Expected %s, and you have entered %s", sampleSize, dataSize));
         }
 
         String[] inputData = data.split(delimiter);
@@ -57,7 +57,7 @@ public class Parser {
 
         if (dataSize % 2 != 0) {
             throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
-                    "Expected even number of parameters (2, 4 and so on) and you have entered %s!", dataSize));
+                    "Expected even number of parameters (2, 4 and so on) and you have entered %s", dataSize));
         }
 
         String[] splitInput = input.split(delimiter);

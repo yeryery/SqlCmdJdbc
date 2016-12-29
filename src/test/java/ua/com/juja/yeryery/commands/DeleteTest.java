@@ -121,8 +121,8 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike|something
-                "Wrong number of parameters. Expected 2, and you have entered 3!, " +
-                "Try again., " +
+                "Error! Wrong number of parameters. Expected 2, and you have entered 3\n" +
+                "Try again, " +
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
@@ -152,8 +152,8 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //notExistingColumn|Mike
-                "Table 'test' doesn't contain column 'notExistingColumn'!, " +
-                "Try again., " +
+                "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
+                "Try again, " +
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
@@ -182,8 +182,8 @@ public class DeleteTest {
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|notExistingValue
-                "Column 'name' doesn't contain value 'notExistingValue'!, " +
-                "Try again., " +
+                "Error! Column 'name' doesn't contain value 'notExistingValue'\n" +
+                "Try again, " +
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
@@ -227,9 +227,9 @@ public class DeleteTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                "Table with name 'notExistingTable' doesn't exist!, " +
                 //notExistingTable
-                "Try again., " +
+                "Error! Table with name 'notExistingTable' doesn't exist\n" +
+                "Try again, " +
                 "Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
@@ -253,9 +253,9 @@ public class DeleteTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                "There is no table with number 22!, " +
                 //22
-                "Try again., " +
+                "Error! There is no table with number 22\n" +
+                "Try again, " +
                 "Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +

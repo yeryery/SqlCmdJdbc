@@ -51,8 +51,8 @@ public class Controller {
                         break;
                     }
                 } catch (Exception e) {
-                    if (e instanceof NullPointerException) {
-                        view.write(String.format("You can`t use '%s' unless you are not connected.", input));
+                    if (e instanceof ConnectException) {
+                        view.write(String.format(e.getMessage(), input));
                         view.write(connectToDatabase);
                         break;
                     }
