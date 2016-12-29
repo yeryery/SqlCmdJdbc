@@ -56,11 +56,11 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //id|2
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike
                 "You have successfully updated table 'test', " +
                 "+--+----+\n" +
@@ -89,11 +89,11 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //id|5
                 "You have successfully updated table 'test', " +
                 "+--+----+\n" +
@@ -106,94 +106,15 @@ public class UpdateTest {
     }
 
     @Test
-    public void testUpdateAndSelectCancel() throws SQLException {
-        //given
-        when(view.read()).thenReturn("cancel");
-
-        //when
-        command.process("update");
-
-        //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Table updating canceled]");
-    }
-
-    @Test
-    public void testUpdateAndSelectZero() throws SQLException {
-        //given
-        when(view.read()).thenReturn("0");
-
-        //when
-        command.process("update");
-
-        //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //0
-                "Table updating canceled]");
-    }
-
-    @Test
-    public void testUpdateAndSelectNotExistingTable() throws SQLException {
-        //given
-        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
-
-        //when
-        command.process("update");
-
-        //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                "Table with name 'notExistingTable' doesn't exist!, " +
-                //notExistingTable
-                "Try again., " +
-                "Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Table updating canceled]");
-    }
-
-    @Test
-    public void testUpdateAndSelectWrongTableNumber() throws SQLException {
-        //given
-        when(view.read()).thenReturn("22").thenReturn("cancel");
-
-        //when
-        command.process("update");
-
-        //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                "There is no table with number 22!, " +
-                //22
-                "Try again., " +
-                "Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Table updating canceled]");
-    }
-
-    @Test
     public void testUpdateSelectTableAndCancel() throws SQLException {
         //given
         when(view.read()).thenReturn(selectedTable).thenReturn("cancel");
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -202,62 +123,8 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
-    }
-
-    @Test
-    public void testUpdateAndInputThreeParameters() throws SQLException {
-        //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("name|John|something").
-                thenReturn("cancel");
-
-        //when
-        command.process("update");
-
-        //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //name|Mike|something
-                "Wrong number of parameters. Expected 2, and you have entered 3!, " +
-                "Try again., " +
-                "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Table updating canceled]");
-    }
-
-    @Test
-    public void testUpdateAndInputNotExistingColumn() throws SQLException {
-        //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("notExistingColumn|Mike").
-                thenReturn("cancel");
-        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
-
-        //when
-        command.process("update");
-
-        //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //notExistingColumn|Mike
-                "Table 'test' doesn't contain column 'notExistingColumn'!, " +
-                "Try again., " +
-                "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
-                //cancel
-                "Table updating canceled]");
     }
 
     @Test
@@ -269,7 +136,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -278,14 +148,13 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|notExistingValue
                 "Column 'name' doesn't contain value 'notExistingValue'!, " +
                 "Try again., " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
     }
 
     @Test
@@ -297,7 +166,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -306,14 +178,13 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //id|22
                 "Column 'id' doesn't contain value '22'!, " +
                 "Try again., " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
     }
 
     @Test
@@ -325,7 +196,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -334,13 +208,12 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
     }
 
     @Test
@@ -352,7 +225,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -361,19 +237,18 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //id|22|thirdParameter
                 "Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3!, " +
                 "Try again., " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
     }
 
     @Test
@@ -385,7 +260,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -394,19 +272,18 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //notExistingColumn|2
                 "Table 'test' doesn't contain column 'notExistingColumn'!, " +
                 "Try again., " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
     }
 
     @Test
@@ -418,7 +295,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("update");
+        try {
+            command.process("update");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table you want to update, " +
@@ -427,19 +307,18 @@ public class UpdateTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //id|2
                 "Your entries are equivalent to the updated!, " +
                 "Try again., " +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table updating canceled]");
     }
 
     @Test(expected = SQLException.class)
@@ -467,7 +346,7 @@ public class UpdateTest {
 
         //then
         verify(view).write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
-                    "Try again.");
+                "Try again.");
         //TODO
     }
 

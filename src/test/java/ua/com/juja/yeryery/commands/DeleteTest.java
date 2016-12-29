@@ -59,7 +59,7 @@ public class DeleteTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike
                 "You have successfully deleted data from 'test', " +
                 "+--+----+\n" +
@@ -88,7 +88,7 @@ public class DeleteTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //id|1
                 "You have successfully deleted data from 'test', " +
                 "+--+----+\n" +
@@ -107,7 +107,10 @@ public class DeleteTest {
                 .thenReturn("cancel");
 
         //when
-        command.process("delete");
+        try {
+            command.process("delete");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
@@ -116,14 +119,13 @@ public class DeleteTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|Mike|something
                 "Wrong number of parameters. Expected 2, and you have entered 3!, " +
                 "Try again., " +
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Row removal canceled]");
     }
 
     @Test
@@ -136,7 +138,10 @@ public class DeleteTest {
         when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
 
         //when
-        command.process("delete");
+        try {
+            command.process("delete");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
@@ -145,14 +150,13 @@ public class DeleteTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //notExistingColumn|Mike
                 "Table 'test' doesn't contain column 'notExistingColumn'!, " +
                 "Try again., " +
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Row removal canceled]");
     }
 
     @Test
@@ -164,7 +168,10 @@ public class DeleteTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         //when
-        command.process("delete");
+        try {
+            command.process("delete");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
@@ -173,14 +180,13 @@ public class DeleteTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //name|notExistingValue
                 "Column 'name' doesn't contain value 'notExistingValue'!, " +
                 "Try again., " +
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Row removal canceled]");
     }
 
     @Test
@@ -189,7 +195,10 @@ public class DeleteTest {
         when(view.read()).thenReturn(selectedTable).thenReturn("cancel");
 
         //when
-        command.process("delete");
+        try {
+            command.process("delete");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
@@ -198,9 +207,8 @@ public class DeleteTest {
                 "0. cancel (to go back), " +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Row removal canceled]");
     }
 
     @Test
@@ -209,7 +217,10 @@ public class DeleteTest {
         when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
 
         //when
-        command.process("delete");
+        try {
+            command.process("delete");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
@@ -222,9 +233,8 @@ public class DeleteTest {
                 "Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
-                "0. cancel (to go back), " +
+                "0. cancel (to go back)]");
                 //cancel
-                "Row removal canceled]");
     }
 
     @Test
@@ -233,7 +243,10 @@ public class DeleteTest {
         when(view.read()).thenReturn("22").thenReturn("cancel");
 
         //when
-        command.process("delete");
+        try {
+             command.process("delete");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
@@ -246,43 +259,8 @@ public class DeleteTest {
                 "Enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
-                "0. cancel (to go back), " +
+                "0. cancel (to go back)]");
                 //cancel
-                "Row removal canceled]");
-    }
-
-    @Test
-    public void testDeleteAndSelectCancel() throws SQLException {
-        //given
-        when(view.read()).thenReturn("cancel");
-
-        //when
-        command.process("delete");
-
-        //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //cancel
-                "Row removal canceled]");
-    }
-
-    @Test
-    public void testDeleteAndSelectZero() throws SQLException {
-        //given
-        when(view.read()).thenReturn("0");
-
-        //when
-        command.process("delete");
-
-        //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
-                "1. test, " +
-                "2. ttable, " +
-                "0. cancel (to go back), " +
-                //0
-                "Row removal canceled]");
     }
 
     @Test

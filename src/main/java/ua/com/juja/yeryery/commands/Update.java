@@ -33,23 +33,18 @@ public class Update implements Command {
         Set<String> names = manager.getTableNames();
         Dialog dialog = new DialogImpl(view, manager);
         String selectTableMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
-        String findMessage = "Enter columnName and defining value of updated row: %s\nor type 'cancel' to go back.";
+        String findMessage = "Enter columnName and defining value of updated row: %s\nor type 'cancel' to go back";
         String setValuesMessage = "Enter columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back.";
+                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back";
         String commandSample = "columnName|value";
 
         String currentTableName = "";
         DataEntry definingEntry = null;
         DataSet newValues = null;
 
-        try {
-            currentTableName = dialog.selectTable(selectTableMessage);
-            definingEntry = dialog.defineRow(currentTableName, findMessage, commandSample);
-            newValues = dialog.getNewValues(currentTableName, setValuesMessage, definingEntry);
-        } catch (CancelException e) {
-            view.write("Table updating canceled");
-            return;
-        }
+        currentTableName = dialog.selectTable(selectTableMessage);
+        definingEntry = dialog.defineRow(currentTableName, findMessage, commandSample);
+        newValues = dialog.getNewValues(currentTableName, setValuesMessage, definingEntry);
 
         try {
             Set<String> tableColumns = manager.getTableColumns(currentTableName);

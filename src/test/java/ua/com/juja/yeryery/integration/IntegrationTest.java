@@ -844,7 +844,7 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //ttable
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|10
                 "You have successfully deleted data from 'ttable'\n" +
                 "+--+----+---+\n" +
@@ -1071,7 +1071,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1108,11 +1108,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //password|newPass
                 "You have successfully updated table 'test'\n" +
                 "+--+---------+--------+\n" +
@@ -1130,11 +1130,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //password|pass2
                 "You have successfully updated table 'test'\n" +
                 "+--+---------+--------+\n" +
@@ -1180,11 +1180,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|30
                 "You have successfully updated table 'test'\n" +
                 "+--+---------+--------+\n" +
@@ -1202,11 +1202,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22
                 "You have successfully updated table 'test'\n" +
                 "+--+---------+--------+\n" +
@@ -1246,9 +1246,9 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1280,14 +1280,14 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22|something
                 "Wrong number of parameters. Expected 2, and you have entered 3!\n" +
                 "Try again.\n" +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1319,14 +1319,14 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //notExistingColumn|22
                 "Table 'test' doesn't contain column 'notExistingColumn'!\n" +
                 "Try again.\n" +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1358,14 +1358,14 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|notExistingValue
                 "Column 'id' doesn't contain value 'notExistingValue'!\n" +
                 "Try again.\n" +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1397,13 +1397,13 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1436,19 +1436,19 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //password|pass2|pass3
                 "Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3!\n" +
                 "Try again.\n" +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1481,19 +1481,19 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //notExistingColumn|pass2
                 "Table 'test' doesn't contain column 'notExistingColumn'!\n" +
                 "Try again.\n" +
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1586,11 +1586,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //password|pass3
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //login|username10
                 "You have successfully updated table 'test'\n" +
                 "+--+---------+--------+\n" +
@@ -1612,7 +1612,7 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //password|pass3
                 "You have successfully deleted data from 'test'\n" +
                 "+--+----------+--------+\n" +
@@ -1658,11 +1658,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|notNumber
                 "ERROR: column \"id\" is of type integer but expression is of type character varying\n" +
                 "  Hint: You will need to rewrite or cast the expression.\n" +
@@ -1673,7 +1673,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1706,11 +1706,11 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //id|12
                 "ERROR: duplicate key value violates unique constraint \"test_pkey\"\n" +
                 "  Detail: Key (id)=(12) already exists.\n" +
@@ -1720,7 +1720,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table updating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1775,7 +1775,7 @@ public class IntegrationTest {
                 "0. cancel (to go back)\n" +
                 //ttable
                 "Enter columnName and defining value of deleted row: columnName|value\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //name|Jack
                 "You have successfully deleted data from 'ttable'\n" +
                 "+--+----+---+\n" +
