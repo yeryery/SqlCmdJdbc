@@ -26,14 +26,11 @@ public class Drop implements Command {
         Dialog dialog = new DialogImpl(view, manager);
         String selectMessage = String.format("Please enter the name or select number of table you want to %s", ACTION);
 
-        try {
-            String currentTableName = dialog.selectTable(selectMessage);
-            String warning = String.format("Table '%s' will be dropped! Continue?", currentTableName);
-            dialog.confirmAction(warning);
-            manager.drop(currentTableName);
-            view.write(String.format("Table '%s' successfully dropped!", currentTableName));
-        } catch (CancelException e) {
-            view.write("Table deleting canceled");
-        }
+        String currentTableName = dialog.selectTable(selectMessage);
+        String warning = String.format("Table '%s' will be dropped! Continue?", currentTableName);
+        dialog.confirmAction(warning);
+
+        manager.drop(currentTableName);
+        view.write(String.format("Table '%s' successfully dropped!", currentTableName));
     }
 }

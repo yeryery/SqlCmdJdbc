@@ -124,7 +124,7 @@ public class UpdateTest {
                 //test
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
     @Test
@@ -154,7 +154,7 @@ public class UpdateTest {
                 "Try again., " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
     @Test
@@ -184,7 +184,7 @@ public class UpdateTest {
                 "Try again., " +
                 "Enter columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
     @Test
@@ -213,7 +213,7 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
     @Test
@@ -248,7 +248,7 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
     @Test
@@ -283,7 +283,7 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
     @Test
@@ -318,10 +318,10 @@ public class UpdateTest {
                 "Enter columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
-                //cancel
+        //cancel
     }
 
-    @Test(expected = SQLException.class)
+    @Test
     public void testUpdateSQLException() throws SQLException {
         //given
         when(view.read()).thenReturn(selectedTable).thenReturn("name|Mike").
@@ -333,13 +333,14 @@ public class UpdateTest {
         newValues.put("id", "notNumber");
         DataEntry definingEntry = new DataEntryImpl("name", "Mike");
 
+        doThrow(new SQLException()).when(manager).update(selectedTable, newValues, definingEntry);
+
         try {
-            doThrow(new SQLException()).when(manager).update(selectedTable, newValues, definingEntry);
+            manager.update(selectedTable, newValues, definingEntry);
         } catch (SQLException e) {
             view.write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
                     "Try again.");
         }
-        manager.update(selectedTable, newValues, definingEntry);
 
         //when
         command.process("update");
@@ -347,7 +348,6 @@ public class UpdateTest {
         //then
         verify(view).write("SQL ERROR: column \"id\" is of type integer but expression is of type character varying!\n" +
                 "Try again.");
-        //TODO
     }
 
     private void shouldPrint(String expected) {

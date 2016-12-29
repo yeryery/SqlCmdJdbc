@@ -30,14 +30,10 @@ public class Display implements Command {
         Dialog dialog = new DialogImpl(view, manager);
         String selectMessage = String.format("Please enter the name or select number of table you want to %s", ACTION);
 
-        try {
-            String currentTableName = dialog.selectTable(selectMessage);
-            Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            List<DataSet> tableContent = manager.getDataContent(currentTableName);
-            TableConstructor tableConstructor = new TableConstructor(tableColumns, tableContent);
-            view.write(tableConstructor.getTableString());
-        } catch (CancelException e) {
-            view.write("Table displaying canceled");
-        }
+        String currentTableName = dialog.selectTable(selectMessage);
+        Set<String> tableColumns = manager.getTableColumns(currentTableName);
+        List<DataSet> tableContent = manager.getDataContent(currentTableName);
+        TableConstructor tableConstructor = new TableConstructor(tableColumns, tableContent);
+        view.write(tableConstructor.getTableString());
     }
 }

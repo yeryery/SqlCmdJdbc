@@ -479,7 +479,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //0
-                "Table displaying canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -723,7 +723,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table inserting canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -771,7 +771,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table inserting canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -949,7 +949,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
-                "Table deleting canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -978,7 +978,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //0
-                "Table deleting canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -1010,7 +1010,7 @@ public class IntegrationTest {
                 //ttable
                 "Table 'ttable' will be dropped! Continue? (y/n)\n" +
                 //n
-                "Table deleting canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));

@@ -44,12 +44,10 @@ public class Insert implements Command {
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
             view.write(tableConstructor.getTableString());
-        } catch (SQLException e1) {
-            view.write(e1.getMessage());
+        } catch (SQLException e) {
+            view.write(e.getMessage());
             view.write("Try again.");
             process(input);
-        } catch (CancelException e2) {
-            view.write("Table inserting canceled");
         }
     }
 
