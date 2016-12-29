@@ -46,7 +46,7 @@ public class CreateTest {
                 //newTable
                 "Enter name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back, " +
                 //someColumnName|text
                 "Your table 'newTable' have successfully created!]");
     }
@@ -78,20 +78,6 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreateAndCancel() throws SQLException {
-        //given
-        when(view.read()).thenReturn("cancel");
-
-        //when
-        command.process("create");
-
-        //then
-        shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
-                //cancel
-                "Table creating canceled]");
-    }
-
-    @Test
     public void testCreateEnterTableNameAndCancel() {
         //given
         String inputTableName = "newTable";
@@ -99,16 +85,18 @@ public class CreateTest {
                          .thenReturn("cancel");
 
         //when
-        command.process("create");
+        try {
+            command.process("create");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //newTable
                 "Enter name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
-                "or type 'cancel' to go back., " +
+                "or type 'cancel' to go back]");
                 //cancel
-                "Table creating canceled]");
     }
 
     @Test
@@ -119,16 +107,18 @@ public class CreateTest {
                          .thenReturn("cancel");
 
         //when
-        command.process("create");
+        try {
+            command.process("create");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
                 //1newTable
                 "You have entered '1newTable' and table name must begin with a letter!, " +
                 "Try again., " +
-                "Please enter the name of table you want to create or 'cancel' to go back, " +
+                "Please enter the name of table you want to create or 'cancel' to go back]");
                 //cancel
-                "Table creating canceled]");
     }
 
     @Test
@@ -139,7 +129,10 @@ public class CreateTest {
                          .thenReturn("cancel");
 
         //when
-        command.process("create");
+        try {
+            command.process("create");
+        } catch (CancelException e) {
+        }
 
         //then
         shouldPrint("[Please enter the name of table you want to create or 'cancel' to go back, " +
@@ -147,9 +140,8 @@ public class CreateTest {
                 "Table with name 'test' already exists!\n" +
                 "[test, ttable], " +
                 "Try again., " +
-                "Please enter the name of table you want to create or 'cancel' to go back, " +
+                "Please enter the name of table you want to create or 'cancel' to go back]");
                 //cancel
-                "Table creating canceled]");
     }
 
     @Test

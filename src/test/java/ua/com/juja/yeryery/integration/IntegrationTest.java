@@ -505,7 +505,7 @@ public class IntegrationTest {
                 //create
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
-                "Table creating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -537,7 +537,7 @@ public class IntegrationTest {
                 "Try again.\n" +
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
-                "Table creating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -566,9 +566,9 @@ public class IntegrationTest {
                 //somename
                 "Enter name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //0
-                "Table creating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -599,7 +599,7 @@ public class IntegrationTest {
                 "Try again.\n" +
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
-                "Table creating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -629,14 +629,14 @@ public class IntegrationTest {
                 //somename
                 "Enter name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //name|wrongType
                 "ERROR: type \"wrongtype\" does not exist\n" +
                 "  Position: 57\n" +
                 "Try again.\n" +
                 "Please enter the name of table you want to create or 'cancel' to go back\n" +
                 //cancel
-                "Table creating canceled\n" +
+                "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -670,7 +670,7 @@ public class IntegrationTest {
                 //somename
                 "Enter name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
-                "or type 'cancel' to go back.\n" +
+                "or type 'cancel' to go back\n" +
                 //name|text|age|int
                 "Your table 'somename' have successfully created!\n" +
                 "Type command or 'help'\n" +

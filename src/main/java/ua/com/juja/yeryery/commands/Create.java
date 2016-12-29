@@ -29,19 +29,17 @@ public class Create implements Command {
         Dialog dialog = new DialogImpl(view, manager);
         String selectTableMessage = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
         String setValuesMessage = "Enter name of columns and its type for new table: \n" +
-                "columnName1|columnType1|columnName2|columnType2|...\nor type 'cancel' to go back.";
+                "columnName1|columnType1|columnName2|columnType2|...\nor type 'cancel' to go back";
 
         try {
             String currentTableName = dialog.nameTable(selectTableMessage);
             DataSet dataTypes = dialog.getInputByTwo(setValuesMessage);
             manager.create(currentTableName, dataTypes);
             view.write(String.format("Your table '%s' have successfully created!", currentTableName));
-        } catch (SQLException e1) {
-            view.write(e1.getMessage());
+        } catch (SQLException e) {
+            view.write(e.getMessage());
             view.write("Try again.");
             process(input);
-        } catch (CancelException e2) {
-            view.write("Table creating canceled");
         }
     }
 }
