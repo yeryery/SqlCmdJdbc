@@ -29,10 +29,9 @@ public class Insert implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String selectMessage = String.format("Please, enter the name or select number of table where you want to %s new row", ACTION);
 
         try {
-            String currentTableName = dialog.selectTable(selectMessage);
+            String currentTableName = dialog.selectTable(ACTION);
 
             Set<String> tableColumns = manager.getTableColumns(currentTableName);
             List<DataSet> originRows = manager.getDataContent(currentTableName);

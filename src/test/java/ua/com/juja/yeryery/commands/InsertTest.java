@@ -52,7 +52,7 @@ public class InsertTest {
         command.process("insert");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to insert new row, " +
+        shouldPrint("[Select the table you need for 'insert' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -76,6 +76,7 @@ public class InsertTest {
         //given
         when(view.read()).thenReturn(selectedTable).thenReturn("notNumber").thenReturn("Bob");
         when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
+        //TODO
 
         DataSet input = new DataSetImpl();
         input.put("id", "notNumber");

@@ -22,9 +22,8 @@ public class Drop implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String selectMessage = String.format("Please, enter the name or select number of table you want to %s", ACTION);
 
-        String currentTableName = dialog.selectTable(selectMessage);
+        String currentTableName = dialog.selectTable(ACTION);
         String warning = String.format("Table '%s' will be dropped! Continue?", currentTableName);
         dialog.confirmAction(warning);
 

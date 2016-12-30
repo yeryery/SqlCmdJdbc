@@ -53,7 +53,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -82,7 +82,7 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -113,7 +113,7 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -144,7 +144,7 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -174,7 +174,7 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -201,7 +201,7 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -223,14 +223,14 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExistingTable
                 "Error! Table with name 'notExistingTable' doesn't exist\n" +
                 "Try again, " +
-                "Please, enter the name or select number of table where you want to delete rows, " +
+                "Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -249,14 +249,14 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //22
                 "Error! There is no table with number 22\n" +
                 "Try again, " +
-                "Please, enter the name or select number of table where you want to delete rows, " +
+                "Select the table you need for 'delete' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");

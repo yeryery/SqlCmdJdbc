@@ -49,7 +49,8 @@ public class Dialog {
         return tableList;
     }
 
-    private void printTableList(String message, Map<Integer, String> tableList) {
+    private void printTableList(String action, Map<Integer, String> tableList) {
+        String message = String.format("Select the table you need for '%s' command", action);
         view.write(message);
         tableList.remove(0);
 

@@ -407,7 +407,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //display
-                "Please, enter the name or select number of table you want to display\n" +
+                "Select the table you need for 'display' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -442,7 +442,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //display
-                "Please, enter the name or select number of table you want to display\n" +
+                "Select the table you need for 'display' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -478,13 +478,13 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //display
-                "Please, enter the name or select number of table you want to display\n" +
+                "Select the table you need for 'display' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //-1
                 "Error! There is no table with number -1\nTry again\n" +
-                "Please, enter the name or select number of table you want to display\n" +
+                "Select the table you need for 'display' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -685,7 +685,7 @@ public class IntegrationTest {
                 "Your table 'somename' have successfully created!\n" +
                 "Type command or 'help'\n" +
                 //display
-                "Please, enter the name or select number of table you want to display\n" +
+                "Select the table you need for 'display' command\n" +
                 "1. somename\n" +
                 "2. test\n" +
                 "3. ttable\n" +
@@ -696,7 +696,7 @@ public class IntegrationTest {
                 "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //drop
-                "Please, enter the name or select number of table you want to drop\n" +
+                "Select the table you need for 'drop' command\n" +
                 "1. somename\n" +
                 "2. test\n" +
                 "3. ttable\n" +
@@ -728,7 +728,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -761,7 +761,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -776,7 +776,7 @@ public class IntegrationTest {
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 41\n" +
                 "Try again.\n" +
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -815,7 +815,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -830,7 +830,7 @@ public class IntegrationTest {
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 41\n" +
                 "Try again.\n" +
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -848,7 +848,7 @@ public class IntegrationTest {
                 "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
-                "Please, enter the name or select number of table where you want to delete rows\n" +
+                "Select the table you need for 'delete' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -893,7 +893,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -911,7 +911,7 @@ public class IntegrationTest {
                 "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //display
-                "Please, enter the name or select number of table you want to display\n" +
+                "Select the table you need for 'display' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -923,7 +923,7 @@ public class IntegrationTest {
                 "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //clear
-                "Please, enter the name or select number of table you want to clear\n" +
+                "Select the table you need for 'clear' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -954,7 +954,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //drop
-                "Please, enter the name or select number of table you want to drop\n" +
+                "Select the table you need for 'drop' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -983,7 +983,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //drop
-                "Please, enter the name or select number of table you want to drop\n" +
+                "Select the table you need for 'drop' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1013,7 +1013,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //drop
-                "Please, enter the name or select number of table you want to drop\n" +
+                "Select the table you need for 'drop' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1045,7 +1045,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //clear
-                "Please, enter the name or select number of table you want to clear\n" +
+                "Select the table you need for 'clear' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1076,7 +1076,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1112,7 +1112,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1134,7 +1134,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1184,7 +1184,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1206,7 +1206,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1250,7 +1250,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1284,7 +1284,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1323,7 +1323,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1362,7 +1362,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1401,7 +1401,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1440,7 +1440,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1485,7 +1485,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1544,7 +1544,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1566,7 +1566,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1590,7 +1590,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1616,7 +1616,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //delete
-                "Please, enter the name or select number of table where you want to delete rows\n" +
+                "Select the table you need for 'delete' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1662,7 +1662,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1678,7 +1678,7 @@ public class IntegrationTest {
                 "  Hint: You will need to rewrite or cast the expression.\n" +
                 "  Position: 20\n" +
                 "Try again.\n" +
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1710,7 +1710,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //update
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1725,7 +1725,7 @@ public class IntegrationTest {
                 "ERROR: duplicate key value violates unique constraint \"test_pkey\"\n" +
                 "  Detail: Key (id)=(12) already exists.\n" +
                 "Try again.\n" +
-                "Please, enter the name or select number of table you want to update\n" +
+                "Select the table you need for 'update' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1761,7 +1761,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //insert
-                "Please, enter the name or select number of table where you want to insert new row\n" +
+                "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
@@ -1779,7 +1779,7 @@ public class IntegrationTest {
                 "+--+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
-                "Please, enter the name or select number of table where you want to delete rows\n" +
+                "Select the table you need for 'delete' command\n" +
                 "1. test\n" +
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +

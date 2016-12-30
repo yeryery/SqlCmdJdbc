@@ -38,7 +38,7 @@ public class DropTest {
         command.process("drop");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table you want to drop, " +
+        shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -57,7 +57,7 @@ public class DropTest {
         command.process("drop");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table you want to drop, " +
+        shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -79,7 +79,7 @@ public class DropTest {
         }
 
         //then
-        shouldPrint("[Please, enter the name or select number of table you want to drop, " +
+        shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -97,7 +97,7 @@ public class DropTest {
         command.process("drop");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table you want to drop, " +
+        shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

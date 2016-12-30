@@ -26,9 +26,8 @@ public class Display implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String selectMessage = String.format("Please, enter the name or select number of table you want to %s", ACTION);
 
-        String currentTableName = dialog.selectTable(selectMessage);
+        String currentTableName = dialog.selectTable(ACTION);
         Set<String> tableColumns = manager.getTableColumns(currentTableName);
         List<DataSet> tableContent = manager.getDataContent(currentTableName);
         TableConstructor tableConstructor = new TableConstructor(tableColumns, tableContent);

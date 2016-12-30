@@ -56,7 +56,7 @@ public class DisplayTest {
         command.process("display");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table you want to display, " +
+        shouldPrint("[Select the table you need for 'display' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -86,7 +86,7 @@ public class DisplayTest {
         command.process("display");
 
         //then
-        shouldPrint("[Please, enter the name or select number of table you want to display, " +
+        shouldPrint("[Select the table you need for 'display' command, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
