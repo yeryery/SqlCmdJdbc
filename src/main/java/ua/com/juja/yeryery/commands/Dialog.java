@@ -134,12 +134,13 @@ public class Dialog {
         return names.contains(tableName);
     }
 
-    public void confirmAction(String warning) {
+    public void confirmAction(String action, String tableName) {
         String confirm = "";
+        String warning = String.format("Are you sure you want to %s table '%s'?", action, tableName);
 
         while (!confirm.equals("y") && !confirm.equals("n")) {
             view.write(warning + " (y/n)");
-            confirm = (String) view.read();
+            confirm = view.read();
         }
 
         if (confirm.equals("n")) {

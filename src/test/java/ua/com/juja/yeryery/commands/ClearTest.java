@@ -43,7 +43,7 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
-                "Table 'test' will be cleared! Continue? (y/n), " +
+                "Are you sure you want to clear table 'test'? (y/n), " +
                 //yes
                 "Table 'test' successfully cleared!]");
     }
@@ -62,7 +62,7 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
-                "Table 'test' will be cleared! Continue? (y/n), " +
+                "Are you sure you want to clear table 'test'? (y/n), " +
                 //yes
                 "Table 'test' successfully cleared!]");
     }
@@ -84,7 +84,7 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
-                "Table 'test' will be cleared! Continue? (y/n)]");
+                "Are you sure you want to clear table 'test'? (y/n)]");
                 //no
     }
 
@@ -102,9 +102,9 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
-                "Table 'test' will be cleared! Continue? (y/n), " +
+                "Are you sure you want to clear table 'test'? (y/n), " +
                 //neither 'y' nor 'n'
-                "Table 'test' will be cleared! Continue? (y/n), " +
+                "Are you sure you want to clear table 'test'? (y/n), " +
                 //yes
                 "Table 'test' successfully cleared!]");
     }

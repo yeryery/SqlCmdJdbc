@@ -23,9 +23,7 @@ public class Clear implements Command {
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
         String currentTableName = dialog.selectTable(ACTION);
-
-        String warning = String.format("Table '%s' will be cleared! Continue?", currentTableName);
-        dialog.confirmAction(warning);
+        dialog.confirmAction(ACTION, currentTableName);
 
         manager.clear(currentTableName);
         view.write(String.format("Table '%s' successfully cleared!", currentTableName));

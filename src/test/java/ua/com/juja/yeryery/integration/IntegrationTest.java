@@ -702,7 +702,7 @@ public class IntegrationTest {
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //somename
-                "Table 'somename' will be dropped! Continue? (y/n)\n" +
+                "Are you sure you want to drop table 'somename'? (y/n)\n" +
                 //y
                 "Table 'somename' successfully dropped!\n" +
                 "Type command or 'help'\n" +
@@ -928,7 +928,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Table 'ttable' will be cleared! Continue? (y/n)\n" +
+                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
                 //y
                 "Table 'ttable' successfully cleared!\n" +
                 "Type command or 'help'\n" +
@@ -1018,7 +1018,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Table 'ttable' will be dropped! Continue? (y/n)\n" +
+                "Are you sure you want to drop table 'ttable'? (y/n)\n" +
                 //n
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -1050,7 +1050,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Table 'ttable' will be cleared! Continue? (y/n)\n" +
+                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
                 //n
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
