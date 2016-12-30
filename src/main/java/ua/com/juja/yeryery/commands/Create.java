@@ -25,12 +25,11 @@ public class Create implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String selectTableMessage = String.format("Please, enter the name of table you want to %s or 'cancel' to go back", ACTION);
         String setValuesMessage = "Enter the name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\nor type 'cancel' to go back";
 
         try {
-            String currentTableName = dialog.nameTable(selectTableMessage);
+            String currentTableName = dialog.nameTable();
             DataSet dataTypes = dialog.getInputByTwo(setValuesMessage);
             manager.create(currentTableName, dataTypes);
             view.write(String.format("Your table '%s' have successfully created!", currentTableName));

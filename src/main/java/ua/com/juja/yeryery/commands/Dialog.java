@@ -18,12 +18,12 @@ public class Dialog {
         this.manager = manager;
     }
 
-    public String selectTable(String message) {
+    public String selectTable(String action) {
         Map<Integer, String> tableList = getTableList();
         String tableName;
 
         while (true) {
-            printTableList(message, tableList);
+            printTableList(action, tableList);
             String input = view.read();
 
             try {
@@ -94,11 +94,12 @@ public class Dialog {
         }
     }
 
-    public String nameTable(String message) {
+    public String nameTable() {
         Set<String> names = manager.getTableNames();
         String tableName;
 
         while (true) {
+            String message = "Enter the name of your table or 'cancel' to go back";
             view.write(message);
             tableName = view.read();
 

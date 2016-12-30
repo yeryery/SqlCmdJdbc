@@ -513,7 +513,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -540,12 +540,12 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //test
                 "Error! Table with name 'test' already exists\n" +
                 "[test, ttable]\n" +
                 "Try again\n" +
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -572,7 +572,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //somename
                 "Enter the name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
@@ -603,11 +603,11 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //1name
                 "Error! You have entered '1name' and tablename must begin with a letter\n" +
                 "Try again\n" +
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -635,7 +635,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //somename
                 "Enter the name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
@@ -644,7 +644,7 @@ public class IntegrationTest {
                 "ERROR: type \"wrongtype\" does not exist\n" +
                 "  Position: 57\n" +
                 "Try again.\n" +
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -676,7 +676,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //create
-                "Please, enter the name of table you want to create or 'cancel' to go back\n" +
+                "Enter the name of your table or 'cancel' to go back\n" +
                 //somename
                 "Enter the name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\n" +
