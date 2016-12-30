@@ -28,8 +28,8 @@ public class Delete implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String selectTableMessage = String.format("Enter the name or select number of table where you want to %s rows", ACTION);
-        String findRowMessage = "Enter columnName and defining value of deleted row: %s\nor type 'cancel' to go back";
+        String selectTableMessage = String.format("Please, enter the name or select number of table where you want to %s rows", ACTION);
+        String findRowMessage = "Enter the columnName and defining value of deleted row: %s\nor type 'cancel' to go back";
         String commandSample = "columnName|value";
 
         String currentTableName;

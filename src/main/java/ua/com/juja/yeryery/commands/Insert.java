@@ -29,7 +29,7 @@ public class Insert implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String selectMessage = String.format("Enter the name or select number of table where you want to %s new row", ACTION);
+        String selectMessage = String.format("Please, enter the name or select number of table where you want to %s new row", ACTION);
 
         try {
             String currentTableName = dialog.selectTable(selectMessage);

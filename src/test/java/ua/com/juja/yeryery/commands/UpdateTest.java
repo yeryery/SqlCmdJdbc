@@ -50,15 +50,15 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
@@ -83,15 +83,15 @@ public class UpdateTest {
         command.process("update");
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|5
@@ -117,12 +117,12 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -142,17 +142,17 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|notExistingValue
                 "Error! Column 'name' doesn't contain value 'notExistingValue'\n" +
                 "Try again, " +
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -172,17 +172,17 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|22
                 "Error! Column 'id' doesn't contain value '22'\n" +
                 "Try again, " +
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -202,15 +202,15 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel
@@ -231,21 +231,21 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike " +
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|22|thirdParameter
                 "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
                 "Try again, " +
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel
@@ -266,21 +266,21 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //notExistingColumn|2
                 "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
                 "Try again, " +
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel
@@ -301,21 +301,21 @@ public class UpdateTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table you want to update, " +
+        shouldPrint("[Please, enter the name or select number of table you want to update, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of updated row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
                 "Error! Your entries are equivalent to the updated\n" +
                 "Try again, " +
-                "Enter columnNames and its new values for updated row: \n" +
+                "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel

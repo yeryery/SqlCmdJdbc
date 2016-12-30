@@ -30,9 +30,9 @@ public class Update implements Command {
     public void process(String input) {
         Set<String> names = manager.getTableNames();
         Dialog dialog = new Dialog(view, manager);
-        String selectTableMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
-        String findMessage = "Enter columnName and defining value of updated row: %s\nor type 'cancel' to go back";
-        String setValuesMessage = "Enter columnNames and its new values for updated row: \n" +
+        String selectTableMessage = String.format("Please, enter the name or select number of table you want to %s", ACTION);
+        String findMessage = "Enter the columnName and defining value of updated row: %s\nor type 'cancel' to go back";
+        String setValuesMessage = "Enter the columnNames and its new values for updated row: \n" +
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back";
         String commandSample = "columnName|value";
 

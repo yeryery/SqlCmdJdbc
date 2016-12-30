@@ -52,7 +52,7 @@ public class InsertTest {
         command.process("insert");
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to insert new row, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to insert new row, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +

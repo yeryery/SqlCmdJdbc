@@ -38,7 +38,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+        shouldPrint("[Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -57,7 +57,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+        shouldPrint("[Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -79,7 +79,7 @@ public class ClearTest {
         }
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+        shouldPrint("[Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -97,7 +97,7 @@ public class ClearTest {
         command.process("clear");
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+        shouldPrint("[Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
@@ -157,14 +157,14 @@ public class ClearTest {
         }
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+        shouldPrint("[Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select notExistingTable
                 "Error! Table with name 'notExistingTable' doesn't exist\n" +
                 "Try again, " +
-                "Please enter the name or select number of table you want to clear, " +
+                "Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -183,14 +183,14 @@ public class ClearTest {
         }
 
         //then
-        shouldPrint("[Please enter the name or select number of table you want to clear, " +
+        shouldPrint("[Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select 22
                 "Error! There is no table with number 22\n" +
                 "Try again, " +
-                "Please enter the name or select number of table you want to clear, " +
+                "Please, enter the name or select number of table you want to clear, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");

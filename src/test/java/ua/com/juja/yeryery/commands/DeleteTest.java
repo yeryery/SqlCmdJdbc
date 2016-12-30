@@ -53,12 +53,12 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "You have successfully deleted data from 'test', " +
@@ -82,12 +82,12 @@ public class DeleteTest {
         command.process("delete");
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|1
                 "You have successfully deleted data from 'test', " +
@@ -113,17 +113,17 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike|something
                 "Error! Wrong number of parameters. Expected 2, and you have entered 3\n" +
                 "Try again, " +
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -144,17 +144,17 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //notExistingColumn|Mike
                 "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
                 "Try again, " +
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -174,17 +174,17 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|notExistingValue
                 "Error! Column 'name' doesn't contain value 'notExistingValue'\n" +
                 "Try again, " +
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -201,12 +201,12 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of deleted row: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -223,14 +223,14 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExistingTable
                 "Error! Table with name 'notExistingTable' doesn't exist\n" +
                 "Try again, " +
-                "Enter the name or select number of table where you want to delete rows, " +
+                "Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
@@ -249,14 +249,14 @@ public class DeleteTest {
         }
 
         //then
-        shouldPrint("[Enter the name or select number of table where you want to delete rows, " +
+        shouldPrint("[Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //22
                 "Error! There is no table with number 22\n" +
                 "Try again, " +
-                "Enter the name or select number of table where you want to delete rows, " +
+                "Please, enter the name or select number of table where you want to delete rows, " +
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back)]");
