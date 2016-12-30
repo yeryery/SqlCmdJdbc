@@ -1,8 +1,5 @@
-package ua.com.juja.yeryery.commands.dialogs;
+package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.commands.CancelException;
-import ua.com.juja.yeryery.commands.IllegalArgumentException;
-import ua.com.juja.yeryery.commands.Parser;
 import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataEntryImpl;
 import ua.com.juja.yeryery.manager.DataSet;
@@ -11,17 +8,16 @@ import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
 
-public class DialogImpl implements Dialog {
+public class Dialog {
 
     private View view;
     private DatabaseManager manager;
 
-    public DialogImpl(View view, DatabaseManager manager) {
+    public Dialog(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
 
-    @Override
     public String selectTable(String message) {
         Map<Integer, String> tableList = getTableList();
         String tableName;
@@ -40,36 +36,6 @@ public class DialogImpl implements Dialog {
         return tableName;
     }
 
-    @Override
-    public String nameTable(String message) {
-        Set<String> names = manager.getTableNames();
-        String tableName;
-
-        while (true) {
-            view.write(message);
-            tableName = view.read();
-
-            try {
-                checkNewName(names, tableName);
-                break;
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-            }
-        }
-        return tableName;
-    }
-
-    private void printTableList(String message, Map<Integer, String> tableList) {
-        view.write(message);
-        tableList.remove(0);
-
-        for (Map.Entry<Integer, String> entry : tableList.entrySet()) {
-            view.write(entry.getKey() + ". " + entry.getValue());
-        }
-
-        view.write(0 + ". " + "cancel (to go back)");
-    }
-
     private Map<Integer, String> getTableList() {
         Set<String> names = manager.getTableNames();
         Map<Integer, String> tableList = new HashMap<>();
@@ -81,6 +47,17 @@ public class DialogImpl implements Dialog {
             i++;
         }
         return tableList;
+    }
+
+    private void printTableList(String message, Map<Integer, String> tableList) {
+        view.write(message);
+        tableList.remove(0);
+
+        for (Map.Entry<Integer, String> entry : tableList.entrySet()) {
+            view.write(entry.getKey() + ". " + entry.getValue());
+        }
+
+        view.write(0 + ". " + "cancel (to go back)");
     }
 
     private String getTableName(String input, Map<Integer, String> tableList) {
@@ -98,6 +75,12 @@ public class DialogImpl implements Dialog {
         return tableName;
     }
 
+    private void checkCancel(String input) {
+        if (input.equals("cancel") || input.equals("0")) {
+            throw new CancelException();
+        }
+    }
+
     private void checkTableNumber(int tableNumber, Map<Integer, String> tableList) {
         if (!tableList.containsKey(tableNumber)) {
             throw new IllegalArgumentException(String.format("There is no table with number %d", tableNumber));
@@ -110,10 +93,22 @@ public class DialogImpl implements Dialog {
         }
     }
 
-    private void checkCancel(String input) {
-        if (input.equals("cancel") || input.equals("0")) {
-            throw new CancelException();
+    public String nameTable(String message) {
+        Set<String> names = manager.getTableNames();
+        String tableName;
+
+        while (true) {
+            view.write(message);
+            tableName = view.read();
+
+            try {
+                checkNewName(names, tableName);
+                break;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+            }
         }
+        return tableName;
     }
 
     private void checkNewName(Set<String> names, String tableName) {
@@ -137,7 +132,6 @@ public class DialogImpl implements Dialog {
         return names.contains(tableName);
     }
 
-    @Override
     public void confirmAction(String warning) {
         String confirm = "";
 
@@ -151,7 +145,6 @@ public class DialogImpl implements Dialog {
         }
     }
 
-    @Override
     public DataEntry defineRow(String tableName, String message, String sample) {
         while (true) {
             try {
@@ -208,7 +201,6 @@ public class DialogImpl implements Dialog {
         return result;
     }
 
-    @Override
     public DataSet getNewValues(String tableName, String message, DataEntry entry) {
         while (true) {
             DataSet newValues;
@@ -235,7 +227,6 @@ public class DialogImpl implements Dialog {
         }
     }
 
-    @Override
     public DataSet getInputByTwo(String message) {
         view.write(message);
         String inputData = view.read();

@@ -7,6 +7,7 @@ public class IllegalArgumentException extends RuntimeException {
         this.message = message;
     }
 
+    @Override
     public String getMessage() {
         return String.format("Error! %s\nTry again", message);
     }

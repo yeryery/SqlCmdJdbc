@@ -1,8 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.TableConstructor;
-import ua.com.juja.yeryery.commands.dialogs.Dialog;
-import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
@@ -31,7 +29,7 @@ public class Update implements Command {
     @Override
     public void process(String input) {
         Set<String> names = manager.getTableNames();
-        Dialog dialog = new DialogImpl(view, manager);
+        Dialog dialog = new Dialog(view, manager);
         String selectTableMessage = String.format("Enter the name or select number of table you want to %s", ACTION);
         String findMessage = "Enter columnName and defining value of updated row: %s\nor type 'cancel' to go back";
         String setValuesMessage = "Enter columnNames and its new values for updated row: \n" +

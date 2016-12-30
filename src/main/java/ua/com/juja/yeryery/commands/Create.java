@@ -1,7 +1,5 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.commands.dialogs.Dialog;
-import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -26,7 +24,7 @@ public class Create implements Command {
 
     @Override
     public void process(String input) {
-        Dialog dialog = new DialogImpl(view, manager);
+        Dialog dialog = new Dialog(view, manager);
         String selectTableMessage = String.format("Please enter the name of table you want to %s or 'cancel' to go back", ACTION);
         String setValuesMessage = "Enter name of columns and its type for new table: \n" +
                 "columnName1|columnType1|columnName2|columnType2|...\nor type 'cancel' to go back";

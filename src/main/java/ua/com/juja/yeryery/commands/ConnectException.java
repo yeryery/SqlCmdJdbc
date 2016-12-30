@@ -8,9 +8,7 @@ public class ConnectException extends RuntimeException {
         this.message = message;
     }
 
-    public ConnectException(Exception e) {
-    }
-
+    @Override
     public String getMessage() {
         return String.format("Error! %s\nTry again", message);
     }

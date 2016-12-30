@@ -1,8 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.TableConstructor;
-import ua.com.juja.yeryery.commands.dialogs.Dialog;
-import ua.com.juja.yeryery.commands.dialogs.DialogImpl;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
@@ -30,7 +28,7 @@ public class Insert implements Command {
 
     @Override
     public void process(String input) {
-        Dialog dialog = new DialogImpl(view, manager);
+        Dialog dialog = new Dialog(view, manager);
         String selectMessage = String.format("Enter the name or select number of table where you want to %s new row", ACTION);
 
         try {
