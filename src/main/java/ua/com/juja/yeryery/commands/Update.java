@@ -43,7 +43,6 @@ public class Update implements Command {
             view.write("Try again.");
             process(input);
         }
-
     }
 }
 

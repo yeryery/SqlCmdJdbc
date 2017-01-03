@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
+import ua.com.juja.yeryery.ConnectException;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 

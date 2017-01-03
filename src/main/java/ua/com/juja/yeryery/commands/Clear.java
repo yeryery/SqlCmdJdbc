@@ -16,7 +16,7 @@ public class Clear implements Command {
 
     @Override
     public boolean canProcess(String input) {
-        return input.startsWith(ACTION);
+        return input.equals(ACTION);
     }
 
     @Override

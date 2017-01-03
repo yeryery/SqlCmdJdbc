@@ -49,6 +49,7 @@ public class Parser {
     }
 
     public static DataSet splitByTwo(String input, String delimiter) {
+        //TODO refactor
         int dataSize = count(input, delimiter);
 
         if (input.equals("cancel")) {

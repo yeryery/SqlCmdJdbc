@@ -76,6 +76,7 @@ public class CreateTest {
                     "  Position: 67");
 
     }
+    //TODO test for wrong number of parameters
 
     @Test
     public void testCreateEnterTableNameAndCancel() {
