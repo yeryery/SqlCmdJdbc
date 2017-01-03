@@ -1,13 +1,11 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 public class Insert implements Command {
@@ -32,15 +30,11 @@ public class Insert implements Command {
 
         try {
             String currentTableName = dialog.selectTable(ACTION);
-
-            Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            List<DataSet> originRows = manager.getDataContent(currentTableName);
-            TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
-
+            TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
             DataSet insertedRow = getNewRow(currentTableName);
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
-            view.write(tableConstructor.getTableString());
+            tablePrinter.print();
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");

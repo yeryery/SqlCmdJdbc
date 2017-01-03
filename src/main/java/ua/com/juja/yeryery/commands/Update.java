@@ -1,13 +1,11 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.TableConstructor;
 import ua.com.juja.yeryery.manager.DataEntry;
 import ua.com.juja.yeryery.manager.DataSet;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 public class Update implements Command {
@@ -44,13 +42,10 @@ public class Update implements Command {
         newValues = dialog.getNewValues(currentTableName, setValuesMessage, definingEntry);
 
         try {
-            Set<String> tableColumns = manager.getTableColumns(currentTableName);
-            List<DataSet> originRows = manager.getDataContent(currentTableName);
-            TableConstructor tableConstructor = new TableConstructor(tableColumns, originRows);
-
+            TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
             manager.update(currentTableName, newValues, definingEntry);
             view.write(String.format("You have successfully updated table '%s'", currentTableName));
-            view.write(tableConstructor.getTableString());
+            tablePrinter.print();
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
