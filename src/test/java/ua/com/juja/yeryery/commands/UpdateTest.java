@@ -55,7 +55,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
                 "Enter the columnNames and its new values for updated row: \n" +
@@ -88,7 +88,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter the columnNames and its new values for updated row: \n" +
@@ -122,7 +122,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -147,12 +147,12 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|notExistingValue
                 "Error! Column 'name' doesn't contain value 'notExistingValue'\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -177,12 +177,12 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|22
                 "Error! Column 'id' doesn't contain value '22'\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -207,7 +207,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter the columnNames and its new values for updated row: \n" +
@@ -236,7 +236,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike " +
                 "Enter the columnNames and its new values for updated row: \n" +
@@ -271,7 +271,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter the columnNames and its new values for updated row: \n" +
@@ -306,7 +306,7 @@ public class UpdateTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of updated row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "Enter the columnNames and its new values for updated row: \n" +

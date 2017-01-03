@@ -23,14 +23,9 @@ public class Delete implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String findRowMessage = "Enter the columnName and defining value of deleted row: %s\nor type 'cancel' to go back";
-        String commandSample = "columnName|value";
 
-        String currentTableName;
-        DataEntry definingEntry;
-
-        currentTableName = dialog.selectTable(ACTION);
-        definingEntry = dialog.defineRow(currentTableName, findRowMessage, commandSample);
+        String currentTableName = dialog.selectTable(ACTION);
+        DataEntry definingEntry = dialog.defineRow(currentTableName, ACTION);
 
         TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 

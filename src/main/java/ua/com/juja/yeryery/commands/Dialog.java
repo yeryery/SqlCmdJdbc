@@ -148,10 +148,10 @@ public class Dialog {
         }
     }
 
-    public DataEntry defineRow(String tableName, String message, String sample) {
+    public DataEntry defineRow(String tableName, String action) {
         while (true) {
             try {
-                DataEntry input = getInput(message, sample);
+                DataEntry input = getInput(action);
                 checkEntry(tableName, input);
                 return input;
             } catch (IllegalArgumentException e) {
@@ -160,8 +160,10 @@ public class Dialog {
         }
     }
 
-    private DataEntry getInput(String message, String sample) throws IllegalArgumentException {
-        view.write(String.format(message, sample));
+    private DataEntry getInput(String action) throws IllegalArgumentException {
+        String message = "Enter the columnName and defining value of the row you want to %s: %s\nor type 'cancel' to go back";
+        String sample = "columnName|value";
+        view.write(String.format(message, action, sample));
 
         String inputData = view.read();
         String delimiter = "\\|";
@@ -204,29 +206,19 @@ public class Dialog {
         return result;
     }
 
-    public DataSet getNewValues(String tableName, String message, DataEntry entry) {
+    public DataSet getNewValues(String tableName, DataEntry entry) {
         while (true) {
             DataSet newValues;
             try {
+                String message = "Enter the columnNames and its new values for updated row: \n" +
+                        "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back";
                 newValues = getInputByTwo(message);
                 checkColumns(tableName, newValues);
                 checkNewValues(tableName, entry, newValues);
+                return newValues;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
-                continue;
             }
-
-            return newValues;
-        }
-    }
-
-    private void checkNewValues(String tableName, DataEntry entry, DataSet newValues) {
-        String columnName = entry.getColumn();
-        Object value = entry.getValue();
-        List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
-
-        if (!isNewValues(newValues, updatedRows)) {
-            throw new IllegalArgumentException("Your entries are equivalent to the updated");
         }
     }
 
@@ -243,6 +235,16 @@ public class Dialog {
 
         for (String columnName : checkedColumns) {
             checkColumn(tableName, columnName);
+        }
+    }
+
+    private void checkNewValues(String tableName, DataEntry entry, DataSet newValues) {
+        String columnName = entry.getColumn();
+        Object value = entry.getValue();
+        List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
+
+        if (!isNewValues(newValues, updatedRows)) {
+            throw new IllegalArgumentException("Your entries are equivalent to the updated");
         }
     }
 

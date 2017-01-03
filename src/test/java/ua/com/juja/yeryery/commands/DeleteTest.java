@@ -58,7 +58,7 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "You have successfully deleted data from 'test', " +
@@ -87,7 +87,7 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|1
                 "You have successfully deleted data from 'test', " +
@@ -118,12 +118,12 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike|something
                 "Error! Wrong number of parameters. Expected 2, and you have entered 3\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -149,12 +149,12 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //notExistingColumn|Mike
                 "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -179,12 +179,12 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|notExistingValue
                 "Error! Column 'name' doesn't contain value 'notExistingValue'\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
@@ -206,7 +206,7 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnName and defining value of deleted row: columnName|value\n" +
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
