@@ -6,6 +6,8 @@ import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class Update implements Command {
@@ -31,7 +33,8 @@ public class Update implements Command {
 
         String currentTableName = dialog.selectTable(ACTION);
         DataEntry definingEntry = dialog.defineRow(currentTableName, ACTION);
-        DataSet newValues = dialog.getNewValues(currentTableName, definingEntry);
+        DataSet newValues = dialog.getNewEntries(currentTableName, definingEntry);
+        checkNewValues(currentTableName, definingEntry, newValues);
 
         try {
             TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
@@ -43,6 +46,42 @@ public class Update implements Command {
             view.write("Try again.");
             process(input);
         }
+    }
+
+    private void checkNewValues(String tableName, DataEntry entry, DataSet inputValues) {
+        String columnName = entry.getColumn();
+        Object value = entry.getValue();
+
+        if (!isNewValues(inputValues, tableName, columnName, value)) {
+            view.write("Your entries are equivalent to the updated");
+            throw new CancelException();
+        }
+    }
+
+    private boolean isNewValues(DataSet newValues, String tableName, String columnName, Object value) {
+        List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
+        for (String column : newValues.getColumnNames()) {
+            for (DataSet row : updatedRows) {
+                Object newValue = newValues.get(column);
+                Object updatedValue = row.get(column);
+                if (!newValue.equals(updatedValue)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<DataSet> getUpdatedRows(String tableName, String columnName, Object value) {
+        List<DataSet> dataSets = manager.getDataContent(tableName);
+        List<DataSet> result = new LinkedList<>();
+
+        for (DataSet row : dataSets) {
+            if (row.get(columnName).equals(value)) {
+                result.add(row);
+            }
+        }
+        return result;
     }
 }
 

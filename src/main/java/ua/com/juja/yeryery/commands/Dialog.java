@@ -24,10 +24,9 @@ public class Dialog {
 
         while (true) {
             printTableList(action, tableList);
-            String input = view.read();
 
             try {
-                tableName = getTableName(input, tableList);
+                tableName = getTableName(tableList);
                 break;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
@@ -61,10 +60,11 @@ public class Dialog {
         view.write(0 + ". " + "cancel (to go back)");
     }
 
-    private String getTableName(String input, Map<Integer, String> tableList) {
-        String tableName;
+    private String getTableName(Map<Integer, String> tableList) {
+        String input = view.read();
         checkCancel(input);
 
+        String tableName;
         if (Parser.isParsable(input)) {
             int tableNumber = Parser.parsedInt;
             checkTableNumber(tableNumber, tableList);
@@ -92,46 +92,6 @@ public class Dialog {
         if (!tableList.containsValue(tableName)) {
             throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist", tableName));
         }
-    }
-
-    public String nameTable() {
-        Set<String> names = manager.getTableNames();
-        String tableName;
-
-        while (true) {
-            String message = "Enter the name of your table or 'cancel' to go back";
-            view.write(message);
-            tableName = view.read();
-
-            try {
-                checkNewName(names, tableName);
-                break;
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-            }
-        }
-        return tableName;
-    }
-
-    private void checkNewName(Set<String> names, String tableName) {
-        if (tableName.equals("cancel")) {
-            throw new CancelException();
-        }
-        if (!isFirstLetter(tableName)) {
-            throw new IllegalArgumentException(String.format("You have entered '%s' and tablename must begin with a letter", tableName));
-        }
-        if (existName(names, tableName)) {
-            throw new IllegalArgumentException(String.format("Table with name '%s' already exists\n%s", tableName, names.toString()));
-        }
-    }
-
-    private boolean isFirstLetter(String tableName) {
-        char firstLetter = tableName.charAt(0);
-        return (firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z');
-    }
-
-    private boolean existName(Set<String> names, String tableName) {
-        return names.contains(tableName);
     }
 
     public void confirmAction(String action, String tableName) {
@@ -206,15 +166,14 @@ public class Dialog {
         return result;
     }
 
-    public DataSet getNewValues(String tableName, DataEntry entry) {
+    public DataSet getNewEntries(String tableName, DataEntry entry) {
         while (true) {
             DataSet newValues;
+            String message = "Enter the columnNames and its new values for updated row: \n" +
+                    "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back";
             try {
-                String message = "Enter the columnNames and its new values for updated row: \n" +
-                        "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back";
                 newValues = getInputByTwo(message);
                 checkColumns(tableName, newValues);
-                checkNewValues(tableName, entry, newValues);
                 return newValues;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
@@ -230,48 +189,11 @@ public class Dialog {
         return splitInput;
     }
 
-    private void checkColumns(String tableName, DataSet checkedDataSet) {
-        Set<String> checkedColumns = checkedDataSet.getColumnNames();
+    private void checkColumns(String tableName, DataSet dataSet) {
+        Set<String> checkedColumns = dataSet.getColumnNames();
 
         for (String columnName : checkedColumns) {
             checkColumn(tableName, columnName);
         }
-    }
-
-    private void checkNewValues(String tableName, DataEntry entry, DataSet newValues) {
-        String columnName = entry.getColumn();
-        Object value = entry.getValue();
-        List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
-
-        if (!isNewValues(newValues, updatedRows)) {
-            throw new IllegalArgumentException("Your entries are equivalent to the updated");
-        }
-    }
-
-    private List<DataSet> getUpdatedRows(String tableName, String columnName, Object value) {
-        List<DataSet> dataSets = manager.getDataContent(tableName);
-        List<DataSet> result = new LinkedList<>();
-
-        for (DataSet row : dataSets) {
-            if (row.get(columnName).equals(value)) {
-                result.add(row);
-            }
-        }
-
-        return result;
-    }
-
-    private boolean isNewValues(DataSet newValues, List<DataSet> updatedRows) {
-        for (String columnName : newValues.getColumnNames()) {
-            for (DataSet row : updatedRows) {
-                Object newValue = newValues.get(columnName);
-                Object updatedValue = row.get(columnName);
-                if (!newValue.equals(updatedValue)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }

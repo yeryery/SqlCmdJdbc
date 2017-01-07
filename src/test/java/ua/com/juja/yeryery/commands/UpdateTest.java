@@ -313,12 +313,7 @@ public class UpdateTest {
                 "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
-                "Error! Your entries are equivalent to the updated\n" +
-                "Try again, " +
-                "Enter the columnNames and its new values for updated row: \n" +
-                "updatedColumn1|newValue1|updatedColumn2|newValue2|...\n" +
-                "or type 'cancel' to go back]");
-        //cancel
+                "Your entries are equivalent to the updated]");
     }
 
     @Test
