@@ -6,12 +6,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.manager.DataSet;
-import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -44,7 +46,7 @@ public class InsertTest {
     @Test
     public void testInsert() throws SQLException {
         //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("5").thenReturn("Bob");
+        when(view.read()).thenReturn(selectedTable).thenReturn("id|5|name|Bob");
         when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
@@ -56,11 +58,11 @@ public class InsertTest {
                 "1. test, " +
                 "2. ttable, " +
                 "0. cancel (to go back), " +
-                "Enter new values you require, " +
-                "id, " +
-                //5
-                "name, " +
-                //Bob
+                //test
+                "Enter the columnNames and its new values: \n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "or type 'cancel' to go back, " +
+                //id|5|name|Bob
                 "You have successfully entered new data into the table 'test', " +
                 "+--+----+\n" +
                 "|id|name|\n" +
@@ -69,34 +71,6 @@ public class InsertTest {
                 "+--+----+\n" +
                 "|2 |Mike|\n" +
                 "+--+----+]");
-    }
-
-    @Test
-    public void testInsertWithSqlException() throws SQLException {
-        //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("notNumber").thenReturn("Bob");
-        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
-        //TODO
-
-        DataSet input = new DataSetImpl();
-        input.put("id", "notNumber");
-        input.put("name", "Bob");
-
-        doThrow(new SQLException()).when(manager).insert(selectedTable, input);
-
-        try {
-            manager.insert(selectedTable, input);
-        } catch (SQLException e) {
-            view.write("SQL ERROR: invalid input syntax for integer: \"notNumber\"\n" +
-                    "  Position: 41");
-        }
-
-        //when
-        command.process("insert");
-
-        //then
-        verify(view).write("SQL ERROR: invalid input syntax for integer: \"notNumber\"\n" +
-                "  Position: 41");
     }
 
     @Test

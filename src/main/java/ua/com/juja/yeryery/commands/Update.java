@@ -33,7 +33,7 @@ public class Update implements Command {
 
         String currentTableName = dialog.selectTable(ACTION);
         DataEntry definingEntry = dialog.defineRow(currentTableName, ACTION);
-        DataSet newValues = dialog.getNewEntries(currentTableName, definingEntry);
+        DataSet newValues = dialog.getNewEntries(currentTableName);
         checkNewValues(currentTableName, definingEntry, newValues);
 
         try {

@@ -166,13 +166,12 @@ public class Dialog {
         return result;
     }
 
-    public DataSet getNewEntries(String tableName, DataEntry entry) {
+    public DataSet getNewEntries(String tableName) {
         while (true) {
-            DataSet newValues;
-            String message = "Enter the columnNames and its new values for updated row: \n" +
-                    "updatedColumn1|newValue1|updatedColumn2|newValue2|...\nor type 'cancel' to go back";
+            String message = "Enter the columnNames and its new values: \n" +
+                    "columnName1|newValue1|columnName2|newValue2|...\nor type 'cancel' to go back";
             try {
-                newValues = getInputByTwo(message);
+                DataSet newValues = getInputByTwo(message);
                 checkColumns(tableName, newValues);
                 return newValues;
             } catch (IllegalArgumentException e) {

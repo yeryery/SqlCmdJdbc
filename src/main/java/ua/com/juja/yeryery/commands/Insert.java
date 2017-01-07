@@ -1,12 +1,10 @@
 package ua.com.juja.yeryery.commands;
 
 import ua.com.juja.yeryery.manager.DataSet;
-import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.Set;
 
 public class Insert implements Command {
 
@@ -31,7 +29,7 @@ public class Insert implements Command {
         try {
             String currentTableName = dialog.selectTable(ACTION);
             TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
-            DataSet insertedRow = getNewRow(currentTableName);
+            DataSet insertedRow = dialog.getNewEntries(currentTableName);
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
             tablePrinter.print();
@@ -40,18 +38,5 @@ public class Insert implements Command {
             view.write("Try again.");
             process(input);
         }
-    }
-
-    private DataSet getNewRow(String currentTableName) {
-        Set<String> tableColumns = manager.getTableColumns(currentTableName);
-        view.write("Enter new values you require");
-
-        DataSet dataSet = new DataSetImpl();
-        for (String columnName : tableColumns) {
-            view.write(columnName);
-            Object value = view.read();
-            dataSet.put(columnName, value);
-        }
-        return dataSet;
     }
 }
