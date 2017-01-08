@@ -44,8 +44,8 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
                 //newTable
-                "Enter the name of columns and its type for new table: \n" +
-                "columnName1|columnType1|columnName2|columnType2|...\n" +
+                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back, " +
                 //someColumnName|text
                 "Your table 'newTable' have successfully created!]");
@@ -94,8 +94,8 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
                 //newTable
-                "Enter the name of columns and its type for new table: \n" +
-                "columnName1|columnType1|columnName2|columnType2|...\n" +
+                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back]");
                 //cancel
     }
