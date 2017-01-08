@@ -6,6 +6,7 @@ import ua.com.juja.yeryery.manager.DataSetImpl;
 public class Parser {
 
     public static int parsedInt;
+    private static String delimiter = "\\|";
 
     public static boolean isParsable(String data) {
         boolean parsable = true;
@@ -25,52 +26,54 @@ public class Parser {
         }
     }
 
-    private static int count(String data, String delimiter) {
+    private static int count(String data) {
         String[] splitData = data.split(delimiter);
         return splitData.length;
     }
 
-    public static String[] splitData(String data, String sample, String delimiter) {
-        int sampleSize = count(sample, delimiter);
-        int dataSize = count(data, delimiter);
+    public static String[] splitBySample(String input, String sample) {
+        String[] splitData = splitInput(input);
+        assertSize(input, sample);
 
-        if (data.equals("cancel")) {
-            throw new CancelException();
-        }
+        return splitData ;
+    }
+
+    private static void assertSize(String input, String sample) {
+        int sampleSize = count(sample);
+        int dataSize = count(input);
 
         if (dataSize != sampleSize) {
             throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
                     "Expected %s, and you have entered %s", sampleSize, dataSize));
         }
-
-        String[] inputData = data.split(delimiter);
-
-        return inputData ;
     }
 
-    public static DataSet splitByTwo(String input, String delimiter) {
+    public static DataSet splitByPairs(String input) {
         //TODO refactor
-        int dataSize = count(input, delimiter);
-
-        if (input.equals("cancel")) {
-            throw new CancelException();
-        }
+        String[] splitData = splitInput(input);
+        int dataSize = splitData.length;
 
         if (dataSize % 2 != 0) {
             throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
                     "Expected even number of parameters (2, 4 and so on) and you have entered %s", dataSize));
         }
 
-        String[] splitInput = input.split(delimiter);
         DataSet splitDataSet = new DataSetImpl();
 
         for (int i = 0; i < dataSize; i++) {
-            String columnName = splitInput[i];
+            String columnName = splitData[i];
             i++;
-            Object value = defineType(splitInput[i]);
+            Object value = defineType(splitData[i]);
             splitDataSet.put(columnName, value);
         }
 
         return splitDataSet;
+    }
+
+    public static String[] splitInput(String input) {
+        if (input.equals("cancel")) {
+            throw new CancelException();
+        }
+        return input.split(delimiter);
     }
 }
