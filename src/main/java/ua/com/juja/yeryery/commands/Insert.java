@@ -29,7 +29,7 @@ public class Insert implements Command {
         try {
             String currentTableName = dialog.selectTable(ACTION);
             TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
-            DataSet insertedRow = dialog.getNewEntries(currentTableName);
+            DataSet insertedRow = dialog.getInputEntries(currentTableName, ACTION);
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
             tablePrinter.print();

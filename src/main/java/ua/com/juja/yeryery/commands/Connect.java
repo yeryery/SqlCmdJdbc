@@ -27,7 +27,7 @@ public class Connect implements Command {
 
         String[] splitInput;
         try {
-            splitInput = Parser.splitData(input, commandSample, delimiter);
+            splitInput = Parser.splitBySample(input, commandSample);
         } catch (IllegalArgumentException e) {
             throw new ConnectException(e.getCutMessage());
         }

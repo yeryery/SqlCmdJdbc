@@ -32,8 +32,8 @@ public class Update implements Command {
         Dialog dialog = new Dialog(view, manager);
 
         String currentTableName = dialog.selectTable(ACTION);
-        DataEntry definingEntry = dialog.defineRow(currentTableName, ACTION);
-        DataSet newValues = dialog.getNewEntries(currentTableName);
+        DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
+        DataSet newValues = dialog.getInputEntries(currentTableName, ACTION);
         checkNewValues(currentTableName, definingEntry, newValues);
 
         try {

@@ -25,7 +25,7 @@ public class Delete implements Command {
         Dialog dialog = new Dialog(view, manager);
 
         String currentTableName = dialog.selectTable(ACTION);
-        DataEntry definingEntry = dialog.defineRow(currentTableName, ACTION);
+        DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
 
         TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 
