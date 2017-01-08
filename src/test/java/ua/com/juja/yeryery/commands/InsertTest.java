@@ -59,7 +59,7 @@ public class InsertTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //test
-                "Enter the columnNames and its new values: \n" +
+                "Enter the columnNames and its new values of the row you want to insert: \n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|5|name|Bob

@@ -108,26 +108,29 @@ public class Dialog {
         }
     }
 
-    public DataEntry defineRow(String tableName, String action) {
+    public DataEntry findRow(String tableName, String action) {
         while (true) {
             try {
-                DataEntry input = getInput(action);
-                checkEntry(tableName, input);
-                return input;
+                DataEntry entry = getEntry(action);
+                checkEntry(tableName, entry);
+                return entry;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
             }
         }
     }
 
-    private DataEntry getInput(String action) throws IllegalArgumentException {
-        String message = "Enter the columnName and defining value of the row you want to %s: %s\nor type 'cancel' to go back";
+    private DataEntry getEntry(String action) throws IllegalArgumentException {
         String sample = "columnName|value";
-        view.write(String.format(message, action, sample));
-
+        String message = String.format("Enter the columnName and defining value of the row you want to %s: %s\nor type 'cancel' to go back", action, sample);
+        view.write(message);
         String inputData = view.read();
-        String delimiter = "\\|";
-        String[] split = Parser.splitData(inputData, sample, delimiter);
+
+        return getInput(inputData, sample);
+    }
+
+    private DataEntry getInput(String input, String sample) {
+        String[] split = Parser.splitBySample(input, sample);
         String columnName = split[0];
         Object value = Parser.defineType(split[1]);
 
@@ -166,26 +169,25 @@ public class Dialog {
         return result;
     }
 
-    public DataSet getNewEntries(String tableName) {
+    public DataSet getInputEntries(String tableName, String action) {
         while (true) {
-            String message = "Enter the columnNames and its new values: \n" +
-                    "columnName1|newValue1|columnName2|newValue2|...\nor type 'cancel' to go back";
             try {
-                DataSet newValues = getInputByTwo(message);
-                checkColumns(tableName, newValues);
-                return newValues;
+                DataSet newEntries = getInputByPairs(action);
+                checkColumns(tableName, newEntries);
+                return newEntries;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
             }
         }
     }
 
-    public DataSet getInputByTwo(String message) {
+    public DataSet getInputByPairs(String action) {
+        String sample = "columnName1|newValue1|columnName2|newValue2|...";
+        String message = String.format("Enter the columnNames and its new values of the row you want to %s: \n%s\nor type 'cancel' to go back", action, sample);
         view.write(message);
         String inputData = view.read();
-        String delimiter = "\\|";
-        DataSet splitInput = Parser.splitByTwo(inputData, delimiter);
-        return splitInput;
+
+        return Parser.splitByPairs(inputData);
     }
 
     private void checkColumns(String tableName, DataSet dataSet) {
