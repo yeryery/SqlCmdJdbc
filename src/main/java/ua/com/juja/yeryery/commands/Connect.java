@@ -24,12 +24,13 @@ public class Connect implements Command {
     public void process(String input) throws ConnectException {
         String delimiter = "\\|";
         String commandSample = "connect|yeryery|postgres|postgrespass";
+        Dialog dialog = new Dialog(view, manager);
 
         String[] splitInput;
         try {
-            splitInput = Parser.splitBySample(input, commandSample);
+            splitInput = dialog.splitBySample(input, commandSample);
         } catch (IllegalArgumentException e) {
-            throw new ConnectException(e.getCutMessage());
+            throw new ConnectException(e.getShortMessage());
         }
         String database = splitInput[1];
         String username = splitInput[2];

@@ -69,7 +69,7 @@ public class CreateTest {
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back, " +
                 //someColumnName|text|thirdParameter
-                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
+                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on), and you have entered 3\n" +
                 "Try again, Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back]");

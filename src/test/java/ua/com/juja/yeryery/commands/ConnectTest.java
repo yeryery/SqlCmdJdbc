@@ -57,7 +57,7 @@ public class ConnectTest {
             command.process("connect|");
             fail("Expect ConnectException");
         } catch (ConnectException e) {
-            assertEquals("Error! Wrong number of parameters. Expected 4, and you have entered 1\n" +
+            assertEquals("Error! Wrong number of parameters. Expected 4 parameters, and you have entered 1\n" +
                     "Try again", e.getMessage());
         }
     }
@@ -69,7 +69,7 @@ public class ConnectTest {
             command.process("connect|argument2|argument3|argument4|argument5");
             fail("Expect ConnectException");
         } catch (ConnectException e) {
-            assertEquals("Error! Wrong number of parameters. Expected 4, and you have entered 5\n" +
+            assertEquals("Error! Wrong number of parameters. Expected 4 parameters, and you have entered 5\n" +
                     "Try again", e.getMessage());
         }
     }

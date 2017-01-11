@@ -32,7 +32,8 @@ public class Create implements Command {
             String setColumnsMessage = "Enter the columnNames and its datatypes of the table you want to create:\n" +
                     "columnName1|dataType1|columnName2|dataType2|...\n" +
                     "or type 'cancel' to go back";
-            DataSet inputColumns = getInputColumns(setColumnsMessage, dialog);
+
+            DataSet inputColumns = getNewColumns(setColumnsMessage, dialog);
             manager.create(currentTableName, inputColumns);
             view.write(String.format("Your table '%s' have successfully created!", currentTableName));
         } catch (SQLException e) {
@@ -42,11 +43,11 @@ public class Create implements Command {
         }
     }
 
-    private DataSet getInputColumns(String message, Dialog dialog) {
+    private DataSet getNewColumns(String message, Dialog dialog) {
         while (true) {
             try {
-                DataSet inputColumns = dialog.getInputByPairs(message);
-                checkInputColumns(inputColumns);
+                DataSet inputColumns = dialog.getEntries(message);
+                checkNewColumns(inputColumns);
                 return inputColumns;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
@@ -54,7 +55,7 @@ public class Create implements Command {
         }
     }
 
-    private void checkInputColumns(DataSet dataSet) {
+    private void checkNewColumns(DataSet dataSet) {
         Set<String> checkedColumns = dataSet.getColumnNames();
 
         for (String columnName : checkedColumns) {
@@ -87,9 +88,7 @@ public class Create implements Command {
         if (tableName.equals("cancel")) {
             throw new CancelException();
         }
-        if (existName(names, tableName)) {
-            throw new IllegalArgumentException(String.format("Table with name '%s' already exists\n%s", tableName, names.toString()));
-        }
+        existName(names, tableName);
     }
 
     private void checkFirstLetter(String name) {
@@ -100,8 +99,9 @@ public class Create implements Command {
         }
     }
 
-    private boolean existName(Set<String> names, String tableName) {
-        return names.contains(tableName);
+    private void existName(Set<String> names, String tableName) {
+        if (names.contains(tableName)) {
+            throw new IllegalArgumentException(String.format("Table with name '%s' already exists\n%s", tableName, names.toString()));
+        }
     }
 }
-
