@@ -9,8 +9,8 @@ public class Dialog {
 
     private View view;
     private DatabaseManager manager;
-    private String cancelInput = "or type 'cancel' to go back";
-    private String delimiter = "\\|";
+    private static final String cancelInput = "or type 'cancel' to go back";
+    private static final String delimiter = "\\|";
 
     public Dialog(View view, DatabaseManager manager) {
         this.view = view;
@@ -19,19 +19,18 @@ public class Dialog {
 
     public String selectTable(String action) {
         Map<Integer, String> tableList = getTableList();
-        String tableName;
 
         while (true) {
             printTableList(action, tableList);
 
             try {
-                tableName = getTableName(tableList);
-                break;
+                String input = view.read();
+                checkCancelOrZero(input);
+                return findInputTable(input, tableList);
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
             }
         }
-        return tableName;
     }
 
     private Map<Integer, String> getTableList() {
@@ -59,10 +58,7 @@ public class Dialog {
         view.write(0 + ". " + "cancel (to go back)");
     }
 
-    private String getTableName(Map<Integer, String> tableList) {
-        String input = view.read();
-        checkCancelOrZero(input);
-
+    private String findInputTable(String input, Map<Integer, String> tableList) {
         String tableName;
         if (Parser.isParsable(input)) {
             int tableNumber = Parser.parsedInt;
@@ -90,6 +86,36 @@ public class Dialog {
     private void checkTableName(String tableName, Map<Integer, String> tableList) {
         if (!tableList.containsValue(tableName)) {
             throw new IllegalArgumentException(String.format("Table with name '%s' doesn't exist", tableName));
+        }
+    }
+
+    public String nameTable() {
+        Set<String> names = manager.getTableNames();
+
+        while (true) {
+            String message = "Enter the name of your table " + cancelInput;
+            view.write(message);
+            String tableName = view.read();
+
+            try {
+                checkNewName(names, tableName);
+                return tableName;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+                nameTable();
+            }
+        }
+    }
+
+    private void checkNewName(Set<String> names, String tableName) {
+        checkFirstLetter(tableName);
+        checkCancel(tableName);
+        checkExistsName(names, tableName);
+    }
+
+    private void checkExistsName(Set<String> names, String tableName) {
+        if (names.contains(tableName)) {
+            throw new IllegalArgumentException(String.format("Table with name '%s' already exists\n%s", tableName, names.toString()));
         }
     }
 
@@ -132,8 +158,14 @@ public class Dialog {
         return new DataEntryImpl(columnName, value);
     }
 
-    public String[] splitBySample(String message, String sample) {
+    private String[] splitBySample(String message, String sample) {
         String input = getInput(message);
+        checkSizeBySample(input, sample);
+
+        return input.split(delimiter);
+    }
+
+    public String[] splitConnectInput(String input, String sample) {
         checkSizeBySample(input, sample);
 
         return input.split(delimiter);
@@ -146,7 +178,7 @@ public class Dialog {
         return input;
     }
 
-    private static void checkCancel(String input) {
+    private void checkCancel(String input) {
         if (input.equals("cancel")) {
             throw new CancelException();
         }
@@ -195,14 +227,11 @@ public class Dialog {
     }
 
     public DataSet getNewEntries(String tableName, String action) {
-        String inputSample = "columnName1|newValue1|columnName2|newValue2|...";
-        String message = String.format("Enter the columnNames and its values of the row you want to %s:\n" +
-                "%s\n%s", action, inputSample, cancelInput);
-
         while (true) {
             try {
+                String message = newEntriesMessage(action);
                 DataSet newEntries = getEntries(message);
-                checkColumns(tableName, newEntries);
+                checkInputColumns(tableName, newEntries);
                 return newEntries;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
@@ -210,7 +239,13 @@ public class Dialog {
         }
     }
 
-    public DataSet getEntries(String message) {
+    private String newEntriesMessage(String action) {
+        String inputSample = "columnName1|newValue1|columnName2|newValue2|...";
+        return String.format("Enter the columnNames and its values of the row you want to %s:\n" +
+                "%s\n%s", action, inputSample, cancelInput);
+    }
+
+    private DataSet getEntries(String message) {
         String[] splitInput = splitByPairs(message);
 
         DataSet splitDataSet = new DataSetImpl();
@@ -240,7 +275,7 @@ public class Dialog {
         }
     }
 
-    private void checkColumns(String tableName, DataSet dataSet) {
+    private void checkInputColumns(String tableName, DataSet dataSet) {
         Set<String> checkedColumns = dataSet.getColumnNames();
 
         for (String columnName : checkedColumns) {
@@ -251,5 +286,40 @@ public class Dialog {
     private int count(String input) {
         String[] splitData = input.split(delimiter);
         return splitData.length;
+    }
+
+    public DataSet getNewColumns(String action) {
+        while (true) {
+            try {
+                String message = newColumnsMessage(action);
+                DataSet inputColumns = getEntries(message);
+                checkNewColumns(inputColumns);
+                return inputColumns;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+            }
+        }
+    }
+
+    private String newColumnsMessage(String action) {
+        String inputSample = "columnName1|dataType1|columnName2|dataType2|...";
+        return String.format("Enter the columnNames and its datatypes of the table you want to %s:\n" +
+                "%s\n%s", action, inputSample, cancelInput);
+    }
+
+    private void checkNewColumns(DataSet dataSet) {
+        Set<String> inputColumns = dataSet.getColumnNames();
+
+        for (String columnName : inputColumns) {
+            checkFirstLetter(columnName);
+        }
+    }
+
+    private void checkFirstLetter(String name) {
+        char firstLetter = name.charAt(0);
+        boolean isFirstLetter = (firstLetter >= 'a' && firstLetter <= 'z') || (firstLetter >= 'A' && firstLetter <= 'Z');
+        if (!isFirstLetter) {
+            throw new IllegalArgumentException(String.format("You have entered '%s' and name must begin with a letter", name));
+        }
     }
 }
