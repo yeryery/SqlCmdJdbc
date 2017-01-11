@@ -40,7 +40,7 @@ public class CreateTest {
         command.process("create");
 
         //then
-        shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
+        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //newTable
                 "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
@@ -63,7 +63,7 @@ public class CreateTest {
         }
 
         //then
-        shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
+        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //newTable
                 "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
@@ -91,7 +91,7 @@ public class CreateTest {
         }
 
         //then
-        shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
+        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //newTable
                 "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
@@ -113,11 +113,11 @@ public class CreateTest {
         }
 
         //then
-        shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
+        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //1newTable
                 "Error! You have entered '1newTable' and name must begin with a letter\n" +
                 "Try again, " +
-                "Enter the name of your table or 'cancel' to go back]");
+                "Enter the name of your table or type 'cancel' to go back]");
                 //cancel
     }
 
@@ -135,12 +135,12 @@ public class CreateTest {
         }
 
         //then
-        shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
+        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //1newTable
                 "Error! Table with name 'test' already exists\n" +
                 "[test, ttable]\n" +
                 "Try again, " +
-                "Enter the name of your table or 'cancel' to go back]");
+                "Enter the name of your table or type 'cancel' to go back]");
                 //cancel
     }
 
