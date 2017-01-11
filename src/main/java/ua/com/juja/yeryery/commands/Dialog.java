@@ -1,9 +1,6 @@
 package ua.com.juja.yeryery.commands;
 
-import ua.com.juja.yeryery.manager.DataEntry;
-import ua.com.juja.yeryery.manager.DataEntryImpl;
-import ua.com.juja.yeryery.manager.DataSet;
-import ua.com.juja.yeryery.manager.DatabaseManager;
+import ua.com.juja.yeryery.manager.*;
 import ua.com.juja.yeryery.view.View;
 
 import java.util.*;
@@ -12,6 +9,8 @@ public class Dialog {
 
     private View view;
     private DatabaseManager manager;
+    private String cancelInput = "or type 'cancel' to go back";
+    private String delimiter = "\\|";
 
     public Dialog(View view, DatabaseManager manager) {
         this.view = view;
@@ -62,7 +61,7 @@ public class Dialog {
 
     private String getTableName(Map<Integer, String> tableList) {
         String input = view.read();
-        checkCancel(input);
+        checkCancelOrZero(input);
 
         String tableName;
         if (Parser.isParsable(input)) {
@@ -76,7 +75,7 @@ public class Dialog {
         return tableName;
     }
 
-    private void checkCancel(String input) {
+    private void checkCancelOrZero(String input) {
         if (input.equals("cancel") || input.equals("0")) {
             throw new CancelException();
         }
@@ -109,9 +108,13 @@ public class Dialog {
     }
 
     public DataEntry findRow(String tableName, String action) {
+        String inputSample = "columnName|value";
+        String message = String.format("Enter the columnName and defining value of the row you want to %s: " +
+                "%s\n%s", action, inputSample, cancelInput);
+
         while (true) {
             try {
-                DataEntry entry = getEntry(action);
+                DataEntry entry = getEntry(message, inputSample);
                 checkEntry(tableName, entry);
                 return entry;
             } catch (IllegalArgumentException e) {
@@ -120,21 +123,43 @@ public class Dialog {
         }
     }
 
-    private DataEntry getEntry(String action) throws IllegalArgumentException {
-        String sample = "columnName|value";
-        String message = String.format("Enter the columnName and defining value of the row you want to %s: %s\nor type 'cancel' to go back", action, sample);
-        view.write(message);
-        String inputData = view.read();
+    private DataEntry getEntry(String message, String sample) {
+        String[] splitInput = splitBySample(message, sample);
 
-        return getInput(inputData, sample);
-    }
-
-    private DataEntry getInput(String input, String sample) {
-        String[] split = Parser.splitBySample(input, sample);
-        String columnName = split[0];
-        Object value = Parser.defineType(split[1]);
+        String columnName = splitInput[0];
+        Object value = Parser.defineType(splitInput[1]);
 
         return new DataEntryImpl(columnName, value);
+    }
+
+    public String[] splitBySample(String message, String sample) {
+        String input = getInput(message);
+        checkSizeBySample(input, sample);
+
+        return input.split(delimiter);
+    }
+
+    private String getInput(String message) {
+        view.write(message);
+        String input = view.read();
+        checkCancel(input);
+        return input;
+    }
+
+    private static void checkCancel(String input) {
+        if (input.equals("cancel")) {
+            throw new CancelException();
+        }
+    }
+
+    private void checkSizeBySample(String input, String sample) {
+        int sampleSize = count(sample);
+        int inputSize = count(input);
+
+        if (inputSize != sampleSize) {
+            throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
+                    "Expected %s parameters, and you have entered %s", sampleSize, inputSize));
+        }
     }
 
     private void checkEntry(String tableName, DataEntry entry) {
@@ -169,10 +194,14 @@ public class Dialog {
         return result;
     }
 
-    public DataSet getInputEntries(String tableName, String message) {
+    public DataSet getNewEntries(String tableName, String action) {
+        String inputSample = "columnName1|newValue1|columnName2|newValue2|...";
+        String message = String.format("Enter the columnNames and its values of the row you want to %s:\n" +
+                "%s\n%s", action, inputSample, cancelInput);
+
         while (true) {
             try {
-                DataSet newEntries = getInputByPairs(message);
+                DataSet newEntries = getEntries(message);
                 checkColumns(tableName, newEntries);
                 return newEntries;
             } catch (IllegalArgumentException e) {
@@ -181,11 +210,34 @@ public class Dialog {
         }
     }
 
-    public DataSet getInputByPairs(String message) {
-        view.write(message);
-        String inputData = view.read();
+    public DataSet getEntries(String message) {
+        String[] splitInput = splitByPairs(message);
 
-        return Parser.splitByPairs(inputData);
+        DataSet splitDataSet = new DataSetImpl();
+        for (int i = 0; i < splitInput.length; i++) {
+            String columnName = splitInput[i];
+            i++;
+            Object value = Parser.defineType(splitInput[i]);
+            splitDataSet.put(columnName, value);
+        }
+
+        return splitDataSet;
+    }
+
+    private String[] splitByPairs(String message) {
+        String input = getInput(message);
+        checkEvenSize(input);
+
+        return input.split(delimiter);
+    }
+
+    private void checkEvenSize(String input) {
+        int inputSize = count(input);
+
+        if (inputSize % 2 != 0) {
+            throw new IllegalArgumentException(String.format("Wrong number of parameters. " +
+                    "Expected even number of parameters (2, 4 and so on), and you have entered %s", inputSize));
+        }
     }
 
     private void checkColumns(String tableName, DataSet dataSet) {
@@ -194,5 +246,10 @@ public class Dialog {
         for (String columnName : checkedColumns) {
             checkColumn(tableName, columnName);
         }
+    }
+
+    private int count(String input) {
+        String[] splitData = input.split(delimiter);
+        return splitData.length;
     }
 }
