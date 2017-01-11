@@ -574,7 +574,7 @@ public class IntegrationTest {
                 //create
                 "Enter the name of your table or 'cancel' to go back\n" +
                 //somename
-                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //0
@@ -605,7 +605,7 @@ public class IntegrationTest {
                 //create
                 "Enter the name of your table or 'cancel' to go back\n" +
                 //1name
-                "Error! You have entered '1name' and tablename must begin with a letter\n" +
+                "Error! You have entered '1name' and name must begin with a letter\n" +
                 "Try again\n" +
                 "Enter the name of your table or 'cancel' to go back\n" +
                 //cancel
@@ -637,7 +637,7 @@ public class IntegrationTest {
                 //create
                 "Enter the name of your table or 'cancel' to go back\n" +
                 //somename
-                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //name|wrongType
@@ -678,7 +678,7 @@ public class IntegrationTest {
                 //create
                 "Enter the name of your table or 'cancel' to go back\n" +
                 //somename
-                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //name|text|age|int
@@ -764,7 +764,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notNumber|name|Mike|age|25
@@ -811,7 +811,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notNumber|name|Mike|age|25
@@ -823,7 +823,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|10|name|Mike|age|25
@@ -881,7 +881,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|10|name|Mike|age|25
@@ -1100,8 +1100,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|newPass
                 "You have successfully updated table 'test'\n" +
@@ -1122,8 +1122,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass2
                 "You have successfully updated table 'test'\n" +
@@ -1172,8 +1172,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|30
                 "You have successfully updated table 'test'\n" +
@@ -1194,8 +1194,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
                 "You have successfully updated table 'test'\n" +
@@ -1389,8 +1389,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1428,14 +1428,14 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass2|pass3
                 "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
                 "Try again\n" +
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1473,14 +1473,14 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //notExistingColumn|pass2
                 "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
                 "Try again\n" +
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1525,7 +1525,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|30|login|username3|password|pass3
@@ -1544,7 +1544,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|31|login|username4|password|pass3
@@ -1568,8 +1568,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass3
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username10
                 "You have successfully updated table 'test'\n" +
@@ -1640,8 +1640,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notNumber
                 "ERROR: column \"id\" is of type integer but expression is of type character varying\n" +
@@ -1688,8 +1688,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|12
                 "ERROR: duplicate key value violates unique constraint \"test_pkey\"\n" +
@@ -1734,7 +1734,7 @@ public class IntegrationTest {
                 "2. ttable\n" +
                 "0. cancel (to go back)\n" +
                 //ttable
-                "Enter the columnNames and its new values of the row you want to insert: \n" +
+                "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|1|name|Jack|age|20

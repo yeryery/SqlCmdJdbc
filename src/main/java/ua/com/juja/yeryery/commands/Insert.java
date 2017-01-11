@@ -25,11 +25,15 @@ public class Insert implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
+        String newEntriesMessage = "Enter the columnNames and its values of the row you want to insert:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "or type 'cancel' to go back";
+
+        String currentTableName = dialog.selectTable(ACTION);
+        DataSet insertedRow = dialog.getInputEntries(currentTableName, newEntriesMessage);
+        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 
         try {
-            String currentTableName = dialog.selectTable(ACTION);
-            TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
-            DataSet insertedRow = dialog.getInputEntries(currentTableName, ACTION);
             manager.insert(currentTableName, insertedRow);
             view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
             tablePrinter.print();

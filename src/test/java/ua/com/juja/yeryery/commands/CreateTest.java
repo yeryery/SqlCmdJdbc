@@ -3,8 +3,6 @@ package ua.com.juja.yeryery.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.manager.DataSet;
-import ua.com.juja.yeryery.manager.DataSetImpl;
 import ua.com.juja.yeryery.manager.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
@@ -44,7 +42,7 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
                 //newTable
-                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back, " +
                 //someColumnName|text
@@ -52,31 +50,32 @@ public class CreateTest {
     }
 
     @Test
-    public void testCreateWithSqlException() throws SQLException {
+    public void testCreateInputOddNumberOfParameters() {
         //given
         String inputTableName = "newTable";
-        String inputNameAndType = "someColumnName|wrongType";
-        when(view.read()).thenReturn(inputTableName).thenReturn(inputNameAndType);
-
-        DataSet dataTypes = new DataSetImpl();
-        doThrow(new SQLException()).when(manager).create(inputTableName, dataTypes);
-
-        try {
-            manager.create(inputTableName, dataTypes);
-        } catch (SQLException e) {
-            view.write("ERROR: type \"wrongtype\" does not exist\n" +
-                    "  Position: 67");
-        }
+        String inputNameAndType = "someColumnName|text|thirdParameter";
+        when(view.read()).thenReturn(inputTableName).thenReturn(inputNameAndType).thenReturn("cancel");
 
         //when
-        command.process("create");
+        try {
+            command.process("create");
+        } catch (CancelException e) {
+        }
 
         //then
-        verify(view).write("ERROR: type \"wrongtype\" does not exist\n" +
-                    "  Position: 67");
+        shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
+                //newTable
+                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                "columnName1|dataType1|columnName2|dataType2|...\n" +
+                "or type 'cancel' to go back, " +
+                //someColumnName|text|thirdParameter
+                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
+                "Try again, Enter the columnNames and its datatypes of the table you want to create:\n" +
+                "columnName1|dataType1|columnName2|dataType2|...\n" +
+                "or type 'cancel' to go back]");
+                //cancel
 
     }
-    //TODO test for wrong number of parameters
 
     @Test
     public void testCreateEnterTableNameAndCancel() {
@@ -94,7 +93,7 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
                 //newTable
-                "Enter the columnNames and its datatypes of the table you want to create: \n" +
+                "Enter the columnNames and its datatypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back]");
                 //cancel
@@ -116,7 +115,7 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or 'cancel' to go back, " +
                 //1newTable
-                "Error! You have entered '1newTable' and tablename must begin with a letter\n" +
+                "Error! You have entered '1newTable' and name must begin with a letter\n" +
                 "Try again, " +
                 "Enter the name of your table or 'cancel' to go back]");
                 //cancel

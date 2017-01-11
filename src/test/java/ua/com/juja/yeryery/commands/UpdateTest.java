@@ -58,8 +58,8 @@ public class UpdateTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
                 "You have successfully updated table 'test', " +
@@ -91,8 +91,8 @@ public class UpdateTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|5
                 "You have successfully updated table 'test', " +
@@ -210,8 +210,8 @@ public class UpdateTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -239,14 +239,14 @@ public class UpdateTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike " +
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|22|thirdParameter
                 "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
                 "Try again, " +
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -274,14 +274,14 @@ public class UpdateTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //notExistingColumn|2
                 "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
                 "Try again, " +
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back]");
         //cancel
     }
@@ -309,8 +309,8 @@ public class UpdateTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike
-                "Enter the columnNames and its new values of the row you want to update: \n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
+                "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
                 "or type 'cancel' to go back, " +
                 //id|2
                 "Your entries are equivalent to the updated]");

@@ -29,7 +29,10 @@ public class Create implements Command {
 
         try {
             String currentTableName = nameTable();
-            DataSet inputColumns = getInputColumns();
+            String setColumnsMessage = "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                    "columnName1|dataType1|columnName2|dataType2|...\n" +
+                    "or type 'cancel' to go back";
+            DataSet inputColumns = getInputColumns(setColumnsMessage, dialog);
             manager.create(currentTableName, inputColumns);
             view.write(String.format("Your table '%s' have successfully created!", currentTableName));
         } catch (SQLException e) {
@@ -39,13 +42,24 @@ public class Create implements Command {
         }
     }
 
-    private DataSet getInputColumns() {
-        String sample = "columnName1|dataType1|columnName2|dataType2|...";
-        String message = String.format("Enter the columnNames and its datatypes of the table you want to %s: \n%s\nor type 'cancel' to go back", ACTION, sample);
-        view.write(message);
-        String inputData = view.read();
+    private DataSet getInputColumns(String message, Dialog dialog) {
+        while (true) {
+            try {
+                DataSet inputColumns = dialog.getInputByPairs(message);
+                checkInputColumns(inputColumns);
+                return inputColumns;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getMessage());
+            }
+        }
+    }
 
-        return Parser.splitByPairs(inputData);
+    private void checkInputColumns(DataSet dataSet) {
+        Set<String> checkedColumns = dataSet.getColumnNames();
+
+        for (String columnName : checkedColumns) {
+            checkFirstLetter(columnName);
+        }
     }
 
     private String nameTable() {
@@ -68,20 +82,22 @@ public class Create implements Command {
     }
 
     private void checkNewName(Set<String> names, String tableName) {
+        checkFirstLetter(tableName);
+
         if (tableName.equals("cancel")) {
             throw new CancelException();
-        }
-        if (!isFirstLetter(tableName)) {
-            throw new IllegalArgumentException(String.format("You have entered '%s' and tablename must begin with a letter", tableName));
         }
         if (existName(names, tableName)) {
             throw new IllegalArgumentException(String.format("Table with name '%s' already exists\n%s", tableName, names.toString()));
         }
     }
 
-    private boolean isFirstLetter(String tableName) {
-        char firstLetter = tableName.charAt(0);
-        return (firstLetter >= 'a' && firstLetter <= 'z') && !(firstLetter >= 'A' && firstLetter <= 'Z');
+    private void checkFirstLetter(String name) {
+        char firstLetter = name.charAt(0);
+        boolean isFirstLetter = (firstLetter >= 'a' && firstLetter <= 'z') || (firstLetter >= 'A' && firstLetter <= 'Z');
+        if (!isFirstLetter) {
+            throw new IllegalArgumentException(String.format("You have entered '%s' and name must begin with a letter", name));
+        }
     }
 
     private boolean existName(Set<String> names, String tableName) {

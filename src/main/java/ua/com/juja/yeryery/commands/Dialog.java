@@ -169,10 +169,10 @@ public class Dialog {
         return result;
     }
 
-    public DataSet getInputEntries(String tableName, String action) {
+    public DataSet getInputEntries(String tableName, String message) {
         while (true) {
             try {
-                DataSet newEntries = getInputByPairs(action);
+                DataSet newEntries = getInputByPairs(message);
                 checkColumns(tableName, newEntries);
                 return newEntries;
             } catch (IllegalArgumentException e) {
@@ -181,9 +181,7 @@ public class Dialog {
         }
     }
 
-    public DataSet getInputByPairs(String action) {
-        String sample = "columnName1|newValue1|columnName2|newValue2|...";
-        String message = String.format("Enter the columnNames and its new values of the row you want to %s: \n%s\nor type 'cancel' to go back", action, sample);
+    public DataSet getInputByPairs(String message) {
         view.write(message);
         String inputData = view.read();
 

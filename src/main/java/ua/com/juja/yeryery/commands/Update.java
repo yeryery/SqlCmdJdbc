@@ -8,7 +8,6 @@ import ua.com.juja.yeryery.view.View;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class Update implements Command {
 
@@ -28,17 +27,19 @@ public class Update implements Command {
 
     @Override
     public void process(String input) {
-        Set<String> names = manager.getTableNames();
         Dialog dialog = new Dialog(view, manager);
+        String updatingEntriesMessage = "Enter the columnNames and its new values of the row you want to update:\n" +
+                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "or type 'cancel' to go back";
 
         String currentTableName = dialog.selectTable(ACTION);
         DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
-        DataSet newValues = dialog.getInputEntries(currentTableName, ACTION);
-        checkNewValues(currentTableName, definingEntry, newValues);
+        DataSet updatingEntries = dialog.getInputEntries(currentTableName, updatingEntriesMessage);
+        checkNewValues(currentTableName, definingEntry, updatingEntries);
+        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 
         try {
-            TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
-            manager.update(currentTableName, newValues, definingEntry);
+            manager.update(currentTableName, updatingEntries, definingEntry);
             view.write(String.format("You have successfully updated table '%s'", currentTableName));
             tablePrinter.print();
         } catch (SQLException e) {
