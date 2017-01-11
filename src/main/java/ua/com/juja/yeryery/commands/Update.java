@@ -28,13 +28,10 @@ public class Update implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-        String updatingEntriesMessage = "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
-                "or type 'cancel' to go back";
 
         String currentTableName = dialog.selectTable(ACTION);
         DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
-        DataSet updatingEntries = dialog.getInputEntries(currentTableName, updatingEntriesMessage);
+        DataSet updatingEntries = dialog.getNewEntries(currentTableName, ACTION);
         checkNewValues(currentTableName, definingEntry, updatingEntries);
         TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 

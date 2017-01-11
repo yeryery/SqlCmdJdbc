@@ -12,7 +12,7 @@ public class IllegalArgumentException extends RuntimeException {
         return String.format("Error! %s\nTry again", message);
     }
 
-    public String getCutMessage() {
+    public String getShortMessage() {
         return message;
     }
 }

@@ -284,7 +284,7 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect|testbase
-                "Error! Wrong number of parameters. Expected 4, and you have entered 2\n" +
+                "Error! Wrong number of parameters. Expected 4 parameters, and you have entered 2\n" +
                 "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
@@ -1100,8 +1100,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|newPass
                 "You have successfully updated table 'test'\n" +
@@ -1122,8 +1122,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass2
                 "You have successfully updated table 'test'\n" +
@@ -1172,8 +1172,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|30
                 "You have successfully updated table 'test'\n" +
@@ -1194,8 +1194,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
                 "You have successfully updated table 'test'\n" +
@@ -1272,7 +1272,7 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22|something
-                "Error! Wrong number of parameters. Expected 2, and you have entered 3\n" +
+                "Error! Wrong number of parameters. Expected 2 parameters, and you have entered 3\n" +
                 "Try again\n" +
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
@@ -1389,8 +1389,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1428,14 +1428,14 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass2|pass3
-                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on) and you have entered 3\n" +
+                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on), and you have entered 3\n" +
                 "Try again\n" +
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1473,14 +1473,14 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //notExistingColumn|pass2
                 "Error! Table 'test' doesn't contain column 'notExistingColumn'\n" +
                 "Try again\n" +
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1568,8 +1568,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass3
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username10
                 "You have successfully updated table 'test'\n" +
@@ -1640,8 +1640,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notNumber
                 "ERROR: column \"id\" is of type integer but expression is of type character varying\n" +
@@ -1688,8 +1688,8 @@ public class IntegrationTest {
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
-                "Enter the columnNames and its new values of the row you want to update:\n" +
-                "columnName1|updatingValue1|columnName2|updatingValue2|...\n" +
+                "Enter the columnNames and its values of the row you want to update:\n" +
+                "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|12
                 "ERROR: duplicate key value violates unique constraint \"test_pkey\"\n" +

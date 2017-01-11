@@ -121,7 +121,7 @@ public class DeleteTest {
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Mike|something
-                "Error! Wrong number of parameters. Expected 2, and you have entered 3\n" +
+                "Error! Wrong number of parameters. Expected 2 parameters, and you have entered 3\n" +
                 "Try again, " +
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back]");
