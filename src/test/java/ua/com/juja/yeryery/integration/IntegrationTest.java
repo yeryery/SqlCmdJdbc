@@ -4,9 +4,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.yeryery.Main;
-import ua.com.juja.yeryery.Preparator;
-import ua.com.juja.yeryery.manager.DatabaseManager;
-import ua.com.juja.yeryery.manager.JdbcManager;
+import ua.com.juja.yeryery.model.DatabaseManager;
+import ua.com.juja.yeryery.model.JdbcManager;
 
 import java.io.PrintStream;
 
