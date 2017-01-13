@@ -10,8 +10,8 @@ public class Dialog {
 
     private View view;
     private DatabaseManager manager;
-    private static final String cancelInput = "or type 'cancel' to go back";
-    private static final String delimiter = "\\|";
+    private static final String CANCEL_INPUT = "or type 'cancel' to go back";
+    private static final String DELIMITER = "\\|";
 
     public Dialog(View view, DatabaseManager manager) {
         this.view = view;
@@ -94,7 +94,7 @@ public class Dialog {
         Set<String> names = manager.getTableNames();
 
         while (true) {
-            String message = "Enter the name of your table " + cancelInput;
+            String message = "Enter the name of your table " + CANCEL_INPUT;
             view.write(message);
             String tableName = view.read();
 
@@ -137,7 +137,7 @@ public class Dialog {
     public DataEntry findRow(String tableName, String action) {
         String inputSample = "columnName|value";
         String message = String.format("Enter the columnName and defining value of the row you want to %s: " +
-                "%s\n%s", action, inputSample, cancelInput);
+                "%s\n%s", action, inputSample, CANCEL_INPUT);
 
         while (true) {
             try {
@@ -163,13 +163,13 @@ public class Dialog {
         String input = getInput(message);
         checkSizeBySample(input, sample);
 
-        return input.split(delimiter);
+        return input.split(DELIMITER);
     }
 
     public String[] splitConnectInput(String input, String sample) {
         checkSizeBySample(input, sample);
 
-        return input.split(delimiter);
+        return input.split(DELIMITER);
     }
 
     private String getInput(String message) {
@@ -243,7 +243,7 @@ public class Dialog {
     private String newEntriesMessage(String action) {
         String inputSample = "columnName1|newValue1|columnName2|newValue2|...";
         return String.format("Enter the columnNames and its values of the row you want to %s:\n" +
-                "%s\n%s", action, inputSample, cancelInput);
+                "%s\n%s", action, inputSample, CANCEL_INPUT);
     }
 
     private DataSet getEntries(String message) {
@@ -264,7 +264,7 @@ public class Dialog {
         String input = getInput(message);
         checkEvenSize(input);
 
-        return input.split(delimiter);
+        return input.split(DELIMITER);
     }
 
     private void checkEvenSize(String input) {
@@ -285,7 +285,7 @@ public class Dialog {
     }
 
     private int count(String input) {
-        String[] splitData = input.split(delimiter);
+        String[] splitData = input.split(DELIMITER);
         return splitData.length;
     }
 
@@ -305,7 +305,7 @@ public class Dialog {
     private String newColumnsMessage(String action) {
         String inputSample = "columnName1|dataType1|columnName2|dataType2|...";
         return String.format("Enter the columnNames and its datatypes of the table you want to %s:\n" +
-                "%s\n%s", action, inputSample, cancelInput);
+                "%s\n%s", action, inputSample, CANCEL_INPUT);
     }
 
     private void checkNewColumns(DataSet dataSet) {

@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.integration;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,16 +16,16 @@ public class IntegrationTest {
 
     private ConfigurableInputStream in;
     private LogOutputStream out;
-    private static String database = "testbase";
+    private static final String DATABASE = "testbase";
     //put here your own username and password
-    private static String username = "postgres";
-    private static String password = "postgrespass";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "postgrespass";
+    private static DatabaseManager testManager = new JdbcManager();
+    private static Preparator preparator = new Preparator(testManager);
 
     @BeforeClass
-    public static void createTestDatabase() {
-        DatabaseManager testManager = new JdbcManager();
-        Preparator preparator = new Preparator(database, username, password);
-        preparator.setupDatabase(testManager);
+    public static void setupTestDB() {
+        preparator.setupDB(DATABASE, USERNAME, PASSWORD);
     }
 
     @Before
@@ -34,6 +35,11 @@ public class IntegrationTest {
 
         System.setIn(in);
         System.setOut(new PrintStream(out));
+    }
+
+    @AfterClass
+    public static void clearAfterTests() {
+        preparator.deleteDB(DATABASE, USERNAME, PASSWORD);
     }
 
     @Test
@@ -273,7 +279,7 @@ public class IntegrationTest {
     @Test
     public void testConnectWithWrongNumberOfParameters() {
         //given
-        in.add(String.format("connect|%s", database));
+        in.add(String.format("connect|%s", DATABASE));
         in.add("exit");
 
         //when
@@ -293,7 +299,7 @@ public class IntegrationTest {
     @Test
     public void testConnectWithWrongPassword() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, "wrongPass"));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, "wrongPass"));
         in.add("exit");
 
         //when
@@ -310,7 +316,7 @@ public class IntegrationTest {
     @Test
     public void testConnectWithWrongUsername() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, "wrongName", password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, "wrongName", PASSWORD));
         in.add("exit");
 
         //when
@@ -327,7 +333,7 @@ public class IntegrationTest {
     @Test
     public void testConnectToWrongDatabase() {
         //given
-        in.add(String.format("connect|%s|%s|%s", "wrongBase", username, password));
+        in.add(String.format("connect|%s|%s|%s", "wrongBase", USERNAME, PASSWORD));
         in.add("exit");
 
         //when
@@ -344,7 +350,7 @@ public class IntegrationTest {
     @Test
     public void testUnknownCommandAfterConnect() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("someCommand");
         in.add("exit");
 
@@ -368,7 +374,7 @@ public class IntegrationTest {
     @Test
     public void testContentAfterConnect() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("content");
         in.add("exit");
 
@@ -391,7 +397,7 @@ public class IntegrationTest {
     @Test
     public void testDisplayAndSelectNumberOfTable() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("display");
         in.add("1");
         in.add("exit");
@@ -426,7 +432,7 @@ public class IntegrationTest {
     @Test
     public void testDisplayAndSelectTableName() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("display");
         in.add("test");
         in.add("exit");
@@ -461,7 +467,7 @@ public class IntegrationTest {
     @Test
     public void testDisplayChooseWrongNumber() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("display");
         in.add("-1");
         in.add("0");
@@ -497,7 +503,7 @@ public class IntegrationTest {
     @Test
     public void testCreateAndCancel() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("cancel");
         in.add("exit");
@@ -523,7 +529,7 @@ public class IntegrationTest {
     @Test
     public void testCreateWithExistingName() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("test");
         in.add("cancel");
@@ -555,7 +561,7 @@ public class IntegrationTest {
     @Test
     public void testCreateAndCancelAfterNaming() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("somename");
         in.add("cancel");
@@ -586,7 +592,7 @@ public class IntegrationTest {
     @Test
     public void testCreateWhenNameIsNumeric() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("1name");
         in.add("cancel");
@@ -617,7 +623,7 @@ public class IntegrationTest {
     @Test
     public void testCreateWithSqlErrorWhenDataTypeDoesntExist() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("somename");
         in.add("name|wrongType");
@@ -654,7 +660,7 @@ public class IntegrationTest {
     @Test
     public void testCreateAfterConnectAndDrop() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("somename");
         in.add("name|text|age|int");
@@ -712,7 +718,7 @@ public class IntegrationTest {
     @Test
     public void testInsertAndCancel() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("cancel");
         in.add("exit");
@@ -741,7 +747,7 @@ public class IntegrationTest {
     @Test
     public void testInsertSQLExceptionAndExit() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("ttable");
         in.add("id|notNumber|name|Mike|age|25");
@@ -784,7 +790,7 @@ public class IntegrationTest {
     @Test
     public void testInsertSQLExceptionTryAgainAndDelete() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("ttable");
         in.add("id|notNumber|name|Mike|age|25");
@@ -854,7 +860,7 @@ public class IntegrationTest {
     @Test
     public void testInsertDataClearAndConfirm() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("ttable");
         in.add("id|10|name|Mike|age|25");
@@ -918,7 +924,7 @@ public class IntegrationTest {
     @Test
     public void testDropAndCancel() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("drop");
         in.add("cancel");
         in.add("exit");
@@ -947,7 +953,7 @@ public class IntegrationTest {
     @Test
     public void testDropAndSelectNull() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("drop");
         in.add("0");
         in.add("exit");
@@ -976,7 +982,7 @@ public class IntegrationTest {
     @Test
     public void testDropSelectTableAndNotConfirm() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("drop");
         in.add("ttable");
         in.add("n");
@@ -1008,7 +1014,7 @@ public class IntegrationTest {
     @Test
     public void testClearSelectTableNotConfirm() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("clear");
         in.add("ttable");
         in.add("n");
@@ -1040,7 +1046,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateAndSelectCancel() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("cancel");
         in.add("exit");
@@ -1069,7 +1075,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateStringValue() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("id|22");
@@ -1141,7 +1147,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateIntValue() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("login|username2");
@@ -1213,7 +1219,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateSelectTableAndCancel() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("cancel");
@@ -1246,7 +1252,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateAndInputThreeParameters() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("id|22|something");
@@ -1285,7 +1291,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateAndInputNotExistingColumn() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("notExistingColumn|22");
@@ -1324,7 +1330,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateAndInputNotExistingValue() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("id|notExistingValue");
@@ -1363,7 +1369,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateDefineUpdatedRowAndCancel() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("id|22");
@@ -1401,7 +1407,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateDefineUpdatedRowAndInputThreeParameters() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("id|22");
@@ -1446,7 +1452,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateInputNotExistingUpdatedColumn() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("id|22");
@@ -1491,7 +1497,7 @@ public class IntegrationTest {
     @Test
     public void testInsertUpdateAndDeleteTwoRows() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("test");
         in.add("id|30|login|username3|password|pass3");
@@ -1613,7 +1619,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateWithSQLException() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("login|username2");
@@ -1661,7 +1667,7 @@ public class IntegrationTest {
     @Test
     public void testUpdateWithSQLExceptionDuplicateKey() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
         in.add("test");
         in.add("login|username2");
@@ -1708,7 +1714,7 @@ public class IntegrationTest {
     @Test
     public void testInsertAndDelete() {
         //given
-        in.add(String.format("connect|%s|%s|%s", database, username, password));
+        in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("ttable");
         in.add("id|1|name|Jack|age|20");
