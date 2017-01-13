@@ -23,8 +23,6 @@ public interface DatabaseManager {
 
     void dropDB(String dataBaseName);
 
-    boolean isConnected();
-
     void insert(String tableName, DataSet input) throws SQLException;
 
     void update(String tableName, DataSet input, DataEntry entry) throws SQLException;

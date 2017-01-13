@@ -16,13 +16,24 @@ public class JdbcManager implements DatabaseManager {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Please, add jdbc jar to lib!", e);
         }
+        closeOpenedConnection();
 
         try {
             connection = DriverManager.getConnection(
-                    String.format("jdbc:postgresql://127.0.0.1:5432/%s", database), username, password);
+                    String.format("jdbc:postgresql://localhost:5432/%s", database), username, password);
         } catch (SQLException e) {
             connection = null;
             throw new RuntimeException(e);
+        }
+    }
+
+    private void closeOpenedConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -124,11 +135,6 @@ public class JdbcManager implements DatabaseManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public boolean isConnected() {
-        return connection != null;
     }
 
     @Override
