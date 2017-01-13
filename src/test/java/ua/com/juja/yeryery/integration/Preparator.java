@@ -16,8 +16,10 @@ public class Preparator {
     }
 
     public void setupDB(String database, String username, String password) {
+        Set<String> databases;
+
         disconnectFromDB(username, password);
-        Set<String> databases = manager.getDatabases();
+        databases = manager.getDatabases();
 
         if (!databases.contains(database)) {
             manager.createDB(database);
@@ -28,18 +30,19 @@ public class Preparator {
 
     private void setupTables() {
         DataSet testColumns = new DataSetImpl();
+        DataSet ttableColumns = new DataSetImpl();
+        DataSet testRow1 = new DataSetImpl();
+        DataSet testRow2 = new DataSetImpl();
+
         testColumns.put("login", "text");
         testColumns.put("password", "text");
 
-        DataSet ttableColumns = new DataSetImpl();
         ttableColumns.put("name", "text");
         ttableColumns.put("age", "int");
 
-        DataSet testRow1 = new DataSetImpl();
         testRow1.put("id", 12);
         testRow1.put("login", "username1");
         testRow1.put("password", "pass1");
-        DataSet testRow2 = new DataSetImpl();
         testRow2.put("id", 22);
         testRow2.put("login", "username2");
         testRow2.put("password", "pass2");

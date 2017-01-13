@@ -24,16 +24,20 @@ public class Connect implements Command {
     public void process(String input) throws ConnectException {
         String commandSample = "connect|yeryery|postgres|postgrespass";
         Dialog dialog = new Dialog(view, manager);
-
         String[] splitInput;
+        String database;
+        String username;
+        String password;
+
         try {
             splitInput = dialog.splitConnectInput(input, commandSample);
         } catch (IllegalArgumentException e) {
             throw new ConnectException(e.getShortMessage());
         }
-        String database = splitInput[1];
-        String username = splitInput[2];
-        String password = splitInput[3];
+
+        database = splitInput[1];
+        username = splitInput[2];
+        password = splitInput[3];
 
         manager.connect(database, username, password);
         view.write("Success!");

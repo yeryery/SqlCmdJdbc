@@ -44,6 +44,7 @@ public class Controller {
 
             for (Command command : commands) {
                 String typeCommand = "Type command or 'help'";
+
                 try {
                     if (command.canProcess(input)) {
                         command.process(input);
@@ -56,14 +57,17 @@ public class Controller {
                         view.write(connectToDatabase);
                         break;
                     }
+
                     if (e instanceof ExitException) {
                         return;
                     }
+
                     if (e instanceof CancelException) {
                         view.write("Command execution is canceled");
                         view.write(typeCommand);
                         break;
                     }
+
                     printError(e);
                     break;
                 }

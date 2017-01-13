@@ -325,8 +325,10 @@ public class UpdateTest {
         when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
 
         DataSet newValues = new DataSetImpl();
+        DataEntry definingEntry = new DataEntryImpl();
+
         newValues.put("id", "notNumber");
-        DataEntry definingEntry = new DataEntryImpl("name", "Mike");
+        definingEntry.setEntry("name", "Mike");
 
         doThrow(new SQLException()).when(manager).update(selectedTable, newValues, definingEntry);
 

@@ -25,7 +25,6 @@ public class Insert implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-
         String currentTableName = dialog.selectTable(ACTION);
         DataSet insertedRow = dialog.getNewEntries(currentTableName, ACTION);
         TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);

@@ -25,11 +25,10 @@ public class Create implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
+        String currentTableName = dialog.nameTable();
+        DataSet inputColumns = dialog.getNewColumns(ACTION);
 
         try {
-            String currentTableName = dialog.nameTable();
-
-            DataSet inputColumns = dialog.getNewColumns(ACTION);
             manager.create(currentTableName, inputColumns);
             view.write(String.format("Your table '%s' have successfully created!", currentTableName));
         } catch (SQLException e) {

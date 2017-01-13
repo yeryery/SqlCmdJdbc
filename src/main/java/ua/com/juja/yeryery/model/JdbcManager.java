@@ -69,9 +69,9 @@ public class JdbcManager implements DatabaseManager {
             while (rs.next()) {
                 list.add(rs.getString(1));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             list = null;
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return list;
     }
@@ -94,8 +94,9 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void clear(String tableName) {
+        String sql = "DELETE FROM " + tableName;
+
         try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM " + tableName;
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,9 +105,10 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void create(String tableName, DataSet dataSet) throws SQLException {
+        String dataTypes = getDataSetFormatted(dataSet);
+        String sql = String.format("CREATE TABLE %s(ID INT PRIMARY KEY NOT NULL, %s)", tableName, dataTypes);
+
         try (Statement st = connection.createStatement()) {
-            String dataTypes = getDataSetFormatted(dataSet);
-            String sql = String.format("CREATE TABLE %s(ID INT PRIMARY KEY NOT NULL, %s)", tableName, dataTypes);
             st.executeUpdate(sql);
         }
     }
@@ -123,8 +125,9 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void drop(String tableName) {
+        String sql = String.format("DROP TABLE %s", tableName);
+
         try (Statement st = connection.createStatement()) {
-            String sql = String.format("DROP TABLE %s", tableName);
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -133,8 +136,9 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void dropDB(String dataBaseName) {
+        String sql = String.format("DROP DATABASE %s", dataBaseName);
+
         try (Statement st = connection.createStatement()) {
-            String sql = String.format("DROP DATABASE %s", dataBaseName);
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -143,10 +147,11 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void insert(String tableName, DataSet input) throws SQLException {
+        String columnNames = getColumnNamesFormatted("%s,", input);
+        String values = getValuesFormatted("'%s',", input);
+        String sql = String.format("INSERT INTO %s (%s)VALUES (%s)", tableName, columnNames, values);
+
         try (Statement st = connection.createStatement()) {
-            String columnNames = getColumnNamesFormatted("%s,", input);
-            String values = getValuesFormatted("'%s',", input);
-            String sql = String.format("INSERT INTO %s (%s)VALUES (%s)", tableName, columnNames, values);
             st.executeUpdate(sql);
         }
     }
@@ -161,10 +166,12 @@ public class JdbcManager implements DatabaseManager {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             int sqlIndex = 1;
             List<Object> newValues = newDataSet.getValues();
+
             for (Object newValue : newValues) {
                 ps.setObject(sqlIndex, newValue);
                 sqlIndex++;
             }
+
             ps.setObject(sqlIndex, definingValue);
             ps.executeUpdate();
         }
@@ -174,8 +181,9 @@ public class JdbcManager implements DatabaseManager {
     public void delete(String tableName, DataEntry definingEntry) {
         String definingColumn = definingEntry.getColumn();
         Object definingValue = definingEntry.getValue();
-        try (Statement st = connection.createStatement()) {
             String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, definingColumn, definingValue);
+
+        try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -189,9 +197,9 @@ public class JdbcManager implements DatabaseManager {
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
-
             ResultSetMetaData rsmd = rs.getMetaData();
             int index = 0;
+
             while (rs.next()) {
                 DataSet dataSet = new DataSetImpl();
                 result.add(dataSet);
@@ -208,18 +216,22 @@ public class JdbcManager implements DatabaseManager {
     private String getColumnNamesFormatted(String format, DataSet input) {
         String result = "";
         Set<String> columnNames = input.getColumnNames();
+
         for (String columnName : columnNames) {
             result += String.format(format, columnName);
         }
+
         return result.substring(0, result.length() - 1);
     }
 
     private String getValuesFormatted(String format, DataSet input) {
         String result = "";
         List<Object> values = input.getValues();
+
         for (Object value : values) {
             result += String.format(format, value);
         }
+
         return result.substring(0, result.length() - 1);
     }
 
@@ -231,6 +243,7 @@ public class JdbcManager implements DatabaseManager {
             result += columnName + " ";
             result += input.get(columnName) + ",";
         }
+
         return result.substring(0, result.length() - 1);
     }
 }

@@ -23,8 +23,8 @@ public class Drop implements Command {
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
         String currentTableName = dialog.selectTable(ACTION);
-        dialog.confirmAction(ACTION, currentTableName);
 
+        dialog.confirmAction(ACTION, currentTableName);
         manager.drop(currentTableName);
         view.write(String.format("Table '%s' successfully dropped!", currentTableName));
     }

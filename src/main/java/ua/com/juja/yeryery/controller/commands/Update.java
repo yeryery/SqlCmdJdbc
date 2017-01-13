@@ -28,7 +28,6 @@ public class Update implements Command {
     @Override
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
-
         String currentTableName = dialog.selectTable(ACTION);
         DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
         DataSet updatingEntries = dialog.getNewEntries(currentTableName, ACTION);
@@ -57,8 +56,9 @@ public class Update implements Command {
     }
 
     private boolean isNewValues(DataSet newValues, String tableName, String columnName, Object value) {
-        List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
         for (String column : newValues.getColumnNames()) {
+            List<DataSet> updatedRows = getUpdatedRows(tableName, columnName, value);
+
             for (DataSet row : updatedRows) {
                 Object newValue = newValues.get(column);
                 Object updatedValue = row.get(column);
@@ -72,14 +72,14 @@ public class Update implements Command {
 
     private List<DataSet> getUpdatedRows(String tableName, String columnName, Object value) {
         List<DataSet> dataSets = manager.getDataContent(tableName);
-        List<DataSet> result = new LinkedList<>();
+        List<DataSet> updatedRows = new LinkedList<>();
 
         for (DataSet row : dataSets) {
             if (row.get(columnName).equals(value)) {
-                result.add(row);
+                updatedRows.add(row);
             }
         }
-        return result;
+        return updatedRows;
     }
 }
 

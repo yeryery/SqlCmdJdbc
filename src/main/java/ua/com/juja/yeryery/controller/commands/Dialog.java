@@ -21,17 +21,24 @@ public class Dialog {
     public String selectTable(String action) {
         Map<Integer, String> tableList = getTableList();
 
-        while (true) {
-            printTableList(action, tableList);
+        return getRequiredTable(action, tableList);
+    }
 
-            try {
-                String input = view.read();
-                checkCancelOrZero(input);
-                return findInputTable(input, tableList);
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-            }
+    private String getRequiredTable(String action, Map<Integer, String> tableList) {
+        String requiredTable = "";
+
+        printTableList(action, tableList);
+
+        try {
+            String input = view.read();
+
+            checkCancelOrZero(input);
+            requiredTable = findInputTable(input, tableList);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            getRequiredTable(action, tableList);
         }
+        return requiredTable;
     }
 
     private Map<Integer, String> getTableList() {
@@ -49,6 +56,7 @@ public class Dialog {
 
     private void printTableList(String action, Map<Integer, String> tableList) {
         String message = String.format("Select the table you need for '%s' command", action);
+
         view.write(message);
         tableList.remove(0);
 
@@ -61,8 +69,10 @@ public class Dialog {
 
     private String findInputTable(String input, Map<Integer, String> tableList) {
         String tableName;
+
         if (Parser.isParsable(input)) {
             int tableNumber = Parser.parsedInt;
+
             checkTableNumber(tableNumber, tableList);
             tableName = tableList.get(tableNumber);
         } else {
@@ -93,25 +103,44 @@ public class Dialog {
     public String nameTable() {
         Set<String> names = manager.getTableNames();
 
-        while (true) {
-            String message = "Enter the name of your table " + CANCEL_INPUT;
-            view.write(message);
-            String tableName = view.read();
+        return assignNewTableName(names);
+    }
 
-            try {
-                checkNewName(names, tableName);
-                return tableName;
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-                nameTable();
-            }
+    private String assignNewTableName(Set<String> names) {
+        String message = "Enter the name of your table " + CANCEL_INPUT;
+        String tableName;
+
+        view.write(message);
+        tableName = view.read();
+
+        try {
+            checkNewName(names, tableName);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            assignNewTableName(names);
         }
+        return tableName;
     }
 
     private void checkNewName(Set<String> names, String tableName) {
         checkFirstLetter(tableName);
         checkCancel(tableName);
         checkExistsName(names, tableName);
+    }
+
+    private void checkFirstLetter(String name) {
+        char firstLetter = name.charAt(0);
+        boolean isFirstLetter = (firstLetter >= 'a' && firstLetter <= 'z') || (firstLetter >= 'A' && firstLetter <= 'Z');
+
+        if (!isFirstLetter) {
+            throw new IllegalArgumentException(String.format("You have entered '%s' and name must begin with a letter", name));
+        }
+    }
+
+    private void checkCancel(String input) {
+        if (input.equals("cancel")) {
+            throw new CancelException();
+        }
     }
 
     private void checkExistsName(Set<String> names, String tableName) {
@@ -135,54 +164,51 @@ public class Dialog {
     }
 
     public DataEntry findRow(String tableName, String action) {
+        DataEntry entry = new DataEntryImpl();
+        //TODO initializator
         String inputSample = "columnName|value";
         String message = String.format("Enter the columnName and defining value of the row you want to %s: " +
                 "%s\n%s", action, inputSample, CANCEL_INPUT);
 
-        while (true) {
-            try {
-                DataEntry entry = getEntry(message, inputSample);
-                checkEntry(tableName, entry);
-                return entry;
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-            }
+        try {
+            entry = getEntry(message, inputSample);
+            checkEntry(tableName, entry);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            findRow(tableName, action);
         }
+        return entry;
     }
 
     private DataEntry getEntry(String message, String sample) {
         String[] splitInput = splitBySample(message, sample);
-
         String columnName = splitInput[0];
         Object value = Parser.defineType(splitInput[1]);
+        DataEntry entry = new DataEntryImpl();
 
-        return new DataEntryImpl(columnName, value);
+        entry.setEntry(columnName, value);
+        return entry;
     }
 
     private String[] splitBySample(String message, String sample) {
         String input = getInput(message);
-        checkSizeBySample(input, sample);
 
+        checkSizeBySample(input, sample);
         return input.split(DELIMITER);
     }
 
     public String[] splitConnectInput(String input, String sample) {
         checkSizeBySample(input, sample);
-
         return input.split(DELIMITER);
     }
 
     private String getInput(String message) {
+        String input;
+
         view.write(message);
-        String input = view.read();
+        input = view.read();
         checkCancel(input);
         return input;
-    }
-
-    private void checkCancel(String input) {
-        if (input.equals("cancel")) {
-            throw new CancelException();
-        }
     }
 
     private void checkSizeBySample(String input, String sample) {
@@ -197,13 +223,15 @@ public class Dialog {
 
     private void checkEntry(String tableName, DataEntry entry) {
         String columnName = entry.getColumn();
-        checkColumn(tableName, columnName);
         Object value = entry.getValue();
+
+        checkColumn(tableName, columnName);
         checkValue(tableName, columnName, value);
     }
 
     private void checkColumn(String tableName, String columnName) {
         Set<String> tableColumns = manager.getTableColumns(tableName);
+
         if (!tableColumns.contains(columnName)) {
             throw new IllegalArgumentException(String.format("Table '%s' doesn't contain column '%s'", tableName, columnName));
         }
@@ -212,6 +240,7 @@ public class Dialog {
     private void checkValue(String tableName, String columnName, Object value) {
         List<DataSet> tableContent = manager.getDataContent(tableName);
         List<Object> columnValues = getColumnValues(tableContent, columnName);
+
         if (!columnValues.contains(value)) {
             throw new IllegalArgumentException(String.format("Column '%s' doesn't contain value '%s'", columnName, value));
         }
@@ -223,21 +252,22 @@ public class Dialog {
         for (DataSet dataSet : dataSets) {
             result.add(dataSet.get(columnName));
         }
-
         return result;
     }
 
     public DataSet getNewEntries(String tableName, String action) {
-        while (true) {
+        DataSet newEntries = new DataSetImpl();
+
             try {
                 String message = newEntriesMessage(action);
-                DataSet newEntries = getEntries(message);
+
+                newEntries = getEntries(message);
                 checkInputColumns(tableName, newEntries);
-                return newEntries;
             } catch (IllegalArgumentException e) {
                 view.write(e.getMessage());
+                getNewEntries(tableName, action);
             }
-        }
+        return newEntries;
     }
 
     private String newEntriesMessage(String action) {
@@ -248,22 +278,21 @@ public class Dialog {
 
     private DataSet getEntries(String message) {
         String[] splitInput = splitByPairs(message);
-
         DataSet splitDataSet = new DataSetImpl();
+
         for (int i = 0; i < splitInput.length; i++) {
-            String columnName = splitInput[i];
-            i++;
+            String columnName = splitInput[i++];
             Object value = Parser.defineType(splitInput[i]);
+
             splitDataSet.put(columnName, value);
         }
-
         return splitDataSet;
     }
 
     private String[] splitByPairs(String message) {
         String input = getInput(message);
-        checkEvenSize(input);
 
+        checkEvenSize(input);
         return input.split(DELIMITER);
     }
 
@@ -290,16 +319,18 @@ public class Dialog {
     }
 
     public DataSet getNewColumns(String action) {
-        while (true) {
-            try {
-                String message = newColumnsMessage(action);
-                DataSet inputColumns = getEntries(message);
-                checkNewColumns(inputColumns);
-                return inputColumns;
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-            }
+        DataSet inputColumns = new DataSetImpl();
+
+        try {
+            String message = newColumnsMessage(action);
+
+            inputColumns = getEntries(message);
+            checkNewColumns(inputColumns);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            getNewColumns(action);
         }
+        return inputColumns;
     }
 
     private String newColumnsMessage(String action) {
@@ -313,14 +344,6 @@ public class Dialog {
 
         for (String columnName : inputColumns) {
             checkFirstLetter(columnName);
-        }
-    }
-
-    private void checkFirstLetter(String name) {
-        char firstLetter = name.charAt(0);
-        boolean isFirstLetter = (firstLetter >= 'a' && firstLetter <= 'z') || (firstLetter >= 'A' && firstLetter <= 'Z');
-        if (!isFirstLetter) {
-            throw new IllegalArgumentException(String.format("You have entered '%s' and name must begin with a letter", name));
         }
     }
 }
