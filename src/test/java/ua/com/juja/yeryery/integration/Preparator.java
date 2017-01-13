@@ -9,30 +9,24 @@ import java.util.Set;
 
 public class Preparator {
 
-    private String database;
-    private String username;
-    private String password;
+    private DatabaseManager manager;
 
-    public Preparator(String database, String username, String password) {
-        this.database = database;
-        this.username = username;
-        this.password = password;
+    public Preparator(DatabaseManager manager) {
+        this.manager = manager;
     }
 
-    public void setupDatabase(DatabaseManager manager) {
-        manager.connect("", username, password);
+    public void setupDB(String database, String username, String password) {
+        disconnectFromDB(username, password);
         Set<String> databases = manager.getDatabases();
 
         if (!databases.contains(database)) {
-        manager.createDB(database);
-        manager.connect(database, username, password);
-
-        setupTables(manager);
-        manager.connect("", username, password);
+            manager.createDB(database);
+            manager.connect(database, username, password);
+            setupTables();
         }
     }
 
-    private void setupTables(DatabaseManager manager) {
+    private void setupTables() {
         DataSet testColumns = new DataSetImpl();
         testColumns.put("login", "text");
         testColumns.put("password", "text");
@@ -58,5 +52,18 @@ public class Preparator {
         } catch (SQLException e) {
             e.getMessage();
         }
+    }
+
+    public void deleteDB(String database, String username, String password) {
+        try {
+            disconnectFromDB(username, password);
+            manager.dropDB(database);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void disconnectFromDB(String username, String password) {
+        manager.connect("", username, password);
     }
 }
