@@ -9,26 +9,29 @@ import java.util.Set;
 
 public class Preparator {
 
-    private DatabaseManager manager;
+    public static final String DATABASE = "testbase";
+    //put here your own username and password
+    public static final String USERNAME = "postgres";
+    public static final String PASSWORD = "postgrespass";
 
-    public Preparator(DatabaseManager manager) {
-        this.manager = manager;
-    }
-
-    public void setupDB(String database, String username, String password) {
+    public static void setupDB(DatabaseManager manager) {
         Set<String> databases;
 
-        disconnectFromDB(username, password);
+        try {
+            disconnectFromDB(manager);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Set your username and password in Preparator class");
+        }
         databases = manager.getDatabases();
 
-        if (!databases.contains(database)) {
-            manager.createDB(database);
-            manager.connect(database, username, password);
-            setupTables();
+        if (!databases.contains(DATABASE)) {
+            manager.createDB(DATABASE);
+            manager.connect(DATABASE, USERNAME, PASSWORD);
+            setupTables(manager);
         }
     }
 
-    private void setupTables() {
+    private static void setupTables(DatabaseManager manager) {
         DataSet testColumns = new DataSetImpl();
         DataSet ttableColumns = new DataSetImpl();
         DataSet testRow1 = new DataSetImpl();
@@ -57,16 +60,16 @@ public class Preparator {
         }
     }
 
-    public void deleteDB(String database, String username, String password) {
+    public static void deleteDB(DatabaseManager manager) {
         try {
-            disconnectFromDB(username, password);
-            manager.dropDB(database);
+            disconnectFromDB(manager);
+            manager.dropDB(DATABASE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void disconnectFromDB(String username, String password) {
-        manager.connect("", username, password);
+    private static void disconnectFromDB(DatabaseManager manager) {
+        manager.connect("", USERNAME, PASSWORD);
     }
 }

@@ -13,18 +13,18 @@ import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
 
+    private static final String DATABASE = Preparator.DATABASE;
+    //put here your own username and password
+    private static final String USERNAME = Preparator.USERNAME;
+    private static final String PASSWORD = Preparator.PASSWORD;
+
     private ConfigurableInputStream in;
     private LogOutputStream out;
-    private static final String DATABASE = "testbase";
-    //put here your own username and password
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "postgrespass";
     private static DatabaseManager testManager = new JdbcManager();
-    private static Preparator preparator = new Preparator(testManager);
 
     @BeforeClass
     public static void setupTestDB() {
-        preparator.setupDB(DATABASE, USERNAME, PASSWORD);
+        Preparator.setupDB(testManager);
     }
 
     @Before
@@ -38,7 +38,7 @@ public class IntegrationTest {
 
 //    @AfterClass
 //    public static void clearAfterTests() {
-//        preparator.deleteDB(DATABASE, USERNAME, PASSWORD);
+//        Preparator.deleteDB(testManager);
 //    }
 
     @Test
