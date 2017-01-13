@@ -1,8 +1,9 @@
-package ua.com.juja.yeryery.model;
+package ua.com.juja.yeryery.controller.commands;
 
 import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;
 import org.nocrala.tools.texttablefmt.Table;
+import ua.com.juja.yeryery.model.DataSet;
 
 import java.util.List;
 import java.util.Set;
