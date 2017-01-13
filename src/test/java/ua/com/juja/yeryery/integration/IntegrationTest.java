@@ -1,6 +1,5 @@
 package ua.com.juja.yeryery.integration;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,10 +36,10 @@ public class IntegrationTest {
         System.setOut(new PrintStream(out));
     }
 
-    @AfterClass
-    public static void clearAfterTests() {
-        preparator.deleteDB(DATABASE, USERNAME, PASSWORD);
-    }
+//    @AfterClass
+//    public static void clearAfterTests() {
+//        preparator.deleteDB(DATABASE, USERNAME, PASSWORD);
+//    }
 
     @Test
     public void testExit() {
@@ -308,8 +307,10 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
-                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"postgres\"\n" +
-                "Try again.\n" +
+                //connect|testBase|postgres|wrongPass
+                "Error! FATAL: password authentication failed for user \"postgres\"\n" +
+                "Try again\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
 
@@ -325,15 +326,17 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
-                "Error! org.postgresql.util.PSQLException: FATAL: password authentication failed for user \"wrongName\"\n" +
-                "Try again.\n" +
+                //connect|testBase|wrongName|postgrespass
+                "Error! FATAL: password authentication failed for user \"wrongName\"\n" +
+                "Try again\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
-    public void testConnectToWrongDatabase() {
+    public void testConnectToNotExistsDatabase() {
         //given
-        in.add(String.format("connect|%s|%s|%s", "wrongBase", USERNAME, PASSWORD));
+        in.add(String.format("connect|%s|%s|%s", "notExistsDB", USERNAME, PASSWORD));
         in.add("exit");
 
         //when
@@ -342,8 +345,10 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
-                "Error! org.postgresql.util.PSQLException: FATAL: database \"wrongBase\" does not exist\n" +
-                "Try again.\n" +
+                //connect|notExistsDB|postgres|postgrespass
+                "Error! FATAL: database \"notExistsDB\" does not exist\n" +
+                "Try again\n" +
+                //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
 

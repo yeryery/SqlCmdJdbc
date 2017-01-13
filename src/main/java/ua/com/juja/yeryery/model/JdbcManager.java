@@ -11,19 +11,23 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void connect(String database, String username, String password) {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Please, add jdbc jar to lib!", e);
-        }
+        findJdbcDriver();
         closeOpenedConnection();
 
         try {
-            connection = DriverManager.getConnection(
-                    String.format("jdbc:postgresql://localhost:5432/%s", database), username, password);
+            String url = String.format("jdbc:postgresql://localhost:5432/%s", database);
+            connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             connection = null;
-            throw new RuntimeException(e);
+            throw new DatabaseAccessException(e.getMessage());
+        }
+    }
+
+    private void findJdbcDriver() {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new JdbcDriverException("Please, add jdbc jar to lib!");
         }
     }
 

@@ -75,6 +75,6 @@ public class Controller {
         String message = e.getMessage();
 
         view.write("Error! " + message);
-        view.write("Try again.");
+        view.write("Try again");
     }
 }
