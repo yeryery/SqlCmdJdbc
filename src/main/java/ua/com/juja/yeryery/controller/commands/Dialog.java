@@ -83,7 +83,7 @@ public class Dialog {
     }
 
     private void checkCancelOrZero(String input) {
-        if (input.equals("cancel") || input.equals("0")) {
+        if (input.equalsIgnoreCase("cancel") || input.equals("0")) {
             throw new CancelException();
         }
     }
@@ -138,7 +138,7 @@ public class Dialog {
     }
 
     private void checkCancel(String input) {
-        if (input.equals("cancel")) {
+        if (input.equalsIgnoreCase("cancel")) {
             throw new CancelException();
         }
     }
@@ -153,19 +153,18 @@ public class Dialog {
         String confirm = "";
         String warning = String.format("Are you sure you want to %s table '%s'?", action, tableName);
 
-        while (!confirm.equals("y") && !confirm.equals("n")) {
+        while (!confirm.equalsIgnoreCase("y") && !confirm.equalsIgnoreCase("n")) {
             view.write(warning + " (y/n)");
             confirm = view.read();
         }
 
-        if (confirm.equals("n")) {
+        if (confirm.equalsIgnoreCase("n")) {
             throw new CancelException();
         }
     }
 
     public DataEntry findRow(String tableName, String action) {
         DataEntry entry = new DataEntryImpl();
-        //TODO initializator
         String inputSample = "columnName|value";
         String message = String.format("Enter the columnName and defining value of the row you want to %s: " +
                 "%s\n%s", action, inputSample, CANCEL_INPUT);
