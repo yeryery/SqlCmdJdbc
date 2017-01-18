@@ -3,7 +3,7 @@ package ua.com.juja.yeryery.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import ua.com.juja.yeryery.controller.commands.Util.ExitException;
+import ua.com.juja.yeryery.controller.commands.Utility.ExitException;
 import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.*;

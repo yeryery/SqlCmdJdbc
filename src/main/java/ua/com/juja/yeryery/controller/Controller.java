@@ -1,9 +1,9 @@
 package ua.com.juja.yeryery.controller;
 
 import ua.com.juja.yeryery.controller.commands.*;
-import ua.com.juja.yeryery.controller.commands.Util.CancelException;
-import ua.com.juja.yeryery.controller.commands.Util.ConnectException;
-import ua.com.juja.yeryery.controller.commands.Util.ExitException;
+import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import ua.com.juja.yeryery.controller.commands.Utility.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Utility.ExitException;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
