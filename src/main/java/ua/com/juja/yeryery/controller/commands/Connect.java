@@ -1,6 +1,8 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import ua.com.juja.yeryery.controller.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Util.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Util.Dialog;
+import ua.com.juja.yeryery.controller.commands.Util.IllegalArgumentException;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 

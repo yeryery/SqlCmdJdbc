@@ -1,4 +1,4 @@
-package ua.com.juja.yeryery.controller.commands;
+package ua.com.juja.yeryery.controller.commands.Util;
 
 import ua.com.juja.yeryery.model.DataSet;
 import ua.com.juja.yeryery.model.DatabaseManager;

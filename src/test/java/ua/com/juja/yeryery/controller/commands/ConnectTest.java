@@ -2,7 +2,7 @@ package ua.com.juja.yeryery.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.com.juja.yeryery.controller.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Util.ConnectException;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 

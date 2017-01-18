@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import ua.com.juja.yeryery.controller.commands.Util.CancelException;
 import ua.com.juja.yeryery.model.*;
 import ua.com.juja.yeryery.view.View;
 

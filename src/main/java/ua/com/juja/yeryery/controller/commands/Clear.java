@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.controller.commands;
 
+import ua.com.juja.yeryery.controller.commands.Util.Dialog;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 

@@ -1,4 +1,4 @@
-package ua.com.juja.yeryery.controller.commands;
+package ua.com.juja.yeryery.controller.commands.Util;
 
 import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;

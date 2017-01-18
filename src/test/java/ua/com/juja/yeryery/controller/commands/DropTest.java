@@ -3,9 +3,7 @@ package ua.com.juja.yeryery.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.controller.commands.CancelException;
-import ua.com.juja.yeryery.controller.commands.Command;
-import ua.com.juja.yeryery.controller.commands.Drop;
+import ua.com.juja.yeryery.controller.commands.Util.CancelException;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 

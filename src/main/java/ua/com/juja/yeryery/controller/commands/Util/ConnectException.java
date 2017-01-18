@@ -1,4 +1,4 @@
-package ua.com.juja.yeryery.controller;
+package ua.com.juja.yeryery.controller.commands.Util;
 
 public class ConnectException extends RuntimeException {
 

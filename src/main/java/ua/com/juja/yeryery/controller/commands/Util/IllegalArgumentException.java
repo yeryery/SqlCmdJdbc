@@ -1,4 +1,4 @@
-package ua.com.juja.yeryery.controller.commands;
+package ua.com.juja.yeryery.controller.commands.Util;
 
 public class IllegalArgumentException extends RuntimeException {
     private String message;
