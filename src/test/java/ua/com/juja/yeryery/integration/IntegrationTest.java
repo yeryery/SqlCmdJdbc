@@ -8,6 +8,7 @@ import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.model.JdbcManager;
 
 import java.io.PrintStream;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,6 +35,7 @@ public class IntegrationTest {
 
         System.setIn(in);
         System.setOut(new PrintStream(out));
+        Locale.setDefault(Locale.ENGLISH);
     }
 
 //    @AfterClass
