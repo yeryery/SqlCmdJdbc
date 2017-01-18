@@ -25,7 +25,7 @@ public class ClearTest {
         DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Clear(view, manager);
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
     }
@@ -41,7 +41,7 @@ public class ClearTest {
         //then
         shouldPrint("[Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "Are you sure you want to clear table 'test'? (y/n), " +
@@ -60,7 +60,7 @@ public class ClearTest {
         //then
         shouldPrint("[Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to clear table 'test'? (y/n), " +
@@ -82,7 +82,7 @@ public class ClearTest {
         //then
         shouldPrint("[Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "Are you sure you want to clear table 'test'? (y/n)]");
@@ -100,7 +100,7 @@ public class ClearTest {
         //then
         shouldPrint("[Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "Are you sure you want to clear table 'test'? (y/n), " +
@@ -160,14 +160,14 @@ public class ClearTest {
         //then
         shouldPrint("[Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select notExistingTable
                 "Error! Table with name 'notexistingtable' doesn't exist\n" +
                 "Try again, " +
                 "Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back)]");
                 //cancel)
     }
@@ -186,14 +186,14 @@ public class ClearTest {
         //then
         shouldPrint("[Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select 22
                 "Error! There is no table with number 22\n" +
                 "Try again, " +
                 "Select the table you need for 'clear' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back)]");
                 //cancel
     }

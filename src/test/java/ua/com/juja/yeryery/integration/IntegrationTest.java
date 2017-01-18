@@ -397,7 +397,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //content
-                "[test, ttable]\n" +
+                "[test, users]\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -423,7 +423,7 @@ public class IntegrationTest {
                 //display
                 "Select the table you need for 'display' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //select table number 1
                 "+--+---------+--------+\n" +
@@ -458,7 +458,7 @@ public class IntegrationTest {
                 //display
                 "Select the table you need for 'display' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //select test
                 "+--+---------+--------+\n" +
@@ -494,13 +494,13 @@ public class IntegrationTest {
                 //display
                 "Select the table you need for 'display' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //-1
                 "Error! There is no table with number -1\nTry again\n" +
                 "Select the table you need for 'display' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //0
                 "Command execution is canceled\n" +
@@ -557,7 +557,7 @@ public class IntegrationTest {
                 "Enter the name of your table or type 'cancel' to go back\n" +
                 //test
                 "Error! Table with name 'test' already exists\n" +
-                "[test, ttable]\n" +
+                "[test, users]\n" +
                 "Try again\n" +
                 "Enter the name of your table or type 'cancel' to go back\n" +
                 //cancel
@@ -702,7 +702,7 @@ public class IntegrationTest {
                 "Select the table you need for 'display' command\n" +
                 "1. somename\n" +
                 "2. test\n" +
-                "3. ttable\n" +
+                "3. users\n" +
                 "0. cancel (to go back)\n" +
                 //someName
                 "+--+----+---+\n" +
@@ -713,7 +713,7 @@ public class IntegrationTest {
                 "Select the table you need for 'drop' command\n" +
                 "1. somename\n" +
                 "2. test\n" +
-                "3. ttable\n" +
+                "3. users\n" +
                 "0. cancel (to go back)\n" +
                 //someName
                 "Are you sure you want to drop table 'somename'? (y/n)\n" +
@@ -744,7 +744,7 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -758,7 +758,7 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
-        in.add("ttable");
+        in.add("users");
         in.add("id|notNumber|name|Mike|age|25");
         in.add("cancel");
         in.add("exit");
@@ -775,19 +775,19 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notNumber|name|Mike|age|25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
-                "  Position: 41\n" +
+                "  Position: 40\n" +
                 "Try again.\n" +
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -801,12 +801,12 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
-        in.add("ttable");
+        in.add("users");
         in.add("id|notNumber|name|Mike|age|25");
-        in.add("ttable");
+        in.add("users");
         in.add("id|10|name|Mike|age|25");
         in.add("delete");
-        in.add("ttable");
+        in.add("users");
         in.add("id|10");
         in.add("exit");
 
@@ -822,26 +822,26 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|notNumber|name|Mike|age|25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
-                "  Position: 41\n" +
+                "  Position: 40\n" +
                 "Try again.\n" +
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|10|name|Mike|age|25
-                "You have successfully entered new data into the table 'ttable'\n" +
+                "You have successfully entered new data into the table 'users'\n" +
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +
@@ -849,13 +849,13 @@ public class IntegrationTest {
                 //delete
                 "Select the table you need for 'delete' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|10
-                "You have successfully deleted data from 'ttable'\n" +
+                "You have successfully deleted data from 'users'\n" +
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +
@@ -871,12 +871,12 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
-        in.add("ttable");
+        in.add("users");
         in.add("id|10|name|Mike|age|25");
         in.add("display");
-        in.add("ttable");
+        in.add("users");
         in.add("clear");
-        in.add("ttable");
+        in.add("users");
         in.add("y");
         in.add("exit");
 
@@ -892,14 +892,14 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|10|name|Mike|age|25
-                "You have successfully entered new data into the table 'ttable'\n" +
+                "You have successfully entered new data into the table 'users'\n" +
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +
@@ -907,9 +907,9 @@ public class IntegrationTest {
                 //display
                 "Select the table you need for 'display' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +
@@ -919,12 +919,12 @@ public class IntegrationTest {
                 //clear
                 "Select the table you need for 'clear' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
-                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                //users
+                "Are you sure you want to clear table 'users'? (y/n)\n" +
                 //y
-                "Table 'ttable' successfully cleared!\n" +
+                "Table 'users' successfully cleared!\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -950,7 +950,7 @@ public class IntegrationTest {
                 //drop
                 "Select the table you need for 'drop' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -979,7 +979,7 @@ public class IntegrationTest {
                 //drop
                 "Select the table you need for 'drop' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //0
                 "Command execution is canceled\n" +
@@ -993,7 +993,7 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("drop");
-        in.add("ttable");
+        in.add("users");
         in.add("n");
         in.add("exit");
 
@@ -1009,10 +1009,10 @@ public class IntegrationTest {
                 //drop
                 "Select the table you need for 'drop' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
-                "Are you sure you want to drop table 'ttable'? (y/n)\n" +
+                //users
+                "Are you sure you want to drop table 'users'? (y/n)\n" +
                 //n
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -1025,7 +1025,7 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("clear");
-        in.add("tTable");
+        in.add("users");
         in.add("n");
         in.add("exit");
 
@@ -1041,10 +1041,10 @@ public class IntegrationTest {
                 //clear
                 "Select the table you need for 'clear' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
-                "Are you sure you want to clear table 'ttable'? (y/n)\n" +
+                //users
+                "Are you sure you want to clear table 'users'? (y/n)\n" +
                 //n
                 "Command execution is canceled\n" +
                 "Type command or 'help'\n" +
@@ -1072,7 +1072,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1108,7 +1108,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1130,7 +1130,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1180,7 +1180,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1202,7 +1202,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1246,7 +1246,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1280,7 +1280,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1319,7 +1319,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1358,7 +1358,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1397,7 +1397,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1436,7 +1436,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1481,7 +1481,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1536,7 +1536,7 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnNames and its values of the row you want to insert:\n" +
@@ -1555,7 +1555,7 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnNames and its values of the row you want to insert:\n" +
@@ -1576,7 +1576,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1602,7 +1602,7 @@ public class IntegrationTest {
                 //delete
                 "Select the table you need for 'delete' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -1648,7 +1648,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1664,7 +1664,7 @@ public class IntegrationTest {
                 "Try again.\n" +
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1696,7 +1696,7 @@ public class IntegrationTest {
                 //update
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -1711,7 +1711,7 @@ public class IntegrationTest {
                 "Try again.\n" +
                 "Select the table you need for 'update' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -1725,11 +1725,11 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
-        in.add("ttable");
+        in.add("users");
         in.add("id|1|name|Jack|age|20");
 
         in.add("delete");
-        in.add("ttable");
+        in.add("users");
         in.add("name|Jack");
         in.add("exit");
 
@@ -1745,14 +1745,14 @@ public class IntegrationTest {
                 //insert
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //id|1|name|Jack|age|20
-                "You have successfully entered new data into the table 'ttable'\n" +
+                "You have successfully entered new data into the table 'users'\n" +
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +
@@ -1760,13 +1760,13 @@ public class IntegrationTest {
                 //delete
                 "Select the table you need for 'delete' command\n" +
                 "1. test\n" +
-                "2. ttable\n" +
+                "2. users\n" +
                 "0. cancel (to go back)\n" +
-                //ttable
+                //users
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //name|Jack
-                "You have successfully deleted data from 'ttable'\n" +
+                "You have successfully deleted data from 'users'\n" +
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +

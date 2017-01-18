@@ -26,7 +26,7 @@ public class CreateTest {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Create(view, manager);
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
     }
 
@@ -139,7 +139,7 @@ public class CreateTest {
         shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //1newTable
                 "Error! Table with name 'test' already exists\n" +
-                "[test, ttable]\n" +
+                "[test, users]\n" +
                 "Try again, " +
                 "Enter the name of your table or type 'cancel' to go back]");
                 //cancel

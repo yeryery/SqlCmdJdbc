@@ -54,7 +54,7 @@ public class Preparator {
             manager.create("test", testColumns);
             manager.insert("test", testRow1);
             manager.insert("test", testRow2);
-            manager.create("ttable", ttableColumns);
+            manager.create("users", ttableColumns);
         } catch (SQLException e) {
             e.getMessage();
         }

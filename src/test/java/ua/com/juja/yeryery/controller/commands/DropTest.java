@@ -25,7 +25,7 @@ public class DropTest {
         DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Drop(view, manager);
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
     }
@@ -41,7 +41,7 @@ public class DropTest {
         //then
         shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "Are you sure you want to drop table 'test'? (y/n), " +
@@ -60,7 +60,7 @@ public class DropTest {
         //then
         shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table number 1
                 "Are you sure you want to drop table 'test'? (y/n), " +
@@ -82,7 +82,7 @@ public class DropTest {
         //then
         shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "Are you sure you want to drop table 'test'? (y/n)]");
@@ -100,7 +100,7 @@ public class DropTest {
         //then
         shouldPrint("[Select the table you need for 'drop' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //Select table 'test'
                 "Are you sure you want to drop table 'test'? (y/n), " +

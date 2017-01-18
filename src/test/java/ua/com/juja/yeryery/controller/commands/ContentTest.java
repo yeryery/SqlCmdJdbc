@@ -1,11 +1,9 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import ua.com.juja.yeryery.controller.commands.Command;
-import ua.com.juja.yeryery.controller.commands.Content;
-import ua.com.juja.yeryery.model.DatabaseManager;
-import ua.com.juja.yeryery.view.View;
 import org.junit.Before;
 import org.junit.Test;
+import ua.com.juja.yeryery.model.DatabaseManager;
+import ua.com.juja.yeryery.view.View;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -31,14 +29,14 @@ public class ContentTest {
     @Test
     public void testList() {
         //given
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
 
         //when
         command.process("content");
 
         //then
-        verify(view).write("[test, ttable]");
+        verify(view).write("[test, users]");
     }
 
     @Test

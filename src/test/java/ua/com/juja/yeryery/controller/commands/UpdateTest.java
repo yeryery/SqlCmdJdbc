@@ -31,7 +31,7 @@ public class UpdateTest {
         view = mock(View.class);
         command = new Update(view, manager);
 
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
 
@@ -53,7 +53,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -86,7 +86,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -120,7 +120,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -145,7 +145,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -175,7 +175,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -205,7 +205,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -234,7 +234,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -269,7 +269,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
@@ -304,7 +304,7 @@ public class UpdateTest {
         //then
         shouldPrint("[Select the table you need for 'update' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to update: columnName|value\n" +

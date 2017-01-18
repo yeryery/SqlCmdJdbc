@@ -34,7 +34,7 @@ public class InsertTest {
         view = mock(View.class);
         command = new Insert(view, manager);
 
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
 
@@ -56,7 +56,7 @@ public class InsertTest {
         //then
         shouldPrint("[Select the table you need for 'insert' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnNames and its values of the row you want to insert:\n" +

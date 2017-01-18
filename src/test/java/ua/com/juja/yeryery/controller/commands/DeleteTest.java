@@ -33,7 +33,7 @@ public class DeleteTest {
         view = mock(View.class);
         command = new Delete(view, manager);
 
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
 
@@ -55,7 +55,7 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -84,7 +84,7 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -115,7 +115,7 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -146,7 +146,7 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -176,7 +176,7 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -203,7 +203,7 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //test
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
@@ -225,14 +225,14 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //notExistingTable
                 "Error! Table with name 'notexistingtable' doesn't exist\n" +
                 "Try again, " +
                 "Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back)]");
                 //cancel
     }
@@ -251,14 +251,14 @@ public class DeleteTest {
         //then
         shouldPrint("[Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back), " +
                 //22
                 "Error! There is no table with number 22\n" +
                 "Try again, " +
                 "Select the table you need for 'delete' command, " +
                 "1. test, " +
-                "2. ttable, " +
+                "2. users, " +
                 "0. cancel (to go back)]");
                 //cancel
     }
