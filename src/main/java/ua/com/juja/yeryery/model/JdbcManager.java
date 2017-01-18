@@ -220,6 +220,10 @@ public class JdbcManager implements DatabaseManager {
             result += String.format(format, columnName);
         }
 
+        return getTruncatedString(result);
+    }
+
+    private String getTruncatedString(String result) {
         return result.substring(0, result.length() - 1);
     }
 
@@ -231,7 +235,7 @@ public class JdbcManager implements DatabaseManager {
             result += String.format(format, value);
         }
 
-        return result.substring(0, result.length() - 1);
+        return getTruncatedString(result);
     }
 
     private String getDataSetFormatted(DataSet input) {
@@ -243,6 +247,6 @@ public class JdbcManager implements DatabaseManager {
             result += input.get(columnName) + ",";
         }
 
-        return result.substring(0, result.length() - 1);
+        return getTruncatedString(result);
     }
 }
