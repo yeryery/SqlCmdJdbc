@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import ua.com.juja.yeryery.controller.commands.Util.ExitException;
+import ua.com.juja.yeryery.controller.commands.Utility.ExitException;
 import ua.com.juja.yeryery.view.View;
 
 public class Exit implements Command {
