@@ -27,7 +27,7 @@ public class DropTest {
         DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Drop(view, manager);
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
     }

@@ -5,8 +5,6 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.controller.commands.Command;
-import ua.com.juja.yeryery.controller.commands.Display;
 import ua.com.juja.yeryery.model.DataSet;
 import ua.com.juja.yeryery.model.DataSetImpl;
 import ua.com.juja.yeryery.model.DatabaseManager;
@@ -30,7 +28,7 @@ public class DisplayTest {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Display(view, manager);
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
     }
@@ -39,7 +37,7 @@ public class DisplayTest {
     public void testDisplayTableData() {
         //given
         when(view.read()).thenReturn(selectedTable);
-        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<String>(Arrays.asList("name", "age")));
+        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<>(Arrays.asList("name", "age")));
 
         DataSet user1 = new DataSetImpl();
         user1.put("name", "Mike");
@@ -49,7 +47,7 @@ public class DisplayTest {
         user2.put("name", "Jack");
         user2.put("age", "28");
 
-        List<DataSet> dataSets = new LinkedList<DataSet>();
+        List<DataSet> dataSets = new LinkedList<>();
         dataSets.add(user1);
         dataSets.add(user2);
         when(manager.getDataContent(selectedTable)).thenReturn(dataSets);
@@ -76,11 +74,11 @@ public class DisplayTest {
     public void testDisplayEmptyTableData() {
         //given
         when(view.read()).thenReturn(selectedTable);
-        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<String>(Arrays.asList("name", "age")));
+        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<>(Arrays.asList("name", "age")));
 
         DataSet user = new DataSetImpl();
 
-        List<DataSet> dataSets = new LinkedList<DataSet>();
+        List<DataSet> dataSets = new LinkedList<>();
         dataSets.add(user);
         when(manager.getDataContent(selectedTable)).thenReturn(dataSets);
 

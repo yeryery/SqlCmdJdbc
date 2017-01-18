@@ -3,9 +3,6 @@ package ua.com.juja.yeryery.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.controller.commands.CancelException;
-import ua.com.juja.yeryery.controller.commands.Clear;
-import ua.com.juja.yeryery.controller.commands.Command;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
@@ -27,7 +24,7 @@ public class ClearTest {
         DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Clear(view, manager);
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
     }

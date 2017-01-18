@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class TestTable {
 
-    private String column1 = "id";
-    private String column2 = "name";
+    private static final String column1 = "id";
+    private static final String column2 = "name";
 
     public Set<String> getTableColumns() {
         Set<String> tableColumns = new LinkedHashSet<>();
@@ -34,7 +34,7 @@ public class TestTable {
         dataSet2.put(column1, value12);
         dataSet2.put(column2, value22);
 
-        List<DataSet> tableContent = new LinkedList<DataSet>();
+        List<DataSet> tableContent = new LinkedList<>();
         tableContent.add(dataSet1);
         tableContent.add(dataSet2);
 

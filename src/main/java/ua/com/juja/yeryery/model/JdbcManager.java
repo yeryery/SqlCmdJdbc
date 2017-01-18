@@ -27,7 +27,7 @@ public class JdbcManager implements DatabaseManager {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new JdbcDriverException("Please, add jdbc jar to lib!");
+            throw new JdbcDriverException();
         }
     }
 
@@ -43,7 +43,7 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public Set<String> getTableNames() {
-        Set<String> tableNames = new TreeSet<String>();
+        Set<String> tableNames = new TreeSet<>();
         String sql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'";
 
         try (Statement statement = connection.createStatement();
@@ -78,7 +78,7 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public Set<String> getTableColumns(String tableName) {
-        Set<String> columnNames = new LinkedHashSet<String>();
+        Set<String> columnNames = new LinkedHashSet<>();
         String sql = String.format("SELECT * FROM information_schema.columns WHERE table_name='%s'", tableName);
 
         try (Statement st = connection.createStatement();
@@ -192,13 +192,12 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public List<DataSet> getDataContent(String tableName) {
-        List<DataSet> result = new LinkedList<DataSet>();
+        List<DataSet> result = new LinkedList<>();
         String sql = String.format("SELECT * FROM %s", tableName);
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             ResultSetMetaData rsmd = rs.getMetaData();
-            int index = 0;
 
             while (rs.next()) {
                 DataSet dataSet = new DataSetImpl();

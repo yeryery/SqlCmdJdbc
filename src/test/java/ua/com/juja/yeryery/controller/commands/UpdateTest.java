@@ -30,7 +30,7 @@ public class UpdateTest {
         view = mock(View.class);
         command = new Update(view, manager);
 
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
 

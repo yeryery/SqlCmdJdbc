@@ -34,7 +34,7 @@ public class InsertTest {
         view = mock(View.class);
         command = new Insert(view, manager);
 
-        Set<String> tableNames = new LinkedHashSet<String>(Arrays.asList("test", "ttable"));
+        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "ttable"));
         when(manager.getTableNames()).thenReturn(tableNames);
         selectedTable = "test";
 

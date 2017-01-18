@@ -1,7 +1,7 @@
 package ua.com.juja.yeryery.model;
 
 public class JdbcDriverException extends RuntimeException {
-    public JdbcDriverException(String message) {
-        super(message);
+    public JdbcDriverException() {
+        super("Please, add jdbc jar to lib!");
     }
 }
