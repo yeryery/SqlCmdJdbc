@@ -68,33 +68,35 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         //then
-        assertEquals("Hello, user!\r\n" +
-                "Please, enter: 'connect|database|username|password' or use command 'help'\r\n" +
+        assertEquals("Hello, user!\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //help
-                "Content of commands:\r\n" +
-                "\tconnect|database|username|password\r\n" +
-                "\t\tConnect to Database\r\n" +
-                "\tcontent\r\n" +
-                "\t\tContent of tables\r\n" +
-                "\tcreate\r\n" +
-                "\t\tCreate new table\r\n" +
-                "\tdelete\r\n" +
-                "\t\tDelete data from require table\r\n" +
-                "\tdisplay\r\n" +
-                "\t\tDisplay require table\r\n" +
-                "\tinsert\r\n" +
-                "\t\tInsert new data in require table\r\n" +
-                "\tclear\r\n" +
-                "\t\tClear require table\r\n" +
-                "\tdrop\r\n" +
-                "\t\tDrop require table\r\n" +
-                "\texit\r\n" +
-                "\t\tProgram exit\r\n" +
-                "\thelp\r\n" +
-                "\t\tAll commands\r\n" +
-                "Type command or 'help'\r\n" +
+                "Content of commands:\n" +
+                "\tconnect|database|username|password\n" +
+                "\t\tConnect to Database\n" +
+                "\tcontent\n" +
+                "\t\tContent of tables\n" +
+                "\tcreate\n" +
+                "\t\tCreate new table\n" +
+                "\tdelete\n" +
+                "\t\tDelete rows in require table\n" +
+                "\tdisplay\n" +
+                "\t\tDisplay require table\n" +
+                "\tinsert\n" +
+                "\t\tInsert new row in require table\n" +
+                "\tupdate\n" +
+                "\t\tUpdate rows in require table\n" +
+                "\tclear\n" +
+                "\t\tClear require table\n" +
+                "\tdrop\n" +
+                "\t\tDrop require table\n" +
+                "\texit\n" +
+                "\t\tProgram exit\n" +
+                "\thelp\n" +
+                "\t\tAll commands\n" +
+                "Type command or 'help'\n" +
                 //exit
-                "See you!\r\n", out.getData());
+                "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
@@ -289,7 +291,7 @@ public class IntegrationTest {
         //then
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
-                //connect|testbase
+                //connect|testBase
                 "Error! Wrong number of parameters. Expected 4 parameters, and you have entered 2\n" +
                 "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
@@ -570,7 +572,7 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
-        in.add("somename");
+        in.add("someName");
         in.add("cancel");
         in.add("exit");
 
@@ -585,8 +587,8 @@ public class IntegrationTest {
                 "Type command or 'help'\n" +
                 //create
                 "Enter the name of your table or type 'cancel' to go back\n" +
-                //somename
-                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                //someName
+                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //0
@@ -632,7 +634,7 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
-        in.add("somename");
+        in.add("someName");
         in.add("name|wrongType");
         in.add("cancel");
         in.add("exit");
@@ -648,8 +650,8 @@ public class IntegrationTest {
                 "Type command or 'help'\n" +
                 //create
                 "Enter the name of your table or type 'cancel' to go back\n" +
-                //somename
-                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                //someName
+                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //name|wrongType
@@ -669,12 +671,12 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
-        in.add("somename");
+        in.add("someName");
         in.add("name|text|age|int");
         in.add("display");
-        in.add("somename");
+        in.add("someName");
         in.add("drop");
-        in.add("somename");
+        in.add("someName");
         in.add("y");
         in.add("exit");
 
@@ -689,8 +691,8 @@ public class IntegrationTest {
                 "Type command or 'help'\n" +
                 //create
                 "Enter the name of your table or type 'cancel' to go back\n" +
-                //somename
-                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                //someName
+                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
                 //name|text|age|int
@@ -702,7 +704,7 @@ public class IntegrationTest {
                 "2. test\n" +
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
-                //somename
+                //someName
                 "+--+----+---+\n" +
                 "|id|name|age|\n" +
                 "+--+----+---+\n" +
@@ -713,7 +715,7 @@ public class IntegrationTest {
                 "2. test\n" +
                 "3. ttable\n" +
                 "0. cancel (to go back)\n" +
-                //somename
+                //someName
                 "Are you sure you want to drop table 'somename'? (y/n)\n" +
                 //y
                 "Table 'somename' successfully dropped!\n" +
@@ -1023,7 +1025,7 @@ public class IntegrationTest {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("clear");
-        in.add("ttable");
+        in.add("tTable");
         in.add("n");
         in.add("exit");
 

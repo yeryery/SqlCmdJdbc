@@ -24,23 +24,6 @@ public class Dialog {
         return getRequiredTable(action, tableList);
     }
 
-    private String getRequiredTable(String action, Map<Integer, String> tableList) {
-        String requiredTable = "";
-
-        printTableList(action, tableList);
-
-        try {
-            String input = view.read();
-
-            checkCancelOrZero(input);
-            requiredTable = findInputTable(input, tableList);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
-            getRequiredTable(action, tableList);
-        }
-        return requiredTable;
-    }
-
     private Map<Integer, String> getTableList() {
         Set<String> names = manager.getTableNames();
         Map<Integer, String> tableList = new HashMap<>();
@@ -52,6 +35,23 @@ public class Dialog {
             i++;
         }
         return tableList;
+    }
+
+    private String getRequiredTable(String action, Map<Integer, String> tableList) {
+        String requiredTable = "";
+
+        printTableList(action, tableList);
+
+        try {
+            String input = view.read().toLowerCase();
+
+            checkCancelOrZero(input);
+            requiredTable = findInputTable(input, tableList);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            getRequiredTable(action, tableList);
+        }
+        return requiredTable;
     }
 
     private void printTableList(String action, Map<Integer, String> tableList) {
@@ -79,7 +79,7 @@ public class Dialog {
             checkTableName(input, tableList);
             tableName = input;
         }
-        return tableName;
+        return tableName.toLowerCase();
     }
 
     private void checkCancelOrZero(String input) {
@@ -111,7 +111,7 @@ public class Dialog {
         String tableName;
 
         view.write(message);
-        tableName = view.read();
+        tableName = view.read().toLowerCase();
 
         try {
             checkNewName(names, tableName);
@@ -119,7 +119,7 @@ public class Dialog {
             view.write(e.getMessage());
             assignNewTableName(names);
         }
-        return tableName;
+        return tableName.toLowerCase();
     }
 
     private void checkNewName(Set<String> names, String tableName) {
@@ -334,7 +334,7 @@ public class Dialog {
 
     private String newColumnsMessage(String action) {
         String inputSample = "columnName1|dataType1|columnName2|dataType2|...";
-        return String.format("Enter the columnNames and its datatypes of the table you want to %s:\n" +
+        return String.format("Enter the columnNames and its dataTypes of the table you want to %s:\n" +
                 "%s\n%s", action, inputSample, CANCEL_INPUT);
     }
 

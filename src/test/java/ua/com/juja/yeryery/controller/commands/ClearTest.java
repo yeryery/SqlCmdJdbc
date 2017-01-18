@@ -162,7 +162,7 @@ public class ClearTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //Select notExistingTable
-                "Error! Table with name 'notExistingTable' doesn't exist\n" +
+                "Error! Table with name 'notexistingtable' doesn't exist\n" +
                 "Try again, " +
                 "Select the table you need for 'clear' command, " +
                 "1. test, " +

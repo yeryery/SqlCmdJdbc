@@ -3,9 +3,6 @@ package ua.com.juja.yeryery.controller.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.controller.commands.CancelException;
-import ua.com.juja.yeryery.controller.commands.Command;
-import ua.com.juja.yeryery.controller.commands.Create;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
@@ -45,11 +42,11 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //newTable
-                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back, " +
                 //someColumnName|text
-                "Your table 'newTable' have successfully created!]");
+                "Your table 'newtable' have successfully created!]");
     }
 
     @Test
@@ -68,12 +65,12 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //newTable
-                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back, " +
                 //someColumnName|text|thirdParameter
                 "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on), and you have entered 3\n" +
-                "Try again, Enter the columnNames and its datatypes of the table you want to create:\n" +
+                "Try again, Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back]");
                 //cancel
@@ -96,7 +93,7 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //newTable
-                "Enter the columnNames and its datatypes of the table you want to create:\n" +
+                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back]");
                 //cancel
@@ -118,7 +115,7 @@ public class CreateTest {
         //then
         shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
                 //1newTable
-                "Error! You have entered '1newTable' and name must begin with a letter\n" +
+                "Error! You have entered '1newtable' and name must begin with a letter\n" +
                 "Try again, " +
                 "Enter the name of your table or type 'cancel' to go back]");
                 //cancel

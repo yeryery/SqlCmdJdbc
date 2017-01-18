@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import ua.com.juja.yeryery.controller.commands.Command;
-import ua.com.juja.yeryery.controller.commands.Help;
 import ua.com.juja.yeryery.view.View;
 
 import static org.junit.Assert.*;
@@ -57,11 +55,13 @@ public class HelpTest {
                 "\tcreate, " +
                     "\t\tCreate new table, " +
                 "\tdelete, " +
-                    "\t\tDelete data from require table, " +
+                    "\t\tDelete rows in require table, " +
                 "\tdisplay, " +
                     "\t\tDisplay require table, " +
                 "\tinsert, " +
-                    "\t\tInsert new data in require table, " +
+                    "\t\tInsert new row in require table, " +
+                "\tupdate, " +
+                    "\t\tUpdate rows in require table, " +
                 "\tclear, " +
                     "\t\tClear require table, " +
                 "\tdrop, " +

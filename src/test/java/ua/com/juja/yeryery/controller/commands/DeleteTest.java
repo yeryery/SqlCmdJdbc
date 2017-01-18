@@ -227,7 +227,7 @@ public class DeleteTest {
                 "2. ttable, " +
                 "0. cancel (to go back), " +
                 //notExistingTable
-                "Error! Table with name 'notExistingTable' doesn't exist\n" +
+                "Error! Table with name 'notexistingtable' doesn't exist\n" +
                 "Try again, " +
                 "Select the table you need for 'delete' command, " +
                 "1. test, " +

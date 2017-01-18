@@ -30,13 +30,16 @@ public class Help implements Command {
         view.write("\t\tCreate new table");
 
         view.write("\tdelete");
-        view.write("\t\tDelete data from require table");
+        view.write("\t\tDelete rows in require table");
 
         view.write("\tdisplay");
         view.write("\t\tDisplay require table");
 
         view.write("\tinsert");
-        view.write("\t\tInsert new data in require table");
+        view.write("\t\tInsert new row in require table");
+
+        view.write("\tupdate");
+        view.write("\t\tUpdate rows in require table");
 
         view.write("\tclear");
         view.write("\t\tClear require table");
