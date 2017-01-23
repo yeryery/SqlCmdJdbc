@@ -10,34 +10,34 @@ import java.util.Set;
 
 public class TestTable {
 
-    private static final String column1 = "id";
-    private static final String column2 = "name";
+    private static final String COLUMN_1 = "id";
+    private static final String COLUMN_2 = "name";
 
-    public Set<String> getTableColumns() {
+    public static Set<String> getTableColumns() {
         Set<String> tableColumns = new LinkedHashSet<>();
-        tableColumns.add(column1);
-        tableColumns.add(column2);
+        tableColumns.add(COLUMN_1);
+        tableColumns.add(COLUMN_2);
 
         return tableColumns;
     }
 
-    public List<DataSet> getTableContent() {
+    public static List<DataSet> getTableContent() {
         DataSet dataSet1 = new DataSetImpl();
-        int value11 = 1;
-        String value21 = "John";
-        dataSet1.put(column1, value11);
-        dataSet1.put(column2, value21);
+        dataSet1.put(COLUMN_1, 1);
+        dataSet1.put(COLUMN_2, "John");
 
         DataSet dataSet2 = new DataSetImpl();
-        int value12 = 2;
-        String value22 = "Mike";
-        dataSet2.put(column1, value12);
-        dataSet2.put(column2, value22);
+        dataSet2.put(COLUMN_1, 2);
+        dataSet2.put(COLUMN_2, "Mike");
 
         List<DataSet> tableContent = new LinkedList<>();
         tableContent.add(dataSet1);
         tableContent.add(dataSet2);
 
         return tableContent;
+    }
+
+    public static List<DataSet> getEmptyTable() {
+        return new LinkedList<>();
     }
 }
