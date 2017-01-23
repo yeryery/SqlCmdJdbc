@@ -39,14 +39,13 @@ public class Update implements Command {
 
         try {
             manager.update(currentTableName, updatingEntries, definingEntry);
+            view.write(String.format("You have successfully updated table '%s'", currentTableName));
+            tablePrinter.print();
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
             process(input);
         }
-
-        view.write(String.format("You have successfully updated table '%s'", currentTableName));
-        tablePrinter.print();
     }
 
     private void checkNewValues(String tableName, DataEntry entry, DataSet inputValues) {

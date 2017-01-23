@@ -33,13 +33,12 @@ public class Insert implements Command {
 
         try {
             manager.insert(currentTableName, insertedRow);
+            view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
+            tablePrinter.print();
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
             process(input);
         }
-
-        view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
-        tablePrinter.print();
     }
 }
