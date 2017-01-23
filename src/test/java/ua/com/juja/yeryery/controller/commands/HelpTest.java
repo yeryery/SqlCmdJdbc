@@ -51,25 +51,25 @@ public class HelpTest {
                 "\tconnect|database|username|password, " +
                 "\t\tConnect to Database, " +
                 "\tcontent, " +
-                "\t\tContent of tables, " +
+                "\t\tDisplay a list of available tables, " +
                 "\tcreate, " +
                 "\t\tCreate new table, " +
-                "\tdelete, " +
-                "\t\tDelete rows in require table, " +
                 "\tdisplay, " +
-                "\t\tDisplay require table, " +
+                "\t\tDisplay records of the table, " +
                 "\tinsert, " +
-                "\t\tInsert new row in require table, " +
+                "\t\tInsert new record in the table, " +
+                "\tdelete, " +
+                "\t\tFind required record and remove it from the table, " +
                 "\tupdate, " +
-                "\t\tUpdate rows in require table, " +
+                "\t\tFind required record and update it in the table, " +
                 "\tclear, " +
-                "\t\tClear require table, " +
+                "\t\tClear the table after confirmation, " +
                 "\tdrop, " +
-                "\t\tDrop require table, " +
+                "\t\tDelete the table after confirmation, " +
                 "\texit, " +
                 "\t\tProgram exit, " +
                 "\thelp, " +
-                "\t\tAll commands]");
+                "\t\tPrint all available commands]");
     }
 
     private void shouldPrint(String expected) {

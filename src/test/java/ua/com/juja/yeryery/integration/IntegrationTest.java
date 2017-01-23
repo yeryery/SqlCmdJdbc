@@ -75,25 +75,25 @@ public class IntegrationTest {
                 "\tconnect|database|username|password\n" +
                 "\t\tConnect to Database\n" +
                 "\tcontent\n" +
-                "\t\tContent of tables\n" +
+                "\t\tDisplay a list of available tables\n" +
                 "\tcreate\n" +
                 "\t\tCreate new table\n" +
-                "\tdelete\n" +
-                "\t\tDelete rows in require table\n" +
                 "\tdisplay\n" +
-                "\t\tDisplay require table\n" +
+                "\t\tDisplay records of the table\n" +
                 "\tinsert\n" +
-                "\t\tInsert new row in require table\n" +
+                "\t\tInsert new record in the table\n" +
+                "\tdelete\n" +
+                "\t\tFind required record and remove it from the table\n" +
                 "\tupdate\n" +
-                "\t\tUpdate rows in require table\n" +
+                "\t\tFind required record and update it in the table\n" +
                 "\tclear\n" +
-                "\t\tClear require table\n" +
+                "\t\tClear the table after confirmation\n" +
                 "\tdrop\n" +
-                "\t\tDrop require table\n" +
+                "\t\tDelete the table after confirmation\n" +
                 "\texit\n" +
                 "\t\tProgram exit\n" +
                 "\thelp\n" +
-                "\t\tAll commands\n" +
+                "\t\tPrint all available commands\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
