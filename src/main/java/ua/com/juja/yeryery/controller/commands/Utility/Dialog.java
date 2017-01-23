@@ -3,7 +3,6 @@ package ua.com.juja.yeryery.controller.commands.Utility;
 import ua.com.juja.yeryery.model.*;
 import ua.com.juja.yeryery.view.View;
 
-import java.lang.*;
 import java.util.*;
 
 public class Dialog {
@@ -39,12 +38,10 @@ public class Dialog {
 
     private String getRequiredTable(String action, Map<Integer, String> tableList) {
         String requiredTable = "";
-
         printTableList(action, tableList);
 
         try {
             String input = view.read().toLowerCase();
-
             checkCancelOrZero(input);
             requiredTable = findInputTable(input, tableList);
         } catch (IllegalArgumentException e) {
@@ -196,11 +193,6 @@ public class Dialog {
         return input.split(DELIMITER);
     }
 
-    public String[] splitConnectInput(String input, String sample) {
-        checkSizeBySample(input, sample);
-        return input.split(DELIMITER);
-    }
-
     private String getInput(String message) {
         String input;
 
@@ -254,18 +246,23 @@ public class Dialog {
         return result;
     }
 
+    public String[] splitConnectInput(String input, String sample) {
+        checkSizeBySample(input, sample);
+        return input.split(DELIMITER);
+    }
+
     public DataSet getNewEntries(String tableName, String action) {
         DataSet newEntries = new DataSetImpl();
 
-            try {
-                String message = newEntriesMessage(action);
+        try {
+            String message = newEntriesMessage(action);
 
-                newEntries = getEntries(message);
-                checkInputColumns(tableName, newEntries);
-            } catch (IllegalArgumentException e) {
-                view.write(e.getMessage());
-                getNewEntries(tableName, action);
-            }
+            newEntries = getEntries(message);
+            checkInputColumns(tableName, newEntries);
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            getNewEntries(tableName, action);
+        }
         return newEntries;
     }
 
