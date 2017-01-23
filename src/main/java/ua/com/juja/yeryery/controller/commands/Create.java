@@ -31,11 +31,12 @@ public class Create implements Command {
 
         try {
             manager.create(currentTableName, inputColumns);
-            view.write(String.format("Your table '%s' have successfully created!", currentTableName));
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
             process(input);
         }
+
+        view.write(String.format("Your table '%s' have successfully created!", currentTableName));
     }
 }
