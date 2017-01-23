@@ -2,200 +2,53 @@ package ua.com.juja.yeryery.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Clear.class)
 public class ClearTest {
 
     private View view;
+    private DatabaseManager manager;
+    private Dialog dialog;
     private Command command;
-    private String selectedTable;
+    private static final String TABLE = "test";
+    private static final String ACTION = "clear";
 
     @Before
     public void setup() {
-        DatabaseManager manager = mock(DatabaseManager.class);
         view = mock(View.class);
+        manager = mock(DatabaseManager.class);
+        dialog = mock(Dialog.class);
         command = new Clear(view, manager);
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        selectedTable = "test";
     }
 
     @Test
-    public void testClearSelectTableNameAndConfirm() {
+    public void testClearCommand() throws Exception {
         //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("y");
+        mockMethods();
 
         //when
-        command.process("clear");
+        command.process(ACTION);
 
         //then
-        shouldPrint("[Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //Select table 'test'
-                "Are you sure you want to clear table 'test'? (y/n), " +
-                //yes
-                "Table 'test' successfully cleared!]");
+        verify(view).write("Table 'test' successfully cleared!");
     }
 
-    @Test
-    public void testClearSelectTableNumberAndConfirm() {
-        //given
-        when(view.read()).thenReturn("1").thenReturn("y");
-
-        //when
-        command.process("clear");
-
-        //then
-        shouldPrint("[Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //Select table number 1
-                "Are you sure you want to clear table 'test'? (y/n), " +
-                //yes
-                "Table 'test' successfully cleared!]");
-    }
-
-    @Test
-    public void testClearSelectTableAndDontConfirm() {
-        //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("n");
-
-        //when
-        try {
-            command.process("clear");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //Select table 'test'
-                "Are you sure you want to clear table 'test'? (y/n)]");
-                //no
-    }
-
-    @Test
-    public void testClearSelectTableAndNeitherInput() {
-        //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("neither").thenReturn("y");
-
-        //when
-        command.process("clear");
-
-        //then
-        shouldPrint("[Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //Select table 'test'
-                "Are you sure you want to clear table 'test'? (y/n), " +
-                //neither 'y' nor 'n'
-                "Are you sure you want to clear table 'test'? (y/n), " +
-                //yes
-                "Table 'test' successfully cleared!]");
-    }
-
-    @Test
-    public void testClearAndSelectCancel() {
-        //given
-        when(view.read()).thenReturn("cancel");
-
-        //when
-        boolean checkException = false;
-        try {
-            command.process("clear");
-            fail("Expected CancelException");
-        } catch (Exception e) {
-            checkException = e instanceof CancelException;
-        }
-
-        //then
-        assertTrue(checkException);
-    }
-
-    @Test
-    public void testClearAndSelectZero() {
-        //given
-        when(view.read()).thenReturn("0");
-
-        //when
-        boolean checkException = false;
-        try {
-            command.process("clear");
-            fail("Expected CancelException");
-        } catch (Exception e) {
-            checkException = e instanceof CancelException;
-        }
-
-        //then
-        assertTrue(checkException);
-    }
-
-    @Test
-    public void testClearAndSelectNotExistingTable() {
-        //given
-        when(view.read()).thenReturn("notExistingTable").thenReturn("cancel");
-
-        //when
-        try {
-            command.process("clear");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //Select notExistingTable
-                "Error! Table with name 'notexistingtable' doesn't exist\n" +
-                "Try again, " +
-                "Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back)]");
-                //cancel)
-    }
-
-    @Test
-    public void testClearAndSelectWrongTableNumber() {
-        //given
-        when(view.read()).thenReturn("22").thenReturn("cancel");
-
-        //when
-        try {
-            command.process("clear");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //Select 22
-                "Error! There is no table with number 22\n" +
-                "Try again, " +
-                "Select the table you need for 'clear' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back)]");
-                //cancel
+    private void mockMethods() throws Exception {
+        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
+        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
+        doNothing().when(dialog).confirmAction(ACTION, TABLE);
     }
 
     @Test
@@ -214,11 +67,5 @@ public class ClearTest {
 
         //then
         assertFalse(canProcess);
-    }
-
-    private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(expected, captor.getAllValues().toString());
     }
 }

@@ -1,99 +1,82 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
+import ua.com.juja.yeryery.controller.commands.Utility.TablePrinter;
 import ua.com.juja.yeryery.model.DataSet;
+import ua.com.juja.yeryery.model.DataSetImpl;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Insert.class)
 public class InsertTest {
 
-    private DatabaseManager manager;
     private View view;
+    private DatabaseManager manager;
+    private Dialog dialog;
+    private TablePrinter tablePrinter;
+    private DataSet insertedRow;
     private Command command;
-    private Set<String> tableColumns;
-    private List<DataSet> tableContent;
-    private String selectedTable;
+    private static final String TABLE = "test";
+    private static final String ACTION = "insert";
 
     @Before
     public void setup() {
-        Logger.getRootLogger().setLevel(Level.OFF);
-        manager = mock(DatabaseManager.class);
         view = mock(View.class);
+        manager = mock(DatabaseManager.class);
+        dialog = mock(Dialog.class);
+        tablePrinter = mock(TablePrinter.class);
+        insertedRow = new DataSetImpl();
         command = new Insert(view, manager);
-
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        selectedTable = "test";
-
-        TestTable testTable = new TestTable();
-        tableColumns = testTable.getTableColumns();
-        tableContent = testTable.getTableContent();
     }
 
     @Test
-    public void testInsert() throws SQLException {
+    public void testInsertCommand() throws Exception {
         //given
-        when(view.read()).thenReturn(selectedTable).thenReturn("id|5|name|Bob");
-        when(manager.getTableColumns(selectedTable)).thenReturn(tableColumns);
-        when(manager.getDataContent(selectedTable)).thenReturn(tableContent);
+        mockMethods();
 
         //when
-        command.process("insert");
+        command.process(ACTION);
 
         //then
-        shouldPrint("[Select the table you need for 'insert' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //test
-                "Enter the columnNames and its values of the row you want to insert:\n" +
-                "columnName1|newValue1|columnName2|newValue2|...\n" +
-                "or type 'cancel' to go back, " +
-                //id|5|name|Bob
-                "You have successfully entered new data into the table 'test', " +
-                "+--+----+\n" +
-                "|id|name|\n" +
-                "+--+----+\n" +
-                "|1 |John|\n" +
-                "+--+----+\n" +
-                "|2 |Mike|\n" +
-                "+--+----+]");
+        verify(tablePrinter, atLeastOnce()).print();
+        verify(view).write("You have successfully entered new data into the table 'test'");
     }
 
     @Test
-    public void testCanProcessInsert() {
+    public void testInsertThrowingSqlException() throws Exception {
+        //given
+        mockMethods();
+        SQLException exception = new SQLException("SQL exception message");
+        doThrow(exception).when(manager).insert(TABLE, insertedRow);
+
         //when
-        boolean canProcess = command.canProcess("insert");
+        try {
+            command.process(ACTION);
+        } catch (CancelException e) {
+            //do nothing
+        }
 
         //then
-        assertTrue(canProcess);
+        verify(tablePrinter, never()).print();
+        verify(view).write("SQL exception message");
     }
 
-    @Test
-    public void testCantProcessWrongInput() {
-        //when
-        boolean canProcess = command.canProcess("wrong");
-
-        //then
-        assertFalse(canProcess);
-    }
-
-    private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(expected, captor.getAllValues().toString());
+    private void mockMethods() throws Exception {
+        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog).thenThrow(new CancelException());
+        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
+        when(dialog.getNewEntries(TABLE, ACTION)).thenReturn(insertedRow);
+        PowerMockito.whenNew(TablePrinter.class).withArguments(view, manager, TABLE).thenReturn(tablePrinter);
     }
 }

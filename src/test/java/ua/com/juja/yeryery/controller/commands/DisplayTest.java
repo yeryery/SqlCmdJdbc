@@ -4,119 +4,81 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.model.DataSet;
-import ua.com.juja.yeryery.model.DataSetImpl;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.util.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Display.class)
 public class DisplayTest {
 
-    private DatabaseManager manager;
     private View view;
+    private DatabaseManager manager;
+    private Dialog dialog;
     private Command command;
-    private String selectedTable;
+    private static final String TABLE = "test";
+    private static final String ACTION = "display";
 
     @Before
     public void setup() {
         Logger.getRootLogger().setLevel(Level.OFF);
-        manager = mock(DatabaseManager.class);
         view = mock(View.class);
+        manager = mock(DatabaseManager.class);
+        dialog = mock(Dialog.class);
         command = new Display(view, manager);
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
-        when(manager.getTableNames()).thenReturn(tableNames);
-        selectedTable = "test";
     }
 
     @Test
-    public void testDisplayTableData() {
+    public void testDisplayTableData() throws Exception {
         //given
-        when(view.read()).thenReturn(selectedTable);
-        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<>(Arrays.asList("name", "age")));
-
-        DataSet user1 = new DataSetImpl();
-        user1.put("name", "Mike");
-        user1.put("age", "25");
-
-        DataSet user2 = new DataSetImpl();
-        user2.put("name", "Jack");
-        user2.put("age", "28");
-
-        List<DataSet> dataSets = new LinkedList<>();
-        dataSets.add(user1);
-        dataSets.add(user2);
-        when(manager.getDataContent(selectedTable)).thenReturn(dataSets);
+        mockMethods();
+        when(manager.getDataContent(TABLE)).thenReturn(TestTable.getTableContent());
 
         //when
-        command.process("display");
+        command.process(ACTION);
 
         //then
-        shouldPrint("[Select the table you need for 'display' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //test
-                "+----+---+\n" +
-                "|name|age|\n" +
-                "+----+---+\n" +
-                "|Mike|25 |\n" +
-                "+----+---+\n" +
-                "|Jack|28 |\n" +
-                "+----+---+]");
+        shouldPrint("[+--+----+\n" +
+                "|id|name|\n" +
+                "+--+----+\n" +
+                "|1 |John|\n" +
+                "+--+----+\n" +
+                "|2 |Mike|\n" +
+                "+--+----+]");
     }
 
     @Test
-    public void testDisplayEmptyTableData() {
+    public void testDisplayEmptyTableData() throws Exception {
         //given
-        when(view.read()).thenReturn(selectedTable);
-        when(manager.getTableColumns(selectedTable)).thenReturn(new LinkedHashSet<>(Arrays.asList("name", "age")));
-
-        DataSet user = new DataSetImpl();
-
-        List<DataSet> dataSets = new LinkedList<>();
-        dataSets.add(user);
-        when(manager.getDataContent(selectedTable)).thenReturn(dataSets);
+        mockMethods();
+        when(manager.getDataContent(TABLE)).thenReturn(TestTable.getEmptyTable());
 
         //when
-        command.process("display");
+        command.process(ACTION);
 
         //then
-        shouldPrint("[Select the table you need for 'display' command, " +
-                "1. test, " +
-                "2. users, " +
-                "0. cancel (to go back), " +
-                //test
-                "+----+---+\n" +
-                "|name|age|\n" +
-                "+----+---+]");
+        shouldPrint("[+--+----+\n" +
+                "|id|name|\n" +
+                "+--+----+]");
+    }
+
+    private void mockMethods() throws Exception {
+        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
+        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
+        when(manager.getTableColumns(TABLE)).thenReturn(TestTable.getTableColumns());
     }
 
     private void shouldPrint(String expected) {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeastOnce()).write(captor.capture());
         assertEquals(expected, captor.getAllValues().toString());
-    }
-
-    @Test
-    public void testCanProcessDisplay() {
-        //when
-        boolean canProcess = command.canProcess("display");
-
-        //then
-        assertTrue(canProcess);
-    }
-
-    @Test
-    public void testCantProcessWrongInput() {
-        //when
-        boolean canProcess = command.canProcess("wrong");
-
-        //then
-        assertFalse(canProcess);
     }
 }

@@ -2,170 +2,54 @@ package ua.com.juja.yeryery.controller.commands;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
+import ua.com.juja.yeryery.model.DataSet;
+import ua.com.juja.yeryery.model.DataSetImpl;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Create.class)
 public class CreateTest {
 
-    private DatabaseManager manager;
     private View view;
+    private DatabaseManager manager;
+    private Dialog dialog;
+    private DataSet inputColumns;
     private Command command;
+    private static final String TABLE = "test";
+    private static final String ACTION = "create";
 
     @Before
     public void setup() {
-        manager = mock(DatabaseManager.class);
         view = mock(View.class);
+        manager = mock(DatabaseManager.class);
+        dialog = mock(Dialog.class);
+        inputColumns = new DataSetImpl();
         command = new Create(view, manager);
-        Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
-        when(manager.getTableNames()).thenReturn(tableNames);
     }
 
     @Test
-    public void testCreate() throws SQLException {
+    public void testCreateCommand() throws Exception {
         //given
-        String inputTableName = "newTable";
-        String inputNameAndType = "someColumnName|text";
-        when(view.read()).thenReturn(inputTableName).thenReturn(inputNameAndType);
+        mockMethods();
 
         //when
-        command.process("create");
+        command.process(ACTION);
 
         //then
-        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
-                //newTable
-                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
-                "columnName1|dataType1|columnName2|dataType2|...\n" +
-                "or type 'cancel' to go back, " +
-                //someColumnName|text
-                "Your table 'newtable' have successfully created!]");
+        verify(view).write("Your table 'test' have successfully created!");
     }
 
-    @Test
-    public void testCreateInputOddNumberOfParameters() {
-        //given
-        String inputTableName = "newTable";
-        String inputNameAndType = "someColumnName|text|thirdParameter";
-        when(view.read()).thenReturn(inputTableName).thenReturn(inputNameAndType).thenReturn("cancel");
-
-        //when
-        try {
-            command.process("create");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
-                //newTable
-                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
-                "columnName1|dataType1|columnName2|dataType2|...\n" +
-                "or type 'cancel' to go back, " +
-                //someColumnName|text|thirdParameter
-                "Error! Wrong number of parameters. Expected even number of parameters (2, 4 and so on), and you have entered 3\n" +
-                "Try again, Enter the columnNames and its dataTypes of the table you want to create:\n" +
-                "columnName1|dataType1|columnName2|dataType2|...\n" +
-                "or type 'cancel' to go back]");
-                //cancel
-
-    }
-
-    @Test
-    public void testCreateEnterTableNameAndCancel() {
-        //given
-        String inputTableName = "newTable";
-        when(view.read()).thenReturn(inputTableName)
-                         .thenReturn("cancel");
-
-        //when
-        try {
-            command.process("create");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
-                //newTable
-                "Enter the columnNames and its dataTypes of the table you want to create:\n" +
-                "columnName1|dataType1|columnName2|dataType2|...\n" +
-                "or type 'cancel' to go back]");
-                //cancel
-    }
-
-    @Test
-    public void testCreateEnterTableNameStartsWithNumber() {
-        //given
-        String TableNameWithNumber = "1newTable";
-        when(view.read()).thenReturn(TableNameWithNumber)
-                         .thenReturn("cancel");
-
-        //when
-        try {
-            command.process("create");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
-                //1newTable
-                "Error! You have entered '1newtable' and name must begin with a letter\n" +
-                "Try again, " +
-                "Enter the name of your table or type 'cancel' to go back]");
-                //cancel
-    }
-
-    @Test
-    public void testCreateEnterExistsTableName() {
-        //given
-        String TableNameWithNumber = "test";
-        when(view.read()).thenReturn(TableNameWithNumber)
-                         .thenReturn("cancel");
-
-        //when
-        try {
-            command.process("create");
-        } catch (CancelException e) {
-        }
-
-        //then
-        shouldPrint("[Enter the name of your table or type 'cancel' to go back, " +
-                //1newTable
-                "Error! Table with name 'test' already exists\n" +
-                "[test, users]\n" +
-                "Try again, " +
-                "Enter the name of your table or type 'cancel' to go back]");
-                //cancel
-    }
-
-    @Test
-    public void testCanProcessCreate() {
-        //when
-        boolean canProcess = command.canProcess("create");
-
-        //then
-        assertTrue(canProcess);
-    }
-
-    @Test
-    public void testCantProcessWrongInput() {
-        //when
-        boolean canProcess = command.canProcess("wrong");
-
-        //then
-        assertFalse(canProcess);
-    }
-
-    private void shouldPrint(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(expected, captor.getAllValues().toString());
+    private void mockMethods() throws Exception {
+        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
+        when(dialog.nameTable()).thenReturn(TABLE);
+        when(dialog.getNewColumns(TABLE)).thenReturn(inputColumns);
     }
 }
