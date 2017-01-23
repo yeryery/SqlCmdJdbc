@@ -27,7 +27,7 @@ public class ContentTest {
     }
 
     @Test
-    public void testList() {
+    public void testContent() {
         //given
         Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
@@ -40,7 +40,7 @@ public class ContentTest {
     }
 
     @Test
-    public void testCanProcessList() {
+    public void testCanProcessContent() {
         //when
         boolean canProcess = command.canProcess("content");
 
