@@ -25,8 +25,7 @@ public class Connect implements Command {
     @Override
     public void process(String input) throws ConnectException {
         Dialog dialog = new Dialog(view, manager);
-        String commandSample = "connect|yeryery|postgres|postgrespass";
-        //TODO поменять sample
+        String commandSample = "connect|database|username|password";
         String[] splitInput;
 
         try {

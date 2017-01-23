@@ -36,7 +36,7 @@ public class ConnectTest {
         //given
         String input = "connect|argument2|argument3|argument4";
         String[] splitInput = new String[]{"connect", "argument2", "argument3", "argument4"};
-        String commandSample = "connect|yeryery|postgres|postgrespass";
+        String commandSample = "connect|database|username|password";
 
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
         when(dialog.splitConnectInput(input, commandSample)).thenReturn(splitInput);
@@ -52,7 +52,7 @@ public class ConnectTest {
     public void testConnectCommandWithFiveArguments() throws Exception {
         //given
         String input = "connect|argument2|argument3|argument4|argument5";
-        String commandSample = "connect|yeryery|postgres|postgrespass";
+        String commandSample = "connect|database|username|password";
 
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
         IllegalArgumentException exception = new IllegalArgumentException(
@@ -73,7 +73,7 @@ public class ConnectTest {
     public void testConnectCommandWithOneArgument() throws Exception {
         //given
         String input = "connect|";
-        String commandSample = "connect|yeryery|postgres|postgrespass";
+        String commandSample = "connect|database|username|password";
 
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
         IllegalArgumentException exception = new IllegalArgumentException(
