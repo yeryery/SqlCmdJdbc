@@ -24,12 +24,10 @@ public class Connect implements Command {
 
     @Override
     public void process(String input) throws ConnectException {
-        String commandSample = "connect|yeryery|postgres|postgrespass";
         Dialog dialog = new Dialog(view, manager);
+        String commandSample = "connect|yeryery|postgres|postgrespass";
+        //TODO поменять sample
         String[] splitInput;
-        String database;
-        String username;
-        String password;
 
         try {
             splitInput = dialog.splitConnectInput(input, commandSample);
@@ -37,9 +35,9 @@ public class Connect implements Command {
             throw new ConnectException(e.getShortMessage());
         }
 
-        database = splitInput[1];
-        username = splitInput[2];
-        password = splitInput[3];
+        String database = splitInput[1];
+        String username = splitInput[2];
+        String password = splitInput[3];
 
         manager.connect(database, username, password);
         view.write("Success!");

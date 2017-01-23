@@ -181,7 +181,7 @@ public class JdbcManager implements DatabaseManager {
     public void delete(String tableName, DataEntry definingEntry) {
         String definingColumn = definingEntry.getColumn();
         Object definingValue = definingEntry.getValue();
-            String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, definingColumn, definingValue);
+        String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, definingColumn, definingValue);
 
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);

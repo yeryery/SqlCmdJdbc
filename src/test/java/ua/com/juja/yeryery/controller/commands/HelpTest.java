@@ -49,27 +49,27 @@ public class HelpTest {
         //then
         shouldPrint("[Content of commands:, " +
                 "\tconnect|database|username|password, " +
-                    "\t\tConnect to Database, " +
+                "\t\tConnect to Database, " +
                 "\tcontent, " +
-                    "\t\tContent of tables, " +
+                "\t\tContent of tables, " +
                 "\tcreate, " +
-                    "\t\tCreate new table, " +
+                "\t\tCreate new table, " +
                 "\tdelete, " +
-                    "\t\tDelete rows in require table, " +
+                "\t\tDelete rows in require table, " +
                 "\tdisplay, " +
-                    "\t\tDisplay require table, " +
+                "\t\tDisplay require table, " +
                 "\tinsert, " +
-                    "\t\tInsert new row in require table, " +
+                "\t\tInsert new row in require table, " +
                 "\tupdate, " +
-                    "\t\tUpdate rows in require table, " +
+                "\t\tUpdate rows in require table, " +
                 "\tclear, " +
-                    "\t\tClear require table, " +
+                "\t\tClear require table, " +
                 "\tdrop, " +
-                    "\t\tDrop require table, " +
+                "\t\tDrop require table, " +
                 "\texit, " +
-                    "\t\tProgram exit, " +
+                "\t\tProgram exit, " +
                 "\thelp, " +
-                    "\t\tAll commands]");
+                "\t\tAll commands]");
     }
 
     private void shouldPrint(String expected) {
