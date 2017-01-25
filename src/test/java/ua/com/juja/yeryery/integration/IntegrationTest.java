@@ -388,7 +388,7 @@ public class IntegrationTest {
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("users");
-        in.add("id|notNumber|name|Mike|age|25");
+        in.add("code|notNumber|name|Mike|age|25");
         in.add("cancel");
         in.add("exit");
 
@@ -412,7 +412,7 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //id|notNumber|name|Mike|age|25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
-                "  Position: 40\n" +
+                "  Position: 42\n" +
                 "Try again.\n" +
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
@@ -431,12 +431,12 @@ public class IntegrationTest {
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("users");
-        in.add("id|notNumber|name|Mike|age|25");
+        in.add("code|notNumber|name|Mike|age|25");
         in.add("users");
-        in.add("id|10|name|Mike|age|25");
+        in.add("code|10|name|Mike|age|25");
         in.add("delete");
         in.add("users");
-        in.add("id|10");
+        in.add("code|10");
         in.add("exit");
 
         //when
@@ -459,7 +459,7 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //id|notNumber|name|Mike|age|25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
-                "  Position: 40\n" +
+                "  Position: 42\n" +
                 "Try again.\n" +
                 "Select the table you need for 'insert' command\n" +
                 "1. test\n" +
@@ -471,9 +471,9 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //id|10|name|Mike|age|25
                 "You have successfully entered new data into the table 'users'\n" +
-                "+--+----+---+\n" +
-                "|id|name|age|\n" +
-                "+--+----+---+\n" +
+                "+----+----+---+\n" +
+                "|code|name|age|\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Select the table you need for 'delete' command\n" +
@@ -485,11 +485,11 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //id|10
                 "You have successfully deleted data from 'users'\n" +
-                "+--+----+---+\n" +
-                "|id|name|age|\n" +
-                "+--+----+---+\n" +
-                "|10|Mike|25 |\n" +
-                "+--+----+---+\n" +
+                "+----+----+---+\n" +
+                "|code|name|age|\n" +
+                "+----+----+---+\n" +
+                "|10  |Mike|25 |\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
@@ -501,7 +501,7 @@ public class IntegrationTest {
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("users");
-        in.add("id|10|name|Mike|age|25");
+        in.add("code|10|name|Mike|age|25");
         in.add("display");
         in.add("users");
         in.add("clear");
@@ -529,9 +529,9 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //id|10|name|Mike|age|25
                 "You have successfully entered new data into the table 'users'\n" +
-                "+--+----+---+\n" +
-                "|id|name|age|\n" +
-                "+--+----+---+\n" +
+                "+----+----+---+\n" +
+                "|code|name|age|\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //display
                 "Select the table you need for 'display' command\n" +
@@ -539,11 +539,11 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //users
-                "+--+----+---+\n" +
-                "|id|name|age|\n" +
-                "+--+----+---+\n" +
-                "|10|Mike|25 |\n" +
-                "+--+----+---+\n" +
+                "+----+----+---+\n" +
+                "|code|name|age|\n" +
+                "+----+----+---+\n" +
+                "|10  |Mike|25 |\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //clear
                 "Select the table you need for 'clear' command\n" +
@@ -1002,7 +1002,7 @@ public class IntegrationTest {
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("insert");
         in.add("users");
-        in.add("id|1|name|Jack|age|20");
+        in.add("code|1|name|Jack|age|20");
 
         in.add("delete");
         in.add("users");
@@ -1029,9 +1029,9 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //id|1|name|Jack|age|20
                 "You have successfully entered new data into the table 'users'\n" +
-                "+--+----+---+\n" +
-                "|id|name|age|\n" +
-                "+--+----+---+\n" +
+                "+----+----+---+\n" +
+                "|code|name|age|\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Select the table you need for 'delete' command\n" +
@@ -1043,11 +1043,11 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //name|Jack
                 "You have successfully deleted data from 'users'\n" +
-                "+--+----+---+\n" +
-                "|id|name|age|\n" +
-                "+--+----+---+\n" +
-                "|1 |Jack|20 |\n" +
-                "+--+----+---+\n" +
+                "+----+----+---+\n" +
+                "|code|name|age|\n" +
+                "+----+----+---+\n" +
+                "|1   |Jack|20 |\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));

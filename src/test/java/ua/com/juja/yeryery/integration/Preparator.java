@@ -34,12 +34,15 @@ public class Preparator {
         testColumns.put("login", "text");
         testColumns.put("password", "text");
 
-        DataEntry primaryKey = new DataEntryImpl();
-        primaryKey.setEntry("id", "int");
+        DataEntry testKey = new DataEntryImpl();
+        testKey.setEntry("id", "int");
 
-        DataSet ttableColumns = new DataSetImpl();
-        ttableColumns.put("name", "text");
-        ttableColumns.put("age", "int");
+        DataEntry usersKey = new DataEntryImpl();
+        usersKey.setEntry("code", "int");
+
+        DataSet usersColumns = new DataSetImpl();
+        usersColumns.put("name", "text");
+        usersColumns.put("age", "int");
 
         DataSet testRow1 = new DataSetImpl();
         testRow1.put("id", 12);
@@ -52,10 +55,10 @@ public class Preparator {
         testRow2.put("password", "pass2");
 
         try {
-            manager.create("test", primaryKey, testColumns);
+            manager.create("test", testKey, testColumns);
             manager.insert("test", testRow1);
             manager.insert("test", testRow2);
-            manager.create("users", primaryKey, ttableColumns);
+            manager.create("users", usersKey, usersColumns);
             //TODO сделать другой primary key
         } catch (SQLException e) {
             e.getMessage();
