@@ -410,7 +410,7 @@ public class IntegrationTest {
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
-                //id|notNumber|name|Mike|age|25
+                //code|notNumber|name|Mike|age|25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 42\n" +
                 "Try again.\n" +
@@ -457,7 +457,7 @@ public class IntegrationTest {
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
-                //id|notNumber|name|Mike|age|25
+                //code|notNumber|name|Mike|age|25
                 "ERROR: invalid input syntax for integer: \"notNumber\"\n" +
                 "  Position: 42\n" +
                 "Try again.\n" +
@@ -469,7 +469,7 @@ public class IntegrationTest {
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
-                //id|10|name|Mike|age|25
+                //code|10|name|Mike|age|25
                 "You have successfully entered new data into the table 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
@@ -483,7 +483,7 @@ public class IntegrationTest {
                 //users
                 "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
-                //id|10
+                //code|10
                 "You have successfully deleted data from 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
@@ -527,7 +527,7 @@ public class IntegrationTest {
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
-                //id|10|name|Mike|age|25
+                //code|10|name|Mike|age|25
                 "You have successfully entered new data into the table 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
@@ -1027,7 +1027,7 @@ public class IntegrationTest {
                 "Enter the columnNames and its values of the row you want to insert:\n" +
                 "columnName1|newValue1|columnName2|newValue2|...\n" +
                 "or type 'cancel' to go back\n" +
-                //id|1|name|Jack|age|20
+                //code|1|name|Jack|age|20
                 "You have successfully entered new data into the table 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
