@@ -1,6 +1,7 @@
 package ua.com.juja.yeryery.controller.commands;
 
 import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
+import ua.com.juja.yeryery.model.DataEntry;
 import ua.com.juja.yeryery.model.DataSet;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
@@ -27,15 +28,17 @@ public class Create implements Command {
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
         String currentTableName = dialog.nameTable();
+        DataEntry primaryKey = dialog.getConstraintColumn();
         DataSet inputColumns = dialog.getNewColumns(ACTION);
 
         try {
-            manager.create(currentTableName, inputColumns);
+            manager.create(currentTableName, primaryKey, inputColumns);
             view.write(String.format("Your table '%s' have successfully created!", currentTableName));
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
             process(input);
         }
+        //TODO create без id
     }
 }

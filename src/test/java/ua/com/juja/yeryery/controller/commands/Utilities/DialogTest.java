@@ -480,6 +480,19 @@ public class DialogTest {
                 "or type 'cancel' to go back]");
     }
 
+    @Test
+    public void testGetConstraintColumn() {
+        //given
+        when(view.read()).thenReturn("id|int");
+
+        //when
+        DataEntry entry = dialog.getConstraintColumn();
+
+        //then
+        assertEquals("id", entry.getColumn());
+        assertEquals("int", entry.getValue());
+    }
+
     private void shouldPrint(String expected) {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeastOnce()).write(captor.capture());

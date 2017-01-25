@@ -42,6 +42,7 @@ public class IntegrationTest {
 //    public static void clearAfterTests() {
 //        Preparator.deleteDB(testManager);
 //    }
+    //TODO удаление базы
 
     @Test
     public void testExit() {
@@ -284,6 +285,7 @@ public class IntegrationTest {
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("someName");
+        in.add("id|int");
         in.add("name|wrongType");
         in.add("cancel");
         in.add("exit");
@@ -300,6 +302,9 @@ public class IntegrationTest {
                 //create
                 "Enter the name of your table or type 'cancel' to go back\n" +
                 //someName
+                "Enter the name of PRIMARY KEY column and its dataType: columnName|dataType\n" +
+                "or type 'cancel' to go back\n" +
+                //id|int
                 "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +
@@ -321,6 +326,7 @@ public class IntegrationTest {
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("create");
         in.add("someName");
+        in.add("id|int");
         in.add("name|text|age|int");
         in.add("display");
         in.add("someName");
@@ -341,6 +347,9 @@ public class IntegrationTest {
                 //create
                 "Enter the name of your table or type 'cancel' to go back\n" +
                 //someName
+                "Enter the name of PRIMARY KEY column and its dataType: columnName|dataType\n" +
+                "or type 'cancel' to go back\n" +
+                //id|int
                 "Enter the columnNames and its dataTypes of the table you want to create:\n" +
                 "columnName1|dataType1|columnName2|dataType2|...\n" +
                 "or type 'cancel' to go back\n" +

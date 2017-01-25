@@ -1,8 +1,6 @@
 package ua.com.juja.yeryery.integration;
 
-import ua.com.juja.yeryery.model.DataSet;
-import ua.com.juja.yeryery.model.DataSetImpl;
-import ua.com.juja.yeryery.model.DatabaseManager;
+import ua.com.juja.yeryery.model.*;
 
 import java.sql.SQLException;
 import java.util.Set;
@@ -33,28 +31,31 @@ public class Preparator {
 
     private static void setupTables(DatabaseManager manager) {
         DataSet testColumns = new DataSetImpl();
-        DataSet ttableColumns = new DataSetImpl();
-        DataSet testRow1 = new DataSetImpl();
-        DataSet testRow2 = new DataSetImpl();
-
         testColumns.put("login", "text");
         testColumns.put("password", "text");
 
+        DataEntry primaryKey = new DataEntryImpl();
+        primaryKey.setEntry("id", "int");
+
+        DataSet ttableColumns = new DataSetImpl();
         ttableColumns.put("name", "text");
         ttableColumns.put("age", "int");
 
+        DataSet testRow1 = new DataSetImpl();
         testRow1.put("id", 12);
         testRow1.put("login", "username1");
         testRow1.put("password", "pass1");
+
+        DataSet testRow2 = new DataSetImpl();
         testRow2.put("id", 22);
         testRow2.put("login", "username2");
         testRow2.put("password", "pass2");
 
         try {
-            manager.create("test", testColumns);
+            manager.create("test", primaryKey, testColumns);
             manager.insert("test", testRow1);
             manager.insert("test", testRow2);
-            manager.create("users", ttableColumns);
+            manager.create("users", primaryKey, ttableColumns);
         } catch (SQLException e) {
             e.getMessage();
         }

@@ -15,7 +15,7 @@ public interface DatabaseManager {
 
     void clear(String tableName);
 
-    void create(String tableName, DataSet columns) throws SQLException;
+    void create(String tableName, DataEntry primaryKey, DataSet columns) throws SQLException;
 
     void createDB(String dataBase);
 

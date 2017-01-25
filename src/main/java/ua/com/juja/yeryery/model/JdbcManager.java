@@ -104,9 +104,10 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void create(String tableName, DataSet dataSet) throws SQLException {
+    public void create(String tableName, DataEntry primaryKey, DataSet dataSet) throws SQLException {
         String dataTypes = getDataSetFormatted(dataSet);
-        String sql = String.format("CREATE TABLE %s(ID INT PRIMARY KEY NOT NULL, %s)", tableName, dataTypes);
+        String sql = String.format("CREATE TABLE %s(%s %s PRIMARY KEY NOT NULL, %s)",
+                tableName, primaryKey.getColumn(), primaryKey.getValue(), dataTypes);
 
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);

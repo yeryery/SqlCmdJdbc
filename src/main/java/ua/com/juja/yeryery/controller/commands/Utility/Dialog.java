@@ -253,10 +253,9 @@ public class Dialog {
 
     public DataSet getNewEntries(String tableName, String action) {
         DataSet newEntries = new DataSetImpl();
+        String message = newEntriesMessage(action);
 
         try {
-            String message = newEntriesMessage(action);
-
             newEntries = getEntries(message);
             checkInputColumns(tableName, newEntries);
         } catch (IllegalArgumentException e) {
@@ -316,10 +315,9 @@ public class Dialog {
 
     public DataSet getNewColumns(String action) {
         DataSet inputColumns = new DataSetImpl();
+        String message = newColumnsMessage(action);
 
         try {
-            String message = newColumnsMessage(action);
-
             inputColumns = getEntries(message);
             checkNewColumns(inputColumns);
         } catch (IllegalArgumentException e) {
@@ -341,5 +339,21 @@ public class Dialog {
         for (String columnName : inputColumns) {
             checkFirstLetter(columnName);
         }
+    }
+
+    public DataEntry getConstraintColumn() {
+        DataEntry entry = new DataEntryImpl();
+        String inputSample = "columnName|dataType";
+        String message = String.format("Enter the name of PRIMARY KEY column and its dataType: " +
+                "%s\n%s", inputSample, CANCEL_INPUT);
+
+        try {
+            entry = getEntry(message, inputSample);
+            checkFirstLetter(entry.getColumn());
+        } catch (IllegalArgumentException e) {
+            view.write(e.getMessage());
+            getConstraintColumn();
+        }
+        return entry;
     }
 }
