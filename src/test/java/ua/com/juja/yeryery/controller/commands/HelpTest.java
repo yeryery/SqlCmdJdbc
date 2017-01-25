@@ -50,7 +50,7 @@ public class HelpTest {
         shouldPrint("[Content of commands:, " +
                 "\tconnect|database|username|password, " +
                 "\t\tConnect to Database, " +
-                "\tcontent, " +
+                "\ttables, " +
                 "\t\tDisplay a list of available tables, " +
                 "\tcreate, " +
                 "\t\tCreate new table, " +

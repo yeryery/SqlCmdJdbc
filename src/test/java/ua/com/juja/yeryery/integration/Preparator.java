@@ -56,6 +56,7 @@ public class Preparator {
             manager.insert("test", testRow1);
             manager.insert("test", testRow2);
             manager.create("users", primaryKey, ttableColumns);
+            //TODO сделать другой primary key
         } catch (SQLException e) {
             e.getMessage();
         }

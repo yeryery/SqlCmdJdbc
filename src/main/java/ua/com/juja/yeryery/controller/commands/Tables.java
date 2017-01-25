@@ -5,13 +5,13 @@ import ua.com.juja.yeryery.view.View;
 
 import java.util.Set;
 
-public class Content implements Command {
+public class Tables implements Command {
 
     private View view;
     private DatabaseManager manager;
-    private static final String ACTION = "content";
+    private static final String ACTION = "tables";
 
-    public Content(View view, DatabaseManager manager) {
+    public Tables(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }

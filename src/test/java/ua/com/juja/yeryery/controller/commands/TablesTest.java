@@ -13,7 +13,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class ContentTest {
+public class TablesTest {
 
     private DatabaseManager manager;
     private View view;
@@ -23,26 +23,26 @@ public class ContentTest {
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new Content(view, manager);
+        command = new Tables(view, manager);
     }
 
     @Test
-    public void testContent() {
+    public void testTables() {
         //given
         Set<String> tableNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
         when(manager.getTableNames()).thenReturn(tableNames);
 
         //when
-        command.process("content");
+        command.process("tables");
 
         //then
         verify(view).write("[test, users]");
     }
 
     @Test
-    public void testCanProcessContent() {
+    public void testCanProcessTables() {
         //when
-        boolean canProcess = command.canProcess("content");
+        boolean canProcess = command.canProcess("tables");
 
         //then
         assertTrue(canProcess);

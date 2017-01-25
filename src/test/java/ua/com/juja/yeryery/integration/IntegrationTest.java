@@ -75,7 +75,7 @@ public class IntegrationTest {
                 "Content of commands:\n" +
                 "\tconnect|database|username|password\n" +
                 "\t\tConnect to Database\n" +
-                "\tcontent\n" +
+                "\ttables\n" +
                 "\t\tDisplay a list of available tables\n" +
                 "\tcreate\n" +
                 "\t\tCreate new table\n" +
@@ -222,10 +222,10 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testContentAfterConnect() {
+    public void testTablesAfterConnect() {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
-        in.add("content");
+        in.add("tables");
         in.add("exit");
 
         //when
@@ -237,7 +237,7 @@ public class IntegrationTest {
                 //connect
                 "Success!\n" +
                 "Type command or 'help'\n" +
-                //content
+                //tables
                 "[test, users]\n" +
                 "Type command or 'help'\n" +
                 //exit
