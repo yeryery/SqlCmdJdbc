@@ -39,6 +39,5 @@ public class Create implements Command {
             view.write("Try again.");
             process(input);
         }
-        //TODO create без id
     }
 }
