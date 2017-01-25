@@ -47,7 +47,7 @@ public class HelpTest {
         command.process("help");
 
         //then
-        shouldPrint("[Content of commands:, " +
+        shouldPrint("[List of commands:, " +
                 "\tconnect|database|username|password, " +
                 "\t\tConnect to Database, " +
                 "\ttables, " +

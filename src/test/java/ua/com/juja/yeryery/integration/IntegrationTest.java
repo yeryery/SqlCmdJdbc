@@ -1,6 +1,5 @@
 package ua.com.juja.yeryery.integration;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,10 +38,11 @@ public class IntegrationTest {
         Locale.setDefault(Locale.ENGLISH);
     }
 
-    @AfterClass
-    public static void clearAfterTests() {
-        Preparator.deleteDB(testManager);
-    }
+//    @AfterClass
+//    public static void clearAfterTests() {
+//        Preparator.deleteDB(testManager);
+//    }
+    //TODO убрать перед отправлением на тестирование
 
     @Test
     public void testExit() {
@@ -72,7 +72,7 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //help
-                "Content of commands:\n" +
+                "List of commands:\n" +
                 "\tconnect|database|username|password\n" +
                 "\t\tConnect to Database\n" +
                 "\ttables\n" +

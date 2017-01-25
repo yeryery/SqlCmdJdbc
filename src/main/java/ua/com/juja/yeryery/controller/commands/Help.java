@@ -18,7 +18,7 @@ public class Help implements Command {
 
     @Override
     public void process(String input) {
-        view.write("Content of commands:");
+        view.write("List of commands:");
 
         view.write("\tconnect|database|username|password");
         view.write("\t\tConnect to Database");
