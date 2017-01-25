@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.integration;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,11 +39,10 @@ public class IntegrationTest {
         Locale.setDefault(Locale.ENGLISH);
     }
 
-//    @AfterClass
-//    public static void clearAfterTests() {
-//        Preparator.deleteDB(testManager);
-//    }
-    //TODO удаление базы
+    @AfterClass
+    public static void clearAfterTests() {
+        Preparator.deleteDB(testManager);
+    }
 
     @Test
     public void testExit() {

@@ -137,9 +137,15 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public void dropDB(String dataBaseName) {
+
+        String disconnectDB = "SELECT pg_terminate_backend(pg_stat_activity.pid)\n" +
+                "    FROM pg_stat_activity\n" +
+                "    WHERE pg_stat_activity.datname = '" + dataBaseName + "'\n" +
+                "      AND pid <> pg_backend_pid();";
         String sql = String.format("DROP DATABASE %s", dataBaseName);
 
         try (Statement st = connection.createStatement()) {
+            st.executeQuery(disconnectDB);
             st.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
