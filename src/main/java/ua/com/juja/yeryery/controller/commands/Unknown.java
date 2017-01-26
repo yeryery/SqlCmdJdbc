@@ -17,7 +17,7 @@ public class Unknown implements Command {
 
     @Override
     public void process(String input) {
-        view.write("Unknown command: " + input + "!");
-        view.write("Try again.");
+        view.write("Unknown command: " + input);
+        view.write("Try again");
     }
 }
