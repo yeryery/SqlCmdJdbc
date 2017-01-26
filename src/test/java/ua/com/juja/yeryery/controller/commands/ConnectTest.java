@@ -55,8 +55,9 @@ public class ConnectTest {
         String commandSample = "connect|database|username|password";
 
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
-        IllegalArgumentException exception = new IllegalArgumentException(
-                "Wrong number of parameters. Expected 4 parameters, and you have entered 5");
+
+        String exceptionMessage = "Wrong number of parameters. Expected 4 parameters, and you have entered 5";
+        IllegalArgumentException exception = new IllegalArgumentException(exceptionMessage);
         when(dialog.splitConnectInput(input, commandSample)).thenThrow(exception);
 
         //when
@@ -64,8 +65,7 @@ public class ConnectTest {
             command.process(input);
             fail("Expect ConnectException");
         } catch (ConnectException e) {
-            assertEquals("Error! Wrong number of parameters. Expected 4 parameters, and you have entered 5\n" +
-                    "Try again", e.getMessage());
+            assertEquals(exceptionMessage, e.getMessage());
         }
     }
 
@@ -76,8 +76,9 @@ public class ConnectTest {
         String commandSample = "connect|database|username|password";
 
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
-        IllegalArgumentException exception = new IllegalArgumentException(
-                "Wrong number of parameters. Expected 4 parameters, and you have entered 1");
+
+        String exceptionMessage = "Wrong number of parameters. Expected 4 parameters, and you have entered 1";
+        IllegalArgumentException exception = new IllegalArgumentException(exceptionMessage);
         when(dialog.splitConnectInput(input, commandSample)).thenThrow(exception);
 
         //when
@@ -85,8 +86,7 @@ public class ConnectTest {
             command.process(input);
             fail("Expect ConnectException");
         } catch (ConnectException e) {
-            assertEquals("Error! Wrong number of parameters. Expected 4 parameters, and you have entered 1\n" +
-                    "Try again", e.getMessage());
+            assertEquals(exceptionMessage, e.getMessage());
         }
     }
 

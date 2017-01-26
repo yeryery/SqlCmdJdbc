@@ -31,7 +31,7 @@ public class Connect implements Command {
         try {
             splitInput = dialog.splitConnectInput(input, commandSample);
         } catch (IllegalArgumentException e) {
-            throw new ConnectException(e.getShortMessage());
+            throw new ConnectException(e.getMessage());
         }
 
         String database = splitInput[1];

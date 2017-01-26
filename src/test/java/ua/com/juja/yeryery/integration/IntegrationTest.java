@@ -216,7 +216,7 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //someCommand
-                "Unknown command: someCommand\n" +
+                "Error! Unknown command: someCommand\n" +
                 "Try again\n" +
                 "Type command or 'help'\n" +
                 //exit

@@ -45,7 +45,7 @@ public class Dialog {
             checkCancelOrZero(input);
             requiredTable = findInputTable(input, tableList);
         } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
+            view.write(e.getExtendedMessage());
             getRequiredTable(action, tableList);
         }
         return requiredTable;
@@ -113,7 +113,7 @@ public class Dialog {
         try {
             checkNewName(names, tableName);
         } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
+            view.write(e.getExtendedMessage());
             assignNewTableName(names);
         }
         return tableName.toLowerCase();
@@ -170,7 +170,7 @@ public class Dialog {
             entry = getEntry(message, inputSample);
             checkEntry(tableName, entry);
         } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
+            view.write(e.getExtendedMessage());
             findRow(tableName, action);
         }
         return entry;
@@ -259,7 +259,7 @@ public class Dialog {
             newEntries = getEntries(message);
             checkInputColumns(tableName, newEntries);
         } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
+            view.write(e.getExtendedMessage());
             getNewEntries(tableName, action);
         }
         return newEntries;
@@ -321,7 +321,7 @@ public class Dialog {
             inputColumns = getEntries(message);
             checkNewColumns(inputColumns);
         } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
+            view.write(e.getExtendedMessage());
             getNewColumns(action);
         }
         return inputColumns;
@@ -351,7 +351,7 @@ public class Dialog {
             entry = getEntry(message, inputSample);
             checkFirstLetter(entry.getColumn());
         } catch (IllegalArgumentException e) {
-            view.write(e.getMessage());
+            view.write(e.getExtendedMessage());
             getConstraintColumn();
         }
         return entry;

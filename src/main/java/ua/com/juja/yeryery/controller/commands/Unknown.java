@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.controller.commands;
 
+import ua.com.juja.yeryery.controller.commands.Utility.UnknownCommandException;
 import ua.com.juja.yeryery.view.View;
 
 public class Unknown implements Command {
@@ -17,7 +18,6 @@ public class Unknown implements Command {
 
     @Override
     public void process(String input) {
-        view.write("Unknown command: " + input);
-        view.write("Try again");
+        throw new UnknownCommandException("Unknown command: " + input);
     }
 }

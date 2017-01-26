@@ -11,8 +11,10 @@ public class Controller {
 
     private View view;
     private Command[] commands;
+    
     private static final String connectToDatabase = "Please, enter: " +
             "'connect|database|username|password' or use command 'help'";
+    private static final String typeCommand = "Type command or 'help'";
 
     public Controller(View view, DatabaseManager manager) {
         this.view = view;
@@ -48,7 +50,6 @@ public class Controller {
             String input = view.read();
 
             for (Command command : commands) {
-                String typeCommand = "Type command or 'help'";
 
                 try {
                     if (command.canProcess(input)) {
@@ -57,11 +58,6 @@ public class Controller {
                         break;
                     }
                 } catch (Exception e) {
-                    if (e instanceof ConnectException) {
-                        view.write(String.format(e.getMessage(), input));
-                        view.write(connectToDatabase);
-                        break;
-                    }
 
                     if (e instanceof CancelException) {
                         view.write(e.getMessage());
@@ -85,5 +81,11 @@ public class Controller {
 
         view.write("Error! " + message);
         view.write("Try again");
+
+        if (e instanceof ConnectException) {
+            view.write(connectToDatabase);
+        } else {
+            view.write(typeCommand);
+        }
     }
 }
