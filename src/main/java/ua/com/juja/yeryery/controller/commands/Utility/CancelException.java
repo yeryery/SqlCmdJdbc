@@ -1,8 +1,7 @@
 package ua.com.juja.yeryery.controller.commands.Utility;
 
 public class CancelException extends RuntimeException {
-
-    public String getMessage() {
-        return "Command execution is canceled";
+    public CancelException() {
+        super("Command execution is canceled");
     }
 }

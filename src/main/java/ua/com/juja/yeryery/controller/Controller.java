@@ -5,13 +5,14 @@ import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
 import ua.com.juja.yeryery.controller.commands.Utility.ConnectException;
 import ua.com.juja.yeryery.controller.commands.Utility.ExitException;
 import ua.com.juja.yeryery.model.DatabaseManager;
+import ua.com.juja.yeryery.model.JdbcDriverException;
 import ua.com.juja.yeryery.view.View;
 
 public class Controller {
 
     private View view;
     private Command[] commands;
-    
+
     private static final String connectToDatabase = "Please, enter: " +
             "'connect|database|username|password' or use command 'help'";
     private static final String typeCommand = "Type command or 'help'";
@@ -58,6 +59,11 @@ public class Controller {
                         break;
                     }
                 } catch (Exception e) {
+
+                    if (e instanceof JdbcDriverException) {
+                        view.write(e.getMessage());
+                        break;
+                    }
 
                     if (e instanceof CancelException) {
                         view.write(e.getMessage());
