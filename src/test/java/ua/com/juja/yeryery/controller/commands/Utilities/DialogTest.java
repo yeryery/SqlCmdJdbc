@@ -16,9 +16,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class DialogTest {
@@ -461,9 +459,8 @@ public class DialogTest {
         when(view.read()).thenReturn("9column1|String|column2|int").thenReturn("cancel");
 
         //when
-        DataSet actualDataSet = null;
         try {
-            actualDataSet = dialog.getNewColumns("action");
+            DataSet actualDataSet = dialog.getNewColumns("action");
         } catch (CancelException e) {
             //do nothing
         }

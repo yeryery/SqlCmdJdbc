@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 public class IntegrationTest {
 
     private static final String DATABASE = Preparator.DATABASE;
-    //put here your own username and password
     private static final String USERNAME = Preparator.USERNAME;
     private static final String PASSWORD = Preparator.PASSWORD;
 
@@ -133,9 +132,9 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //someCommand
-                "Unknown command: someCommand!\n" +
-                "Try again.\n" +
-                "Type command or 'help'\n" +
+                "Error! You can`t use 'someCommand' unless you are not connected\n" +
+                "Try again\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
@@ -155,6 +154,7 @@ public class IntegrationTest {
                 //connect|testBase|postgres|wrongPass
                 "Error! FATAL: password authentication failed for user \"postgres\"\n" +
                 "Try again\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
@@ -174,6 +174,7 @@ public class IntegrationTest {
                 //connect|testBase|wrongName|postgrespass
                 "Error! FATAL: password authentication failed for user \"wrongName\"\n" +
                 "Try again\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
@@ -193,6 +194,7 @@ public class IntegrationTest {
                 //connect|notExistsDB|postgres|postgrespass
                 "Error! FATAL: database \"notExistsDB\" does not exist\n" +
                 "Try again\n" +
+                "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
@@ -214,8 +216,8 @@ public class IntegrationTest {
                 "Success!\n" +
                 "Type command or 'help'\n" +
                 //someCommand
-                "Unknown command: someCommand!\n" +
-                "Try again.\n" +
+                "Unknown command: someCommand\n" +
+                "Try again\n" +
                 "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));

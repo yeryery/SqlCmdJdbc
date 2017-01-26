@@ -16,17 +16,19 @@ public class Controller {
 
     public Controller(View view, DatabaseManager manager) {
         this.view = view;
-        this.commands = new Command[]{new Connect(view, manager),
+        this.commands = new Command[]{
+                new Connect(view, manager),
+                new Help(view),
+                new Exit(view),
+                new IsConnected(manager),
                 new Clear(view, manager),
                 new Create(view, manager),
                 new Drop(view, manager),
-                new Content(view, manager),
+                new Tables(view, manager),
                 new Insert(view, manager),
                 new Display(view, manager),
                 new Update(view, manager),
                 new Delete(view, manager),
-                new Exit(view),
-                new Help(view),
                 new Unknown(view)};
     }
 
@@ -61,14 +63,14 @@ public class Controller {
                         break;
                     }
 
-                    if (e instanceof ExitException) {
-                        return;
-                    }
-
                     if (e instanceof CancelException) {
-                        view.write("Command execution is canceled");
+                        view.write(e.getMessage());
                         view.write(typeCommand);
                         break;
+                    }
+
+                    if (e instanceof ExitException) {
+                        return;
                     }
 
                     printError(e);

@@ -13,6 +13,8 @@ public interface DatabaseManager {
 
     Set<String> getTableColumns(String tableName);
 
+    boolean isConnected();
+
     void clear(String tableName);
 
     void create(String tableName, DataEntry primaryKey, DataSet columns) throws SQLException;

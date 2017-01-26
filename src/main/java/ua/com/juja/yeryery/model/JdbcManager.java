@@ -8,6 +8,7 @@ import java.util.*;
 public class JdbcManager implements DatabaseManager {
 
     private Connection connection;
+    private boolean isConnected = false;
 
     @Override
     public void connect(String database, String username, String password) {
@@ -17,9 +18,10 @@ public class JdbcManager implements DatabaseManager {
         try {
             String url = String.format("jdbc:postgresql://localhost:5432/%s", database);
             connection = DriverManager.getConnection(url, username, password);
+            isConnected = true;
         } catch (SQLException e) {
             connection = null;
-            throw new DatabaseAccessException(e.getMessage());
+            throw new ConnectException(e.getMessage());
         }
     }
 
@@ -35,6 +37,7 @@ public class JdbcManager implements DatabaseManager {
         if (connection != null) {
             try {
                 connection.close();
+                isConnected = false;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -53,9 +56,8 @@ public class JdbcManager implements DatabaseManager {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (NullPointerException e) {
-            throw new ConnectException("You can`t use '%s' unless you are not connected");
         }
+
         return tableNames;
     }
 
@@ -73,6 +75,7 @@ public class JdbcManager implements DatabaseManager {
             list = null;
             throw new RuntimeException(e);
         }
+
         return list;
     }
 
@@ -89,7 +92,13 @@ public class JdbcManager implements DatabaseManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return columnNames;
+    }
+
+    @Override
+    public boolean isConnected() {
+        return isConnected;
     }
 
     @Override
