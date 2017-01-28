@@ -1,11 +1,10 @@
 package ua.com.juja.yeryery.integration;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.yeryery.Main;
-import ua.com.juja.yeryery.model.DatabaseManager;
-import ua.com.juja.yeryery.model.JdbcManager;
 
 import java.io.PrintStream;
 import java.util.Locale;
@@ -20,11 +19,10 @@ public class IntegrationTest {
 
     private ConfigurableInputStream in;
     private LogOutputStream out;
-    private static DatabaseManager testManager = new JdbcManager();
 
     @BeforeClass
     public static void setupTestDB() {
-        Preparator.setupDB(testManager);
+        Preparator.setupDB();
     }
 
     @Before
@@ -37,10 +35,10 @@ public class IntegrationTest {
         Locale.setDefault(Locale.ENGLISH);
     }
 
-//    @AfterClass
-//    public static void clearAfterTests() {
-//        Preparator.deleteDB(testManager);
-//    }
+    @AfterClass
+    public static void clearAfterTests() {
+        Preparator.deleteDB();
+    }
     //TODO убрать перед отправлением на тестирование
 
     @Test

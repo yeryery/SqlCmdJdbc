@@ -14,24 +14,24 @@ public class JdbcManagerTest {
     private static final String DATABASE = Preparator.DATABASE;
     private static final String USERNAME = Preparator.USERNAME;
     private static final String PASSWORD = Preparator.PASSWORD;
-    private static final String DATABASE_TO_DROP = Preparator.DATABASE_TO_DROP;
 
-    private static DatabaseManager testManager = new JdbcManager();
+    private static final String DATABASE_TO_DROP = Preparator.DATABASE_TO_DROP;
+    private static final DatabaseManager MANAGER = Preparator.TEST_MANAGER;
 
     @BeforeClass
     public static void setupTestDB() {
-        Preparator.setupDB(testManager);
+        Preparator.setupDB();
     }
 
     @AfterClass
     public static void clearAfterTests() {
-        Preparator.deleteDB(testManager);
+        Preparator.deleteDB();
     }
 
     @Test
     public void testGetTableNames() {
         //when
-        Set<String> actualNames = testManager.getTableNames();
+        Set<String> actualNames = MANAGER.getTableNames();
 
         //then
         Set<String> expectedNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
@@ -41,11 +41,11 @@ public class JdbcManagerTest {
     @Test
     public void testConnect() {
         //given
-        Preparator.disconnectFromDB(testManager);
+        Preparator.disconnectFromDB();
 
         //when
-        testManager.connect(DATABASE, USERNAME, PASSWORD);
-        Set<String> actualNames = testManager.getTableNames();
+        MANAGER.connect(DATABASE, USERNAME, PASSWORD);
+        Set<String> actualNames = MANAGER.getTableNames();
 
         //then
         Set<String> expectedNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
@@ -55,16 +55,16 @@ public class JdbcManagerTest {
     @Test(expected = ConnectException.class)
     public void testConnectToNotExistingDatabase() {
         //given
-        Preparator.disconnectFromDB(testManager);
+        Preparator.disconnectFromDB();
 
         //when
         try {
-            testManager.connect("NotExistingDatabase", USERNAME, PASSWORD);
+            MANAGER.connect("NotExistingDatabase", USERNAME, PASSWORD);
             fail("Expected ConnectException");
 
         //then
         } catch (Exception e) {
-            testManager.connect(DATABASE, USERNAME, PASSWORD);
+            MANAGER.connect(DATABASE, USERNAME, PASSWORD);
             throw e;
         }
     }
@@ -72,16 +72,16 @@ public class JdbcManagerTest {
     @Test(expected = ConnectException.class)
     public void testConnectWithWrongPassword() {
         //given
-        Preparator.disconnectFromDB(testManager);
+        Preparator.disconnectFromDB();
 
         //when
         try {
-            testManager.connect(DATABASE, USERNAME, "WrongPassword");
+            MANAGER.connect(DATABASE, USERNAME, "WrongPassword");
             fail("Expected ConnectException");
 
         //then
         } catch (Exception e) {
-            testManager.connect(DATABASE, USERNAME, PASSWORD);
+            MANAGER.connect(DATABASE, USERNAME, PASSWORD);
             throw e;
         }
     }
@@ -89,7 +89,7 @@ public class JdbcManagerTest {
     @Test
     public void testGetDatabases() {
         //when
-        Set<String> actualDatabases = testManager.getDatabases();
+        Set<String> actualDatabases = MANAGER.getDatabases();
 
         //then
         assertTrue(actualDatabases.contains(DATABASE));
@@ -98,7 +98,7 @@ public class JdbcManagerTest {
     @Test
     public void testGetTableColumns() {
         //when
-        Set<String> actualColumns = testManager.getTableColumns("users");
+        Set<String> actualColumns = MANAGER.getTableColumns("users");
 
         //then
         Set<String> expectedColumns = new LinkedHashSet<>(Arrays.asList("code", "name", "age"));
@@ -108,13 +108,13 @@ public class JdbcManagerTest {
     @Test
     public void testClearTable() {
         //when
-        testManager.clear("test");
+        MANAGER.clear("test");
 
         //then
         List<DataSet> expectedContent = new LinkedList<>();
-        assertEquals(expectedContent, testManager.getDataContent("test"));
+        assertEquals(expectedContent, MANAGER.getDataContent("test"));
 
-        Preparator.createTableTest(testManager);
+        Preparator.createTableTest();
     }
 
     @Test
@@ -128,53 +128,53 @@ public class JdbcManagerTest {
 
         //when
         final String TABLE_TO_CREATE = "tabletocreate";
-        testManager.create(TABLE_TO_CREATE, primaryKey, columns);
+        MANAGER.create(TABLE_TO_CREATE, primaryKey, columns);
 
         //then
         Set<String> expectedColumns = new LinkedHashSet<>(Arrays.asList("key", "login"));
-        assertTrue(testManager.getTableNames().contains(TABLE_TO_CREATE));
-        assertEquals(expectedColumns, testManager.getTableColumns(TABLE_TO_CREATE));
+        assertTrue(MANAGER.getTableNames().contains(TABLE_TO_CREATE));
+        assertEquals(expectedColumns, MANAGER.getTableColumns(TABLE_TO_CREATE));
 
-        testManager.drop(TABLE_TO_CREATE);
+        MANAGER.drop(TABLE_TO_CREATE);
     }
 
     @Test
     public void testDropTable() {
         //when
-        testManager.drop("test");
+        MANAGER.drop("test");
 
         //then
-        assertFalse(testManager.getTableNames().contains("test"));
-        Preparator.createTableTest(testManager);
+        assertFalse(MANAGER.getTableNames().contains("test"));
+        Preparator.createTableTest();
     }
 
     @Test(expected = RuntimeException.class)
     public void testDropNotExistingTable() {
         //when
-        testManager.drop("NotExistingTable");
+        MANAGER.drop("NotExistingTable");
     }
 
     @Ignore
     //todo убрать ignore
     public void testCreateDB() {
         //when
-        testManager.createDB(DATABASE_TO_DROP);
+        MANAGER.createDB(DATABASE_TO_DROP);
 
         //then
-        assertTrue(testManager.getDatabases().contains(DATABASE_TO_DROP));
-        testManager.dropDB(DATABASE_TO_DROP);
+        assertTrue(MANAGER.getDatabases().contains(DATABASE_TO_DROP));
+        MANAGER.dropDB(DATABASE_TO_DROP);
     }
 
     @Ignore
     public void testDropDB() {
         //given
-        testManager.createDB(DATABASE_TO_DROP);
+        MANAGER.createDB(DATABASE_TO_DROP);
 
         //when
-        testManager.dropDB(DATABASE_TO_DROP);
+        MANAGER.dropDB(DATABASE_TO_DROP);
 
         //then
-        assertFalse(testManager.getDatabases().contains(DATABASE_TO_DROP));
+        assertFalse(MANAGER.getDatabases().contains(DATABASE_TO_DROP));
     }
 
     @Test
@@ -186,14 +186,14 @@ public class JdbcManagerTest {
         expectedData.put("age", 25);
 
         //when
-        testManager.insert("users", expectedData);
+        MANAGER.insert("users", expectedData);
 
         //then
-        DataSet actualData = testManager.getDataContent("users").get(0);
+        DataSet actualData = MANAGER.getDataContent("users").get(0);
         assertEquals(expectedData.getColumnNames(), actualData.getColumnNames());
         assertEquals(expectedData.getValues(), actualData.getValues());
 
-        testManager.clear("users");
+        MANAGER.clear("users");
     }
 
     @Test
@@ -203,7 +203,7 @@ public class JdbcManagerTest {
         updatedData.put("code", 100);
         updatedData.put("name", "Jack");
         updatedData.put("age", 25);
-        testManager.insert("users", updatedData);
+        MANAGER.insert("users", updatedData);
 
         //when
         updatedData.put("code", 150);
@@ -211,14 +211,14 @@ public class JdbcManagerTest {
         DataEntry definingEntry = new DataEntryImpl();
         definingEntry.setEntry("age", 25);
 
-        testManager.update("users", updatedData, definingEntry);
+        MANAGER.update("users", updatedData, definingEntry);
 
         //then
-        DataSet actualData = testManager.getDataContent("users").get(0);
+        DataSet actualData = MANAGER.getDataContent("users").get(0);
         assertEquals(updatedData.getColumnNames(), actualData.getColumnNames());
         assertEquals(updatedData.getValues(), actualData.getValues());
 
-        testManager.clear("users");
+        MANAGER.clear("users");
     }
 
     @Test
@@ -228,17 +228,17 @@ public class JdbcManagerTest {
         deletedData.put("code", 100);
         deletedData.put("name", "Jack");
         deletedData.put("age", 25);
-        testManager.insert("users", deletedData);
+        MANAGER.insert("users", deletedData);
 
         //when
         DataEntry definingEntry = new DataEntryImpl();
         definingEntry.setEntry("age", 25);
 
-        testManager.delete("users", definingEntry);
+        MANAGER.delete("users", definingEntry);
 
         //then
         List<DataSet> expectedContent = new LinkedList<>();
-        assertEquals(expectedContent, testManager.getDataContent("users"));
+        assertEquals(expectedContent, MANAGER.getDataContent("users"));
     }
 
     @Test
@@ -248,10 +248,10 @@ public class JdbcManagerTest {
         expectedData.put("code", 100);
         expectedData.put("name", "Jack");
         expectedData.put("age", 25);
-        testManager.insert("users", expectedData);
+        MANAGER.insert("users", expectedData);
 
         //when
-        DataSet actualData = testManager.getDataContent("users").get(0);
+        DataSet actualData = MANAGER.getDataContent("users").get(0);
 
         //then
         assertEquals(expectedData.getColumnNames(), actualData.getColumnNames());
