@@ -18,6 +18,9 @@ public class JdbcManagerTest {
     private static final String DATABASE_TO_DROP = Preparator.DATABASE_TO_DROP;
     private static final DatabaseManager MANAGER = Preparator.TEST_MANAGER;
 
+    private static final String TEST_TABLE = "test";
+    private static final String USERS_TABLE = "users";
+
     @BeforeClass
     public static void setupTestDB() {
         Preparator.setupDB();
@@ -34,7 +37,7 @@ public class JdbcManagerTest {
         Set<String> actualNames = MANAGER.getTableNames();
 
         //then
-        Set<String> expectedNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
+        Set<String> expectedNames = new LinkedHashSet<>(Arrays.asList(TEST_TABLE, USERS_TABLE));
         assertEquals(expectedNames, actualNames);
     }
 
@@ -48,7 +51,7 @@ public class JdbcManagerTest {
         Set<String> actualNames = MANAGER.getTableNames();
 
         //then
-        Set<String> expectedNames = new LinkedHashSet<>(Arrays.asList("test", "users"));
+        Set<String> expectedNames = new LinkedHashSet<>(Arrays.asList(TEST_TABLE, USERS_TABLE));
         assertEquals(expectedNames, actualNames);
     }
 
@@ -98,7 +101,7 @@ public class JdbcManagerTest {
     @Test
     public void testGetTableColumns() {
         //when
-        Set<String> actualColumns = MANAGER.getTableColumns("users");
+        Set<String> actualColumns = MANAGER.getTableColumns(USERS_TABLE);
 
         //then
         Set<String> expectedColumns = new LinkedHashSet<>(Arrays.asList("code", "name", "age"));
@@ -108,11 +111,11 @@ public class JdbcManagerTest {
     @Test
     public void testClearTable() {
         //when
-        MANAGER.clear("test");
+        MANAGER.clear(TEST_TABLE);
 
         //then
         List<DataSet> expectedContent = new LinkedList<>();
-        assertEquals(expectedContent, MANAGER.getDataContent("test"));
+        assertEquals(expectedContent, MANAGER.getDataContent(TEST_TABLE));
 
         Preparator.createTableTest();
     }
@@ -141,10 +144,10 @@ public class JdbcManagerTest {
     @Test
     public void testDropTable() {
         //when
-        MANAGER.drop("test");
+        MANAGER.drop(TEST_TABLE);
 
         //then
-        assertFalse(MANAGER.getTableNames().contains("test"));
+        assertFalse(MANAGER.getTableNames().contains(TEST_TABLE));
         Preparator.createTableTest();
     }
 
@@ -180,30 +183,24 @@ public class JdbcManagerTest {
     @Test
     public void testInsert() throws SQLException {
         //given
-        DataSet expectedData = new DataSetImpl();
-        expectedData.put("code", 100);
-        expectedData.put("name", "Jack");
-        expectedData.put("age", 25);
+        DataSet expectedData = getDataSet();
 
         //when
-        MANAGER.insert("users", expectedData);
+        MANAGER.insert(USERS_TABLE, expectedData);
 
         //then
-        DataSet actualData = MANAGER.getDataContent("users").get(0);
+        DataSet actualData = MANAGER.getDataContent(USERS_TABLE).get(0);
         assertEquals(expectedData.getColumnNames(), actualData.getColumnNames());
         assertEquals(expectedData.getValues(), actualData.getValues());
 
-        MANAGER.clear("users");
+        MANAGER.clear(USERS_TABLE);
     }
 
     @Test
     public void testUpdate() throws SQLException {
         //given
-        DataSet updatedData = new DataSetImpl();
-        updatedData.put("code", 100);
-        updatedData.put("name", "Jack");
-        updatedData.put("age", 25);
-        MANAGER.insert("users", updatedData);
+        DataSet updatedData = getDataSet();
+        MANAGER.insert(USERS_TABLE, updatedData);
 
         //when
         updatedData.put("code", 150);
@@ -211,50 +208,52 @@ public class JdbcManagerTest {
         DataEntry definingEntry = new DataEntryImpl();
         definingEntry.setEntry("age", 25);
 
-        MANAGER.update("users", updatedData, definingEntry);
+        MANAGER.update(USERS_TABLE, updatedData, definingEntry);
 
         //then
-        DataSet actualData = MANAGER.getDataContent("users").get(0);
+        DataSet actualData = MANAGER.getDataContent(USERS_TABLE).get(0);
         assertEquals(updatedData.getColumnNames(), actualData.getColumnNames());
         assertEquals(updatedData.getValues(), actualData.getValues());
 
-        MANAGER.clear("users");
+        MANAGER.clear(USERS_TABLE);
     }
 
     @Test
     public void testDelete() throws SQLException {
         //given
-        DataSet deletedData = new DataSetImpl();
-        deletedData.put("code", 100);
-        deletedData.put("name", "Jack");
-        deletedData.put("age", 25);
-        MANAGER.insert("users", deletedData);
+        DataSet deletedData = getDataSet();
+        MANAGER.insert(USERS_TABLE, deletedData);
 
         //when
         DataEntry definingEntry = new DataEntryImpl();
         definingEntry.setEntry("age", 25);
 
-        MANAGER.delete("users", definingEntry);
+        MANAGER.delete(USERS_TABLE, definingEntry);
 
         //then
         List<DataSet> expectedContent = new LinkedList<>();
-        assertEquals(expectedContent, MANAGER.getDataContent("users"));
+        assertEquals(expectedContent, MANAGER.getDataContent(USERS_TABLE));
     }
 
     @Test
     public void testGetDataContent() throws SQLException {
         //given
-        DataSet expectedData = new DataSetImpl();
-        expectedData.put("code", 100);
-        expectedData.put("name", "Jack");
-        expectedData.put("age", 25);
-        MANAGER.insert("users", expectedData);
+        DataSet expectedData = getDataSet();
+        MANAGER.insert(USERS_TABLE, expectedData);
 
         //when
-        DataSet actualData = MANAGER.getDataContent("users").get(0);
+        DataSet actualData = MANAGER.getDataContent(USERS_TABLE).get(0);
 
         //then
         assertEquals(expectedData.getColumnNames(), actualData.getColumnNames());
         assertEquals(expectedData.getValues(), actualData.getValues());
+    }
+
+    private DataSet getDataSet() {
+        DataSet expectedData = new DataSetImpl();
+        expectedData.put("code", 100);
+        expectedData.put("name", "Jack");
+        expectedData.put("age", 25);
+        return expectedData;
     }
 }

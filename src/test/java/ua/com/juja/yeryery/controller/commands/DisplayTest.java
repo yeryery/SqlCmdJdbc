@@ -24,7 +24,7 @@ public class DisplayTest {
     private DatabaseManager manager;
     private Dialog dialog;
     private Command command;
-    private static final String TABLE = "test";
+    private static final String TEST_TABLE = "test";
     private static final String ACTION = "display";
 
     @Before
@@ -40,7 +40,7 @@ public class DisplayTest {
     public void testDisplayTableData() throws Exception {
         //given
         mockMethods();
-        when(manager.getDataContent(TABLE)).thenReturn(TestTable.getTableContent());
+        when(manager.getDataContent(TEST_TABLE)).thenReturn(TestTable.getTableContent());
 
         //when
         command.process(ACTION);
@@ -59,7 +59,7 @@ public class DisplayTest {
     public void testDisplayEmptyTableData() throws Exception {
         //given
         mockMethods();
-        when(manager.getDataContent(TABLE)).thenReturn(TestTable.getEmptyTable());
+        when(manager.getDataContent(TEST_TABLE)).thenReturn(TestTable.getEmptyTable());
 
         //when
         command.process(ACTION);
@@ -72,8 +72,8 @@ public class DisplayTest {
 
     private void mockMethods() throws Exception {
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
-        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
-        when(manager.getTableColumns(TABLE)).thenReturn(TestTable.getTableColumns());
+        when(dialog.selectTable(ACTION)).thenReturn(TEST_TABLE);
+        when(manager.getTableColumns(TEST_TABLE)).thenReturn(TestTable.getTableColumns());
     }
 
     private void shouldPrint(String expected) {

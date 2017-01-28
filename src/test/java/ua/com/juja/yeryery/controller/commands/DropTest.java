@@ -20,7 +20,7 @@ public class DropTest {
     private DatabaseManager manager;
     private Dialog dialog;
     private Command command;
-    private static final String TABLE = "test";
+    private static final String TEST_TABLE = "test";
     private static final String ACTION = "drop";
 
     @Before
@@ -34,7 +34,9 @@ public class DropTest {
     @Test
     public void testDropCommand() throws Exception {
         //given
-        mockMethods();
+        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
+        when(dialog.selectTable(ACTION)).thenReturn(TEST_TABLE);
+        doNothing().when(dialog).confirmAction(ACTION, TEST_TABLE);
 
         //when
         command.process(ACTION);
@@ -43,9 +45,4 @@ public class DropTest {
         verify(view).write("Table 'test' successfully dropped!");
     }
 
-    private void mockMethods() throws Exception {
-        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
-        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
-        doNothing().when(dialog).confirmAction(ACTION, TABLE);
-    }
 }

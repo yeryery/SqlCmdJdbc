@@ -25,7 +25,7 @@ public class UpdateTest {
     private DataEntry definingEntry;
     private DataSet updatingEntries;
     private Command command;
-    private static final String TABLE = "test";
+    private static final String TEST_TABLE = "test";
     private static final String ACTION = "update";
 
     @Before
@@ -90,10 +90,10 @@ public class UpdateTest {
 
     private void mockMethods() throws Exception {
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
-        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
-        when(dialog.findRow(TABLE, ACTION)).thenReturn(definingEntry);
-        when(dialog.getNewEntries(TABLE, ACTION)).thenReturn(updatingEntries);
-        when(manager.getDataContent(TABLE)).thenReturn(TestTable.getTableContent());
-        PowerMockito.whenNew(TablePrinter.class).withArguments(view, manager, TABLE).thenReturn(tablePrinter);
+        when(dialog.selectTable(ACTION)).thenReturn(TEST_TABLE);
+        when(dialog.findRow(TEST_TABLE, ACTION)).thenReturn(definingEntry);
+        when(dialog.getNewEntries(TEST_TABLE, ACTION)).thenReturn(updatingEntries);
+        when(manager.getDataContent(TEST_TABLE)).thenReturn(TestTable.getTableContent());
+        PowerMockito.whenNew(TablePrinter.class).withArguments(view, manager, TEST_TABLE).thenReturn(tablePrinter);
     }
 }

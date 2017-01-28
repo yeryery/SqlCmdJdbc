@@ -28,7 +28,7 @@ public class InsertTest {
     private TablePrinter tablePrinter;
     private DataSet insertedRow;
     private Command command;
-    private static final String TABLE = "test";
+    private static final String TEST_TABLE = "test";
     private static final String ACTION = "insert";
 
     @Before
@@ -59,7 +59,7 @@ public class InsertTest {
         //given
         mockMethods();
         SQLException exception = new SQLException("SQL exception message");
-        doThrow(exception).when(manager).insert(TABLE, insertedRow);
+        doThrow(exception).when(manager).insert(TEST_TABLE, insertedRow);
 
         //when
         try {
@@ -75,8 +75,8 @@ public class InsertTest {
 
     private void mockMethods() throws Exception {
         PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog).thenThrow(new CancelException());
-        when(dialog.selectTable(ACTION)).thenReturn(TABLE);
-        when(dialog.getNewEntries(TABLE, ACTION)).thenReturn(insertedRow);
-        PowerMockito.whenNew(TablePrinter.class).withArguments(view, manager, TABLE).thenReturn(tablePrinter);
+        when(dialog.selectTable(ACTION)).thenReturn(TEST_TABLE);
+        when(dialog.getNewEntries(TEST_TABLE, ACTION)).thenReturn(insertedRow);
+        PowerMockito.whenNew(TablePrinter.class).withArguments(view, manager, TEST_TABLE).thenReturn(tablePrinter);
     }
 }

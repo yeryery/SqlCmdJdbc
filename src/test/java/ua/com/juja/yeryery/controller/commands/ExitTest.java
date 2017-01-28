@@ -11,8 +11,9 @@ import static org.mockito.Mockito.verify;
 
 public class ExitTest {
 
-    private View view = Mockito.mock(View.class);
+    private View view;
     private Command command;
+    private static final String ACTION = "exit";
 
     @Before
     public void setup() {
@@ -23,7 +24,7 @@ public class ExitTest {
     @Test
     public void testCanProcessExitString() {
         //when
-        boolean canProcess = command.canProcess("exit");
+        boolean canProcess = command.canProcess(ACTION);
 
         //then
         assertTrue(canProcess);
@@ -43,7 +44,7 @@ public class ExitTest {
     public void testProcessExitCommand_ThrowsExitException() {
         //when
         try {
-            command.process("exit");
+            command.process(ACTION);
             fail("Expected ExitException");
         } catch (ExitException e) {
             //do nothing

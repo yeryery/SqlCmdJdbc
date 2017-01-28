@@ -18,6 +18,7 @@ public class TablesTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
+    private static final String ACTION = "tables";
 
     @Before
     public void setup() {
@@ -33,7 +34,7 @@ public class TablesTest {
         when(manager.getTableNames()).thenReturn(tableNames);
 
         //when
-        command.process("tables");
+        command.process(ACTION);
 
         //then
         verify(view).write("[test, users]");
@@ -42,7 +43,7 @@ public class TablesTest {
     @Test
     public void testCanProcessTables() {
         //when
-        boolean canProcess = command.canProcess("tables");
+        boolean canProcess = command.canProcess(ACTION);
 
         //then
         assertTrue(canProcess);

@@ -23,7 +23,7 @@ public class CreateTest {
     private Dialog dialog;
     private DataSet inputColumns;
     private Command command;
-    private static final String TABLE = "test";
+    private static final String TEST_TABLE = "test";
     private static final String ACTION = "create";
 
     @Before
@@ -38,7 +38,9 @@ public class CreateTest {
     @Test
     public void testCreateCommand() throws Exception {
         //given
-        mockMethods();
+        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
+        when(dialog.nameTable()).thenReturn(TEST_TABLE);
+        when(dialog.getNewColumns(TEST_TABLE)).thenReturn(inputColumns);
 
         //when
         command.process(ACTION);
@@ -47,9 +49,4 @@ public class CreateTest {
         verify(view).write("Your table 'test' have successfully created!");
     }
 
-    private void mockMethods() throws Exception {
-        PowerMockito.whenNew(Dialog.class).withArguments(view, manager).thenReturn(dialog);
-        when(dialog.nameTable()).thenReturn(TABLE);
-        when(dialog.getNewColumns(TABLE)).thenReturn(inputColumns);
-    }
 }

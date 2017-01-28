@@ -13,7 +13,8 @@ import static org.mockito.Mockito.verify;
 public class HelpTest {
 
     private View view = Mockito.mock(View.class);
-    private Command command = new Help(view);
+    private Command command;
+    private static final String ACTION = "help";
 
     @Before
     public void setup() {
@@ -24,7 +25,7 @@ public class HelpTest {
     @Test
     public void TestCanProcessHelpString() {
         //when
-        boolean canProcess = command.canProcess("help");
+        boolean canProcess = command.canProcess(ACTION);
 
         //then
         assertTrue(canProcess);
@@ -44,7 +45,7 @@ public class HelpTest {
         //given
 
         //when
-        command.process("help");
+        command.process(ACTION);
 
         //then
         shouldPrint("[List of commands:, " +
