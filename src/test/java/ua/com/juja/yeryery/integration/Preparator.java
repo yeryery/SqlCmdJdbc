@@ -11,6 +11,8 @@ public class Preparator {
     //put here your own username and password
     public static final String USERNAME = "postgres";
     public static final String PASSWORD = "postgrespass";
+    public static final String DATABASE_TO_DROP = "databasetodrop";
+    //todo выделить manager как отдельное поле
 
     public static void setupDB(DatabaseManager manager) {
         Set<String> databases;
@@ -20,7 +22,12 @@ public class Preparator {
         } catch (RuntimeException e) {
             throw new RuntimeException("Set your username and password in Preparator class");
         }
+
         databases = manager.getDatabases();
+
+        if (databases.contains(DATABASE_TO_DROP)) {
+            manager.dropDB(DATABASE_TO_DROP);
+        }
 
         if (!databases.contains(DATABASE)) {
             manager.createDB(DATABASE);
@@ -29,20 +36,13 @@ public class Preparator {
         }
     }
 
-    private static void setupTables(DatabaseManager manager) {
+    public static void createTableTest(DatabaseManager manager) {
         DataSet testColumns = new DataSetImpl();
         testColumns.put("login", "text");
         testColumns.put("password", "text");
 
         DataEntry testKey = new DataEntryImpl();
         testKey.setEntry("id", "int");
-
-        DataEntry usersKey = new DataEntryImpl();
-        usersKey.setEntry("code", "int");
-
-        DataSet usersColumns = new DataSetImpl();
-        usersColumns.put("name", "text");
-        usersColumns.put("age", "int");
 
         DataSet testRow1 = new DataSetImpl();
         testRow1.put("id", 12);
@@ -58,10 +58,30 @@ public class Preparator {
             manager.create("test", testKey, testColumns);
             manager.insert("test", testRow1);
             manager.insert("test", testRow2);
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+
+    public static void createTableUsers(DatabaseManager manager) {
+
+        DataSet usersColumns = new DataSetImpl();
+        usersColumns.put("name", "text");
+        usersColumns.put("age", "int");
+
+        DataEntry usersKey = new DataEntryImpl();
+        usersKey.setEntry("code", "int");
+
+        try {
             manager.create("users", usersKey, usersColumns);
         } catch (SQLException e) {
             e.getMessage();
         }
+    }
+
+    private static void setupTables(DatabaseManager manager) {
+        createTableTest(manager);
+        createTableUsers(manager);
     }
 
     public static void deleteDB(DatabaseManager manager) {
@@ -73,7 +93,7 @@ public class Preparator {
         }
     }
 
-    private static void disconnectFromDB(DatabaseManager manager) {
+    public static void disconnectFromDB(DatabaseManager manager) {
         manager.connect("", USERNAME, PASSWORD);
     }
 }
