@@ -37,18 +37,16 @@ public class Dialog {
     }
 
     private String getRequiredTable(String action, Map<Integer, String> tableList) {
-        String requiredTable = "";
-        printTableList(action, tableList);
-
-        try {
+        while (true) {
+            printTableList(action, tableList);
             String input = view.read().toLowerCase();
-            checkCancelOrZero(input);
-            requiredTable = findInputTable(input, tableList);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getExtendedMessage());
-            getRequiredTable(action, tableList);
+            try {
+                checkCancelOrZero(input);
+                return findInputTable(input, tableList);
+            } catch (IllegalArgumentException e) {
+                view.write(e.getExtendedMessage());
+            }
         }
-        return requiredTable;
     }
 
     private void printTableList(String action, Map<Integer, String> tableList) {
@@ -105,18 +103,17 @@ public class Dialog {
 
     private String assignNewTableName(Set<String> names) {
         String message = "Enter the name of your table " + CANCEL_INPUT;
-        String tableName;
 
-        view.write(message);
-        tableName = view.read().toLowerCase();
-
-        try {
-            checkNewName(names, tableName);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getExtendedMessage());
-            assignNewTableName(names);
+        while (true) {
+            view.write(message);
+            String tableName = view.read().toLowerCase();
+            try {
+                checkNewName(names, tableName);
+                return tableName;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getExtendedMessage());
+            }
         }
-        return tableName.toLowerCase();
     }
 
     private void checkNewName(Set<String> names, String tableName) {
@@ -161,19 +158,19 @@ public class Dialog {
     }
 
     public DataEntry findRow(String tableName, String action) {
-        DataEntry entry = new DataEntryImpl();
         String inputSample = "columnName|value";
         String message = String.format("Enter the columnName and defining value of the row you want to %s: " +
                 "%s\n%s", action, inputSample, CANCEL_INPUT);
 
-        try {
-            entry = getEntry(message, inputSample);
-            checkEntry(tableName, entry);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getExtendedMessage());
-            findRow(tableName, action);
+        while (true) {
+            try {
+                DataEntry entry = getEntry(message, inputSample);
+                checkEntry(tableName, entry);
+                return entry;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getExtendedMessage());
+            }
         }
-        return entry;
     }
 
     private DataEntry getEntry(String message, String sample) {
@@ -252,12 +249,11 @@ public class Dialog {
     }
 
     public DataSet getNewEntries(String tableName, String action) {
-        DataSet inputEntries = new DataSetImpl();
         String message = newEntriesMessage(action);
 
         while (true) {
             try {
-                inputEntries = getEntries(message);
+                DataSet inputEntries = getEntries(message);
                 checkInputColumns(tableName, inputEntries);
                 return inputEntries;
             } catch (IllegalArgumentException e) {
@@ -315,17 +311,17 @@ public class Dialog {
     }
 
     public DataSet getNewColumns(String action) {
-        DataSet inputColumns = new DataSetImpl();
         String message = newColumnsMessage(action);
 
-        try {
-            inputColumns = getEntries(message);
-            checkNewColumns(inputColumns);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getExtendedMessage());
-            getNewColumns(action);
+        while (true) {
+            DataSet inputColumns = getEntries(message);
+            try {
+                checkNewColumns(inputColumns);
+                return inputColumns;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getExtendedMessage());
+            }
         }
-        return inputColumns;
     }
 
     private String newColumnsMessage(String action) {
@@ -343,18 +339,18 @@ public class Dialog {
     }
 
     public DataEntry getConstraintColumn() {
-        DataEntry entry = new DataEntryImpl();
         String inputSample = "columnName|dataType";
         String message = String.format("Enter the name of PRIMARY KEY column and its dataType: " +
                 "%s\n%s", inputSample, CANCEL_INPUT);
 
-        try {
-            entry = getEntry(message, inputSample);
-            checkFirstLetter(entry.getColumn());
-        } catch (IllegalArgumentException e) {
-            view.write(e.getExtendedMessage());
-            getConstraintColumn();
+        while (true) {
+            DataEntry entry = getEntry(message, inputSample);
+            try {
+                checkFirstLetter(entry.getColumn());
+                return entry;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getExtendedMessage());
+            }
         }
-        return entry;
     }
 }
