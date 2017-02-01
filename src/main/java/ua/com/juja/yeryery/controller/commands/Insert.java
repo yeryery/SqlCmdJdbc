@@ -29,16 +29,18 @@ public class Insert implements Command {
         Dialog dialog = new Dialog(view, manager);
         String currentTableName = dialog.selectTable(ACTION);
         DataSet insertedRow = dialog.getNewEntries(currentTableName, ACTION);
-        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 
         try {
             manager.insert(currentTableName, insertedRow);
-            view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
-            tablePrinter.print();
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
             process(input);
+            return;
         }
+
+        view.write(String.format("You have successfully entered new data into the table '%s'", currentTableName));
+        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
+        tablePrinter.print();
     }
 }

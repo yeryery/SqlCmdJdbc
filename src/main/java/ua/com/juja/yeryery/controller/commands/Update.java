@@ -35,17 +35,19 @@ public class Update implements Command {
         DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
         DataSet updatingEntries = dialog.getNewEntries(currentTableName, ACTION);
         checkNewValues(currentTableName, definingEntry, updatingEntries);
-        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 
         try {
             manager.update(currentTableName, updatingEntries, definingEntry);
-            view.write(String.format("You have successfully updated table '%s'", currentTableName));
-            tablePrinter.print();
         } catch (SQLException e) {
             view.write(e.getMessage());
             view.write("Try again.");
             process(input);
+            return;
         }
+
+        view.write(String.format("You have successfully updated table '%s'", currentTableName));
+        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
+        tablePrinter.print();
     }
 
     private void checkNewValues(String tableName, DataEntry entry, DataSet inputValues) {

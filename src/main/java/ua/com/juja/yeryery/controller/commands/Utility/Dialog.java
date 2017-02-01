@@ -252,17 +252,18 @@ public class Dialog {
     }
 
     public DataSet getNewEntries(String tableName, String action) {
-        DataSet newEntries = new DataSetImpl();
+        DataSet inputEntries = new DataSetImpl();
         String message = newEntriesMessage(action);
 
-        try {
-            newEntries = getEntries(message);
-            checkInputColumns(tableName, newEntries);
-        } catch (IllegalArgumentException e) {
-            view.write(e.getExtendedMessage());
-            getNewEntries(tableName, action);
+        while (true) {
+            try {
+                inputEntries = getEntries(message);
+                checkInputColumns(tableName, inputEntries);
+                return inputEntries;
+            } catch (IllegalArgumentException e) {
+                view.write(e.getExtendedMessage());
+            }
         }
-        return newEntries;
     }
 
     private String newEntriesMessage(String action) {

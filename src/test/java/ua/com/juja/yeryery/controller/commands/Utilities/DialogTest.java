@@ -448,6 +448,26 @@ public class DialogTest {
     }
 
     @Test
+    public void testGetNewEntriesTryToInputNotExistingColumnAndInputCorrectColumn() {
+        //given
+        when(view.read()).thenReturn("notExistingColumn|1|name|Bob").thenReturn("id|1|name|Bob");
+        when(manager.getTableColumns(TEST_TABLE)).thenReturn(testColumns);
+        when(manager.getDataContent(TEST_TABLE)).thenReturn(testContent);
+
+        //when
+        DataSet actualDataSet = dialog.getNewEntries(TEST_TABLE, ACTION);
+
+        //then
+        DataSet expectedDataSet = new DataSetImpl();
+        expectedDataSet.put("id", 1);
+        expectedDataSet.put("name", "Bob");
+
+        assertEquals(expectedDataSet.getColumnNames(), actualDataSet.getColumnNames());
+        assertEquals(expectedDataSet.getValues(), actualDataSet.getValues());
+
+    }
+
+    @Test
     public void testGetNewColumns() {
         //given
         when(view.read()).thenReturn("column1|String|column2|int");

@@ -474,6 +474,8 @@ public class IntegrationTest {
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
                 "+----+----+---+\n" +
+                "|10  |Mike|25 |\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Select the table you need for 'delete' command\n" +
@@ -487,8 +489,6 @@ public class IntegrationTest {
                 "You have successfully deleted data from 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
-                "+----+----+---+\n" +
-                "|10  |Mike|25 |\n" +
                 "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -531,6 +531,8 @@ public class IntegrationTest {
                 "You have successfully entered new data into the table 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
+                "+----+----+---+\n" +
+                "|10  |Mike|25 |\n" +
                 "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //display
@@ -634,7 +636,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "|12|username1|pass1   |\n" +
                 "+--+---------+--------+\n" +
-                "|22|username2|pass2   |\n" +
+                "|30|username2|pass2   |\n" +
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
@@ -656,7 +658,7 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "|12|username1|pass1   |\n" +
                 "+--+---------+--------+\n" +
-                "|30|username2|pass2   |\n" +
+                "|22|username2|pass2   |\n" +
                 "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //exit
@@ -827,6 +829,8 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "|22|username2|pass2   |\n" +
                 "+--+---------+--------+\n" +
+                "|30|username3|pass3   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //insert
                 "Select the table you need for 'insert' command\n" +
@@ -848,6 +852,8 @@ public class IntegrationTest {
                 "+--+---------+--------+\n" +
                 "|30|username3|pass3   |\n" +
                 "+--+---------+--------+\n" +
+                "|31|username4|pass3   |\n" +
+                "+--+---------+--------+\n" +
                 "Type command or 'help'\n" +
                 //update
                 "Select the table you need for 'update' command\n" +
@@ -863,28 +869,6 @@ public class IntegrationTest {
                 "or type 'cancel' to go back\n" +
                 //login|username10
                 "You have successfully updated table 'test'\n" +
-                "+--+---------+--------+\n" +
-                "|id|login    |password|\n" +
-                "+--+---------+--------+\n" +
-                "|12|username1|pass1   |\n" +
-                "+--+---------+--------+\n" +
-                "|22|username2|pass2   |\n" +
-                "+--+---------+--------+\n" +
-                "|30|username3|pass3   |\n" +
-                "+--+---------+--------+\n" +
-                "|31|username4|pass3   |\n" +
-                "+--+---------+--------+\n" +
-                "Type command or 'help'\n" +
-                //delete
-                "Select the table you need for 'delete' command\n" +
-                "1. test\n" +
-                "2. users\n" +
-                "0. cancel (to go back)\n" +
-                //test
-                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
-                "or type 'cancel' to go back\n" +
-                //password|pass3
-                "You have successfully deleted data from 'test'\n" +
                 "+--+----------+--------+\n" +
                 "|id|login     |password|\n" +
                 "+--+----------+--------+\n" +
@@ -897,12 +881,30 @@ public class IntegrationTest {
                 "|31|username10|pass3   |\n" +
                 "+--+----------+--------+\n" +
                 "Type command or 'help'\n" +
+                //delete
+                "Select the table you need for 'delete' command\n" +
+                "1. test\n" +
+                "2. users\n" +
+                "0. cancel (to go back)\n" +
+                //test
+                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
+                "or type 'cancel' to go back\n" +
+                //password|pass3
+                "You have successfully deleted data from 'test'\n" +
+                "+--+---------+--------+\n" +
+                "|id|login    |password|\n" +
+                "+--+---------+--------+\n" +
+                "|12|username1|pass1   |\n" +
+                "+--+---------+--------+\n" +
+                "|22|username2|pass2   |\n" +
+                "+--+---------+--------+\n" +
+                "Type command or 'help'\n" +
                 //exit
                 "See you!", out.getData().trim().replace("\r", ""));
     }
 
     @Test
-    public void testUpdateWithSQLExceptionTryToUpdateStringValueInsteadOfInteger() {
+    public void testUpdateWithSQLExceptionTryToUpdateIntegerValueWithString() {
         //given
         in.add(String.format("connect|%s|%s|%s", DATABASE, USERNAME, PASSWORD));
         in.add("update");
@@ -1032,6 +1034,8 @@ public class IntegrationTest {
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
                 "+----+----+---+\n" +
+                "|1   |Jack|20 |\n" +
+                "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //delete
                 "Select the table you need for 'delete' command\n" +
@@ -1045,8 +1049,6 @@ public class IntegrationTest {
                 "You have successfully deleted data from 'users'\n" +
                 "+----+----+---+\n" +
                 "|code|name|age|\n" +
-                "+----+----+---+\n" +
-                "|1   |Jack|20 |\n" +
                 "+----+----+---+\n" +
                 "Type command or 'help'\n" +
                 //exit

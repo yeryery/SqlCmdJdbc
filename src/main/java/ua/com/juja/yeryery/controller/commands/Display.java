@@ -24,8 +24,8 @@ public class Display implements Command {
     public void process(String input) {
         Dialog dialog = new Dialog(view, manager);
         String currentTableName = dialog.selectTable(ACTION);
-        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
 
+        TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);
         tablePrinter.print();
     }
 }
