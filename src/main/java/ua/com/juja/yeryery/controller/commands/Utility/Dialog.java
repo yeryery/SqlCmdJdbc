@@ -40,6 +40,7 @@ public class Dialog {
         while (true) {
             printTableList(action, tableList);
             String input = view.read().toLowerCase();
+
             try {
                 checkCancelOrZero(input);
                 return findInputTable(input, tableList);
@@ -107,6 +108,7 @@ public class Dialog {
         while (true) {
             view.write(message);
             String tableName = view.read().toLowerCase();
+
             try {
                 checkNewName(names, tableName);
                 return tableName;
@@ -315,6 +317,7 @@ public class Dialog {
 
         while (true) {
             DataSet inputColumns = getEntries(message);
+
             try {
                 checkNewColumns(inputColumns);
                 return inputColumns;
@@ -345,6 +348,7 @@ public class Dialog {
 
         while (true) {
             DataEntry entry = getEntry(message, inputSample);
+
             try {
                 checkFirstLetter(entry.getColumn());
                 return entry;

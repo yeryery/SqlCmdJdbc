@@ -4,7 +4,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ua.com.juja.yeryery.Main;
+import ua.com.juja.yeryery.controller.Main;
 
 import java.io.PrintStream;
 import java.util.Locale;
