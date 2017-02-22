@@ -39,7 +39,6 @@ public class IntegrationTest {
     public static void clearAfterTests() {
         Preparator.deleteDB();
     }
-    //TODO убрать перед отправлением на тестирование
 
     @Test
     public void testExit() {
@@ -150,7 +149,7 @@ public class IntegrationTest {
         assertEquals("Hello, user!\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //connect|testBase|postgres|wrongPass
-                "Error! FATAL: password authentication failed for user \"postgres\"\n" +
+                "Error! FATAL: password authentication failed for user \"" + USERNAME + "\"\n" +
                 "Try again\n" +
                 "Please, enter: 'connect|database|username|password' or use command 'help'\n" +
                 //exit

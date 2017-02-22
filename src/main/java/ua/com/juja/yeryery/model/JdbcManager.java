@@ -72,7 +72,6 @@ public class JdbcManager implements DatabaseManager {
                 result.add(rs.getString(1));
             }
         } catch (SQLException e) {
-            result = null;
             throw new RuntimeException(e);
         }
 
