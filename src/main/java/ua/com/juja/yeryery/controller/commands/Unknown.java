@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import ua.com.juja.yeryery.controller.commands.Utility.UnknownCommandException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.UnknownCommandException;
 import ua.com.juja.yeryery.view.View;
 
 public class Unknown implements Command {

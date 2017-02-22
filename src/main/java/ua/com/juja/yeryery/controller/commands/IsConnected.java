@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import ua.com.juja.yeryery.controller.commands.Utility.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.ConnectException;
 import ua.com.juja.yeryery.model.DatabaseManager;
 
 public class IsConnected implements Command {

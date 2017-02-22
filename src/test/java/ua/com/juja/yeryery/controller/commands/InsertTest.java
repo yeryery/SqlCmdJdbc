@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.CancelException;
 import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
 import ua.com.juja.yeryery.controller.commands.Utility.TablePrinter;
 import ua.com.juja.yeryery.model.DataSet;

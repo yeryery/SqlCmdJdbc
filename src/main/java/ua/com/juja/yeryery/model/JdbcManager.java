@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.model;
 
-import ua.com.juja.yeryery.controller.commands.Utility.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.ConnectException;
 
 import java.sql.*;
 import java.util.*;

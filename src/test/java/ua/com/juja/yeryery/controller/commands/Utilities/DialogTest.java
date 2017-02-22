@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import ua.com.juja.yeryery.controller.commands.TestTable;
-import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.CancelException;
 import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
 import ua.com.juja.yeryery.model.DataEntry;
 import ua.com.juja.yeryery.model.DataSet;

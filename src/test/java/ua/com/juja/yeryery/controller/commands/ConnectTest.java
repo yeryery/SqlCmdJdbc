@@ -5,9 +5,9 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import ua.com.juja.yeryery.controller.commands.Utility.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.ConnectException;
 import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
-import ua.com.juja.yeryery.controller.commands.Utility.IllegalArgumentException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.IllegalArgumentException;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 

@@ -1,7 +1,7 @@
 package ua.com.juja.yeryery.model;
 
 import org.junit.*;
-import ua.com.juja.yeryery.controller.commands.Utility.ConnectException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.ConnectException;
 import ua.com.juja.yeryery.integration.Preparator;
 
 import java.sql.SQLException;

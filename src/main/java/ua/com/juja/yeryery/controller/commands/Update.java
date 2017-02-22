@@ -1,6 +1,6 @@
 package ua.com.juja.yeryery.controller.commands;
 
-import ua.com.juja.yeryery.controller.commands.Utility.CancelException;
+import ua.com.juja.yeryery.controller.commands.Exceptions.CancelException;
 import ua.com.juja.yeryery.controller.commands.Utility.Dialog;
 import ua.com.juja.yeryery.controller.commands.Utility.TablePrinter;
 import ua.com.juja.yeryery.model.DataEntry;
