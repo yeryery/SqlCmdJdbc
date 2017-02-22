@@ -13,9 +13,9 @@ public class Controller {
     private View view;
     private Command[] commands;
 
-    private static final String connectToDatabase = "Please, enter: " +
+    private static final String CONNECT_TO_DATABASE = "Please, enter: " +
             "'connect|database|username|password' or use command 'help'";
-    private static final String typeCommand = "Type command or 'help'";
+    private static final String TYPE_COMMAND = "Type command or 'help'";
 
     public Controller(View view, DatabaseManager manager) {
         this.view = view;
@@ -37,7 +37,7 @@ public class Controller {
 
     public void run() {
         view.write("Hello, user!");
-        view.write(connectToDatabase);
+        view.write(CONNECT_TO_DATABASE);
 
         try {
             execute();
@@ -55,7 +55,7 @@ public class Controller {
                 try {
                     if (command.canProcess(input)) {
                         command.process(input);
-                        view.write(typeCommand);
+                        view.write(TYPE_COMMAND);
                         break;
                     }
                 } catch (Exception e) {
@@ -67,7 +67,7 @@ public class Controller {
 
                     if (e instanceof CancelException) {
                         view.write(e.getMessage());
-                        view.write(typeCommand);
+                        view.write(TYPE_COMMAND);
                         break;
                     }
 
@@ -89,9 +89,9 @@ public class Controller {
         view.write("Try again");
 
         if (e instanceof ConnectException) {
-            view.write(connectToDatabase);
+            view.write(CONNECT_TO_DATABASE);
         } else {
-            view.write(typeCommand);
+            view.write(TYPE_COMMAND);
         }
     }
 }

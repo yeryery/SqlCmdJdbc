@@ -2,7 +2,6 @@ package ua.com.juja.yeryery.controller;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import ua.com.juja.yeryery.controller.Controller;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.model.JdbcManager;
 import ua.com.juja.yeryery.view.Console;
