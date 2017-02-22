@@ -77,14 +77,14 @@ public class Update implements Command {
 
     private List<DataSet> getUpdatedRows(String tableName, String columnName, Object value) {
         List<DataSet> dataSets = manager.getDataContent(tableName);
-        List<DataSet> updatedRows = new LinkedList<>();
+        List<DataSet> result = new LinkedList<>();
 
         for (DataSet row : dataSets) {
             if (row.get(columnName).equals(value)) {
-                updatedRows.add(row);
+                result.add(row);
             }
         }
-        return updatedRows;
+        return result;
     }
 }
 

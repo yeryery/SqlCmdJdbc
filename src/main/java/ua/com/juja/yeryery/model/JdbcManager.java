@@ -46,54 +46,54 @@ public class JdbcManager implements DatabaseManager {
 
     @Override
     public Set<String> getTableNames() {
-        Set<String> tableNames = new TreeSet<>();
+        Set<String> result = new TreeSet<>();
         String sql = "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
-                tableNames.add(resultSet.getString("table_name"));
+                result.add(resultSet.getString("table_name"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return tableNames;
+        return result;
     }
 
     @Override
     public Set<String> getDatabases() {
-        Set<String> list = new LinkedHashSet<>();
+        Set<String> result = new LinkedHashSet<>();
         String sql = "SELECT datname FROM pg_database WHERE datistemplate = false;";
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                list.add(rs.getString(1));
+                result.add(rs.getString(1));
             }
         } catch (SQLException e) {
-            list = null;
+            result = null;
             throw new RuntimeException(e);
         }
 
-        return list;
+        return result;
     }
 
     @Override
     public Set<String> getTableColumns(String tableName) {
-        Set<String> columnNames = new LinkedHashSet<>();
+        Set<String> result = new LinkedHashSet<>();
         String sql = String.format("SELECT * FROM information_schema.columns WHERE table_name='%s'", tableName);
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
-                columnNames.add(rs.getString("column_name"));
+                result.add(rs.getString("column_name"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return columnNames;
+        return result;
     }
 
     @Override
@@ -239,8 +239,8 @@ public class JdbcManager implements DatabaseManager {
         return getTruncatedString(result);
     }
 
-    private String getTruncatedString(String result) {
-        return result.substring(0, result.length() - 1);
+    private String getTruncatedString(String string) {
+        return string.substring(0, string.length() - 1);
     }
 
     private String getValuesFormatted(String format, DataSet input) {

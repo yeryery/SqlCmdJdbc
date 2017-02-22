@@ -27,15 +27,15 @@ public class Dialog {
 
     private Map<Integer, String> getTableList() {
         Set<String> names = manager.getTableNames();
-        Map<Integer, String> tableList = new HashMap<>();
+        Map<Integer, String> result = new HashMap<>();
         Iterator iterator = names.iterator();
         int i = 1;
 
         while (iterator.hasNext()) {
-            tableList.put(i, (String) iterator.next());
+            result.put(i, (String) iterator.next());
             i++;
         }
-        return tableList;
+        return result;
     }
 
     private String getRequiredTable(String action, Map<Integer, String> tableList) {
@@ -100,7 +100,6 @@ public class Dialog {
 
     public String nameTable() {
         Set<String> names = manager.getTableNames();
-
         return assignNewTableName(names);
     }
 
@@ -109,11 +108,11 @@ public class Dialog {
 
         while (true) {
             view.write(message);
-            String tableName = view.read().toLowerCase();
+            String result = view.read().toLowerCase();
 
             try {
-                checkNewName(names, tableName);
-                return tableName;
+                checkNewName(names, result);
+                return result;
             } catch (IllegalArgumentException e) {
                 view.write(e.getExtendedMessage());
             }
@@ -168,9 +167,9 @@ public class Dialog {
 
         while (true) {
             try {
-                DataEntry entry = getEntry(message, inputSample);
-                checkEntry(tableName, entry);
-                return entry;
+                DataEntry result = getEntry(message, inputSample);
+                checkEntry(tableName, result);
+                return result;
             } catch (IllegalArgumentException e) {
                 view.write(e.getExtendedMessage());
             }
@@ -181,10 +180,10 @@ public class Dialog {
         String[] splitInput = splitBySample(message, sample);
         String columnName = splitInput[0];
         Object value = Parser.defineType(splitInput[1]);
-        DataEntry entry = new DataEntryImpl();
+        DataEntry result = new DataEntryImpl();
 
-        entry.setEntry(columnName, value);
-        return entry;
+        result.setEntry(columnName, value);
+        return result;
     }
 
     private String[] splitBySample(String message, String sample) {
@@ -195,12 +194,12 @@ public class Dialog {
     }
 
     private String getInput(String message) {
-        String input;
+        String result;
 
         view.write(message);
-        input = view.read();
-        checkCancel(input);
-        return input;
+        result = view.read();
+        checkCancel(result);
+        return result;
     }
 
     private void checkSizeBySample(String input, String sample) {
@@ -257,9 +256,9 @@ public class Dialog {
 
         while (true) {
             try {
-                DataSet inputEntries = getEntries(message);
-                checkInputColumns(tableName, inputEntries);
-                return inputEntries;
+                DataSet result = getEntries(message);
+                checkInputColumns(tableName, result);
+                return result;
             } catch (IllegalArgumentException e) {
                 view.write(e.getExtendedMessage());
             }
@@ -274,15 +273,15 @@ public class Dialog {
 
     private DataSet getEntries(String message) {
         String[] splitInput = splitByPairs(message);
-        DataSet splitDataSet = new DataSetImpl();
+        DataSet result = new DataSetImpl();
 
         for (int i = 0; i < splitInput.length; i++) {
             String columnName = splitInput[i++];
             Object value = Parser.defineType(splitInput[i]);
 
-            splitDataSet.put(columnName, value);
+            result.put(columnName, value);
         }
-        return splitDataSet;
+        return result;
     }
 
     private String[] splitByPairs(String message) {
@@ -318,11 +317,11 @@ public class Dialog {
         String message = newColumnsMessage(action);
 
         while (true) {
-            DataSet inputColumns = getEntries(message);
+            DataSet result = getEntries(message);
 
             try {
-                checkNewColumns(inputColumns);
-                return inputColumns;
+                checkNewColumns(result);
+                return result;
             } catch (IllegalArgumentException e) {
                 view.write(e.getExtendedMessage());
             }
@@ -349,11 +348,11 @@ public class Dialog {
                 "%s\n%s", inputSample, CANCEL_INPUT);
 
         while (true) {
-            DataEntry entry = getEntry(message, inputSample);
+            DataEntry result = getEntry(message, inputSample);
 
             try {
-                checkFirstLetter(entry.getColumn());
-                return entry;
+                checkFirstLetter(result.getColumn());
+                return result;
             } catch (IllegalArgumentException e) {
                 view.write(e.getExtendedMessage());
             }
