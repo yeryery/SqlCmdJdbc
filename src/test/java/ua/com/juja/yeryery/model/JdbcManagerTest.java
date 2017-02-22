@@ -15,7 +15,8 @@ public class JdbcManagerTest {
     private static final String USERNAME = Preparator.USERNAME;
     private static final String PASSWORD = Preparator.PASSWORD;
 
-    private static final String DATABASE_TO_DROP = Preparator.DATABASE_TO_DROP;
+//    private static final String DATABASE_TO_DROP = Preparator.DATABASE_TO_DROP;
+    private static final String DATABASE_TO_DROP = "databasetodrop";
     private static final DatabaseManager MANAGER = Preparator.TEST_MANAGER;
 
     private static final String TEST_TABLE = "test";
@@ -157,8 +158,7 @@ public class JdbcManagerTest {
         MANAGER.drop("NotExistingTable");
     }
 
-    @Ignore
-    //todo убрать ignore
+    @Test
     public void testCreateDB() {
         //when
         MANAGER.createDB(DATABASE_TO_DROP);
@@ -168,7 +168,7 @@ public class JdbcManagerTest {
         MANAGER.dropDB(DATABASE_TO_DROP);
     }
 
-    @Ignore
+    @Test
     public void testDropDB() {
         //given
         MANAGER.createDB(DATABASE_TO_DROP);

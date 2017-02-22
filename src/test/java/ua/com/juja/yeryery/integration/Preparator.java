@@ -8,7 +8,6 @@ import java.util.Set;
 public class Preparator {
 
     public static final DatabaseManager TEST_MANAGER = new JdbcManager();
-    public static final String DATABASE_TO_DROP = "databasetodrop";
 
     //put here your own username and password
     private static final String DEFAULT_DB = "postgres";
@@ -25,15 +24,13 @@ public class Preparator {
 
         Set<String> databases = TEST_MANAGER.getDatabases();
 
-        if (databases.contains(DATABASE_TO_DROP)) {
-            TEST_MANAGER.dropDB(DATABASE_TO_DROP);
+        if (databases.contains(TEST_DB)) {
+            TEST_MANAGER.dropDB(TEST_DB);
         }
 
-        if (!databases.contains(TEST_DB)) {
-            TEST_MANAGER.createDB(TEST_DB);
-            TEST_MANAGER.connect(TEST_DB, USERNAME, PASSWORD);
-            setupTables();
-        }
+        TEST_MANAGER.createDB(TEST_DB);
+        TEST_MANAGER.connect(TEST_DB, USERNAME, PASSWORD);
+        setupTables();
     }
 
     public static void createTableTest() {
