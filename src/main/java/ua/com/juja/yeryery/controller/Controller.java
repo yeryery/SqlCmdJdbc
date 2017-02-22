@@ -32,7 +32,7 @@ public class Controller {
                 new Display(view, manager),
                 new Update(view, manager),
                 new Delete(view, manager),
-                new Unknown(view)};
+                new Unknown()};
     }
 
     public void run() {
