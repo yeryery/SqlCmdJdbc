@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class JdbcManagerTest {
 
-    private static final String DATABASE = Preparator.DATABASE;
+    private static final String DATABASE = Preparator.TEST_DB;
     private static final String USERNAME = Preparator.USERNAME;
     private static final String PASSWORD = Preparator.PASSWORD;
 
@@ -44,7 +44,7 @@ public class JdbcManagerTest {
     @Test
     public void testConnect() {
         //given
-        Preparator.disconnectFromDB();
+        Preparator.connectToDefaultDB();
 
         //when
         MANAGER.connect(DATABASE, USERNAME, PASSWORD);
@@ -58,7 +58,7 @@ public class JdbcManagerTest {
     @Test(expected = ConnectException.class)
     public void testConnectToNotExistingDatabase() {
         //given
-        Preparator.disconnectFromDB();
+        Preparator.connectToDefaultDB();
 
         //when
         try {
@@ -75,7 +75,7 @@ public class JdbcManagerTest {
     @Test(expected = ConnectException.class)
     public void testConnectWithWrongPassword() {
         //given
-        Preparator.disconnectFromDB();
+        Preparator.connectToDefaultDB();
 
         //when
         try {

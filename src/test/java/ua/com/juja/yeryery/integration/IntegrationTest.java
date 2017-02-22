@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
 
-    private static final String DATABASE = Preparator.DATABASE;
+    private static final String DATABASE = Preparator.TEST_DB;
     private static final String USERNAME = Preparator.USERNAME;
     private static final String PASSWORD = Preparator.PASSWORD;
 

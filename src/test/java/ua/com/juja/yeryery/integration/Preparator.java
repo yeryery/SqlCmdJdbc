@@ -11,28 +11,27 @@ public class Preparator {
     public static final String DATABASE_TO_DROP = "databasetodrop";
 
     //put here your own username and password
-    public static final String DATABASE = "testbase";
+    private static final String DEFAULT_DB = "postgres";
+    public static final String TEST_DB = "testbase";
     public static final String USERNAME = "postgres";
     public static final String PASSWORD = "postgrespass";
 
     public static void setupDB() {
-        Set<String> databases;
-
         try {
-            disconnectFromDB();
+            connectToDefaultDB();
         } catch (RuntimeException e) {
             throw new RuntimeException("Set your username and password in Preparator class");
         }
 
-        databases = TEST_MANAGER.getDatabases();
+        Set<String> databases = TEST_MANAGER.getDatabases();
 
         if (databases.contains(DATABASE_TO_DROP)) {
             TEST_MANAGER.dropDB(DATABASE_TO_DROP);
         }
 
-        if (!databases.contains(DATABASE)) {
-            TEST_MANAGER.createDB(DATABASE);
-            TEST_MANAGER.connect(DATABASE, USERNAME, PASSWORD);
+        if (!databases.contains(TEST_DB)) {
+            TEST_MANAGER.createDB(TEST_DB);
+            TEST_MANAGER.connect(TEST_DB, USERNAME, PASSWORD);
             setupTables();
         }
     }
@@ -64,8 +63,7 @@ public class Preparator {
         }
     }
 
-    public static void createTableUsers() {
-
+    private static void createTableUsers() {
         DataSet usersColumns = new DataSetImpl();
         usersColumns.put("name", "text");
         usersColumns.put("age", "int");
@@ -87,14 +85,14 @@ public class Preparator {
 
     public static void deleteDB() {
         try {
-            disconnectFromDB();
-            TEST_MANAGER.dropDB(DATABASE);
+            connectToDefaultDB();
+            TEST_MANAGER.dropDB(TEST_DB);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void disconnectFromDB() {
-        TEST_MANAGER.connect("", USERNAME, PASSWORD);
+    public static void connectToDefaultDB() {
+        TEST_MANAGER.connect(DEFAULT_DB, USERNAME, PASSWORD);
     }
 }
