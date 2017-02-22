@@ -482,7 +482,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //users
-                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
+                "Select the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //code|10
                 "You have successfully deleted data from 'users'\n" +
@@ -622,7 +622,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -644,7 +644,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -688,7 +688,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //cancel
                 "Command execution is canceled\n" +
@@ -722,7 +722,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -761,7 +761,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //id|22
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -860,7 +860,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass3
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -886,7 +886,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
+                "Select the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //password|pass3
                 "You have successfully deleted data from 'test'\n" +
@@ -928,7 +928,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -976,7 +976,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //test
-                "Enter the columnName and defining value of the row you want to update: columnName|value\n" +
+                "Select the row you want to update: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //login|username2
                 "Enter the columnNames and its values of the row you want to update:\n" +
@@ -1042,7 +1042,7 @@ public class IntegrationTest {
                 "2. users\n" +
                 "0. cancel (to go back)\n" +
                 //users
-                "Enter the columnName and defining value of the row you want to delete: columnName|value\n" +
+                "Select the row you want to delete: columnName|value\n" +
                 "or type 'cancel' to go back\n" +
                 //name|Jack
                 "You have successfully deleted data from 'users'\n" +

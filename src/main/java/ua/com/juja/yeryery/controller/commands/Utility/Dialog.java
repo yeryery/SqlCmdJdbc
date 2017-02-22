@@ -162,7 +162,7 @@ public class Dialog {
 
     public DataEntry findRow(String tableName, String action) {
         String inputSample = "columnName|value";
-        String message = String.format("Enter the columnName and defining value of the row you want to %s: " +
+        String message = String.format("Select the row you want to %s: " +
                 "%s\n%s", action, inputSample, CANCEL_INPUT);
 
         while (true) {

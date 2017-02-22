@@ -336,12 +336,12 @@ public class DialogTest {
         }
 
         //then
-        shouldPrint("[Enter the columnName and defining value of the row you want to SOME_ACTION: columnName|value\n" +
+        shouldPrint("[Select the row you want to SOME_ACTION: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //login|Mike
                 "Error! Table 'test' doesn't contain column 'login'\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of the row you want to SOME_ACTION: columnName|value\n" +
+                "Select the row you want to SOME_ACTION: columnName|value\n" +
                 "or type 'cancel' to go back]");
     }
 
@@ -360,12 +360,12 @@ public class DialogTest {
         }
 
         //then
-        shouldPrint("[Enter the columnName and defining value of the row you want to SOME_ACTION: columnName|value\n" +
+        shouldPrint("[Select the row you want to SOME_ACTION: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //name|Bob
                 "Error! Column 'name' doesn't contain value 'Bob'\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of the row you want to SOME_ACTION: columnName|value\n" +
+                "Select the row you want to SOME_ACTION: columnName|value\n" +
                 "or type 'cancel' to go back]");
     }
 
@@ -382,12 +382,12 @@ public class DialogTest {
         }
 
         //then
-        shouldPrint("[Enter the columnName and defining value of the row you want to SOME_ACTION: columnName|value\n" +
+        shouldPrint("[Select the row you want to SOME_ACTION: columnName|value\n" +
                 "or type 'cancel' to go back, " +
                 //argument1|argument2|argument3
                 "Error! Wrong number of parameters. Expected 2 parameters, and you have entered 3\n" +
                 "Try again, " +
-                "Enter the columnName and defining value of the row you want to SOME_ACTION: columnName|value\n" +
+                "Select the row you want to SOME_ACTION: columnName|value\n" +
                 "or type 'cancel' to go back]");
     }
 

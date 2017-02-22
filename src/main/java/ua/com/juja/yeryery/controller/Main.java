@@ -19,4 +19,3 @@ public class Main {
         controller.run();
     }
 }
-// connect|yeryery|postgres|postgrespass
