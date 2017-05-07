@@ -15,7 +15,6 @@ public class JdbcManagerTest {
     private static final String USERNAME = Preparator.USERNAME;
     private static final String PASSWORD = Preparator.PASSWORD;
 
-//    private static final String DATABASE_TO_DROP = Preparator.DATABASE_TO_DROP;
     private static final String DATABASE_TO_DROP = "databasetodrop";
     private static final DatabaseManager MANAGER = Preparator.TEST_MANAGER;
 
@@ -158,6 +157,7 @@ public class JdbcManagerTest {
         MANAGER.drop("NotExistingTable");
     }
 
+    @Ignore
     @Test
     public void testCreateDB() {
         //when
@@ -168,6 +168,7 @@ public class JdbcManagerTest {
         MANAGER.dropDB(DATABASE_TO_DROP);
     }
 
+    @Ignore
     @Test
     public void testDropDB() {
         //given
