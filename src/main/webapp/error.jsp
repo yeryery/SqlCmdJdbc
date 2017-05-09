@@ -5,6 +5,6 @@
     </head>
     <body>
         <h1>Ошибка! ${message}</h1><br>
-        <a href="menu">menu</a>
+        <%@include file="footer.jsp" %>
     </body>
 </html>

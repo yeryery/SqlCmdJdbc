@@ -39,6 +39,6 @@
             <b>help</b><br>
             <i>Print all available commands</i><br><br>
 
-            <h2>Back to <a href="menu">menu</a></h2>
+            <%@include file="footer.jsp" %>
     </body>
 </html>
