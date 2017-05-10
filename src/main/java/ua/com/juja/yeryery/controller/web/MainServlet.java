@@ -53,6 +53,10 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("table", service.display(manager, tableName));
             req.getRequestDispatcher("display.jsp").forward(req, resp);
 
+        } else if (action.startsWith("/tables")) {
+            req.setAttribute("tables", service.listTables(manager));
+            req.getRequestDispatcher("tables.jsp").forward(req, resp);
+
         } else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }

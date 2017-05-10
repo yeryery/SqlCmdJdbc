@@ -4,10 +4,7 @@ import ua.com.juja.yeryery.model.DataSet;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.model.JdbcManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ServiceImpl implements Service {
 
@@ -42,5 +39,10 @@ public class ServiceImpl implements Service {
 
         return result;
 
+    }
+
+    @Override
+    public Set<String> listTables(DatabaseManager manager) {
+        return manager.getTableNames();
     }
 }
