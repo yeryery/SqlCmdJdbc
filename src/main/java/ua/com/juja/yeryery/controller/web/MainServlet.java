@@ -67,14 +67,15 @@ public class MainServlet extends HttpServlet {
         } else if (action.startsWith("/insert")) {
             tableName = req.getParameter("tableName");
             req.setAttribute("tableName", tableName);
-            req.setAttribute("table", service.constructTable(manager, tableName));
+            req.setAttribute("tableRows", service.constructTable(manager, tableName));
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
 
         } else if (action.startsWith("/delete")) {
             tableName = req.getParameter("tableName");
             req.setAttribute("tableName", tableName);
-            req.setAttribute("table", service.constructTable(manager, tableName));
+            req.setAttribute("tableRows", service.constructTable(manager, tableName));
+            req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("delete.jsp").forward(req, resp);
 
         } else {
