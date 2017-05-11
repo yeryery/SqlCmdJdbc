@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
 
 public class MainServlet extends HttpServlet {
 
     private Service service;
+    private DatabaseManager manager;
+    private String tableName;
 
     @Override
     public void init() throws ServletException {
@@ -25,7 +29,7 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getAction(req);
 
-        DatabaseManager manager = (DatabaseManager) req.getSession().getAttribute("db_manager");
+        manager = (DatabaseManager) req.getSession().getAttribute("db_manager");
 
         if (action.startsWith("/connect")) {
             if (manager == null) {
@@ -49,13 +53,21 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
 
         } else if (action.startsWith("/display")) {
-            String tableName = req.getParameter("table");
-            req.setAttribute("table", service.display(manager, tableName));
+            tableName = req.getParameter("table");
+            req.setAttribute("tableName", tableName);
+            req.setAttribute("table", service.constructTable(manager, tableName));
             req.getRequestDispatcher("display.jsp").forward(req, resp);
 
         } else if (action.startsWith("/tables")) {
             req.setAttribute("tables", service.listTables(manager));
             req.getRequestDispatcher("tables.jsp").forward(req, resp);
+
+        } else if (action.startsWith("/insert")) {
+            tableName = req.getParameter("table");
+            req.setAttribute("tableName", tableName);
+            req.setAttribute("table", service.constructTable(manager, tableName));
+            req.setAttribute("columns", service.getColumnNames(manager, tableName));
+            req.getRequestDispatcher("insert.jsp").forward(req, resp);
 
         } else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
@@ -81,6 +93,18 @@ public class MainServlet extends HttpServlet {
                 req.getSession().setAttribute("db_manager", manager);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (Exception e) {
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
+        }
+
+        if (action.startsWith("/insert")) {
+
+            Map parameters = req.getParameterMap();
+            try {
+                service.insert(manager, tableName, parameters);
+                resp.sendRedirect(resp.encodeRedirectURL("display?table=" + tableName));
+            } catch (SQLException e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }

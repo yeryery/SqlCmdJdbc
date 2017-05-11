@@ -6,15 +6,7 @@
     </head>
     <body>
         <table border="1">
-            <c:forEach items="${table}" var="row">
-                <tr>
-                    <c:forEach items="${row}" var="element">
-                        <td>
-                            ${element}
-                        </td>
-                    </c:forEach>
-                </tr>
-            </c:forEach>
+            <%@include file="constructor.jsp" %>
         </table>
         <br>
         <%@include file="footer.jsp" %>

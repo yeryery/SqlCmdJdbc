@@ -9,7 +9,7 @@
             <table>
                 <tr>
                     <td>Database name</td>
-                    <td><input type="text" name="dbname"/></td>
+                    <td><input type="text" name="dbname" value="yeryery"/></td>
                 </tr>
                 <tr>
                     <td>Username</td>
