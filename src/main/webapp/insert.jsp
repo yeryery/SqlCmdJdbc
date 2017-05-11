@@ -7,7 +7,7 @@
     <body>
         <form action="insert" method="post">
             <table border="1">
-                <%@include file="constructor.jsp" %>
+                <%@include file="constructor.jsp"%>
                 <tr>
                     <c:forEach items="${columns}" var="column">
                         <td><input type="text" name="${column}"/></td>

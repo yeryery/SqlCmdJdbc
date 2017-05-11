@@ -52,18 +52,20 @@ public class MainServlet extends HttpServlet {
         } else if (action.startsWith("/help")) {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
 
+        } else if (action.startsWith("/select")) {
+            String command = req.getParameter("command");
+            req.setAttribute("command", command);
+            req.setAttribute("tables", service.listTables(manager));
+            req.getRequestDispatcher("select.jsp").forward(req, resp);
+
         } else if (action.startsWith("/display")) {
-            tableName = req.getParameter("table");
+            tableName = req.getParameter("tableName");
             req.setAttribute("tableName", tableName);
             req.setAttribute("table", service.constructTable(manager, tableName));
             req.getRequestDispatcher("display.jsp").forward(req, resp);
 
-        } else if (action.startsWith("/tables")) {
-            req.setAttribute("tables", service.listTables(manager));
-            req.getRequestDispatcher("tables.jsp").forward(req, resp);
-
         } else if (action.startsWith("/insert")) {
-            tableName = req.getParameter("table");
+            tableName = req.getParameter("tableName");
             req.setAttribute("tableName", tableName);
             req.setAttribute("table", service.constructTable(manager, tableName));
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
@@ -103,7 +105,7 @@ public class MainServlet extends HttpServlet {
             Map parameters = req.getParameterMap();
             try {
                 service.insert(manager, tableName, parameters);
-                resp.sendRedirect(resp.encodeRedirectURL("display?table=" + tableName));
+                resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
             } catch (SQLException e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);

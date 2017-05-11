@@ -6,7 +6,8 @@
     </head>
     <body>
         <c:forEach items="${items}" var="item">
-            <a href="${item}">${item}</a><br>
+            <a href="select?command=${item}">${item}</a><br>
         </c:forEach>
+            <a href="help">help</a><br>
     </body>
 </html>

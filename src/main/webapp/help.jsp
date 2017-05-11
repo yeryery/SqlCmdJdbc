@@ -9,9 +9,6 @@
             <b>connect|database|username|password</b><br>
             <i>Connect to Database</i><br><br>
     
-            <b>tables</b><br>
-            <i>Display a list of available tables</i><br><br>
-    
             <b>create</b><br>
             <i>Create new table</i><br><br>
     

@@ -5,8 +5,9 @@
         <title>SQLCmd</title>
     </head>
     <body>
+    Select the table you need<br>
         <c:forEach items="${tables}" var="table">
-            <a href="display?table=${table}">${table}</a><br>
+            <a href="<c:out value = "${command}"/>?tableName=${table}">${table}</a><br>
         </c:forEach>
         <br>
         <%@include file="footer.jsp" %>
