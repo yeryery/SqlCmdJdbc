@@ -21,5 +21,7 @@ public interface Service {
 
     Set<String> getColumnNames(DatabaseManager manager, String tableName);
 
-    void delete(DatabaseManager manager, String tableName, String column, String value);
+    void delete(DatabaseManager manager, String tableName, String column, String value) throws SQLException;
+
+    void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes) throws SQLException;
 }

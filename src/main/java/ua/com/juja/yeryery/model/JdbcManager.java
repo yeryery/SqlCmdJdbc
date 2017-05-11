@@ -193,15 +193,13 @@ public class JdbcManager implements DatabaseManager {
     }
 
     @Override
-    public void delete(String tableName, DataEntry definingEntry) {
+    public void delete(String tableName, DataEntry definingEntry) throws SQLException {
         String definingColumn = definingEntry.getColumn();
         Object definingValue = definingEntry.getValue();
         String sql = String.format("DELETE FROM %s WHERE %s = '%s'", tableName, definingColumn, definingValue);
 
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 

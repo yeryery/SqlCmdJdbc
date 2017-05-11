@@ -6,6 +6,8 @@ import ua.com.juja.yeryery.model.DataEntry;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.view.View;
 
+import java.sql.SQLException;
+
 public class Delete implements Command {
 
     private View view;
@@ -28,7 +30,11 @@ public class Delete implements Command {
         String currentTableName = dialog.selectTable(ACTION);
         DataEntry definingEntry = dialog.findRow(currentTableName, ACTION);
 
-        manager.delete(currentTableName, definingEntry);
+        try {
+            manager.delete(currentTableName, definingEntry);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         view.write(String.format("You have successfully deleted data from '%s'", currentTableName));
 
         TablePrinter tablePrinter = new TablePrinter(view, manager, currentTableName);

@@ -56,7 +56,12 @@ public class MainServlet extends HttpServlet {
             String command = req.getParameter("command");
             req.setAttribute("command", command);
             req.setAttribute("tables", service.listTables(manager));
-            req.getRequestDispatcher("select.jsp").forward(req, resp);
+
+            if (!command.equals("create")) {
+                req.getRequestDispatcher("select.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("createName.jsp").forward(req, resp);
+            }
 
         } else if (action.startsWith("/display")) {
             tableName = req.getParameter("tableName");
@@ -78,7 +83,7 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("delete.jsp").forward(req, resp);
 
-        } else {
+        }  else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
@@ -110,6 +115,7 @@ public class MainServlet extends HttpServlet {
         if (action.startsWith("/insert")) {
 
             Map parameters = req.getParameterMap();
+
             try {
                 service.insert(manager, tableName, parameters);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
@@ -123,8 +129,37 @@ public class MainServlet extends HttpServlet {
 
             String column = req.getParameter("column");
             String value = req.getParameter("value");
-            service.delete(manager, tableName, column, value);
-            resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
+
+            try {
+                service.delete(manager, tableName, column, value);
+                resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
+            } catch (SQLException e) {
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
+        }
+
+        if (action.startsWith("/createName")) {
+
+            tableName = req.getParameter("tableName");
+            String size = req.getParameter("size");
+            req.setAttribute("tableName", tableName);
+            req.setAttribute("size", size);
+            req.getRequestDispatcher("createColumns.jsp").forward(req, resp);
+        }
+
+        if (action.startsWith("/createColumns")) {
+
+            String[] columnNames = req.getParameterValues("columnName");
+            String[] columnTypes = req.getParameterValues("columnType");
+
+            try {
+                service.create(manager, tableName, columnNames, columnTypes);
+                resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
+            } catch (SQLException e) {
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
         }
     }
 }

@@ -45,13 +45,13 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameter) throws SQLException {
+    public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameters) throws SQLException {
         DataSet insertedRow = new DataSetImpl();
         Set<String> tableColumns = manager.getTableColumns(tableName);
 
-        for (String name : parameter.keySet()) {
+        for (String name : parameters.keySet()) {
             if (tableColumns.contains(name)) {
-                insertedRow.put(name, parameter.get(name)[0]);
+                insertedRow.put(name, parameters.get(name)[0]);
             }
         }
 
@@ -64,9 +64,24 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public void delete(DatabaseManager manager, String tableName, String column, String value) {
+    public void delete(DatabaseManager manager, String tableName, String column, String value) throws SQLException {
         DataEntry entry = new DataEntryImpl();
         entry.setEntry(column, value);
         manager.delete(tableName, entry);
+    }
+
+    @Override
+    public void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes) throws SQLException {
+        DataEntry primaryKey = new DataEntryImpl();
+        primaryKey.setEntry(columnNames[0], columnTypes[0]);
+        //TODO убрать 0 и 1
+
+        DataSet dataSet = new DataSetImpl();
+
+        for (int i = 1; i < columnNames.length; i++) {
+            dataSet.put(columnNames[i], columnTypes[i]);
+        }
+
+        manager.create(tableName, primaryKey, dataSet);
     }
 }

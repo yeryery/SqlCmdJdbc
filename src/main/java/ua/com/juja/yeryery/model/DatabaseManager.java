@@ -29,7 +29,7 @@ public interface DatabaseManager {
 
     void update(String tableName, DataSet input, DataEntry entry) throws SQLException;
 
-    void delete(String tableName, DataEntry entry);
+    void delete(String tableName, DataEntry entry) throws SQLException;
 
     List<DataSet> getDataContent(String tableName);
 }
