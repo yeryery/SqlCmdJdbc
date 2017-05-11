@@ -20,4 +20,6 @@ public interface Service {
     void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameter) throws SQLException;
 
     Set<String> getColumnNames(DatabaseManager manager, String tableName);
+
+    void delete(DatabaseManager manager, String tableName, String column, String value);
 }

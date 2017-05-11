@@ -5,7 +5,7 @@
         <title>SQLCmd</title>
     </head>
     <body>
-    Select the table you need<br>
+    Select the table you require<br>
         <c:forEach items="${tables}" var="table">
             <a href="<c:out value = "${command}"/>?tableName=${table}">${table}</a><br>
         </c:forEach>

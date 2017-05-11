@@ -1,9 +1,6 @@
 package ua.com.juja.yeryery.service;
 
-import ua.com.juja.yeryery.model.DataSet;
-import ua.com.juja.yeryery.model.DataSetImpl;
-import ua.com.juja.yeryery.model.DatabaseManager;
-import ua.com.juja.yeryery.model.JdbcManager;
+import ua.com.juja.yeryery.model.*;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -51,6 +48,7 @@ public class ServiceImpl implements Service {
     public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameter) throws SQLException {
         DataSet insertedRow = new DataSetImpl();
         Set<String> tableColumns = manager.getTableColumns(tableName);
+
         for (String name : parameter.keySet()) {
             if (tableColumns.contains(name)) {
                 insertedRow.put(name, parameter.get(name)[0]);
@@ -63,5 +61,12 @@ public class ServiceImpl implements Service {
     @Override
     public Set<String> getColumnNames(DatabaseManager manager, String tableName) {
         return manager.getTableColumns(tableName);
+    }
+
+    @Override
+    public void delete(DatabaseManager manager, String tableName, String column, String value) {
+        DataEntry entry = new DataEntryImpl();
+        entry.setEntry(column, value);
+        manager.delete(tableName, entry);
     }
 }

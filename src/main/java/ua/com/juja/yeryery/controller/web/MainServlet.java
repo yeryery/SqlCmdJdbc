@@ -61,7 +61,7 @@ public class MainServlet extends HttpServlet {
         } else if (action.startsWith("/display")) {
             tableName = req.getParameter("tableName");
             req.setAttribute("tableName", tableName);
-            req.setAttribute("table", service.constructTable(manager, tableName));
+            req.setAttribute("tableRows", service.constructTable(manager, tableName));
             req.getRequestDispatcher("display.jsp").forward(req, resp);
 
         } else if (action.startsWith("/insert")) {
@@ -70,6 +70,12 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("table", service.constructTable(manager, tableName));
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
+
+        } else if (action.startsWith("/delete")) {
+            tableName = req.getParameter("tableName");
+            req.setAttribute("tableName", tableName);
+            req.setAttribute("table", service.constructTable(manager, tableName));
+            req.getRequestDispatcher("delete.jsp").forward(req, resp);
 
         } else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
@@ -110,6 +116,14 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
+        }
+
+        if (action.startsWith("/delete")) {
+
+            String column = req.getParameter("column");
+            String value = req.getParameter("value");
+            service.delete(manager, tableName, column, value);
+            resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
         }
     }
 }
