@@ -57,10 +57,10 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("command", command);
             req.setAttribute("tables", service.listTables(manager));
 
-            if (!command.equals("create")) {
-                req.getRequestDispatcher("select.jsp").forward(req, resp);
-            } else {
+            if (command.equals("create")) {
                 req.getRequestDispatcher("createName.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("select.jsp").forward(req, resp);
             }
 
         } else if (action.startsWith("/display")) {
@@ -82,6 +82,14 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("tableRows", service.constructTable(manager, tableName));
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("delete.jsp").forward(req, resp);
+
+        } else if (action.startsWith("/drop")) {
+            tableName = req.getParameter("tableName");
+            req.setAttribute("tableName", tableName);
+
+            service.drop(manager, tableName);
+            //TODO are you sure?
+            req.getRequestDispatcher("drop.jsp").forward(req, resp);
 
         }  else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
@@ -150,11 +158,13 @@ public class MainServlet extends HttpServlet {
 
         if (action.startsWith("/createColumns")) {
 
+            String primaryKeyName = req.getParameter("keyName");
+            String primaryKeyType = req.getParameter("keyType");
             String[] columnNames = req.getParameterValues("columnName");
             String[] columnTypes = req.getParameterValues("columnType");
 
             try {
-                service.create(manager, tableName, columnNames, columnTypes);
+                service.create(manager, tableName, columnNames, columnTypes, primaryKeyName, primaryKeyType);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
             } catch (SQLException e) {
                 req.setAttribute("message", e.getMessage());

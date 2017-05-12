@@ -9,21 +9,18 @@
         <form action="createColumns" method="post">
             <table>
                 <tr>
-                    <td>Name of column</td>
-                    <c:forEach var = "i" begin = "1" end = "${size}">
-                        <td><input type="text" name="columnName" /></td>
+                    <td><input type="text" name="keyName" placeholder="primary key"/></td>
+                    <c:forEach var = "i" begin = "2" end = "${size}">
+                        <td><input type="text" name="columnName" placeholder="column"/></td>
                     </c:forEach>
                 </tr>
                 <tr>
-                    <td>Type of column</td>
-                    <c:forEach var = "i" begin = "1" end = "${size}">
-                        <td><input type="text" name="columnType" /></td>
+                    <td><input type="text" name="keyType" placeholder="data type"/></td>
+                    <c:forEach var = "i" begin = "2" end = "${size}">
+                        <td><input type="text" name="columnType" placeholder="data type"/></td>
                     </c:forEach>
                 </tr>
                 <tr>
-                    <c:forEach begin = "1" end = "${size}">
-                        <td></td>
-                    </c:forEach>
                     <td><input type="submit" value="create"/></td>
                 </tr>
             </table>

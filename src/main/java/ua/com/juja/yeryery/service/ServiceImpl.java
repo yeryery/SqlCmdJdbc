@@ -71,17 +71,22 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes) throws SQLException {
+    public void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes,
+                            String primaryKeyName, String primaryKeyType) throws SQLException {
         DataEntry primaryKey = new DataEntryImpl();
-        primaryKey.setEntry(columnNames[0], columnTypes[0]);
-        //TODO убрать 0 и 1
+        primaryKey.setEntry(primaryKeyName, primaryKeyType);
 
         DataSet dataSet = new DataSetImpl();
 
-        for (int i = 1; i < columnNames.length; i++) {
+        for (int i = 0; i < columnNames.length; i++) {
             dataSet.put(columnNames[i], columnTypes[i]);
         }
 
         manager.create(tableName, primaryKey, dataSet);
+    }
+
+    @Override
+    public void drop(DatabaseManager manager, String tableName) {
+        manager.drop(tableName);
     }
 }

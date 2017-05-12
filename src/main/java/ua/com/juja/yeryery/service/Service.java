@@ -23,5 +23,8 @@ public interface Service {
 
     void delete(DatabaseManager manager, String tableName, String column, String value) throws SQLException;
 
-    void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes) throws SQLException;
+    void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes,
+                    String primaryKeyName, String primaryKeyType) throws SQLException;
+
+    void drop(DatabaseManager manager, String tableName);
 }
