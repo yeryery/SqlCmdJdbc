@@ -27,4 +27,6 @@ public interface Service {
                     String primaryKeyName, String primaryKeyType) throws SQLException;
 
     void drop(DatabaseManager manager, String tableName);
+
+    void clear(DatabaseManager manager, String tableName);
 }

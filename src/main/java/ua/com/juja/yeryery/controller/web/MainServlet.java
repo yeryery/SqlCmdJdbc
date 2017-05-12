@@ -27,7 +27,8 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = getAction(req);
+        String action = req.getServletPath();
+        String command = "";
 
         manager = (DatabaseManager) req.getSession().getAttribute("db_manager");
 
@@ -53,7 +54,7 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
 
         } else if (action.startsWith("/select")) {
-            String command = req.getParameter("command");
+            command = req.getParameter("command");
             req.setAttribute("command", command);
             req.setAttribute("tables", service.listTables(manager));
 
@@ -83,27 +84,32 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("delete.jsp").forward(req, resp);
 
-        } else if (action.startsWith("/drop")) {
+        } else if (action.startsWith("/drop") || action.startsWith("/clear")) {
             tableName = req.getParameter("tableName");
             req.setAttribute("tableName", tableName);
+            req.setAttribute("command", command);
+            req.getRequestDispatcher("confirm.jsp").forward(req, resp);
 
-            service.drop(manager, tableName);
-            //TODO are you sure?
-            req.getRequestDispatcher("drop.jsp").forward(req, resp);
+        } else if (action.startsWith("/confirm")) {
+            req.setAttribute("tableName", tableName);
+            req.setAttribute("command", command);
 
-        }  else {
+            if (command.equals("drop")) {
+                service.drop(manager, tableName);
+            } else if (command.equals("clear")) {
+                service.clear(manager, tableName);
+            }
+
+            req.getRequestDispatcher("success.jsp").forward(req, resp);
+
+        } else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 
-    private String getAction(HttpServletRequest req) {
-        String requestURI = req.getRequestURI();
-        return requestURI.substring(req.getContextPath().length(), requestURI.length());
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = getAction(req);
+        String action = req.getServletPath();
 
         if (action.startsWith("/connect")) {
             String databaseName = req.getParameter("dbname");
@@ -118,9 +124,8 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
-        }
 
-        if (action.startsWith("/insert")) {
+        } else if (action.startsWith("/insert")) {
 
             Map parameters = req.getParameterMap();
 
@@ -131,9 +136,8 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
-        }
 
-        if (action.startsWith("/delete")) {
+        } else if (action.startsWith("/delete")) {
 
             String column = req.getParameter("column");
             String value = req.getParameter("value");
@@ -145,18 +149,16 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
-        }
 
-        if (action.startsWith("/createName")) {
+        } else if (action.startsWith("/createName")) {
 
             tableName = req.getParameter("tableName");
             String size = req.getParameter("size");
             req.setAttribute("tableName", tableName);
             req.setAttribute("size", size);
             req.getRequestDispatcher("createColumns.jsp").forward(req, resp);
-        }
 
-        if (action.startsWith("/createColumns")) {
+        } else if (action.startsWith("/createColumns")) {
 
             String primaryKeyName = req.getParameter("keyName");
             String primaryKeyType = req.getParameter("keyType");

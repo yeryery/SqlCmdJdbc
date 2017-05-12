@@ -4,8 +4,7 @@
         <title>SQLCmd</title>
     </head>
     <body>
-        Success!
-        <br>
+        <p>Success!</p>
         <%@include file="footer.jsp" %>
     </body>
 </html>

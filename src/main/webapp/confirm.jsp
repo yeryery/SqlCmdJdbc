@@ -5,11 +5,8 @@
         <title>SQLCmd</title>
     </head>
     <body>
-    <p>Select the table for '<c:out value = "${command}"/>'</p>
-        <c:forEach items="${tables}" var="table">
-            <a href="<c:out value = "${command}"/>?tableName=${table}">${table}</a><br>
-        </c:forEach>
-        <br>
+        <p>Are you sure you want to <b><c:out value = "${command}"/></b> table '<c:out value = "${tableName}"/>'?</p>
+        <p><a href = "confirm"><button><c:out value = "${command}"/>!</button></a></p>
         <%@include file="footer.jsp" %>
     </body>
 </html>
