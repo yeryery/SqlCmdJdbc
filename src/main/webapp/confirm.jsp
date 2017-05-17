@@ -5,8 +5,8 @@
         <title>SQLCmd</title>
     </head>
     <body>
-        <p>Are you sure you want to <b><c:out value = "${command}"/></b> table '<c:out value = "${tableName}"/>'?</p>
-        <p><a href = "confirm"><button><c:out value = "${command}"/>!</button></a></p>
+        <p>Are you sure you want to <b>${command}</b> table '${tableName}'?</p>
+        <p><a href = "confirm"><button>${command}!</button></a></p>
         <%@include file="footer.jsp" %>
     </body>
 </html>

@@ -5,6 +5,7 @@
         <title>SQLCmd</title>
     </head>
     <body>
+        <p>${tableName}</p>
         <form action="insert" method="post">
             <table border="1">
                 <%@include file="constructor.jsp"%>

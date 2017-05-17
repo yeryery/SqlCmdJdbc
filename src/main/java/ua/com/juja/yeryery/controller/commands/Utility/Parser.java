@@ -14,7 +14,7 @@ public class Parser {
         return parsable;
     }
 
-    public static Object defineType(String data) {
+    public static Object checkType(String data) {
         try {
             return Integer.parseInt(data);
         } catch (NumberFormatException e) {

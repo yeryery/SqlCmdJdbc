@@ -4,6 +4,7 @@
         <title>SQLCmd</title>
     </head>
     <body>
+        <p>${tableName}</p>
         <table border="1">
             <%@include file="constructor.jsp" %>
         </table>

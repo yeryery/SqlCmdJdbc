@@ -179,7 +179,7 @@ public class Dialog {
     private DataEntry getEntry(String message, String sample) {
         String[] splitInput = splitBySample(message, sample);
         String columnName = splitInput[0];
-        Object value = Parser.defineType(splitInput[1]);
+        Object value = Parser.checkType(splitInput[1]);
         DataEntry result = new DataEntryImpl();
 
         result.setEntry(columnName, value);
@@ -277,7 +277,7 @@ public class Dialog {
 
         for (int i = 0; i < splitInput.length; i++) {
             String columnName = splitInput[i++];
-            Object value = Parser.defineType(splitInput[i]);
+            Object value = Parser.checkType(splitInput[i]);
 
             result.put(columnName, value);
         }

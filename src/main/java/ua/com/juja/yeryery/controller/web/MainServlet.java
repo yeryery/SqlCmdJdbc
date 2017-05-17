@@ -17,6 +17,9 @@ public class MainServlet extends HttpServlet {
     private Service service;
     private DatabaseManager manager;
     private String tableName;
+    private String command = "";
+    private String definingColumn = "";
+    private String definingValue = "";
 
     @Override
     public void init() throws ServletException {
@@ -28,7 +31,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getServletPath();
-        String command = "";
 
         manager = (DatabaseManager) req.getSession().getAttribute("db_manager");
 
@@ -76,6 +78,13 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("tableRows", service.constructTable(manager, tableName));
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
+
+        } else if (action.equals("/update")) {
+            tableName = req.getParameter("tableName");
+            req.setAttribute("tableName", tableName);
+            req.setAttribute("tableRows", service.constructTable(manager, tableName));
+            req.setAttribute("columns", service.getColumnNames(manager, tableName));
+            req.getRequestDispatcher("update.jsp").forward(req, resp);
 
         } else if (action.startsWith("/delete")) {
             tableName = req.getParameter("tableName");
@@ -131,6 +140,25 @@ public class MainServlet extends HttpServlet {
 
             try {
                 service.insert(manager, tableName, parameters);
+                resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
+            } catch (SQLException e) {
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
+
+        } else if (action.equals("/update")) {
+            definingColumn = req.getParameter("column");
+            definingValue = req.getParameter("value");
+            req.setAttribute("definingColumn", definingColumn);
+            req.setAttribute("definingValue", definingValue);
+            req.setAttribute("tableColumns", service.getColumns(manager, tableName));
+            req.getRequestDispatcher("updateValues.jsp").forward(req, resp);
+
+        } else if (action.equals("/updateValues")) {
+            Map parameters = req.getParameterMap();
+
+            try {
+                service.update(manager, tableName, parameters, definingColumn, definingValue);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
             } catch (SQLException e) {
                 req.setAttribute("message", e.getMessage());

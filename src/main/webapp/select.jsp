@@ -5,9 +5,9 @@
         <title>SQLCmd</title>
     </head>
     <body>
-    <p>Select the table for '<c:out value = "${command}"/>'</p>
+    <p>Select the table for '${command}'</p>
         <c:forEach items="${tables}" var="table">
-            <a href="<c:out value = "${command}"/>?tableName=${table}">${table}</a><br>
+            <a href="${command}?tableName=${table}">${table}</a><br>
         </c:forEach>
         <br>
         <%@include file="footer.jsp" %>

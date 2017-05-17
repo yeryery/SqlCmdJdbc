@@ -29,4 +29,8 @@ public interface Service {
     void drop(DatabaseManager manager, String tableName);
 
     void clear(DatabaseManager manager, String tableName);
+
+    void update(DatabaseManager manager, String tableName, Map<String, String[]> parameters, String definingColumn, String definingValue) throws SQLException;
+
+    Set<String> getColumns(DatabaseManager manager, String tableName);
 }

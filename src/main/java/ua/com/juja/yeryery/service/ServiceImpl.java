@@ -36,7 +36,6 @@ public class ServiceImpl implements Service {
         }
 
         return result;
-
     }
 
     @Override
@@ -47,12 +46,9 @@ public class ServiceImpl implements Service {
     @Override
     public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameters) throws SQLException {
         DataSet insertedRow = new DataSetImpl();
-        Set<String> tableColumns = manager.getTableColumns(tableName);
 
         for (String name : parameters.keySet()) {
-            if (tableColumns.contains(name)) {
-                insertedRow.put(name, parameters.get(name)[0]);
-            }
+            insertedRow.put(name, parameters.get(name)[0]);
         }
 
         manager.insert(tableName, insertedRow);
@@ -72,7 +68,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes,
-                            String primaryKeyName, String primaryKeyType) throws SQLException {
+                       String primaryKeyName, String primaryKeyType) throws SQLException {
         DataEntry primaryKey = new DataEntryImpl();
         primaryKey.setEntry(primaryKeyName, primaryKeyType);
 
@@ -93,5 +89,38 @@ public class ServiceImpl implements Service {
     @Override
     public void clear(DatabaseManager manager, String tableName) {
         manager.clear(tableName);
+    }
+
+    @Override
+    public void update(DatabaseManager manager, String tableName, Map<String, String[]> parameters,
+                       String definingColumn, String definingValue) throws SQLException {
+
+        DataSet updatedRow = new DataSetImpl();
+
+        for (String name : parameters.keySet()) {
+            String newValue = parameters.get(name)[0];
+
+            if (!newValue.equals("")) {
+                updatedRow.put(name, defineType(newValue));
+            }
+        }
+
+        DataEntry definingEntry = new DataEntryImpl();
+        definingEntry.setEntry(definingColumn, defineType(definingValue));
+
+        manager.update(tableName, updatedRow, definingEntry);
+    }
+
+    private Object defineType(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return value;
+        }
+    }
+
+    @Override
+    public Set<String> getColumns(DatabaseManager manager, String tableName) {
+        return manager.getTableColumns(tableName);
     }
 }
