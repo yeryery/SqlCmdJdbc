@@ -18,6 +18,8 @@
         <maven-resources.version>2.7</maven-resources.version>
         <maven-antrun.version>1.8</maven-antrun.version>
         <maven-license.version>1.9</maven-license.version>
+
+        <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
     </properties>
 
     <groupId>ua.com.juja.yeryery.</groupId>
@@ -29,6 +31,19 @@
     <description>sqlcmd</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

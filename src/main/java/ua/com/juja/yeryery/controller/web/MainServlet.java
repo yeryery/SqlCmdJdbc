@@ -1,9 +1,11 @@
 package ua.com.juja.yeryery.controller.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.service.Service;
-import ua.com.juja.yeryery.service.ServiceImpl;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 public class MainServlet extends HttpServlet {
 
+    @Autowired
     private Service service;
     private DatabaseManager manager;
     private String tableName;
@@ -22,10 +25,10 @@ public class MainServlet extends HttpServlet {
     private String definingValue = "";
 
     @Override
-    public void init() throws ServletException {
-        super.init();
-
-        service = new ServiceImpl();
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
     }
 
     @Override

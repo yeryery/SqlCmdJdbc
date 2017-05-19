@@ -1,10 +1,12 @@
 package ua.com.juja.yeryery.service;
 
+import org.springframework.stereotype.Component;
 import ua.com.juja.yeryery.model.*;
 
 import java.sql.SQLException;
 import java.util.*;
 
+@Component
 public class ServiceImpl implements Service {
 
     @Override
