@@ -1,5 +1,6 @@
 package ua.com.juja.yeryery.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.juja.yeryery.model.*;
 
@@ -9,6 +10,9 @@ import java.util.*;
 @Component
 public class ServiceImpl implements Service {
 
+    @Autowired
+    private DatabaseManagerFactory factory;
+
     @Override
     public List<String> commandsList() {
         return Arrays.asList("display", "clear", "create", "delete", "drop", "insert", "update");
@@ -16,7 +20,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public DatabaseManager connect(String databaseName, String userName, String password) {
-        DatabaseManager manager = new JdbcManager();
+        DatabaseManager manager = factory.createDatabaseManager();
         manager.connect(databaseName, userName, password);
         return manager;
     }
@@ -33,7 +37,12 @@ public class ServiceImpl implements Service {
             List<String> row = new ArrayList<>(columns.size());
             result.add(row);
             for (String column : columns) {
-                row.add(dataSet.get(column).toString());
+                Object value = dataSet.get(column);
+                if (value != null) {
+                    row.add(value.toString());
+                } else {
+                    row.add("");
+                }
             }
         }
 
