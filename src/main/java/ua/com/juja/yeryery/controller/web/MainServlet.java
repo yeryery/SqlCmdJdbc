@@ -18,6 +18,7 @@ public class MainServlet extends HttpServlet {
 
     @Autowired
     private Service service;
+
     private DatabaseManager manager;
     private String tableName;
     private String command = "";
