@@ -5,7 +5,6 @@ import ua.com.juja.yeryery.model.*;
 import java.sql.SQLException;
 import java.util.*;
 
-//@Component
 public abstract class ServiceImpl implements Service {
 
     @Override
@@ -18,6 +17,7 @@ public abstract class ServiceImpl implements Service {
     @Override
     public DatabaseManager connect(String databaseName, String userName, String password) {
         DatabaseManager manager = createManager();
+        //TODO не видит bean JdbcManager в AppContext
         manager.connect(databaseName, userName, password);
         return manager;
     }
@@ -52,7 +52,7 @@ public abstract class ServiceImpl implements Service {
     }
 
     @Override
-    public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameters) throws SQLException {
+    public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameters) {
         DataSet insertedRow = new DataSetImpl();
 
         for (String name : parameters.keySet()) {
@@ -68,15 +68,16 @@ public abstract class ServiceImpl implements Service {
     }
 
     @Override
-    public void delete(DatabaseManager manager, String tableName, String column, String value) throws SQLException {
+    public void delete(DatabaseManager manager, String tableName, String column, String value) {
         DataEntry entry = new DataEntryImpl();
         entry.setEntry(column, value);
+
         manager.delete(tableName, entry);
     }
 
     @Override
     public void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes,
-                       String primaryKeyName, String primaryKeyType) throws SQLException {
+                       String primaryKeyName, String primaryKeyType) {
         DataEntry primaryKey = new DataEntryImpl();
         primaryKey.setEntry(primaryKeyName, primaryKeyType);
 

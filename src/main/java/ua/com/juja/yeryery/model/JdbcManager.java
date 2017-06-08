@@ -1,10 +1,10 @@
 package ua.com.juja.yeryery.model;
 
-import ua.com.juja.yeryery.controller.commands.Exceptions.ConnectException;
-
 import java.sql.*;
 import java.util.*;
 
+//@Component
+//@Scope(value = "prototype")
 public class JdbcManager implements DatabaseManager {
 
     private Connection connection;
@@ -21,7 +21,7 @@ public class JdbcManager implements DatabaseManager {
             isConnected = true;
         } catch (SQLException e) {
             connection = null;
-            throw new ConnectException(e.getMessage());
+            throw new JdbcManagerException("Connect error", e);
         }
     }
 
@@ -39,7 +39,7 @@ public class JdbcManager implements DatabaseManager {
                 connection.close();
                 isConnected = false;
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                throw new JdbcManagerException("Close Connection error", e);
             }
         }
     }
@@ -55,7 +55,7 @@ public class JdbcManager implements DatabaseManager {
                 result.add(resultSet.getString("table_name"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Get TableNames error", e);
         }
 
         return result;
@@ -72,7 +72,7 @@ public class JdbcManager implements DatabaseManager {
                 result.add(rs.getString(1));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Get Databases error", e);
         }
 
         return result;
@@ -89,7 +89,7 @@ public class JdbcManager implements DatabaseManager {
                 result.add(rs.getString("column_name"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Get Table columns error", e);
         }
 
         return result;
@@ -107,18 +107,20 @@ public class JdbcManager implements DatabaseManager {
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Clear Table error", e);
         }
     }
 
     @Override
-    public void create(String tableName, DataEntry primaryKey, DataSet dataSet) throws SQLException {
+    public void create(String tableName, DataEntry primaryKey, DataSet dataSet) {
         String dataTypes = getDataSetFormatted(dataSet);
         String sql = String.format("CREATE TABLE %s(%s %s PRIMARY KEY NOT NULL, %s)",
                 tableName, primaryKey.getColumn(), primaryKey.getValue(), dataTypes);
 
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new JdbcManagerException("Create Table error", e);
         }
     }
 
@@ -128,7 +130,7 @@ public class JdbcManager implements DatabaseManager {
             String sql = String.format("CREATE DATABASE %s", dataBaseName);
             st.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Create Database error", e);
         }
     }
 
@@ -139,7 +141,7 @@ public class JdbcManager implements DatabaseManager {
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Drop Table error", e);
         }
     }
 
@@ -156,23 +158,25 @@ public class JdbcManager implements DatabaseManager {
             st.executeQuery(disconnectDB);
             st.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Drop Database error", e);
         }
     }
 
     @Override
-    public void insert(String tableName, DataSet input) throws SQLException {
+    public void insert(String tableName, DataSet input) {
         String columnNames = getColumnNamesFormatted("%s,", input);
         String values = getValuesFormatted("'%s',", input);
         String sql = String.format("INSERT INTO %s (%s)VALUES (%s)", tableName, columnNames, values);
 
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new JdbcManagerException("Insert error", e);
         }
     }
 
     @Override
-    public void update(String tableName, DataSet newDataSet, DataEntry definingEntry) throws SQLException {
+    public void update(String tableName, DataSet newDataSet, DataEntry definingEntry) {
         String updatedColumns = getColumnNamesFormatted("%s=?,", newDataSet);
         String definingColumn = definingEntry.getColumn();
         Object definingValue = definingEntry.getValue();
@@ -189,11 +193,13 @@ public class JdbcManager implements DatabaseManager {
 
             ps.setObject(sqlIndex, definingValue);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new JdbcManagerException("Update error", e);
         }
     }
 
     @Override
-    public void delete(String tableName, DataEntry definingEntry) throws SQLException {
+    public void delete(String tableName, DataEntry definingEntry) {
         String definingColumn = definingEntry.getColumn();
         Object definingValue = definingEntry.getValue();
         String type = definingValue.getClass().getName();
@@ -201,6 +207,8 @@ public class JdbcManager implements DatabaseManager {
 
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new JdbcManagerException("Delete error", e);
         }
     }
 
@@ -221,7 +229,7 @@ public class JdbcManager implements DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new JdbcManagerException("Get DataContent error", e);
         }
         return result;
     }

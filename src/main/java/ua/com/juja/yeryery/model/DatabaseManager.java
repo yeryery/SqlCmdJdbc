@@ -1,6 +1,5 @@
 package ua.com.juja.yeryery.model;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public interface DatabaseManager {
 
     void clear(String tableName);
 
-    void create(String tableName, DataEntry primaryKey, DataSet columns) throws SQLException;
+    void create(String tableName, DataEntry primaryKey, DataSet columns);
 
     void createDB(String dataBase);
 
@@ -25,11 +24,11 @@ public interface DatabaseManager {
 
     void dropDB(String dataBaseName);
 
-    void insert(String tableName, DataSet input) throws SQLException;
+    void insert(String tableName, DataSet input);
 
-    void update(String tableName, DataSet input, DataEntry entry) throws SQLException;
+    void update(String tableName, DataSet input, DataEntry entry);
 
-    void delete(String tableName, DataEntry entry) throws SQLException;
+    void delete(String tableName, DataEntry entry);
 
     List<DataSet> getDataContent(String tableName);
 }
