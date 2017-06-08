@@ -15,19 +15,30 @@ public abstract class ServiceImpl implements Service {
     protected abstract DatabaseManager createManager();
 
     @Override
-    public DatabaseManager connect(String databaseName, String userName, String password) {
+    public DatabaseManager connect(String databaseName, String userName, String password) throws ServiceException {
         DatabaseManager manager = createManager();
         //TODO не видит bean JdbcManager в AppContext
-        manager.connect(databaseName, userName, password);
+        try {
+            manager.connect(databaseName, userName, password);
+        } catch (SQLException e) {
+            throw new ServiceException("Connection error", e);
+        }
+
         return manager;
     }
 
     @Override
     public List<List<String>> constructTable(DatabaseManager manager, String tableName) {
         List<List<String>> result = new LinkedList<>();
+        List<String> columns = new LinkedList<>();
+        List<DataSet> tableData = new LinkedList<>();
 
-        List<String> columns = new LinkedList<>(manager.getTableColumns(tableName));
-        List<DataSet> tableData = manager.getDataContent(tableName);
+        try {
+            columns = new LinkedList<>(manager.getTableColumns(tableName));
+            tableData = manager.getDataContent(tableName);
+        } catch (SQLException e) {
+            throw new ServiceException("Construct table error", e);
+        }
 
         result.add(columns);
         for (DataSet dataSet : tableData) {
@@ -47,37 +58,53 @@ public abstract class ServiceImpl implements Service {
     }
 
     @Override
-    public Set<String> listTables(DatabaseManager manager) {
-        return manager.getTableNames();
+    public Set<String> listTables(DatabaseManager manager) throws ServiceException {
+        try {
+            return manager.getTableNames();
+        } catch (SQLException e) {
+            throw new ServiceException("List tables error", e);
+        }
     }
 
     @Override
-    public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameters) {
+    public void insert(DatabaseManager manager, String tableName, Map<String, String[]> parameters) throws ServiceException {
         DataSet insertedRow = new DataSetImpl();
 
         for (String name : parameters.keySet()) {
             insertedRow.put(name, parameters.get(name)[0]);
         }
 
-        manager.insert(tableName, insertedRow);
+        try {
+            manager.insert(tableName, insertedRow);
+        } catch (SQLException e) {
+            throw new ServiceException("Insert entry error", e);
+        }
     }
 
     @Override
-    public Set<String> getColumnNames(DatabaseManager manager, String tableName) {
-        return manager.getTableColumns(tableName);
+    public Set<String> getColumnNames(DatabaseManager manager, String tableName) throws ServiceException {
+        try {
+            return manager.getTableColumns(tableName);
+        } catch (SQLException e) {
+            throw new ServiceException("Get columnnames error", e);
+        }
     }
 
     @Override
-    public void delete(DatabaseManager manager, String tableName, String column, String value) {
+    public void delete(DatabaseManager manager, String tableName, String column, String value) throws ServiceException {
         DataEntry entry = new DataEntryImpl();
         entry.setEntry(column, value);
 
-        manager.delete(tableName, entry);
+        try {
+            manager.delete(tableName, entry);
+        } catch (SQLException e) {
+            throw new ServiceException("Delete entry error", e);
+        }
     }
 
     @Override
     public void create(DatabaseManager manager, String tableName, String[] columnNames, String[] columnTypes,
-                       String primaryKeyName, String primaryKeyType) {
+                       String primaryKeyName, String primaryKeyType) throws ServiceException {
         DataEntry primaryKey = new DataEntryImpl();
         primaryKey.setEntry(primaryKeyName, primaryKeyType);
 
@@ -87,22 +114,34 @@ public abstract class ServiceImpl implements Service {
             dataSet.put(columnNames[i], columnTypes[i]);
         }
 
-        manager.create(tableName, primaryKey, dataSet);
+        try {
+            manager.create(tableName, primaryKey, dataSet);
+        } catch (SQLException e) {
+            throw new ServiceException("Create table error", e);
+        }
     }
 
     @Override
-    public void drop(DatabaseManager manager, String tableName) {
-        manager.drop(tableName);
+    public void drop(DatabaseManager manager, String tableName) throws ServiceException {
+        try {
+            manager.drop(tableName);
+        } catch (SQLException e) {
+            throw new ServiceException("Drop table error", e);
+        }
     }
 
     @Override
-    public void clear(DatabaseManager manager, String tableName) {
-        manager.clear(tableName);
+    public void clear(DatabaseManager manager, String tableName) throws ServiceException {
+        try {
+            manager.clear(tableName);
+        } catch (SQLException e) {
+            throw new ServiceException("Clear table error", e);
+        }
     }
 
     @Override
     public void update(DatabaseManager manager, String tableName, Map<String, String[]> parameters,
-                       String definingColumn, String definingValue) throws SQLException {
+                       String definingColumn, String definingValue) throws ServiceException {
 
         DataSet updatedRow = new DataSetImpl();
 
@@ -117,7 +156,11 @@ public abstract class ServiceImpl implements Service {
         DataEntry definingEntry = new DataEntryImpl();
         definingEntry.setEntry(definingColumn, defineType(definingValue));
 
-        manager.update(tableName, updatedRow, definingEntry);
+        try {
+            manager.update(tableName, updatedRow, definingEntry);
+        } catch (SQLException e) {
+            throw new ServiceException("Update table error", e);
+        }
     }
 
     private Object defineType(String value) {
@@ -129,7 +172,11 @@ public abstract class ServiceImpl implements Service {
     }
 
     @Override
-    public Set<String> getColumns(DatabaseManager manager, String tableName) {
-        return manager.getTableColumns(tableName);
+    public Set<String> getColumns(DatabaseManager manager, String tableName) throws ServiceException {
+        try {
+            return manager.getTableColumns(tableName);
+        } catch (SQLException e) {
+            throw new ServiceException("Get columns error", e);
+        }
     }
 }

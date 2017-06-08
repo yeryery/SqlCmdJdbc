@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.service.Service;
+import ua.com.juja.yeryery.service.ServiceException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Map;
 
 public class MainServlet extends HttpServlet {
@@ -145,7 +145,7 @@ public class MainServlet extends HttpServlet {
             try {
                 service.insert(manager, tableName, parameters);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
@@ -164,7 +164,7 @@ public class MainServlet extends HttpServlet {
             try {
                 service.update(manager, tableName, parameters, definingColumn, definingValue);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
@@ -177,7 +177,7 @@ public class MainServlet extends HttpServlet {
             try {
                 service.delete(manager, tableName, column, value);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
@@ -200,7 +200,7 @@ public class MainServlet extends HttpServlet {
             try {
                 service.create(manager, tableName, columnNames, columnTypes, primaryKeyName, primaryKeyType);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
