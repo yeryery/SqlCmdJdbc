@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface Service {
 
-    List<String> commandsList();
+    List<String> getCommands();
 
     DatabaseManager connect(String databaseName, String userName, String password) throws ServiceException;
 

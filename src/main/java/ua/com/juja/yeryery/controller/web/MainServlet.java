@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class MainServlet extends HttpServlet {
@@ -53,7 +54,7 @@ public class MainServlet extends HttpServlet {
         }
 
         if (action.startsWith("/menu") || action.equals("/")) {
-            req.setAttribute("items", service.commandsList());
+            req.setAttribute("items", service.getCommands());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
 
         } else if (action.startsWith("/help")) {
@@ -62,7 +63,11 @@ public class MainServlet extends HttpServlet {
         } else if (action.startsWith("/select")) {
             command = req.getParameter("command");
             req.setAttribute("command", command);
-            req.setAttribute("tables", service.listTables(manager));
+            try {
+                req.setAttribute("tables", manager.getTableNames());
+            } catch (SQLException e) {
+                throw new ServiceException("List tables error", e);
+            }
 
             if (command.equals("create")) {
                 req.getRequestDispatcher("createName.jsp").forward(req, resp);

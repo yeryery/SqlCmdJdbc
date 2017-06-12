@@ -7,9 +7,15 @@ import java.util.*;
 
 public abstract class ServiceImpl implements Service {
 
+    private List<String> commands;
+
+    public void setCommands(List<String> commands) {
+        this.commands = commands;
+    }
+
     @Override
-    public List<String> commandsList() {
-        return Arrays.asList("display", "clear", "create", "delete", "drop", "insert", "update");
+    public List<String> getCommands() {
+        return commands;
     }
 
     protected abstract DatabaseManager createManager();
