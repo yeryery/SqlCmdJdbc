@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.juja.yeryery.model.DatabaseManager;
 import ua.com.juja.yeryery.service.Service;
-import ua.com.juja.yeryery.service.ServiceException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Map;
+import java.util.Set;
 
 public class MainServlet extends HttpServlet {
 
@@ -22,7 +21,6 @@ public class MainServlet extends HttpServlet {
 
     private DatabaseManager manager;
     private String tableName;
-    private String command = "";
     private String definingColumn = "";
     private String definingValue = "";
 
@@ -57,75 +55,62 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("items", service.getCommands());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
 
-        } else if (action.startsWith("/select")) {{
-            command = req.getParameter("command");
+        } else if (action.startsWith("/select")) {
+            {
+                String command = req.getParameter("command");
 
-            if (command.equals("help")) {
-                req.getRequestDispatcher("help.jsp").forward(req, resp);
-            } else {
-                req.setAttribute("command", command);
-                try {
-                    req.setAttribute("tables", manager.getTableNames());
-                } catch (SQLException e) {
-                    throw new ServiceException("List tables error", e);
-                }
+                if (command.equals("help")) {
+                    req.getRequestDispatcher("help.jsp").forward(req, resp);
 
-                if (command.equals("create")) {
-                    req.getRequestDispatcher("createName.jsp").forward(req, resp);
                 } else {
-                    req.getRequestDispatcher("select.jsp").forward(req, resp);
+                    req.setAttribute("command", command);
+                    Set<String> tableNames = service.listTables(manager);
+                    req.setAttribute("tables", tableNames);
+
+                    if (command.equals("create")) {
+                        req.getRequestDispatcher("createName.jsp").forward(req, resp);
+                    } else {
+                        req.getRequestDispatcher("select.jsp").forward(req, resp);
+                    }
                 }
-            }
             }
 
         } else if (action.startsWith("/display")) {
-            tableName = req.getParameter("tableName");
-            req.setAttribute("tableName", tableName);
-            req.setAttribute("tableRows", service.constructTable(manager, tableName));
+            findTable(req);
             req.getRequestDispatcher("display.jsp").forward(req, resp);
 
         } else if (action.startsWith("/insert")) {
-            tableName = req.getParameter("tableName");
-            req.setAttribute("tableName", tableName);
-            req.setAttribute("tableRows", service.constructTable(manager, tableName));
+            findTable(req);
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
 
         } else if (action.equals("/update")) {
-            tableName = req.getParameter("tableName");
-            req.setAttribute("tableName", tableName);
-            req.setAttribute("tableRows", service.constructTable(manager, tableName));
+            findTable(req);
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
-            req.getRequestDispatcher("update.jsp").forward(req, resp);
+            req.getRequestDispatcher("updatePrepare.jsp").forward(req, resp);
 
         } else if (action.startsWith("/delete")) {
-            tableName = req.getParameter("tableName");
-            req.setAttribute("tableName", tableName);
-            req.setAttribute("tableRows", service.constructTable(manager, tableName));
+            findTable(req);
             req.setAttribute("columns", service.getColumnNames(manager, tableName));
             req.getRequestDispatcher("delete.jsp").forward(req, resp);
 
-        } else if (action.startsWith("/drop") || action.startsWith("/clear")) {
-            tableName = req.getParameter("tableName");
-            req.setAttribute("tableName", tableName);
-            req.setAttribute("command", command);
-            req.getRequestDispatcher("confirm.jsp").forward(req, resp);
+        } else if (action.startsWith("/drop")) {
+            findTable(req);
+            req.getRequestDispatcher("drop.jsp").forward(req, resp);
 
-        } else if (action.startsWith("/confirm")) {
-            req.setAttribute("tableName", tableName);
-            req.setAttribute("command", command);
-
-            if (command.equals("drop")) {
-                service.drop(manager, tableName);
-            } else if (command.equals("clear")) {
-                service.clear(manager, tableName);
-            }
-
-            req.getRequestDispatcher("success.jsp").forward(req, resp);
+        } else if (action.startsWith("/clear")) {
+            findTable(req);
+            req.getRequestDispatcher("clear.jsp").forward(req, resp);
 
         } else {
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
+    }
+
+    private void findTable(HttpServletRequest req) {
+        tableName = req.getParameter("tableName");
+        req.setAttribute("tableName", tableName);
+        req.setAttribute("tableRows", service.constructTable(manager, tableName));
     }
 
     @Override
@@ -133,6 +118,7 @@ public class MainServlet extends HttpServlet {
         String action = req.getServletPath();
 
         if (action.startsWith("/connect")) {
+
             String databaseName = req.getParameter("dbname");
             String userName = req.getParameter("username");
             String password = req.getParameter("password");
@@ -158,23 +144,28 @@ public class MainServlet extends HttpServlet {
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
 
-        } else if (action.equals("/update")) {
-            definingColumn = req.getParameter("column");
-            definingValue = req.getParameter("value");
-            req.setAttribute("definingColumn", definingColumn);
-            req.setAttribute("definingValue", definingValue);
-            req.setAttribute("tableColumns", service.getColumns(manager, tableName));
-            req.getRequestDispatcher("updateValues.jsp").forward(req, resp);
+        } else if (action.startsWith("/update")) {
 
-        } else if (action.equals("/updateValues")) {
-            Map parameters = req.getParameterMap();
+            if (action.equals("/updatePrepare")) {
 
-            try {
-                service.update(manager, tableName, parameters, definingColumn, definingValue);
-                resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
-            } catch (Exception e) {
-                req.setAttribute("message", e.getMessage());
-                req.getRequestDispatcher("error.jsp").forward(req, resp);
+                definingColumn = req.getParameter("column");
+                definingValue = req.getParameter("value");
+                req.setAttribute("definingColumn", definingColumn);
+                req.setAttribute("definingValue", definingValue);
+                req.setAttribute("tableColumns", service.getColumns(manager, tableName));
+                req.getRequestDispatcher("updateValues.jsp").forward(req, resp);
+
+            } else if (action.equals("/updateValues")) {
+
+                Map updatedValues = req.getParameterMap();
+
+                try {
+                    service.update(manager, tableName, updatedValues, definingColumn, definingValue);
+                    resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
+                } catch (Exception e) {
+                    req.setAttribute("message", e.getMessage());
+                    req.getRequestDispatcher("error.jsp").forward(req, resp);
+                }
             }
 
         } else if (action.startsWith("/delete")) {
@@ -185,6 +176,26 @@ public class MainServlet extends HttpServlet {
             try {
                 service.delete(manager, tableName, column, value);
                 resp.sendRedirect(resp.encodeRedirectURL("display?tableName=" + tableName));
+            } catch (Exception e) {
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
+
+        } else if (action.startsWith("/drop")) {
+
+            try {
+                service.drop(manager, tableName);
+                req.getRequestDispatcher("success.jsp").forward(req, resp);
+            } catch (Exception e) {
+                req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
+            }
+
+        } else if (action.startsWith("/clear")) {
+
+            try {
+                service.clear(manager, tableName);
+                req.getRequestDispatcher("success.jsp").forward(req, resp);
             } catch (Exception e) {
                 req.setAttribute("message", e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);

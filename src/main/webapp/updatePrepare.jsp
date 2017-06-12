@@ -5,7 +5,7 @@
         <title>SQLCmd</title>
     </head>
     <body>
-        <form action="update" method="post">
+        <form action="updatePrepare" method="post">
             <table border="1">
                 <%@include file="constructor.jsp"%>
             </table>
