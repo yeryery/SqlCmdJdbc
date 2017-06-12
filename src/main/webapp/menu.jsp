@@ -8,6 +8,5 @@
         <c:forEach items="${items}" var="item">
             <a href="select?command=${item}">${item}</a><br>
         </c:forEach>
-        <a href="help">help</a><br>
     </body>
 </html>

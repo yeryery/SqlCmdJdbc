@@ -57,22 +57,25 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("items", service.getCommands());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
 
-        } else if (action.startsWith("/help")) {
-            req.getRequestDispatcher("help.jsp").forward(req, resp);
-
-        } else if (action.startsWith("/select")) {
+        } else if (action.startsWith("/select")) {{
             command = req.getParameter("command");
-            req.setAttribute("command", command);
-            try {
-                req.setAttribute("tables", manager.getTableNames());
-            } catch (SQLException e) {
-                throw new ServiceException("List tables error", e);
-            }
 
-            if (command.equals("create")) {
-                req.getRequestDispatcher("createName.jsp").forward(req, resp);
+            if (command.equals("help")) {
+                req.getRequestDispatcher("help.jsp").forward(req, resp);
             } else {
-                req.getRequestDispatcher("select.jsp").forward(req, resp);
+                req.setAttribute("command", command);
+                try {
+                    req.setAttribute("tables", manager.getTableNames());
+                } catch (SQLException e) {
+                    throw new ServiceException("List tables error", e);
+                }
+
+                if (command.equals("create")) {
+                    req.getRequestDispatcher("createName.jsp").forward(req, resp);
+                } else {
+                    req.getRequestDispatcher("select.jsp").forward(req, resp);
+                }
+            }
             }
 
         } else if (action.startsWith("/display")) {
