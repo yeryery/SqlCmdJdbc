@@ -1,6 +1,7 @@
 package ua.com.juja.yeryery.model;
 
 public interface DataEntry {
+    //TODO возможно убрать
 
     String getColumn();
 

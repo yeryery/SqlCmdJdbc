@@ -1,4 +1,4 @@
-package ua.com.juja.yeryery.controller.web;
+package ua.com.juja.yeryery.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;

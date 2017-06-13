@@ -1,4 +1,4 @@
-package ua.com.juja.yeryery.integration;
+package ua.com.juja.yeryery.model;
 
 import ua.com.juja.yeryery.model.*;
 
@@ -15,7 +15,7 @@ public class Preparator {
     public static final String USERNAME = "postgres";
     public static final String PASSWORD = "postgrespass";
 
-    public static void setupDB() {
+    public static void setupDB() throws SQLException {
         try {
             connectToDefaultDB();
         } catch (RuntimeException e) {
@@ -89,7 +89,7 @@ public class Preparator {
         }
     }
 
-    public static void connectToDefaultDB() {
+    public static void connectToDefaultDB() throws SQLException {
         TEST_MANAGER.connect(DEFAULT_DB, USERNAME, PASSWORD);
     }
 }

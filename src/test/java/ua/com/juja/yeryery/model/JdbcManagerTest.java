@@ -1,8 +1,9 @@
 package ua.com.juja.yeryery.model;
 
-import org.junit.*;
-import ua.com.juja.yeryery.controller.commands.Exceptions.ConnectException;
-import ua.com.juja.yeryery.integration.Preparator;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -22,7 +23,7 @@ public class JdbcManagerTest {
     private static final String USERS_TABLE = "users";
 
     @BeforeClass
-    public static void setupTestDB() {
+    public static void setupTestDB() throws SQLException {
         Preparator.setupDB();
     }
 
@@ -32,7 +33,7 @@ public class JdbcManagerTest {
     }
 
     @Test
-    public void testGetTableNames() {
+    public void testGetTableNames() throws SQLException {
         //when
         Set<String> actualNames = MANAGER.getTableNames();
 
@@ -42,7 +43,7 @@ public class JdbcManagerTest {
     }
 
     @Test
-    public void testConnect() {
+    public void testConnect() throws SQLException {
         //given
         Preparator.connectToDefaultDB();
 
@@ -55,8 +56,8 @@ public class JdbcManagerTest {
         assertEquals(expectedNames, actualNames);
     }
 
-    @Test(expected = ConnectException.class)
-    public void testConnectToNotExistingDatabase() {
+    @Test(expected = SQLException.class)
+    public void testConnectToNotExistingDatabase() throws SQLException {
         //given
         Preparator.connectToDefaultDB();
 
@@ -72,8 +73,8 @@ public class JdbcManagerTest {
         }
     }
 
-    @Test(expected = ConnectException.class)
-    public void testConnectWithWrongPassword() {
+    @Test(expected = SQLException.class)
+    public void testConnectWithWrongPassword() throws SQLException {
         //given
         Preparator.connectToDefaultDB();
 
@@ -90,7 +91,7 @@ public class JdbcManagerTest {
     }
 
     @Test
-    public void testGetDatabases() {
+    public void testGetDatabases() throws SQLException {
         //when
         Set<String> actualDatabases = MANAGER.getDatabases();
 
@@ -99,7 +100,7 @@ public class JdbcManagerTest {
     }
 
     @Test
-    public void testGetTableColumns() {
+    public void testGetTableColumns() throws SQLException {
         //when
         Set<String> actualColumns = MANAGER.getTableColumns(USERS_TABLE);
 
@@ -109,7 +110,7 @@ public class JdbcManagerTest {
     }
 
     @Test
-    public void testClearTable() {
+    public void testClearTable() throws SQLException {
         //when
         MANAGER.clear(TEST_TABLE);
 
@@ -142,7 +143,7 @@ public class JdbcManagerTest {
     }
 
     @Test
-    public void testDropTable() {
+    public void testDropTable() throws SQLException {
         //when
         MANAGER.drop(TEST_TABLE);
 
@@ -151,15 +152,15 @@ public class JdbcManagerTest {
         Preparator.createTableTest();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void testDropNotExistingTable() {
+    @Test(expected = SQLException.class)
+    public void testDropNotExistingTable() throws SQLException {
         //when
         MANAGER.drop("NotExistingTable");
     }
 
     @Ignore
     @Test
-    public void testCreateDB() {
+    public void testCreateDB() throws SQLException {
         //when
         MANAGER.createDB(DATABASE_TO_DROP);
 
@@ -170,7 +171,7 @@ public class JdbcManagerTest {
 
     @Ignore
     @Test
-    public void testDropDB() {
+    public void testDropDB() throws SQLException {
         //given
         MANAGER.createDB(DATABASE_TO_DROP);
 
