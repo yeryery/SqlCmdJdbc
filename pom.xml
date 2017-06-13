@@ -36,13 +36,12 @@
             <artifactId>spring-context-support</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -51,9 +50,31 @@
         </dependency>
 
         <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--TEST-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.ow2.sirocco</groupId>
             <artifactId>sirocco-text-table-formatter</artifactId>
             <version>1.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -74,24 +95,14 @@
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
             <version>1.6.6</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
             <version>1.6.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
